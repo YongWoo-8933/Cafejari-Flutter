@@ -57,7 +57,7 @@ class MapViewModel extends StateNotifier<MapState> {
           tappedMarker.setCaptionAligns([NAlign.top]);
           tappedMarker.setCaptionOffset(4.0);
 
-          state = state.copyWith(selectedCafeInfo: cafeInfo, selectedMarker: tappedMarker);
+          state = state.copyWith(selectedCafeInfo: cafeInfo, selectedMarker: tappedMarker, selectedCafe: cafeInfo.cafes.first);
           state.mapController?.updateCamera(
               NCameraUpdate.scrollAndZoomTo(target: cafeInfo.latLng, zoom: Zoom.large));
           await state.bottomSheetController.animatePanelToSnapPoint();
@@ -78,5 +78,17 @@ class MapViewModel extends StateNotifier<MapState> {
 
   initMapController(NaverMapController mapController) {
     state = state.copyWith(mapController: mapController);
+  }
+
+  changeSelectedCafe(Cafe changedSelectedCafe){
+    state = state.copyWith(selectedCafe: changedSelectedCafe);
+  }
+
+  changeUpdatedCrowded(double changedUpdatedCrowded){
+    state = state.copyWith(updatedCrowded: changedUpdatedCrowded);
+  }
+
+  updateTopVisible(bool updateTopVisibility){
+    state = state.copyWith(topVisible: updateTopVisibility);
   }
 }

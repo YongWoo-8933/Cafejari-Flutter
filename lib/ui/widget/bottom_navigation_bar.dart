@@ -16,34 +16,53 @@ class BottomNavBar extends ConsumerWidget {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
-    return CurvedNavigationBar(
-      index: globalState.currentPage.index,
-      height: 60.0,
-      items: <Widget>[
-        _BottomBarUnit(
-            icon: CupertinoIcons.map_fill,
-            isSelected: globalState.currentPage.index == PageType.map.index,
-            description: "지도"),
-        _BottomBarUnit(
-            icon: Icons.military_tech,
-            isSelected: globalState.currentPage.index == PageType.leaderboard.index,
-            description: "랭킹"),
-        _BottomBarUnit(
-            icon: Icons.shopping_cart,
-            isSelected: globalState.currentPage.index == PageType.shop.index,
-            description: "상점"),
-        _BottomBarUnit(
-            icon: CupertinoIcons.profile_circled,
-            isSelected: globalState.currentPage.index == PageType.profile.index,
-            description: "프로필")
-      ],
-      color: AppColor.white,
-      buttonBackgroundColor: AppColor.white,
-      backgroundColor: AppColor.brown_500,
-      animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 400),
-      onTap: (index) => globalViewModel.updateCurrentPageTo(index),
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30.0),
+        topRight: Radius.circular(30.0),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: globalState.currentPage.index,
+        items:  [
+          BottomNavigationBarItem(
+            icon: _BottomBarUnit(
+              icon: CupertinoIcons.map_fill,
+              isSelected: globalState.currentPage.index == PageType.map.index,
+              description: "지도",
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: _BottomBarUnit(
+              icon: Icons.military_tech,
+              isSelected: globalState.currentPage.index == PageType.leaderboard.index,
+              description: "랭킹",
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: _BottomBarUnit(
+              icon: Icons.shopping_cart,
+              isSelected: globalState.currentPage.index == PageType.shop.index,
+              description: "상점",
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: _BottomBarUnit(
+              icon: CupertinoIcons.profile_circled,
+              isSelected: globalState.currentPage.index == PageType.profile.index,
+              description: "프로필",
+            ),
+            label: "",
+          ),
+        ],
+        backgroundColor: AppColor.white,
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) => globalViewModel.updateCurrentPageTo(index),
+      ),
     );
+
   }
 }
 
@@ -60,7 +79,7 @@ class _BottomBarUnit extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         width: 36,
-        height: 36,
+        height: 40,
         child: Column(
           children: [
             Icon(icon, size: 24, color: isSelected ? AppColor.brown_500 : AppColor.grey_300),

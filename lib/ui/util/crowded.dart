@@ -12,9 +12,10 @@ class Crowded {
   final Color color;
   final Color complementaryColor;
   final String description;
+  final String image;
 
   Crowded(this.intValue, this.stringValue, this.marker, this.iconName, this.color,
-      this.complementaryColor, this.description);
+      this.complementaryColor, this.description, this.image);
 
   factory Crowded.minus() => Crowded(
       -1,
@@ -23,7 +24,9 @@ class Crowded {
       "cafe_icon",
       AppColor.grey_500,
       AppColor.white,
-      "정보가 없어요");
+      "정보가 없어요",
+      "asset/image/cafe_icon.png"
+  );
 
   factory Crowded.zero([double dpi = 3.0]) => Crowded(
       0,
@@ -32,7 +35,8 @@ class Crowded {
       "cafe_icon_0",
       AppColor.crowdedBlue,
       AppColor.white,
-      "카페가 한적해요");
+      "카페가 한적해요",
+      "asset/image/cafe_icon_0.png");
 
   factory Crowded.one([double dpi = 3.0]) => Crowded(
       1,
@@ -41,7 +45,8 @@ class Crowded {
       "cafe_icon_1",
       AppColor.crowdedGreen,
       AppColor.black,
-      "카페가 여유로워요");
+      "카페가 여유로워요",
+      "asset/image/cafe_icon_1.png");
 
   factory Crowded.two([double dpi = 3.0]) => Crowded(
       2,
@@ -50,7 +55,8 @@ class Crowded {
       "cafe_icon_2",
       AppColor.crowdedYellow,
       AppColor.black,
-      "보통이에요");
+      "보통이에요",
+      "asset/image/cafe_icon_2.png");
 
   factory Crowded.three([double dpi = 3.0]) => Crowded(
       3,
@@ -59,7 +65,8 @@ class Crowded {
       "cafe_icon_#",
       AppColor.crowdedOrange,
       AppColor.white,
-      "카페가 붐벼요");
+      "카페가 붐벼요",
+      "asset/image/cafe_icon_3.png");
 
   factory Crowded.four([double dpi = 3.0]) => Crowded(
       4,
@@ -68,5 +75,6 @@ class Crowded {
       "cafe_icon_4",
       AppColor.crowdedRed,
       AppColor.white,
-      "남은 자리가 거의 없어요");
+      "남은 자리가 거의 없어요",
+      "asset/image/cafe_icon_4.png");
 }

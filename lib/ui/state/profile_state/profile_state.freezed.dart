@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ProfileState {
   int get counter => throw _privateConstructorUsedError;
+  User get userInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileStateCopyWith<ProfileState> get copyWith =>
@@ -29,7 +30,9 @@ abstract class $ProfileStateCopyWith<$Res> {
           ProfileState value, $Res Function(ProfileState) then) =
       _$ProfileStateCopyWithImpl<$Res, ProfileState>;
   @useResult
-  $Res call({int counter});
+  $Res call({int counter, User userInfo});
+
+  $UserCopyWith<$Res> get userInfo;
 }
 
 /// @nodoc
@@ -46,13 +49,26 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   @override
   $Res call({
     Object? counter = null,
+    Object? userInfo = null,
   }) {
     return _then(_value.copyWith(
       counter: null == counter
           ? _value.counter
           : counter // ignore: cast_nullable_to_non_nullable
               as int,
+      userInfo: null == userInfo
+          ? _value.userInfo
+          : userInfo // ignore: cast_nullable_to_non_nullable
+              as User,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get userInfo {
+    return $UserCopyWith<$Res>(_value.userInfo, (value) {
+      return _then(_value.copyWith(userInfo: value) as $Val);
+    });
   }
 }
 
@@ -64,7 +80,10 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       __$$_ProfileStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int counter});
+  $Res call({int counter, User userInfo});
+
+  @override
+  $UserCopyWith<$Res> get userInfo;
 }
 
 /// @nodoc
@@ -79,12 +98,17 @@ class __$$_ProfileStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? counter = null,
+    Object? userInfo = null,
   }) {
     return _then(_$_ProfileState(
       counter: null == counter
           ? _value.counter
           : counter // ignore: cast_nullable_to_non_nullable
               as int,
+      userInfo: null == userInfo
+          ? _value.userInfo
+          : userInfo // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
   }
 }
@@ -92,14 +116,16 @@ class __$$_ProfileStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ProfileState implements _ProfileState {
-  _$_ProfileState({required this.counter});
+  _$_ProfileState({required this.counter, required this.userInfo});
 
   @override
   final int counter;
+  @override
+  final User userInfo;
 
   @override
   String toString() {
-    return 'ProfileState(counter: $counter)';
+    return 'ProfileState(counter: $counter, userInfo: $userInfo)';
   }
 
   @override
@@ -107,11 +133,13 @@ class _$_ProfileState implements _ProfileState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProfileState &&
-            (identical(other.counter, counter) || other.counter == counter));
+            (identical(other.counter, counter) || other.counter == counter) &&
+            (identical(other.userInfo, userInfo) ||
+                other.userInfo == userInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, counter);
+  int get hashCode => Object.hash(runtimeType, counter, userInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -121,10 +149,14 @@ class _$_ProfileState implements _ProfileState {
 }
 
 abstract class _ProfileState implements ProfileState {
-  factory _ProfileState({required final int counter}) = _$_ProfileState;
+  factory _ProfileState(
+      {required final int counter,
+      required final User userInfo}) = _$_ProfileState;
 
   @override
   int get counter;
+  @override
+  User get userInfo;
   @override
   @JsonKey(ignore: true)
   _$$_ProfileStateCopyWith<_$_ProfileState> get copyWith =>

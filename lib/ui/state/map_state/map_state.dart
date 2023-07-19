@@ -13,12 +13,18 @@ class MapState with _$MapState {
       required final CafeInfos cafeInfos,
       required final NMarker? selectedMarker,
       required final CafeInfo selectedCafeInfo,
-      required final NaverMapController? mapController}) = _MapState;
+      required final Cafe selectedCafe,
+      required final NaverMapController? mapController,
+      required final double updatedCrowded,
+      required final bool topVisible}) = _MapState;
 
   factory MapState.empty() => MapState(
       bottomSheetController: PanelController(),
       cafeInfos: [],
       selectedMarker: null,
       selectedCafeInfo: CafeInfo.empty(),
-      mapController: null);
+      selectedCafe: Cafe.empty(),
+      mapController: null,
+      updatedCrowded: 0,
+      topVisible: true);
 }

@@ -49,6 +49,14 @@ class Cafe with _$Cafe {
       required final User master,
       required final String wallSocket,
       required final String restroom}) = _Cafe;
+
+  factory Cafe.empty() => Cafe(
+      id: 0,
+      floor: 1,
+      crowded: -1,
+      master: User.empty(),
+      wallSocket: none,
+      restroom: none);
 }
 
 /// cafe info의 각 층별 최근 혼잡도 로그 모델
