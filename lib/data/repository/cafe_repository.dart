@@ -39,3 +39,4 @@ class CafeRepositoryImpl implements CafeRepository {
     }
   }
 }
+
