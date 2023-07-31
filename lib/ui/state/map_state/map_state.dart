@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_info/cafe_info.dart';
@@ -16,7 +17,10 @@ class MapState with _$MapState {
       required final Cafe selectedCafe,
       required final NaverMapController? mapController,
       required final double updatedCrowded,
-      required final bool topVisible}) = _MapState;
+      required final IconData thumbIcons,
+      required final PageController pageController,
+      required final bool topVisible,
+      required final bool topImageVisible,}) = _MapState;
 
   factory MapState.empty() => MapState(
       bottomSheetController: PanelController(),
@@ -26,5 +30,8 @@ class MapState with _$MapState {
       selectedCafe: Cafe.empty(),
       mapController: null,
       updatedCrowded: 0,
-      topVisible: true);
+      thumbIcons: CupertinoIcons.xmark_circle,
+      pageController: PageController(initialPage: 0),
+      topVisible: true,
+      topImageVisible: false);
 }

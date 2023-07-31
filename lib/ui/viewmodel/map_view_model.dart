@@ -88,7 +88,19 @@ class MapViewModel extends StateNotifier<MapState> {
     state = state.copyWith(updatedCrowded: changedUpdatedCrowded);
   }
 
+  changeUpdatedThumbIcons(IconData changedUpdatedThumbIcon){
+    state = state.copyWith(thumbIcons: changedUpdatedThumbIcon);
+  }
+
+  changeCurrentPage(PageController changedCurrentPage){
+    state = state.copyWith(pageController: changedCurrentPage);
+  }
+
   updateTopVisible(bool updateTopVisibility){
     state = state.copyWith(topVisible: updateTopVisibility);
+  }
+
+  updateTopImageVisible(bool updateTopImageVisibility){
+    state = state.copyWith(topImageVisible: updateTopImageVisibility);
   }
 }

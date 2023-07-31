@@ -93,6 +93,8 @@ dependencies:
 
   geolocator: ^9.0.2
 
+  another_xlider: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

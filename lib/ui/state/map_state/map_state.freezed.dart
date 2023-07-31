@@ -24,7 +24,10 @@ mixin _$MapState {
   Cafe get selectedCafe => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   double get updatedCrowded => throw _privateConstructorUsedError;
+  IconData get thumbIcons => throw _privateConstructorUsedError;
+  PageController get pageController => throw _privateConstructorUsedError;
   bool get topVisible => throw _privateConstructorUsedError;
+  bool get topImageVisible => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MapStateCopyWith<MapState> get copyWith =>
@@ -44,7 +47,10 @@ abstract class $MapStateCopyWith<$Res> {
       Cafe selectedCafe,
       NaverMapController? mapController,
       double updatedCrowded,
-      bool topVisible});
+      IconData thumbIcons,
+      PageController pageController,
+      bool topVisible,
+      bool topImageVisible});
 
   $CafeInfoCopyWith<$Res> get selectedCafeInfo;
   $CafeCopyWith<$Res> get selectedCafe;
@@ -70,7 +76,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? selectedCafe = null,
     Object? mapController = freezed,
     Object? updatedCrowded = null,
+    Object? thumbIcons = null,
+    Object? pageController = null,
     Object? topVisible = null,
+    Object? topImageVisible = null,
   }) {
     return _then(_value.copyWith(
       bottomSheetController: null == bottomSheetController
@@ -101,9 +110,21 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.updatedCrowded
           : updatedCrowded // ignore: cast_nullable_to_non_nullable
               as double,
+      thumbIcons: null == thumbIcons
+          ? _value.thumbIcons
+          : thumbIcons // ignore: cast_nullable_to_non_nullable
+              as IconData,
+      pageController: null == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController,
       topVisible: null == topVisible
           ? _value.topVisible
           : topVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      topImageVisible: null == topImageVisible
+          ? _value.topImageVisible
+          : topImageVisible // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -140,7 +161,10 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       Cafe selectedCafe,
       NaverMapController? mapController,
       double updatedCrowded,
-      bool topVisible});
+      IconData thumbIcons,
+      PageController pageController,
+      bool topVisible,
+      bool topImageVisible});
 
   @override
   $CafeInfoCopyWith<$Res> get selectedCafeInfo;
@@ -166,7 +190,10 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? selectedCafe = null,
     Object? mapController = freezed,
     Object? updatedCrowded = null,
+    Object? thumbIcons = null,
+    Object? pageController = null,
     Object? topVisible = null,
+    Object? topImageVisible = null,
   }) {
     return _then(_$_MapState(
       bottomSheetController: null == bottomSheetController
@@ -197,9 +224,21 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.updatedCrowded
           : updatedCrowded // ignore: cast_nullable_to_non_nullable
               as double,
+      thumbIcons: null == thumbIcons
+          ? _value.thumbIcons
+          : thumbIcons // ignore: cast_nullable_to_non_nullable
+              as IconData,
+      pageController: null == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController,
       topVisible: null == topVisible
           ? _value.topVisible
           : topVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      topImageVisible: null == topImageVisible
+          ? _value.topImageVisible
+          : topImageVisible // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -216,7 +255,10 @@ class _$_MapState implements _MapState {
       required this.selectedCafe,
       required this.mapController,
       required this.updatedCrowded,
-      required this.topVisible})
+      required this.thumbIcons,
+      required this.pageController,
+      required this.topVisible,
+      required this.topImageVisible})
       : _cafeInfos = cafeInfos;
 
   @override
@@ -240,11 +282,17 @@ class _$_MapState implements _MapState {
   @override
   final double updatedCrowded;
   @override
+  final IconData thumbIcons;
+  @override
+  final PageController pageController;
+  @override
   final bool topVisible;
+  @override
+  final bool topImageVisible;
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafeInfos: $cafeInfos, selectedMarker: $selectedMarker, selectedCafeInfo: $selectedCafeInfo, selectedCafe: $selectedCafe, mapController: $mapController, updatedCrowded: $updatedCrowded, topVisible: $topVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafeInfos: $cafeInfos, selectedMarker: $selectedMarker, selectedCafeInfo: $selectedCafeInfo, selectedCafe: $selectedCafe, mapController: $mapController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
   }
 
   @override
@@ -266,8 +314,14 @@ class _$_MapState implements _MapState {
                 other.mapController == mapController) &&
             (identical(other.updatedCrowded, updatedCrowded) ||
                 other.updatedCrowded == updatedCrowded) &&
+            (identical(other.thumbIcons, thumbIcons) ||
+                other.thumbIcons == thumbIcons) &&
+            (identical(other.pageController, pageController) ||
+                other.pageController == pageController) &&
             (identical(other.topVisible, topVisible) ||
-                other.topVisible == topVisible));
+                other.topVisible == topVisible) &&
+            (identical(other.topImageVisible, topImageVisible) ||
+                other.topImageVisible == topImageVisible));
   }
 
   @override
@@ -280,7 +334,10 @@ class _$_MapState implements _MapState {
       selectedCafe,
       mapController,
       updatedCrowded,
-      topVisible);
+      thumbIcons,
+      pageController,
+      topVisible,
+      topImageVisible);
 
   @JsonKey(ignore: true)
   @override
@@ -298,7 +355,10 @@ abstract class _MapState implements MapState {
       required final Cafe selectedCafe,
       required final NaverMapController? mapController,
       required final double updatedCrowded,
-      required final bool topVisible}) = _$_MapState;
+      required final IconData thumbIcons,
+      required final PageController pageController,
+      required final bool topVisible,
+      required final bool topImageVisible}) = _$_MapState;
 
   @override
   PanelController get bottomSheetController;
@@ -315,7 +375,13 @@ abstract class _MapState implements MapState {
   @override
   double get updatedCrowded;
   @override
+  IconData get thumbIcons;
+  @override
+  PageController get pageController;
+  @override
   bool get topVisible;
+  @override
+  bool get topImageVisible;
   @override
   @JsonKey(ignore: true)
   _$$_MapStateCopyWith<_$_MapState> get copyWith =>

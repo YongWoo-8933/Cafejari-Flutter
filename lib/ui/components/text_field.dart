@@ -70,6 +70,3 @@ class MyCustomTextFieldExample extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MyCustomTextFieldExample());
-}

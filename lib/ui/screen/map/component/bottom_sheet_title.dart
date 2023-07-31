@@ -40,13 +40,6 @@ class BottomSheetTitle extends ConsumerWidget {
               )
             ]
         ),
-        Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColor.grey_500
-          ),
-          child: const Icon(CupertinoIcons.heart),
-        )
       ]
     );
   }

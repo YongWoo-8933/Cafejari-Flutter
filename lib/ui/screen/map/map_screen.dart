@@ -1,8 +1,7 @@
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_floor.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_moreInfo.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_slider.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_title.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page1.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page3.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/listView_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/top_components.dart';
 import 'package:cafejari_flutter/ui/util/permission_request.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ class MapScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+
     locationPermission();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -53,24 +53,38 @@ class MapScreen extends ConsumerWidget {
                   onCameraIdle: () {},
                 )),
             panelBuilder: (ScrollController sc) {
-              return ListView(
-                padding: EdgeInsets.all(15),
-                controller: sc,
+              return PageView(
+                controller: mapState.pageController,
+                physics: NeverScrollableScrollPhysics(),
                 children: const [
-                  BottomSheetTitle(),
-                  BottomSheetFloor(),
-                  BottomSheetSlider(),
-                  BottomSheetMoreInfo(),
-                ],
+                  BottomSheetPage1(),
+                  BottomSheetPage2(),
+                  BottomSheetPage3(),
+                ]
               );
             },
             minHeight: 0,
             maxHeight: (MediaQuery.of(context).size.height - 60.0) * 0.95,
-            snapPoint: 0.3,
+            snapPoint: mapState.pageController.initialPage==2 ? 0.5 : 0.3,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.elliptical(10.0, 10.0), topRight: Radius.elliptical(10.0, 10.0)),
-            onPanelOpened: () => mapViewModel.updateTopVisible(false),
-            onPanelClosed: () => mapViewModel.updateTopVisible(true),
+            onPanelClosed: () => {
+              mapViewModel.updateTopVisible(true),
+              mapViewModel.updateTopImageVisible(false),
+              mapState.pageController.jumpToPage(0)
+            },
+            onPanelSlide: (double slideOffset) {
+              if (slideOffset <= 0.31) {
+                ref.read(mapViewModelProvider.notifier).updateTopVisible(true);
+                //mapState.pageController.jumpToPage(0);
+              } else if(0.31 < slideOffset && slideOffset < 0.7){
+                ref.read(mapViewModelProvider.notifier).updateTopVisible(false);
+                ref.read(mapViewModelProvider.notifier).updateTopImageVisible(false);
+                mapState.pageController.jumpToPage(1);
+              }else{
+                ref.read(mapViewModelProvider.notifier).updateTopImageVisible(true);
+              }
+            },
           ),
           Visibility(
             visible: mapState.topVisible,
@@ -78,6 +92,24 @@ class MapScreen extends ConsumerWidget {
                 top: 70,
                 left: 20,
                 child: TopComponents()
+            ),
+          ),
+          Visibility(
+            visible: mapState.topImageVisible,
+            child: Positioned(
+                child: Image.network(mapState.selectedCafeInfo.googlePlaceId)
+            ),
+          ),
+          Visibility(
+            visible: mapState.topVisible,
+            child: Positioned(
+                top: MediaQuery.of(context).size.height*0.55,
+                left: MediaQuery.of(context).size.width*0.45,
+                child: ListViewButton(
+                    onPressed: () => {
+
+                    }
+                )
             ),
           )
         ],

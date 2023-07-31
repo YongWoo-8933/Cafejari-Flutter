@@ -24,9 +24,48 @@ class AppColor {
 
   static const Color white = Color(0xFFffffff);
   static const Color black = Color(0xFF000000);
+  static const Color transparent = Colors.transparent;
   static const Color transparentBlack_300 = Color(0x4D272914);
   static const Color transparentBlack_400 = Color(0x66272914);
   static const Color transparentBlack_500 = Color(0x80272914);
   static const Color transparentBlack_600 = Color(0x99272914);
   static const Color transparentBlack_700 = Color(0xB3272914);
+
+  static const Color secondarContainer = Color(0xFFF8F7F7);
+  static const Color bookMark = Color(0xFFD0D0D0);
+  static const Color unselectedTextColor = Color(0xFFB7B7B7);
+  static const Color primary = Color(0xFF000000);
+  static const Color secondary = Color(0xFF785B52);
+
 }
+
+///Color? primary,
+///Color? onPrimary,
+///Color? primaryContainer,
+///Color? onPrimaryContainer,
+///Color? secondary,
+///Color? onSecondary,
+///Color? secondaryContainer,
+///Color? onSecondaryContainer,
+///Color? tertiary,
+///Color? onTertiary,
+///Color? tertiaryContainer,
+///Color? onTertiaryContainer,
+///Color? error,
+///Color? onError,
+///Color? errorContainer,
+///Color? onErrorContainer,
+///Color? outline,
+///Color? outlineVariant,
+///Color? background,
+///Color? onBackground,
+///Color? surface,
+///Color? onSurface,
+///Color? surfaceVariant,
+///Color? onSurfaceVariant,
+///Color? inverseSurface,
+///Color? onInverseSurface,
+///Color? inversePrimary,
+///Color? shadow,
+///Color? scrim,
+///Color? surfaceTint,

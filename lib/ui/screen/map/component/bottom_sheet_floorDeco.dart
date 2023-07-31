@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 
-class BottomSheetFloor extends ConsumerWidget {
-  const BottomSheetFloor({Key? key}) : super(key: key);
+class BottomSheetFloorDeco extends ConsumerWidget {
+  const BottomSheetFloorDeco({Key? key}) : super(key: key);
 
 
   @override
@@ -26,14 +26,22 @@ class BottomSheetFloor extends ConsumerWidget {
                         InkWell(
                           onTap: (){mapViewModel.changeSelectedCafe(mapState.selectedCafeInfo.cafes[i]);},
                           child: Container(
-                            width: 30,
-                            height: 30.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.secondary : AppColor.white,
+                              border: Border.all(
+                                color: AppColor.secondary,
+                                width: 1
+                              )
+                            ),
+                            width: 50,
+                            height: 40.0,
                             child: Center(
                               child: Text(
                                 " ${mapState.selectedCafeInfo.firstFloor + i}층 ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.black : AppColor.unselectedTextColor
+                                    color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.white : AppColor.brown_300
                                 ),
                               ),
                             ),

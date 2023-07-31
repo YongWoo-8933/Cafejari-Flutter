@@ -37,20 +37,20 @@ class CafeInfo with _$CafeInfo {
       moreInfo: MoreInfo.empty());
 }
 
-typedef Cafes = List<Cafe>;
+typedef Cafes = List<Cafe1>;
 
 /// cafe info의 각 층 모델
 @freezed
-class Cafe with _$Cafe {
-  factory Cafe(
+class Cafe1 with _$Cafe1 {
+  factory Cafe1(
       {required final int id,
       required final int floor,
       required final int crowded,
       required final User master,
       required final String wallSocket,
-      required final String restroom}) = _Cafe;
+      required final String restroom}) = _Cafe1;
 
-  factory Cafe.empty() => Cafe(
+  factory Cafe1.empty() => Cafe1(
       id: 0,
       floor: 1,
       crowded: -1,

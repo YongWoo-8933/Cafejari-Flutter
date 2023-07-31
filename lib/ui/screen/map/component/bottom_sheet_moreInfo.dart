@@ -15,18 +15,6 @@ class BottomSheetMoreInfo extends ConsumerWidget {
     return Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            child: Text("Ranking part"),
-            height: 200,
-            width: 300,
-            color: AppColor.brown_300,
-          ),
-          Text("카페 정보"),
-          Image.network(
-            mapState.selectedCafeInfo.googlePlaceId,
-            height: 200,
-            width: 300,
-          ),
           Row(children: [
             Icon(Icons.copy, size: 15.0),
             Text("${mapState.selectedCafeInfo.fullAddress}")

@@ -15,8 +15,10 @@ class SamplePage1 extends ConsumerWidget {
     final ShopViewModel shopViewModel = ref.read(shopViewModelProvider.notifier);
     final ShopState shopState = ref.watch(shopViewModelProvider);
 
-    return Center(
-      child: ElevatedButton(
+    return PageView(
+      children: [
+        Center(
+          child: ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -25,9 +27,25 @@ class SamplePage1 extends ConsumerWidget {
                   builder: (context) => SamplePage2(),
                 ),
               );
-        },
-        child: const Text('다른 페이지로 이동1111'),
-      ),
+            },
+            child: const Text('다른 페이지로 이동1111'),
+          ),
+        ),
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  settings: RouteSettings(name: "SamplePage1"),
+                  builder: (context) => SamplePage2(),
+                ),
+              );
+            },
+            child: const Text('옆 페이지로 이동'),
+          ),
+        ),
+      ]
     );
   }
 }

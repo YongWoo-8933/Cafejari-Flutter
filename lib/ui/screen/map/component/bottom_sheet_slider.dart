@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/components/slider.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,51 +14,12 @@ class BottomSheetSlider extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Slider 값: ${mapState.updatedCrowded}',
-          style: TextStyle(fontSize: 18.0),
-        ),
-        SizedBox(height: 10.0),
-
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            trackHeight: 10.0,
-            trackShape: RoundedRectSliderTrackShape(),
-            activeTrackColor: AppColor.brown_900,
-            inactiveTrackColor: AppColor.brown_700,
-            thumbShape: RoundSliderThumbShape(
-              enabledThumbRadius: 14.0,
-              pressedElevation: 8.0,
-            ),
-            overlayColor: Colors.pink.withOpacity(0.2),
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 32.0),
-            tickMarkShape: RoundSliderTickMarkShape(),
-            activeTickMarkColor: AppColor.brown_100,
-            inactiveTickMarkColor: Colors.white,
-            valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-            valueIndicatorColor: Colors.black,
-            valueIndicatorTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
-          ),
-          child: Slider(
-            value: mapState.updatedCrowded,
-            min: 0.0,
-            max: 100.0,
-            divisions: 100,
-            onChanged: (double newValue) {
-              mapViewModel.changeUpdatedCrowded(newValue);
-            },
-          ),
-        )
-      ],
-    );
+    // return CustomSlider(
+    //     value: mapState.updatedCrowded,
+    //     onChanged: (double newValue) {
+    //       mapViewModel.changeUpdatedCrowded(newValue);
+    //     },
+    //     sliderWidth_padding: 300);
+    return Container();
   }
 }
-
-

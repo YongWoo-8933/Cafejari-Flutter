@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+  another_xlider:
+    dependency: "direct main"
+    description:
+      name: another_xlider
+      sha256: "95e8c9f812e76aa1b517f5c670088e1a86ba64e06bb84655c87e1df1877fa9bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   args:
     dependency: transitive
     description:
