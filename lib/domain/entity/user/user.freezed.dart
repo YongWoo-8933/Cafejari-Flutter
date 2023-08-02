@@ -17,16 +17,16 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$User {
   int get userId => throw _privateConstructorUsedError;
-  int get profileId => throw _privateConstructorUsedError;
+  int? get profileId => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   DateTime get dateJoined => throw _privateConstructorUsedError;
   DateTime get lastLogin => throw _privateConstructorUsedError;
-  String get fcmToken => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
-  int get point => throw _privateConstructorUsedError;
-  int get grade => throw _privateConstructorUsedError;
-  int get activitySeconds => throw _privateConstructorUsedError;
+  String? get fcmToken => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
+  int? get point => throw _privateConstructorUsedError;
+  int? get grade => throw _privateConstructorUsedError;
+  int? get activitySeconds => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
@@ -39,16 +39,16 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {int userId,
-      int profileId,
+      int? profileId,
       bool isAdmin,
       DateTime dateJoined,
       DateTime lastLogin,
-      String fcmToken,
-      String phoneNumber,
-      String imageUrl,
-      int point,
-      int grade,
-      int activitySeconds});
+      String? fcmToken,
+      String? phoneNumber,
+      String? imageUrl,
+      int? point,
+      int? grade,
+      int? activitySeconds});
 }
 
 /// @nodoc
@@ -65,26 +65,26 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? userId = null,
-    Object? profileId = null,
+    Object? profileId = freezed,
     Object? isAdmin = null,
     Object? dateJoined = null,
     Object? lastLogin = null,
-    Object? fcmToken = null,
-    Object? phoneNumber = null,
-    Object? imageUrl = null,
-    Object? point = null,
-    Object? grade = null,
-    Object? activitySeconds = null,
+    Object? fcmToken = freezed,
+    Object? phoneNumber = freezed,
+    Object? imageUrl = freezed,
+    Object? point = freezed,
+    Object? grade = freezed,
+    Object? activitySeconds = freezed,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      profileId: null == profileId
+      profileId: freezed == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -97,30 +97,30 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      fcmToken: null == fcmToken
+      fcmToken: freezed == fcmToken
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      point: null == point
+              as String?,
+      point: freezed == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
-              as int,
-      grade: null == grade
+              as int?,
+      grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
-              as int,
-      activitySeconds: null == activitySeconds
+              as int?,
+      activitySeconds: freezed == activitySeconds
           ? _value.activitySeconds
           : activitySeconds // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -133,16 +133,16 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {int userId,
-      int profileId,
+      int? profileId,
       bool isAdmin,
       DateTime dateJoined,
       DateTime lastLogin,
-      String fcmToken,
-      String phoneNumber,
-      String imageUrl,
-      int point,
-      int grade,
-      int activitySeconds});
+      String? fcmToken,
+      String? phoneNumber,
+      String? imageUrl,
+      int? point,
+      int? grade,
+      int? activitySeconds});
 }
 
 /// @nodoc
@@ -155,26 +155,26 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @override
   $Res call({
     Object? userId = null,
-    Object? profileId = null,
+    Object? profileId = freezed,
     Object? isAdmin = null,
     Object? dateJoined = null,
     Object? lastLogin = null,
-    Object? fcmToken = null,
-    Object? phoneNumber = null,
-    Object? imageUrl = null,
-    Object? point = null,
-    Object? grade = null,
-    Object? activitySeconds = null,
+    Object? fcmToken = freezed,
+    Object? phoneNumber = freezed,
+    Object? imageUrl = freezed,
+    Object? point = freezed,
+    Object? grade = freezed,
+    Object? activitySeconds = freezed,
   }) {
     return _then(_$_User(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      profileId: null == profileId
+      profileId: freezed == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -187,30 +187,30 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      fcmToken: null == fcmToken
+      fcmToken: freezed == fcmToken
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumber: null == phoneNumber
+              as String?,
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      point: null == point
+              as String?,
+      point: freezed == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
-              as int,
-      grade: null == grade
+              as int?,
+      grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
-              as int,
-      activitySeconds: null == activitySeconds
+              as int?,
+      activitySeconds: freezed == activitySeconds
           ? _value.activitySeconds
           : activitySeconds // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -234,7 +234,7 @@ class _$_User implements _User {
   @override
   final int userId;
   @override
-  final int profileId;
+  final int? profileId;
   @override
   final bool isAdmin;
   @override
@@ -242,17 +242,17 @@ class _$_User implements _User {
   @override
   final DateTime lastLogin;
   @override
-  final String fcmToken;
+  final String? fcmToken;
   @override
-  final String phoneNumber;
+  final String? phoneNumber;
   @override
-  final String imageUrl;
+  final String? imageUrl;
   @override
-  final int point;
+  final int? point;
   @override
-  final int grade;
+  final int? grade;
   @override
-  final int activitySeconds;
+  final int? activitySeconds;
 
   @override
   String toString() {
@@ -309,21 +309,21 @@ class _$_User implements _User {
 abstract class _User implements User {
   factory _User(
       {required final int userId,
-      required final int profileId,
+      required final int? profileId,
       required final bool isAdmin,
       required final DateTime dateJoined,
       required final DateTime lastLogin,
-      required final String fcmToken,
-      required final String phoneNumber,
-      required final String imageUrl,
-      required final int point,
-      required final int grade,
-      required final int activitySeconds}) = _$_User;
+      required final String? fcmToken,
+      required final String? phoneNumber,
+      required final String? imageUrl,
+      required final int? point,
+      required final int? grade,
+      required final int? activitySeconds}) = _$_User;
 
   @override
   int get userId;
   @override
-  int get profileId;
+  int? get profileId;
   @override
   bool get isAdmin;
   @override
@@ -331,17 +331,17 @@ abstract class _User implements User {
   @override
   DateTime get lastLogin;
   @override
-  String get fcmToken;
+  String? get fcmToken;
   @override
-  String get phoneNumber;
+  String? get phoneNumber;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
-  int get point;
+  int? get point;
   @override
-  int get grade;
+  int? get grade;
   @override
-  int get activitySeconds;
+  int? get activitySeconds;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
