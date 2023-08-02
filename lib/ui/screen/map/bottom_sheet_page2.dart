@@ -1,9 +1,10 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/book_mark.dart';
-import 'package:cafejari_flutter/ui/components/share_button.dart';
-import 'package:cafejari_flutter/ui/components/action_button.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafejigi.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_detail_floor.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_moreInfo.dart';
@@ -30,7 +31,7 @@ class BottomSheetPage2 extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ActionButton(buttonWidth: MediaQuery.of(context).size.width - 160, buttonHeight: 40, title: "혼잡도 등록",  onPressed: () => mapState.pageController.jumpToPage(2), ),
+                ActionButtonPrimary(buttonWidth: MediaQuery.of(context).size.width - 160, buttonHeight: 40, title: "혼잡도 등록",  onPressed: () => mapState.pageController.jumpToPage(2), ),
                 SizedBox(width: 10),
                 ShareButton(buttonSize: 40,),
                 SizedBox(width: 10),

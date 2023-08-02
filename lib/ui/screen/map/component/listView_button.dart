@@ -15,7 +15,7 @@ class ListViewButton extends StatelessWidget {
       label: Text("목록보기", style: TextStyle(color: AppColor.black),),
       icon: Icon(CupertinoIcons.list_bullet),
       onPressed: onPressed,
-      foregroundColor: AppColor.white,
+      backgroundColor: AppColor.white,
     );
   }
 }
