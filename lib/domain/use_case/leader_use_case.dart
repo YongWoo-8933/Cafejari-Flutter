@@ -1,6 +1,6 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/data/repository/leader_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
+import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
 import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leader_use_case/get_leader_infos.dart';
 

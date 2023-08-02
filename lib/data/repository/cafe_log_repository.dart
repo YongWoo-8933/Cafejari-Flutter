@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 
 /// cafe application api와 통신하는 저장소
 abstract interface class CafeRepository {
-  Future<List<CafeResponse>> fetchMapCafe(
+  Future<List<CafeInfoResponse>> fetchCafeInfo(
       {required String accessToken,
       required double latitude,
       required double longitude,
@@ -18,7 +18,7 @@ class CafeRepositoryImpl implements CafeRepository {
   CafeRepositoryImpl(this.apiService);
 
   @override
-  Future<List<CafeResponse>> fetchMapCafe(
+  Future<List<CafeInfoResponse>> fetchCafeInfo(
       {required String accessToken,
       required double latitude,
       required double longitude,
@@ -28,9 +28,10 @@ class CafeRepositoryImpl implements CafeRepository {
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "cafe_info/nearby_cafe_info/",
+        accessToken: accessToken,
         query: {"latitude": latitude, "longitude": longitude, "zoom_level": zoomLevel},
       );
-      return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+      return response.map((dynamic e) => CafeInfoResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

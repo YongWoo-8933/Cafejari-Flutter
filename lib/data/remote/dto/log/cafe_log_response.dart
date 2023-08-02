@@ -1,35 +1,35 @@
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe_info.dart';
+import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 
 part 'cafe_log_response.g.dart';
 
 @JsonSerializable()
-class CafeLogListResponse {
+class CafeLogPageResponse {
   final int count;
   final String? next, previous;
-  final CafeLogResponse results;
+  final List<CafeLogResponse> results;
 
-  CafeLogListResponse(
+  CafeLogPageResponse(
       {required this.count,
         required this.next,
         required this.previous,
         required this.results});
 
-  factory CafeLogListResponse.fromJson(Map<String, dynamic> json) => _$CafeLogListResponseFromJson(json);
+  factory CafeLogPageResponse.fromJson(Map<String, dynamic> json) => _$CafeLogPageResponseFromJson(json);
 }
 
 @JsonSerializable()
 class CafeLogResponse {
   final int id;
-  final List<CafeLogLike> like;
-  final List<CafeLogReport> report;
-  final PartialUser user;
-  final Cafe cafe;
-  final List<SnapShotResponse> snapshot;
+  final PartialUserResponse user;
+  final CafeRepResponse cafe;
   final bool is_private, is_visible;
   final String theme, content, created_at, updated_at;
-
+  final List<CafeLogLikeResponse> like;
+  final List<CafeLogReportResponse> report;
+  final List<SnapshotResponse> snapshot;
 
   CafeLogResponse(
       {required this.id,
@@ -49,42 +49,39 @@ class CafeLogResponse {
 }
 
 @JsonSerializable()
-class CafeLogLike { //완 	SwaggerCafeResponse
-  final int id, cafe_log, user;
+class CafeLogLikeResponse {
+  final int id, user;
 
-
-  CafeLogLike(
+  CafeLogLikeResponse(
       {required this.id,
-        required this.cafe_log,
-        required this.user,});
+        required this.user});
 
-  factory CafeLogLike.fromJson(Map<String, dynamic> json) => _$CafeLogLikeFromJson(json);
+  factory CafeLogLikeResponse.fromJson(Map<String, dynamic> json) => _$CafeLogLikeResponseFromJson(json);
 }
 
 @JsonSerializable()
-class CafeLogReport { //완 	SwaggerCafeResponse
-  final int id, cafe_log, user;
-  final String? reason;
+class CafeLogReportResponse {
+  final int id, user;
+  final String reason;
 
-  CafeLogReport(
+  CafeLogReportResponse(
       {required this.id,
-        required this.cafe_log,
         required this.user,
         required this.reason});
 
-  factory CafeLogReport.fromJson(Map<String, dynamic> json) => _$CafeLogReportFromJson(json);
+  factory CafeLogReportResponse.fromJson(Map<String, dynamic> json) => _$CafeLogReportResponseFromJson(json);
 }
 
 @JsonSerializable()
-class SnapShotResponse { //완 	SwaggerCafeResponse
+class SnapshotResponse {
   final int id;
-  final String? image, theme;
+  final String image, theme;
 
-  SnapShotResponse(
+  SnapshotResponse(
       {required this.id,
         required this.image,
         required this.theme});
 
-  factory SnapShotResponse.fromJson(Map<String, dynamic> json) => _$SnapShotResponseFromJson(json);
+  factory SnapshotResponse.fromJson(Map<String, dynamic> json) => _$SnapshotResponseFromJson(json);
 }
 

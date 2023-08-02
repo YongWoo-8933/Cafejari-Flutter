@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/data/repository/leader_repository.dart';
+import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/use_case/leader_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
@@ -7,7 +7,7 @@ import 'package:cafejari_flutter/ui/viewmodel/leader_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
 import 'package:cafejari_flutter/domain/use_case/map_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';

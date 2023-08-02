@@ -385,11 +385,10 @@ packages:
   flutter_naver_map:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "1.0.2-dev"
-      resolved-ref: f06813b061d85bc3de6d44a328b3a5444a48a834
-      url: "https://github.com/note11g/flutter_naver_map.git"
-    source: git
+      name: flutter_naver_map
+      sha256: "2f12d6fe0b9a41c9bce994eed0e5547840e0ba211e67b604a6e70ce160a54d6b"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   flutter_riverpod:
     dependency: "direct main"

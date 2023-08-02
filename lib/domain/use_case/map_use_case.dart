@@ -1,14 +1,14 @@
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe_info.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
+import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/map_use_case/get_cafe_infos.dart';
 
 /// 지도 관련 data CRUD를 처리하는 use case
 abstract interface class MapUseCase {
-  Future<CafeInfos> getCafeInfos(
+  Future<Cafes> getCafeInfos(
       {required String accessToken,
       required NCameraPosition cameraPosition});
 }
@@ -21,7 +21,7 @@ class MapUseCaseImpl extends BaseUseCase implements MapUseCase {
   MapUseCaseImpl({required this.tokenRepository, required this.cafeRepository});
 
   @override
-  Future<CafeInfos> getCafeInfos(
+  Future<Cafes> getCafeInfos(
       {required String accessToken,
         required NCameraPosition cameraPosition}) async {
     final f = GetCafeInfos();

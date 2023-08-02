@@ -1,7 +1,7 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/data/remote/dto/user/leader_response.dart';
-import 'package:cafejari_flutter/data/repository/leader_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
+import 'package:cafejari_flutter/data/remote/dto/leader/leaderboard_response.dart';
+import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
 import 'package:cafejari_flutter/domain/entity/leader/leader_info.dart';
 
 

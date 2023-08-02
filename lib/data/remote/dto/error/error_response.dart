@@ -6,9 +6,9 @@ part 'error_response.g.dart';
 @JsonSerializable()
 class ConflictErrorResponse {
   final int error_code;
-  final String? detail;
+  final String error_message;
 
-  ConflictErrorResponse({required this.error_code, required this.detail});
+  ConflictErrorResponse({required this.error_code, required this.error_message});
 
   factory ConflictErrorResponse.fromJson(Map<String, dynamic> json) =>
       _$ConflictErrorResponseFromJson(json);

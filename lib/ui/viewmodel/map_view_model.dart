@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe_info.dart';
+import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:cafejari_flutter/domain/use_case/map_use_case.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
@@ -24,7 +24,7 @@ class MapViewModel extends StateNotifier<MapState> {
 
   refreshCafeInfos() async {
     try {
-      final CafeInfos newCafeInfos = await _mapUseCase.getCafeInfos(
+      final Cafes newCafeInfos = await _mapUseCase.getCafeInfos(
           accessToken: globalViewModel.state.accessToken,
           cameraPosition:
               await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition);

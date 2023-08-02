@@ -1,6 +1,6 @@
 
 import 'package:cafejari_flutter/core/util.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
 
 /// 토큰 관련 data CRUD를 처리하는 use case
 abstract interface class TokenUseCase {

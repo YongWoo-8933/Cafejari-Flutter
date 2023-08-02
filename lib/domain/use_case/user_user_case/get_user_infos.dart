@@ -1,6 +1,6 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 

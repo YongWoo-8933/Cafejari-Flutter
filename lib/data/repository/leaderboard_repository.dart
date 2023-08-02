@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
-import 'package:cafejari_flutter/data/remote/dto/user/leader_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/leader/leaderboard_response.dart';
 import 'package:http/http.dart';
 
 /// leader application api와 통신하는 저장소

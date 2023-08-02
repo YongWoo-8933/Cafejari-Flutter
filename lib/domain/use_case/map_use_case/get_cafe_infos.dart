@@ -4,14 +4,14 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/core/util.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe_info.dart';
+import 'package:cafejari_flutter/data/repository/push_repository.dart';
+import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/entity/util.dart';
 
 /// getCafeInfos의 실제 구현부
 class GetCafeInfos {
-  Future<CafeInfos> call(
+  Future<Cafes> call(
       {required CafeRepository cafeRepository,
       required TokenRepository tokenRepository,
       required String accessToken,
@@ -24,9 +24,9 @@ class GetCafeInfos {
           zoomLevel: cameraPosition.zoom._calculateZoomLevel()
       );
 
-      CafeInfos cafeInfos = [];
+      Cafes cafeInfos = [];
       for (CafeInfoResponse cafeInfoResponse in cafeInfoResponseList) {
-        Cafes cafes = [];
+        CafeFloors cafes = [];
         for (CafeInfoCafeResponse cafeResponse in cafeInfoResponse.cafe) {
           RecentLogs recentLogs = [];
           for (RecentUpdatedLogResponse recentLogResponse in cafeResponse.recent_updated_log) {
@@ -37,7 +37,7 @@ class GetCafeInfos {
                     parseUserFromUserResponse(recentLogResponse.cafe_detail_log.cafe_log.master),
                 update: DateTime.parse(recentLogResponse.update)));
           }
-          cafes.add(Cafe(
+          cafes.add(CafeRepResponse(
               id: cafeResponse.id,
               floor: cafeResponse.floor,
               crowded: recentLogs.isNotEmpty ? recentLogs.first.crowded : -1,
@@ -48,7 +48,7 @@ class GetCafeInfos {
               restroom: cafeResponse.restroom ?? none));
         }
         int minCrowded = -1;
-        for(Cafe cafe in cafes) {
+        for(CafeRepResponse cafe in cafes) {
           if(cafe.crowded != -1) {
             if(minCrowded == -1) {
               minCrowded = cafe.crowded;
@@ -58,7 +58,7 @@ class GetCafeInfos {
           }
         }
         final String gu = cafeInfoResponse.gu.length < 2 ? "" : cafeInfoResponse.gu;
-        cafeInfos.add(CafeInfo(
+        cafeInfos.add(Cafe(
             id: cafeInfoResponse.id,
             minCrowded: minCrowded,
             name: cafeInfoResponse.name,

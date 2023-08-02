@@ -69,10 +69,7 @@ dependencies:
   url_launcher: ^6.1.10
 
   # 네이버 지도
-  flutter_naver_map:
-    git:
-      url: https://github.com/note11g/flutter_naver_map.git
-      ref: 1.0.2-dev
+  flutter_naver_map: ^1.0.2
 
   # 웹뷰
   webview_flutter: ^4.2.0
@@ -157,10 +154,26 @@ flutter:
           weight: 200
         - asset: asset/font/Inter-Thin.ttf
           weight: 100
-    - family: Roboto
+    - family: Suit
       fonts:
-        - asset: asset/font/Roboto-Medium.ttf
+        - asset: asset/font/SUIT-Heavy.ttf
+          weight: 900
+        - asset: asset/font/SUIT-ExtraBold.ttf
+          weight: 800
+        - asset: asset/font/SUIT-Bold.ttf
+          weight: 700
+        - asset: asset/font/SUIT-SemiBold.ttf
+          weight: 600
+        - asset: asset/font/SUIT-Medium.ttf
           weight: 500
+        - asset: asset/font/SUIT-Regular.ttf
+          weight: 400
+        - asset: asset/font/SUIT-Light.ttf
+          weight: 300
+        - asset: asset/font/SUIT-ExtraLight.ttf
+          weight: 200
+        - asset: asset/font/SUIT-Thin.ttf
+          weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
