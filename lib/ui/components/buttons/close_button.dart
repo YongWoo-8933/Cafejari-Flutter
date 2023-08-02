@@ -3,16 +3,14 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ActionButton extends StatelessWidget {
+class CloseButton extends StatelessWidget {
   final double? buttonWidth;
   final double? buttonHeight;
   final VoidCallback? onPressed;
-  final String title;
 
-  ActionButton({
+  CloseButton({
     required this.buttonWidth,
     required this.buttonHeight,
-    required this.title,
     this.onPressed,
   });
 
@@ -24,16 +22,25 @@ class ActionButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primary,
+          backgroundColor: AppColor.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
+          side: const BorderSide(
+            color: AppColor.primary, // 테두리 색을 지정합니다.
+            width: 2.0, // 테두리 두께를 설정합니다.
+          )
         ),
-        child: FittedBox(
+        child: const FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text(
-            title,
-            style: TextSize.textSize_white_20,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "닫기",
+                  style: TextSize.textSize_14,
+                ),
+              ]
           ),
         ),
       ),

@@ -2,13 +2,11 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BookmarkButton extends StatelessWidget {
-  final bool isBookmarked;
+class LogEditButton extends StatelessWidget { // 크기가 더 작아질시 icon크기 조절 필
   final double? buttonSize;
   final Function? onPressed;
 
-  BookmarkButton({
-    required this.isBookmarked,
+  LogEditButton({
     required this.buttonSize,
     this.onPressed,
   });
@@ -19,7 +17,7 @@ class BookmarkButton extends StatelessWidget {
       width: buttonSize,
       height: buttonSize,
       decoration: const BoxDecoration(
-        shape: BoxShape.circle
+          shape: BoxShape.circle
       ),
       child: FloatingActionButton(
         onPressed: () {
@@ -27,9 +25,9 @@ class BookmarkButton extends StatelessWidget {
             onPressed!(); // 콜백 함수 호출
           }
         },
-        backgroundColor: isBookmarked ? AppColor.primary : AppColor.bookMark,
+        backgroundColor: AppColor.secondary,
         child: const Icon(
-          CupertinoIcons.heart,
+          CupertinoIcons.square_pencil,
           color: AppColor.white,
           size: 15,
         ),

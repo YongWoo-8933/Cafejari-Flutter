@@ -5,7 +5,7 @@ class CustomSnackBar extends SnackBar {
   CustomSnackBar({
     Key? key,
     required Widget content,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 1),
     SnackBarAction? action,
     Color backgroundColor = AppColor.brown_300,
     double elevation = 6.0,

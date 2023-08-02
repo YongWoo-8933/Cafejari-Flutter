@@ -36,6 +36,7 @@ class AppColor {
   static const Color unselectedTextColor = Color(0xFFB7B7B7);
   static const Color primary = Color(0xFF000000);
   static const Color secondary = Color(0xFF785B52);
+  static const Color alert = Color(0xFFFE9E45);
 
 }
 
