@@ -51,14 +51,14 @@ class RecommendCard extends StatelessWidget {
           SizedBox(height: 10),
           Row(
             children: [
-              Image.asset("asset/image/"),
+              Image.asset("asset/image/icon_people4_black.png"),
               Text("혼잡도", style: TextSize.textSize_grey_12),
               Text(cafeCrowded, style: TextSize.textSize_bold_12)
             ],
           ),
           Row(
             children: [
-              Image.asset("asset/image/"),
+              Image.asset("asset/image/icon_plug.png"),
               Text("콘센트", style: TextSize.textSize_grey_12),
               Text(cafePlug, style: TextSize.textSize_bold_12)
             ],

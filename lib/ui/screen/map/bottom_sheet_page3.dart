@@ -2,8 +2,8 @@ import 'package:another_xlider/another_xlider.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/slider.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_floorDeco.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
@@ -22,7 +22,7 @@ class BottomSheetPage3 extends ConsumerWidget {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
     return Container(
-      padding: AppPading.padding_30,
+      padding: AppPadding.padding_30,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,7 +39,7 @@ class BottomSheetPage3 extends ConsumerWidget {
               sliderWidth_padding: 10
           ),
           SizedBox(height: 30),
-          ActionButtonPrimary(buttonWidth: 210, buttonHeight: 40, title: "등록하기")
+          ActionButtonSecondary(buttonWidth: 210, buttonHeight: 40, title: "등록하기", isClicked: false,)
         ],
       ),
     );

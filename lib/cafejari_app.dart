@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cafejari_flutter/ui/screen/profile/profile_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
-import 'package:cafejari_flutter/ui/widget/bottom_navigation_bar.dart';
+import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
 
 import 'ui/state/map_state/map_state.dart';
 import 'ui/viewmodel/global_view_model.dart';

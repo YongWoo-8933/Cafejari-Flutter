@@ -1,5 +1,8 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
 import 'package:cafejari_flutter/ui/state/profile_state/profile_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
@@ -13,37 +16,42 @@ class ProfilePoint extends ConsumerWidget {
 
     final diviceSize = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: () {
-        print('Container tapped!');
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.brown[900]!,
-            width: 2,
-          ),
-        ),
-        height: diviceSize.height * 0.05,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey, // 그림자 색상
+            spreadRadius: 5, // 그림자 퍼짐 정도
+            blurRadius: 10, // 그림자 흐림 정도
+            offset: Offset(0, 3), // 그림자 위치 (x, y)
+          )
+        ]
+      ),
+      child: Row(
+        children: [
+          Container(
+            child: Column(
               children: [
-                Icon(Icons.attach_money),
-                SizedBox(width: 8),
-                Text("${profileState.userInfo.point}"),
+                Text("포인트", style: TextSize.textSize_grey_14,),
+                Row(
+                  children: [
+                    Text("45,000", style: TextSize.textSize_bold_16),
+                    Icon(CupertinoIcons.right_chevron)
+                  ],
+                )
               ],
             ),
-            Icon(Icons.arrow_forward_ios),
-          ],
-        ),
+          ),
+          ActionButtonSecondary(
+              buttonWidth: 60,
+              buttonHeight: 20,
+              title: "포인트SHOP",
+              isClicked: true,
+              icon: CupertinoIcons.shopping_cart,
+          )
+        ],
       ),
     );
-
-
-
   }
 }

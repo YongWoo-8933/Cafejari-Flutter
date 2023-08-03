@@ -1,5 +1,5 @@
 
-import 'package:cafejari_flutter/ui/components/alert_dialog.dart';
+import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';

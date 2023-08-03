@@ -18,7 +18,7 @@ class BottomSheetSmallSlider extends ConsumerWidget {
     double slider_Width = ((MediaQuery.of(context).size.width / 2)-60);
 
     return Container(
-      padding: AppPading.padding_horizon_10,
+      padding: AppPadding.padding_horizon_10,
       child: Column(
         children: [
           Row(

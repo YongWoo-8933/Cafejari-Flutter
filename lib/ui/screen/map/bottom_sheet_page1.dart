@@ -1,10 +1,8 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
-import 'package:cafejari_flutter/ui/components/slider.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_floor.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_small_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +55,7 @@ class BottomSheetPage1 extends ConsumerWidget {
         Container(
           padding: EdgeInsets.only(left: 20, right: 20, top: 10),
           width: MediaQuery.of(context).size.width/2,
-          color: AppColor.secondarContainer,
+          color: AppColor.secondaryContainer,
           child: Column(
             children: [
               BottomSheetFloor(),
