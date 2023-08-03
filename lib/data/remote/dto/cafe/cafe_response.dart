@@ -33,12 +33,25 @@ class CafeResponse {
 }
 
 @JsonSerializable()
+class CafeSearchResponse {
+  final int id;
+  final String name, address;
+
+  CafeSearchResponse(
+      {required this.id,
+      required this.name,
+      required this.address});
+
+  factory CafeSearchResponse.fromJson(Map<String, dynamic> json) => _$CafeSearchResponseFromJson(json);
+}
+
+@JsonSerializable()
 class CafeFloorCafeRepResponse {
   final int id, floor;
   final String? wall_socket_rate, restroom;
   final bool has_seat;
   final OccupancyRatePredictionResponse occupancy_rate_prediction;
-  final List<OccupancyRateUpdateRepResponse> recent_user_updated_log, recent_guest_updated_log;
+  final List<OccupancyRateUpdateRepResponse> recent_updated_log;
 
   CafeFloorCafeRepResponse(
       {required this.id,
@@ -47,8 +60,7 @@ class CafeFloorCafeRepResponse {
         required this.restroom,
         required this.has_seat,
         required this.occupancy_rate_prediction,
-        required this.recent_user_updated_log,
-        required this.recent_guest_updated_log});
+        required this.recent_updated_log});
 
   factory CafeFloorCafeRepResponse.fromJson(Map<String, dynamic> json) =>
       _$CafeFloorCafeRepResponseFromJson(json);
@@ -154,13 +166,15 @@ class OccupancyRateUpdateResponse {
   final int id, point;
   final CafeFloorOccupancyRepResponse cafe_floor;
   final String occupancy_rate, update;
+  final PartialUserResponse user;
 
   OccupancyRateUpdateResponse(
       {required this.id,
         required this.cafe_floor,
         required this.point,
         required this.occupancy_rate,
-        required this.update});
+        required this.update,
+        required this.user});
 
   factory OccupancyRateUpdateResponse.fromJson(Map<String, dynamic> json) =>
       _$OccupancyRateUpdateResponseFromJson(json);

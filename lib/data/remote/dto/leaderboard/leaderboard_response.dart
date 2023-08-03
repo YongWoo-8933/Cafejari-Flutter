@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/data/remote/dto/log/cafe_log_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 

@@ -1,13 +1,15 @@
-import 'dart:convert';
 
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
-import 'package:http/http.dart';
 
 /// user application api와 통신하는 저장소
 abstract class UserRepository {
-  Future<UserResponse> fetchUserProfile({
+  Future<List<GradeResponse>> fetchGrade();
+  Future<NicknameResponse> validateNickname({
+    required String nickname,
+  });
+  Future<UserResponse> fetchUser({
     required String accessToken,
   });
 }
@@ -15,18 +17,31 @@ abstract class UserRepository {
 /// user repository의 구현부
 class UserRepositoryImpl implements UserRepository {
   APIService apiService;
+
   UserRepositoryImpl(this.apiService);
 
   @override
-  Future<UserResponse> fetchUserProfile({
-    required String accessToken,
-  }) async {
+  Future<List<GradeResponse>> fetchGrade() async {
     try {
-      dynamic response = await apiService.request(
+      List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "user",
-        endpoint: "user/",
-        accessToken: accessToken,
+        endpoint: "grade/"
+      );
+      return response.map((dynamic e) => GradeResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UserResponse> fetchUser({required String accessToken}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "user",
+          endpoint: "user/",
+          accessToken: accessToken
       );
       return UserResponse.fromJson(response);
     } on ErrorWithMessage {
@@ -36,4 +51,18 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
+  @override
+  Future<NicknameResponse> validateNickname({required String nickname}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "user",
+          endpoint: "profile/validate_nickname/",
+          query: {"nickname": nickname}
+      );
+      return NicknameResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
 }

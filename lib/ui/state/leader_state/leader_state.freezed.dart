@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LeaderState {
-  List<LeaderInfo> get monthLeaderInfos => throw _privateConstructorUsedError;
-  List<LeaderInfo> get weekLeaderInfos => throw _privateConstructorUsedError;
-  LeaderInfo get selectedLeaderInfo => throw _privateConstructorUsedError;
+  InvalidType get monthLeaderInfos => throw _privateConstructorUsedError;
+  InvalidType get weekLeaderInfos => throw _privateConstructorUsedError;
+  InvalidType get selectedLeaderInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LeaderStateCopyWith<LeaderState> get copyWith =>
@@ -32,11 +32,9 @@ abstract class $LeaderStateCopyWith<$Res> {
       _$LeaderStateCopyWithImpl<$Res, LeaderState>;
   @useResult
   $Res call(
-      {List<LeaderInfo> monthLeaderInfos,
-      List<LeaderInfo> weekLeaderInfos,
-      LeaderInfo selectedLeaderInfo});
-
-  $LeaderInfoCopyWith<$Res> get selectedLeaderInfo;
+      {InvalidType monthLeaderInfos,
+      InvalidType weekLeaderInfos,
+      InvalidType selectedLeaderInfo});
 }
 
 /// @nodoc
@@ -52,32 +50,24 @@ class _$LeaderStateCopyWithImpl<$Res, $Val extends LeaderState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? monthLeaderInfos = null,
-    Object? weekLeaderInfos = null,
-    Object? selectedLeaderInfo = null,
+    Object? monthLeaderInfos = freezed,
+    Object? weekLeaderInfos = freezed,
+    Object? selectedLeaderInfo = freezed,
   }) {
     return _then(_value.copyWith(
-      monthLeaderInfos: null == monthLeaderInfos
+      monthLeaderInfos: freezed == monthLeaderInfos
           ? _value.monthLeaderInfos
           : monthLeaderInfos // ignore: cast_nullable_to_non_nullable
-              as List<LeaderInfo>,
-      weekLeaderInfos: null == weekLeaderInfos
+              as InvalidType,
+      weekLeaderInfos: freezed == weekLeaderInfos
           ? _value.weekLeaderInfos
           : weekLeaderInfos // ignore: cast_nullable_to_non_nullable
-              as List<LeaderInfo>,
-      selectedLeaderInfo: null == selectedLeaderInfo
+              as InvalidType,
+      selectedLeaderInfo: freezed == selectedLeaderInfo
           ? _value.selectedLeaderInfo
           : selectedLeaderInfo // ignore: cast_nullable_to_non_nullable
-              as LeaderInfo,
+              as InvalidType,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $LeaderInfoCopyWith<$Res> get selectedLeaderInfo {
-    return $LeaderInfoCopyWith<$Res>(_value.selectedLeaderInfo, (value) {
-      return _then(_value.copyWith(selectedLeaderInfo: value) as $Val);
-    });
   }
 }
 
@@ -90,12 +80,9 @@ abstract class _$$_LeaderStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<LeaderInfo> monthLeaderInfos,
-      List<LeaderInfo> weekLeaderInfos,
-      LeaderInfo selectedLeaderInfo});
-
-  @override
-  $LeaderInfoCopyWith<$Res> get selectedLeaderInfo;
+      {InvalidType monthLeaderInfos,
+      InvalidType weekLeaderInfos,
+      InvalidType selectedLeaderInfo});
 }
 
 /// @nodoc
@@ -109,23 +96,23 @@ class __$$_LeaderStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? monthLeaderInfos = null,
-    Object? weekLeaderInfos = null,
-    Object? selectedLeaderInfo = null,
+    Object? monthLeaderInfos = freezed,
+    Object? weekLeaderInfos = freezed,
+    Object? selectedLeaderInfo = freezed,
   }) {
     return _then(_$_LeaderState(
-      monthLeaderInfos: null == monthLeaderInfos
-          ? _value._monthLeaderInfos
+      monthLeaderInfos: freezed == monthLeaderInfos
+          ? _value.monthLeaderInfos
           : monthLeaderInfos // ignore: cast_nullable_to_non_nullable
-              as List<LeaderInfo>,
-      weekLeaderInfos: null == weekLeaderInfos
-          ? _value._weekLeaderInfos
+              as InvalidType,
+      weekLeaderInfos: freezed == weekLeaderInfos
+          ? _value.weekLeaderInfos
           : weekLeaderInfos // ignore: cast_nullable_to_non_nullable
-              as List<LeaderInfo>,
-      selectedLeaderInfo: null == selectedLeaderInfo
+              as InvalidType,
+      selectedLeaderInfo: freezed == selectedLeaderInfo
           ? _value.selectedLeaderInfo
           : selectedLeaderInfo // ignore: cast_nullable_to_non_nullable
-              as LeaderInfo,
+              as InvalidType,
     ));
   }
 }
@@ -134,31 +121,16 @@ class __$$_LeaderStateCopyWithImpl<$Res>
 
 class _$_LeaderState implements _LeaderState {
   _$_LeaderState(
-      {required final List<LeaderInfo> monthLeaderInfos,
-      required final List<LeaderInfo> weekLeaderInfos,
-      required this.selectedLeaderInfo})
-      : _monthLeaderInfos = monthLeaderInfos,
-        _weekLeaderInfos = weekLeaderInfos;
-
-  final List<LeaderInfo> _monthLeaderInfos;
-  @override
-  List<LeaderInfo> get monthLeaderInfos {
-    if (_monthLeaderInfos is EqualUnmodifiableListView)
-      return _monthLeaderInfos;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_monthLeaderInfos);
-  }
-
-  final List<LeaderInfo> _weekLeaderInfos;
-  @override
-  List<LeaderInfo> get weekLeaderInfos {
-    if (_weekLeaderInfos is EqualUnmodifiableListView) return _weekLeaderInfos;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_weekLeaderInfos);
-  }
+      {required this.monthLeaderInfos,
+      required this.weekLeaderInfos,
+      required this.selectedLeaderInfo});
 
   @override
-  final LeaderInfo selectedLeaderInfo;
+  final InvalidType monthLeaderInfos;
+  @override
+  final InvalidType weekLeaderInfos;
+  @override
+  final InvalidType selectedLeaderInfo;
 
   @override
   String toString() {
@@ -171,19 +143,19 @@ class _$_LeaderState implements _LeaderState {
         (other.runtimeType == runtimeType &&
             other is _$_LeaderState &&
             const DeepCollectionEquality()
-                .equals(other._monthLeaderInfos, _monthLeaderInfos) &&
+                .equals(other.monthLeaderInfos, monthLeaderInfos) &&
             const DeepCollectionEquality()
-                .equals(other._weekLeaderInfos, _weekLeaderInfos) &&
-            (identical(other.selectedLeaderInfo, selectedLeaderInfo) ||
-                other.selectedLeaderInfo == selectedLeaderInfo));
+                .equals(other.weekLeaderInfos, weekLeaderInfos) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedLeaderInfo, selectedLeaderInfo));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_monthLeaderInfos),
-      const DeepCollectionEquality().hash(_weekLeaderInfos),
-      selectedLeaderInfo);
+      const DeepCollectionEquality().hash(monthLeaderInfos),
+      const DeepCollectionEquality().hash(weekLeaderInfos),
+      const DeepCollectionEquality().hash(selectedLeaderInfo));
 
   @JsonKey(ignore: true)
   @override
@@ -194,16 +166,16 @@ class _$_LeaderState implements _LeaderState {
 
 abstract class _LeaderState implements LeaderState {
   factory _LeaderState(
-      {required final List<LeaderInfo> monthLeaderInfos,
-      required final List<LeaderInfo> weekLeaderInfos,
-      required final LeaderInfo selectedLeaderInfo}) = _$_LeaderState;
+      {required final InvalidType monthLeaderInfos,
+      required final InvalidType weekLeaderInfos,
+      required final InvalidType selectedLeaderInfo}) = _$_LeaderState;
 
   @override
-  List<LeaderInfo> get monthLeaderInfos;
+  InvalidType get monthLeaderInfos;
   @override
-  List<LeaderInfo> get weekLeaderInfos;
+  InvalidType get weekLeaderInfos;
   @override
-  LeaderInfo get selectedLeaderInfo;
+  InvalidType get selectedLeaderInfo;
   @override
   @JsonKey(ignore: true)
   _$$_LeaderStateCopyWith<_$_LeaderState> get copyWith =>

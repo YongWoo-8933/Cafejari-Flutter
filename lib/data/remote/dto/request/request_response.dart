@@ -1,5 +1,4 @@
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'request_response.g.dart';

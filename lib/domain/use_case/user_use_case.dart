@@ -1,13 +1,16 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/data/repository/push_repository.dart';
+import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
+import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
+import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
-
-import 'user_user_case/get_user_infos.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case/get_grades.dart';
+import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class UserUseCase {
-  Future getUserInfos(
-      {required String accessToken});
+  Future<User> getUser({required String accessToken});
+  Future<Grades> getGrades();
+  Future<String> validateNickname({required String nickname});
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
@@ -17,27 +20,17 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   UserUseCaseImpl({required this.tokenRepository, required this.userRepository});
 
   @override
-  Future getUserInfos(
-      {required String accessToken}) async {
-    final f = GetUserInfos();
+  Future<User> getUser({required String accessToken}) async {
     try{
-      return f(
-          accessToken: accessToken,
-          tokenRepository: tokenRepository,
-          userRepository: userRepository
-      );
+      return parseUserFromUserResponse(
+          await userRepository.fetchUser(accessToken: accessToken));
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
-      try{
-        return f(
-            accessToken: newToken,
-            tokenRepository: tokenRepository,
-            userRepository: userRepository
-        );
+      try {
+        return parseUserFromUserResponse(
+            await userRepository.fetchUser(accessToken: newToken));
       } on AccessTokenExpired{
-        throw ErrorWithMessage("원인 모를 에러 발생, 앱을 재시작 해보세요");
-      } on ErrorWithMessage{
-        rethrow;
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
     }on RefreshTokenExpired{
       rethrow;
@@ -46,4 +39,23 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     }
   }
 
+  @override
+  Future<Grades> getGrades() async {
+    final f = GetGrades();
+    try {
+      return await f(userRepository: userRepository);
+    }on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> validateNickname({required String nickname}) async {
+    try {
+      NicknameResponse res = await userRepository.validateNickname(nickname: nickname);
+      return res.nickname;
+    }on ErrorWithMessage {
+      rethrow;
+    }
+  }
 }

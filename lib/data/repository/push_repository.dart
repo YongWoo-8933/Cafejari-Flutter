@@ -1,45 +1,31 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cafejari_flutter/data/remote/dto/push/push_response.dart';
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
-import 'package:cafejari_flutter/data/remote/dto/user/token_response.dart';
 
-/// access token, refresh token 관리 저장소
-abstract interface class TokenRepository {
-  Future<TokenResponse> fetchAccessToken();
-  putRefreshToken({required String newToken});
+/// push 알림 저장소
+abstract interface class PushRepository {
+  Future<List<PushResponse>> fetchMyPush({required String accessToken});
 }
 
-/// user repository의 구현부
-class TokenRepositoryImpl implements TokenRepository {
+/// push repository의 구현부
+class PushRepositoryImpl implements PushRepository {
   final APIService service;
-  final String appLabel = "user/token";
-  final String boxLabel = "local";
-  final String refreshTokenKey = "refreshToken";
 
-  TokenRepositoryImpl(this.service);
+  PushRepositoryImpl(this.service);
 
   @override
-  Future<TokenResponse> fetchAccessToken() async {
+  Future<List<PushResponse>> fetchMyPush({required String accessToken}) async {
     try {
-      final Box<dynamic> box = await Hive.openBox(boxLabel);
-      String? refreshToken = await box.get(refreshTokenKey);
-      if (refreshToken.isNull) throw RefreshTokenExpired();
-      return TokenResponse.fromJson(await service.request(
-          method: HttpMethod.post,
-          appLabel: appLabel,
-          endpoint: "token/refresh/",
-          body: {"refresh": refreshToken}));
+      final List<dynamic> response = await service.request(
+          method: HttpMethod.get,
+          appLabel: "push",
+          endpoint: "/",
+          accessToken: accessToken);
+      return response.map((dynamic e) => PushResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
-      throw RefreshTokenExpired();
+      throw AccessTokenExpired();
     }
-  }
-
-  @override
-  putRefreshToken({required String newToken}) async {
-    final Box<dynamic> box = await Hive.openBox(boxLabel);
-    await box.put(refreshTokenKey, newToken);
   }
 }

@@ -23,7 +23,7 @@ class BrandResponse {
 @JsonSerializable()
 class BrandconResponse {
   final int id, item;
-  final String image, expiration_period;
+  final String image, expiration_period, description;
   final bool is_used;
 
   BrandconResponse(
@@ -31,6 +31,7 @@ class BrandconResponse {
         required this.item,
         required this.image,
         required this.expiration_period,
+        required this.description,
         required this.is_used});
 
   factory BrandconResponse.fromJson(Map<String, dynamic> json) =>
@@ -40,7 +41,7 @@ class BrandconResponse {
 @JsonSerializable()
 class ItemResponse {
   final int id, price, limit_day, brand;
-  final String name, small_image_url, large_image_url;
+  final String name, description, small_image_url, large_image_url;
 
   ItemResponse(
       {required this.id,
@@ -48,6 +49,7 @@ class ItemResponse {
         required this.limit_day,
         required this.brand,
         required this.name,
+        required this.description,
         required this.small_image_url,
         required this.large_image_url});
 
@@ -58,13 +60,13 @@ class ItemResponse {
 @JsonSerializable()
 class CouponResponse {
   final int id;
-  final String name, description, imageUrl;
+  final String name, description, image;
 
   CouponResponse(
       {required this.id,
         required this.name,
         required this.description,
-        required this.imageUrl});
+        required this.image});
 
   factory CouponResponse.fromJson(Map<String, dynamic> json) =>
       _$CouponResponseFromJson(json);
@@ -73,14 +75,16 @@ class CouponResponse {
 @JsonSerializable()
 class UserCouponResponse {
   final int id;
-  final String name, description, imageUrl;
+  final bool is_used;
+  final String expiration_period;
+  final CouponResponse coupon;
 
-  CouponResponse(
+  UserCouponResponse(
       {required this.id,
-        required this.name,
-        required this.description,
-        required this.imageUrl});
+        required this.is_used,
+        required this.expiration_period,
+        required this.coupon});
 
-  factory CouponResponse.fromJson(Map<String, dynamic> json) =>
-      _$CouponResponseFromJson(json);
+  factory UserCouponResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserCouponResponseFromJson(json);
 }

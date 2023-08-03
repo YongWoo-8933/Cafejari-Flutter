@@ -12,10 +12,11 @@ typedef Cafes = List<Cafe>;
 class Cafe with _$Cafe {
   factory Cafe({
     required final int id,
-    required final int? minOccupancyFloor,
-    required final double? minOccupancyRate, minOccupancyPrediction,
+    required final int? recentUpdatedFloor,
+    required final double? recentUpdatedOccupancyRate,
     required final bool isClosed,
-    required final String name, address,
+    required final String name,
+    required final String address,
     required final NLatLng latLng,
     required final CafeFloors cafeFloors,
     required final OpeningHour? openingHour,
@@ -25,16 +26,16 @@ class Cafe with _$Cafe {
 
   factory Cafe.empty() => Cafe(
       id: 0,
-      minOccupancyFloor: null,
-      minOccupancyRate: null,
-      minOccupancyPrediction: null,
+      recentUpdatedFloor: null,
+      recentUpdatedOccupancyRate: null,
       isClosed: false,
       name: "",
       address: "",
       latLng: NLocation.sinchon().cameraPosition.target,
       cafeFloors: [],
       openingHour: null,
-      imageUrls: []);
+      imageUrls: [],
+      vips: []);
 }
 
 typedef CafeFloors = List<CafeFloor>;
@@ -43,21 +44,24 @@ typedef CafeFloors = List<CafeFloor>;
 @freezed
 class CafeFloor with _$CafeFloor {
   factory CafeFloor(
-      {required final int id, floor,
-      required final String? wallSocket, restroom,
+      {required final int id,
+      required final int floor,
+      required final String? restroom,
       required final bool hasSeat,
+      required final double? wallSocketRate,
       required final double? occupancyRatePrediction,
-      required final OccupancyRateUpdates userUpdates, guestUpdates}) = _CafeFloor;
+      required final Cafe cafe,
+      required final OccupancyRateUpdates recentUpdates}) = _CafeFloor;
 
   factory CafeFloor.empty() => CafeFloor(
       id: 0,
       floor: 1,
-      wallSocket: null,
       restroom: null,
       hasSeat: true,
+      wallSocketRate: null,
       occupancyRatePrediction: null,
-      userUpdates: [],
-      guestUpdates: []);
+      cafe: Cafe.empty(),
+      recentUpdates: []);
 }
 
 typedef OccupancyRateUpdates = List<OccupancyRateUpdate>;
@@ -70,7 +74,16 @@ class OccupancyRateUpdate with _$OccupancyRateUpdate {
       required final int point,
       required final double occupancyRate,
       required final DateTime update,
-      required final PartialUser user}) = _OccupancyRateUpdate;
+      required final CafeFloor cafeFloor,
+      required final PartialUser? user}) = _OccupancyRateUpdate;
+
+  factory OccupancyRateUpdate.empty() => OccupancyRateUpdate(
+      id: 0,
+      point: 0,
+      occupancyRate: 0.0,
+      update: DateTime(2022),
+      cafeFloor: CafeFloor.empty(),
+      user: null);
 }
 
 /// 영업 시간 정보 모델
@@ -84,4 +97,13 @@ class OpeningHour with _$OpeningHour {
         required final String fri,
         required final String sat,
         required final String son}) = _OpeningHour;
+
+  factory OpeningHour.empty() => OpeningHour(
+      mon: "",
+      tue: "",
+      wed: "",
+      thu: "",
+      fri: "",
+      sat: "",
+      son: "");
 }

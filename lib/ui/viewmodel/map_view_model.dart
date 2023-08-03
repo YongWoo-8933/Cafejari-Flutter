@@ -8,17 +8,17 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
-import 'package:cafejari_flutter/domain/use_case/map_use_case.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
 
 class MapViewModel extends StateNotifier<MapState> {
-  final MapUseCase _mapUseCase;
+  final CafeUseCase _mapUseCase;
   final GlobalViewModel globalViewModel;
 
-  MapViewModel({required MapUseCase mapUseCase, required this.globalViewModel})
+  MapViewModel({required CafeUseCase mapUseCase, required this.globalViewModel})
       : _mapUseCase = mapUseCase,
         super(MapState.empty());
 

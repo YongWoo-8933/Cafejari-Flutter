@@ -1,61 +1,75 @@
-import 'dart:convert';
 
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
-import 'package:cafejari_flutter/data/remote/dto/leader/leaderboard_response.dart';
-import 'package:http/http.dart';
+import 'package:cafejari_flutter/data/remote/dto/leaderboard/leaderboard_response.dart';
 
 /// leader application api와 통신하는 저장소
-abstract class LeaderRepository {
-  Future<List<LeaderResponse>> fetchMonthLeaderBoard({
-    required String accessToken,
-  });
-  Future<List<LeaderResponse>> fetchWeekLeaderBoard({
-    required String accessToken,
-  });
+abstract class LeaderboardRepository {
+  Future<List<RankerResponse>> fetchMonthRanker();
+  Future<List<RankerResponse>> fetchWeekRanker();
+  Future<List<RankerResponse>> fetchTotalRanker();
+  Future<List<MonthlyHotCafeLogResponse>> fetchMonthlyHotCafeLog();
 }
 
 /// leader repository의 구현부
-class LeaderRepositoryImpl implements LeaderRepository {
+class LeaderboardRepositoryImpl implements LeaderboardRepository {
   APIService apiService;
 
-  LeaderRepositoryImpl(this.apiService);
+  LeaderboardRepositoryImpl(this.apiService);
 
   @override
-  Future<List<LeaderResponse>> fetchMonthLeaderBoard({
-    required String accessToken,
-  }) async {
+  Future<List<RankerResponse>> fetchMonthRanker() async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
-        appLabel: "user",
-        endpoint: "month_leader/",
-        accessToken: accessToken,
+        appLabel: "leaderboard",
+        endpoint: "month_sharing_ranker/"
       );
-      return response.map((dynamic e) => LeaderResponse.fromJson(e)).toList();
+      return response.map((dynamic e) => RankerResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
-    } on TokenExpired {
-      throw AccessTokenExpired();
     }
   }
 
-  Future<List<LeaderResponse>> fetchWeekLeaderBoard({
-    required String accessToken,
-  }) async {
+  @override
+  Future<List<MonthlyHotCafeLogResponse>> fetchMonthlyHotCafeLog() async {
     try {
       final List<dynamic> response = await apiService.request(
-        method: HttpMethod.get,
-        appLabel: "user",
-        endpoint: "week_leader/",
-        accessToken: accessToken,
+          method: HttpMethod.get,
+          appLabel: "leaderboard",
+          endpoint: "monthly_hot_cafe_log/"
       );
-      return response.map((dynamic e) => LeaderResponse.fromJson(e)).toList();
+      return response.map((dynamic e) => MonthlyHotCafeLogResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
-    } on TokenExpired {
-      throw AccessTokenExpired();
     }
   }
 
+  @override
+  Future<List<RankerResponse>> fetchTotalRanker() async {
+    try {
+      final List<dynamic> response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "leaderboard",
+          endpoint: "total_sharing_ranker/"
+      );
+      return response.map((dynamic e) => RankerResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RankerResponse>> fetchWeekRanker() async {
+    try {
+      final List<dynamic> response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "leaderboard",
+          endpoint: "week_sharing_ranker/"
+      );
+      return response.map((dynamic e) => RankerResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/domain/entity/leader/leader_info.dart';
+import 'package:cafejari_flutter/domain/entity/leader/leaderboard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
