@@ -8,10 +8,12 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:cafejari_flutter/cafejari_app.dart';
-import 'core/util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // dotenv init
+  await dotenv.load(fileName: ".env");
 
   // 로컬 저장소 init
   Hive.initFlutter();
@@ -27,9 +29,8 @@ void main() async {
   });
 
   // Naver map init
-  await NaverMapSdk.instance.initialize(
-      clientId:
-          await getValueFromJsonFile(fileName: "secret.json", stringKey: dotenv.get('NAVER_MAP_CLIENT_ID')));
+  await NaverMapSdk.instance.initialize(clientId: dotenv.env['NAVER_MAP_CLIENT_ID']);
 
+  // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
 }
