@@ -10,9 +10,6 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-
-
     return Container(
       color: AppColor.grey_300,
       child: Column(
