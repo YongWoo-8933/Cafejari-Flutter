@@ -1,10 +1,8 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
-import 'package:cafejari_flutter/ui/components/slider.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_floor.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_small_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +33,7 @@ class BottomSheetPage1 extends ConsumerWidget {
                   BookmarkButton(isBookmarked: false, buttonSize: 30)
                 ],
               ),
-              Text("${mapState.selectedCafeInfo.name}",style: TextSize.textSize_24,),
+              Text("${mapState.selectedCafe.name}",style: TextSize.textSize_24,),
               SizedBox(
                 height: 20,
               ),
@@ -57,7 +55,7 @@ class BottomSheetPage1 extends ConsumerWidget {
         Container(
           padding: EdgeInsets.only(left: 20, right: 20, top: 10),
           width: MediaQuery.of(context).size.width/2,
-          color: AppColor.secondarContainer,
+          color: AppColor.secondaryContainer,
           child: Column(
             children: [
               BottomSheetFloor(),
@@ -69,7 +67,7 @@ class BottomSheetPage1 extends ConsumerWidget {
                   Image(image: AssetImage("asset/image/plug_icon.png"),width: 20, height: 20),
                   Text("콘센트", style: TextStyle(fontSize: 12),),
                   Text("테이블 대비"),
-                  Text("${mapState.selectedCafe.wallSocket}")
+                  Text("${mapState.selectedCafeFloor.wallSocketRate}")
                 ],
               )
             ],

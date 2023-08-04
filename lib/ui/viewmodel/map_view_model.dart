@@ -1,13 +1,12 @@
 import 'dart:ui';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
@@ -19,28 +18,24 @@ class MapViewModel extends StateNotifier<MapState> {
   final GlobalViewModel globalViewModel;
 
   MapViewModel({required CafeUseCase mapUseCase, required this.globalViewModel})
-      : _mapUseCase = mapUseCase,
-        super(MapState.empty());
+      : _mapUseCase = mapUseCase, super(MapState.empty());
 
-  refreshCafeInfos() async {
+  refreshCafes() async {
     try {
-      final Cafes newCafeInfos = await _mapUseCase.getCafeInfos(
-          accessToken: globalViewModel.state.accessToken,
+      final Cafes newCafes = await _mapUseCase.getMapCafes(
           cameraPosition:
               await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition);
-
       Set<NMarker> resSet = {};
-
-      for (var cafeInfo in newCafeInfos) {
+      for (var cafe in newCafes) {
         var marker = NMarker(
-            id: cafeInfo.id.toString(),
-            position: cafeInfo.latLng,
-            icon: cafeInfo.minCrowded.toCrowded().marker,
-            size: const Size(31, 36));
+            id: cafe.id.toString(),
+            position: cafe.latLng,
+            icon: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerImage,
+            size: const Size(33, 46));
         marker.setZIndex(1);
         marker.setOnTapListener((tappedMarker) async {
           if (state.selectedMarker.isNotNull) {
-            state.selectedMarker?.setSize(const Size(31, 36));
+            state.selectedMarker?.setSize(const Size(33, 46));
             state.selectedMarker?.setZIndex(1);
             state.selectedMarker?.setCaption(const NOverlayCaption(text: ""));
             state.selectedMarker?.setSubCaption(const NOverlayCaption(text: ""));
@@ -48,18 +43,21 @@ class MapViewModel extends StateNotifier<MapState> {
           tappedMarker.setCaptionOffset(1.0);
           tappedMarker.setSize(const Size(43, 50));
           tappedMarker.setZIndex(3);
-          tappedMarker.setCaption(NOverlayCaption(text: cafeInfo.name, textSize: 16.0));
+          tappedMarker.setCaption(NOverlayCaption(text: cafe.name, textSize: 16.0));
           tappedMarker.setSubCaption(NOverlayCaption(
-              text: cafeInfo.minCrowded.toCrowded().stringValue,
+              text: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().stringValue,
               textSize: 14.0,
-              color: cafeInfo.minCrowded.toCrowded().complementaryColor,
-              haloColor: cafeInfo.minCrowded.toCrowded().color));
+              color: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().complementaryColor,
+              haloColor: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().color));
           tappedMarker.setCaptionAligns([NAlign.top]);
           tappedMarker.setCaptionOffset(4.0);
 
-          state = state.copyWith(selectedCafeInfo: cafeInfo, selectedMarker: tappedMarker, selectedCafe: cafeInfo.cafes.first);
+          state = state.copyWith(
+              selectedCafe: cafe,
+              selectedMarker: tappedMarker,
+              selectedCafeFloor: cafe.cafeFloors.first);
           state.mapController?.updateCamera(
-              NCameraUpdate.scrollAndZoomTo(target: cafeInfo.latLng, zoom: Zoom.large));
+              NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
           await state.bottomSheetController.animatePanelToSnapPoint();
         });
         resSet.add(marker);
@@ -68,7 +66,7 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
-      state = state.copyWith(cafeInfos: newCafeInfos);
+      state = state.copyWith(cafes: newCafes);
     } on RefreshTokenExpired {
       globalViewModel.logout();
     } on ErrorWithMessage {

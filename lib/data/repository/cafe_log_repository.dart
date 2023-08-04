@@ -23,7 +23,7 @@ class CafeLogRepositoryImpl implements CafeLogRepository {
       final dynamic response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe_log",
-        endpoint: "/",
+        endpoint: "",
       );
       return CafeLogPageResponse.fromJson(response);
     } on ErrorWithMessage {

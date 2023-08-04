@@ -9,8 +9,10 @@ import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
-import 'package:cafejari_flutter/ui/state/leader_state/leader_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/leader_view_model.dart';
+import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
+import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
+import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
+import 'package:cafejari_flutter/ui/viewmodel/my_page_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
@@ -19,11 +21,9 @@ import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/state/profile_state/profile_state.dart';
 import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
-import 'package:cafejari_flutter/ui/viewmodel/profile_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/shop_view_model.dart';
 
 final apiServiceProvider = Provider<APIService>((ref) {
@@ -133,16 +133,16 @@ final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref)
   return MapViewModel(mapUseCase: mapUseCase, globalViewModel: viewModel);
 });
 
-final profileViewModelProvider = StateNotifierProvider<ProfileViewModel, ProfileState>((ref) {
+final myPageViewModelProvider = StateNotifierProvider<MyPageViewModel, MyPageState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
-  return ProfileViewModel(userUseCase: userUseCase, globalViewModel: viewModel);
+  return MyPageViewModel(userUseCase: userUseCase, globalViewModel: viewModel);
 });
 
-final leaderViewModelProvider = StateNotifierProvider<LeaderViewModel, LeaderState>((ref) {
+final leaderboardViewModelProvider = StateNotifierProvider<LeaderboardViewModel, LeaderboardState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
-  final LeaderboardUseCase leaderUseCase = ref.watch(leaderboardUseCaseProvider);
-  return LeaderViewModel(leaderUseCase: leaderUseCase, globalViewModel: viewModel);
+  final LeaderboardUseCase leaderboardUseCase = ref.watch(leaderboardUseCaseProvider);
+  return LeaderboardViewModel(leaderboardUseCase: leaderboardUseCase, globalViewModel: viewModel);
 });
 
 final shopViewModelProvider = StateNotifierProvider<ShopViewModel, ShopState>((ref) {

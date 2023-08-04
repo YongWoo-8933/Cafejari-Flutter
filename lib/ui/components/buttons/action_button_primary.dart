@@ -3,19 +3,19 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ActionButtonSecondary extends StatelessWidget {
+class ActionButtonPrimary extends StatelessWidget {
   final double? buttonWidth;
   final double? buttonHeight;
   final VoidCallback? onPressed;
   final String title;
-  final bool isClicked;
+  final IconData? icon;
 
-  ActionButtonSecondary({
+  ActionButtonPrimary({
     required this.buttonWidth,
     required this.buttonHeight,
     required this.title,
-    required this.isClicked,
     this.onPressed,
+    this.icon
   });
 
   @override
@@ -26,27 +26,20 @@ class ActionButtonSecondary extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isClicked? AppColor.secondary : AppColor.white,
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          side: const BorderSide(
-            color: AppColor.secondary, // 테두리 색을 지정합니다.
-            width: 2.0, // 테두리 두께를 설정합니다.
-          )
         ),
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(icon, color: AppColor.white),
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: isClicked? AppColor.white : AppColor.secondary
-                  ),
+                  style: TextSize.textSize_white_20,
                 ),
               ]
           ),

@@ -19,7 +19,7 @@ class PushRepositoryImpl implements PushRepository {
       final List<dynamic> response = await service.request(
           method: HttpMethod.get,
           appLabel: "push",
-          endpoint: "/",
+          endpoint: "",
           accessToken: accessToken);
       return response.map((dynamic e) => PushResponse.fromJson(e)).toList();
     } on ErrorWithMessage {

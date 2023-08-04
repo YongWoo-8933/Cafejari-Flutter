@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/core/extension/int.dart';
+
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
@@ -18,15 +18,15 @@ class BottomSheetSmallSlider extends ConsumerWidget {
     double slider_Width = ((MediaQuery.of(context).size.width / 2)-60);
 
     return Container(
-      padding: AppPading.padding_horizon_10,
+      padding: AppPadding.padding_horizon_10,
       child: Column(
         children: [
-          Row(
-            children: [
+          // Row(
+            // children: [
               //SizedBox(width: (slider_Width/100)*mapState.selectedCafe.crowded),
-              Text("${mapState.selectedCafe.crowded}"),
-            ],
-          ),
+          //     Text("${mapState.selectedCafe.crowded}"),
+          //   ],
+          // ),
           SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,14 +57,13 @@ class BottomSheetSmallSlider extends ConsumerWidget {
           Row(
             children: [
               //SizedBox(width: (slider_Width/100)*mapState.selectedCafe.crowded),
-              Transform.rotate(
-                angle: 3.14,
-                child: Image.asset(
-                  mapState.selectedCafe.crowded.toCrowded().image,
-                  width: 20,
-                  height: 20,
-              ),),
-
+              // Transform.rotate(
+              //   angle: 3.14,
+              //   child: Image.asset(
+              //     mapState.selectedCafe.crowded.toCrowded().image,
+              //     width: 20,
+              //     height: 20,
+              // ),),
             ],
           ),
         ],

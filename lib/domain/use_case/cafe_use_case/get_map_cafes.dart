@@ -32,7 +32,7 @@ class GetMapCafes {
             wallSocketRate = double.parse(cafeFloorResponse.wall_socket_rate!);
           }
           if (cafeFloorResponse.occupancy_rate_prediction.isNotNull) {
-            occupancyRatePrediction = double.parse(cafeFloorResponse.occupancy_rate_prediction.occupancy_rate);
+            occupancyRatePrediction = double.parse(cafeFloorResponse.occupancy_rate_prediction!.occupancy_rate);
           }
           cafeFloors.add(CafeFloor(
               id: cafeFloorResponse.id,

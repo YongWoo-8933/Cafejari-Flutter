@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';

@@ -1,7 +1,7 @@
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page1.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page3.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/listView_button.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/list_view_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/top_components.dart';
 import 'package:cafejari_flutter/ui/util/permission_request.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class MapScreen extends ConsumerWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Text("카페 불러오기"),
-        onPressed: () => ref.watch(mapViewModelProvider.notifier).refreshCafeInfos(),
+        onPressed: () => mapViewModel.refreshCafes(),
       ),
       body: Stack(
         children: [
@@ -97,7 +97,8 @@ class MapScreen extends ConsumerWidget {
           Visibility(
             visible: mapState.topImageVisible,
             child: Positioned(
-                child: Image.network(mapState.selectedCafeInfo.googlePlaceId)
+                // child: Image.network(mapState.selectedCafeInfo.googlePlaceId)
+                child: Image.network("")
             ),
           ),
           Visibility(

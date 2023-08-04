@@ -1,4 +1,4 @@
-import 'package:cafejari_flutter/core/extension/int.dart';
+
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,12 +19,12 @@ class BottomSheetDetailFloor extends ConsumerWidget {
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: mapState.selectedCafeInfo.cafes.length * 2 - 1, // 아이템과 디바이더 개수의 총합
+        itemCount: mapState.selectedCafe.cafeFloors.length * 2 - 1, // 아이템과 디바이더 개수의 총합
         itemBuilder: (context, index) {
           if (index.isEven) { // index가 짝수인 경우 (층 정보 위젯)
             final cafeIndex = index ~/ 2;
-            final cafe = mapState.selectedCafeInfo.cafes[cafeIndex];
-            final floor = mapState.selectedCafeInfo.firstFloor + cafeIndex;
+            final cafeFloor = mapState.selectedCafe.cafeFloors[cafeIndex];
+            final floor = mapState.selectedCafe.cafeFloors.first.floor + cafeIndex;
 
             return Container(
               width: (MediaQuery.of(context).size.width-100) / 2,
@@ -33,13 +33,13 @@ class BottomSheetDetailFloor extends ConsumerWidget {
                 children: [
                   Text("$floor층", style: TextSize.textSize_bold_16,),
                   SizedBox(height: 10),
-                  Image.asset(
-                    cafe.crowded.toCrowded().image,
-                    width: 30,
-                    height: 30,
-                  ),
+                  // Image.asset(
+                  //   cafeFloor.occupancy.toCrowded().image,
+                  //   width: 30,
+                  //   height: 30,
+                  // ),
                   SizedBox(height: 10),
-                  Text("${cafe.crowded.toCrowded().stringValue}"),
+                  // Text("${cafeFloor.crowded.toCrowded().stringValue}"),
                   SizedBox(height: 7),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class BottomSheetDetailFloor extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //Text("콘센트 비율 ", style: TextSize.textSize_grey_12),
-                      Text("${cafe.wallSocket}", style: TextSize.textSize_bold_12)
+                      // Text("${cafeFloor.wallSocket}", style: TextSize.textSize_bold_12)
                     ],
                   ),
                 ],

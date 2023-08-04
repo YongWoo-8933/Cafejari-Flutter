@@ -1,5 +1,4 @@
-import 'package:cafejari_flutter/core/extension/int.dart';
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +21,18 @@ class BottomSheetTitle extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  "${mapState.selectedCafeInfo.name}",
+                  "${mapState.selectedCafe.name}",
                   style: TextSize.textSize_20),
               SizedBox(height: 3),
               Center(
                 child: Row(
                   children: [
                     Image.asset(
-                      mapState.selectedCafeInfo.minCrowded.toCrowded().image,
+                      mapState.selectedCafe.recentUpdatedOccupancyRate.toOccupancyLevel().pinImagePath,
                       width: 12,
                       height: 12,
                     ),
-                    Text(" ${mapState.selectedCafeInfo.fullAddress}",
+                    Text(" ${mapState.selectedCafe.address}",
                         style: TextSize.textSize_12)
                   ],
                 ),

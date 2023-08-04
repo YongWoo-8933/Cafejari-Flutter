@@ -38,7 +38,7 @@ class TopComponents extends ConsumerWidget {
                   )
                 ],
               ),
-              padding: AppPading.padding_horizon_10,
+              padding: AppPadding.padding_horizon_10,
             )
           ),
           SizedBox(width: 10,),

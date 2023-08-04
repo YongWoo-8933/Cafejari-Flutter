@@ -50,7 +50,7 @@ class CafeFloorCafeRepResponse {
   final int id, floor;
   final String? wall_socket_rate, restroom;
   final bool has_seat;
-  final OccupancyRatePredictionResponse occupancy_rate_prediction;
+  final OccupancyRatePredictionResponse? occupancy_rate_prediction;
   final List<OccupancyRateUpdateRepResponse> recent_updated_log;
 
   CafeFloorCafeRepResponse(

@@ -18,33 +18,33 @@ class BottomSheetFloor extends ConsumerWidget {
         children: [
           Row(
             children: [
-              for(int i=0; i<mapState.selectedCafeInfo.cafes.length; i++)
-                FittedBox(
-                  child: SizedBox(
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: (){mapViewModel.changeSelectedCafe(mapState.selectedCafeInfo.cafes[i]);},
-                          child: Container(
-                            width: 30,
-                            height: 30.0,
-                            child: Center(
-                              child: Text(
-                                " ${mapState.selectedCafeInfo.firstFloor + i}층 ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.black : AppColor.unselectedTextColor
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10,height: 30,)
-                        //Text("${mapState.selectedCafeInfo.cafes[i].crowded}"),
-                      ],
-                    ),
-                  ),
-                )
+            //   for(int i=0; i<mapState.selectedCafeInfo.cafes.length; i++)
+            //     FittedBox(
+            //       child: SizedBox(
+            //         child: Row(
+            //           children: [
+            //             InkWell(
+            //               onTap: (){mapViewModel.changeSelectedCafe(mapState.selectedCafeInfo.cafes[i]);},
+            //               child: Container(
+            //                 width: 30,
+            //                 height: 30.0,
+            //                 child: Center(
+            //                   child: Text(
+            //                     " ${mapState.selectedCafeInfo.firstFloor + i}층 ",
+            //                     style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.black : AppColor.unselectedTextColor
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //             SizedBox(width: 10,height: 30)
+            //             //Text("${mapState.selectedCafeInfo.cafes[i].crowded}"),
+            //           ],
+            //         ),
+            //       ),
+            //     )
             ],
           ),
         ]

@@ -65,8 +65,10 @@ CafeFloorCafeRepResponse _$CafeFloorCafeRepResponseFromJson(
       wall_socket_rate: json['wall_socket_rate'] as String?,
       restroom: json['restroom'] as String?,
       has_seat: json['has_seat'] as bool,
-      occupancy_rate_prediction: OccupancyRatePredictionResponse.fromJson(
-          json['occupancy_rate_prediction'] as Map<String, dynamic>),
+      occupancy_rate_prediction: json['occupancy_rate_prediction'] == null
+          ? null
+          : OccupancyRatePredictionResponse.fromJson(
+              json['occupancy_rate_prediction'] as Map<String, dynamic>),
       recent_updated_log: (json['recent_updated_log'] as List<dynamic>)
           .map((e) => OccupancyRateUpdateRepResponse.fromJson(
               e as Map<String, dynamic>))

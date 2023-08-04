@@ -10,7 +10,7 @@ class SplashScreen extends ConsumerWidget {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           child: const Text("붩은"),
-          onPressed: () => ref.read(mapViewModelProvider.notifier).refreshCafeInfos(),
+          onPressed: () => ref.read(mapViewModelProvider.notifier).refreshCafes(),
         ),
         body: const Center(child: Text("여기는 스플래쉬 화면")));
   }

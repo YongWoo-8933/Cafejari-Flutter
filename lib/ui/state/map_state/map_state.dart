@@ -1,8 +1,9 @@
 
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_info/cafe.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 part 'map_state.freezed.dart';
@@ -11,10 +12,10 @@ part 'map_state.freezed.dart';
 class MapState with _$MapState {
   factory MapState(
       {required final PanelController bottomSheetController,
-      required final Cafes cafeInfos,
-      required final NMarker? selectedMarker,
-      required final Cafe selectedCafeInfo,
+      required final Cafes cafes,
       required final Cafe selectedCafe,
+      required final CafeFloor selectedCafeFloor,
+      required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
       required final double updatedCrowded,
       required final IconData thumbIcons,
@@ -24,10 +25,10 @@ class MapState with _$MapState {
 
   factory MapState.empty() => MapState(
       bottomSheetController: PanelController(),
-      cafeInfos: [],
-      selectedMarker: null,
-      selectedCafeInfo: Cafe.empty(),
+      cafes: [],
       selectedCafe: Cafe.empty(),
+      selectedCafeFloor: CafeFloor.empty(),
+      selectedMarker: null,
       mapController: null,
       updatedCrowded: 0,
       thumbIcons: CupertinoIcons.xmark_circle,

@@ -34,7 +34,7 @@ class CafeRepositoryImpl implements CafeRepository {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
-        endpoint: "/",
+        endpoint: "",
         query: {"latitude": latitude, "longitude": longitude, "zoom_level": zoomLevel},
       );
       return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();

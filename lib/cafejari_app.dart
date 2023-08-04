@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,10 +7,9 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/leaderboard_screen.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:cafejari_flutter/ui/screen/profile/profile_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
-import 'package:cafejari_flutter/ui/widget/bottom_navigation_bar.dart';
+import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
 
 import 'ui/state/map_state/map_state.dart';
 import 'ui/viewmodel/global_view_model.dart';
@@ -79,7 +79,7 @@ class _RootScreen extends ConsumerWidget {
       child: Scaffold(
           body: IndexedStack(
             index: globalState.currentPage.index,
-            children: const [MapScreen(), LeaderboardScreen(), ShopScreen(), ProfileScreen()],
+            children: const [MapScreen(), LeaderboardScreen(), ShopScreen(), MyPageScreen()],
           ),
           bottomNavigationBar: const BottomNavBar(),
           backgroundColor: Colors.transparent),

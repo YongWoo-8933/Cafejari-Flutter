@@ -31,15 +31,19 @@ class AppColor {
   static const Color transparentBlack_600 = Color(0x99272914);
   static const Color transparentBlack_700 = Color(0xB3272914);
 
-  static const Color secondarContainer = Color(0xFFF8F7F7);
+  static const Color secondaryContainer = Color(0xFFF8F7F7);
   static const Color bookMark = Color(0xFFD0D0D0);
   static const Color unselectedTextColor = Color(0xFFB7B7B7);
   static const Color primary = Color(0xFF000000);
   static const Color secondary = Color(0xFF785B52);
   static const Color alert = Color(0xFFFE9E45);
+  static const Color background = Color(0xFFF8F8F8);
+  static const Color onSecondaryContainer = Color(0xFFF4EDEB);
+  static const Color textColorOnContainer = Color(0xFFA1A7AE);
 
+  static const Color occupancyLevel1 = Color(0xFFAAA29B);
+  static const Color occupancyLevel2 = Color(0xFF5A4F4F);
 }
-
 ///Color? primary,
 ///Color? onPrimary,
 ///Color? primaryContainer,

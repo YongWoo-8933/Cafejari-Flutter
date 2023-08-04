@@ -18,10 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MapState {
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
-  InvalidType get cafeInfos => throw _privateConstructorUsedError;
+  List<Cafe> get cafes => throw _privateConstructorUsedError;
+  Cafe get selectedCafe => throw _privateConstructorUsedError;
+  CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
   NMarker? get selectedMarker => throw _privateConstructorUsedError;
-  InvalidType get selectedCafeInfo => throw _privateConstructorUsedError;
-  InvalidType get selectedCafe => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   double get updatedCrowded => throw _privateConstructorUsedError;
   IconData get thumbIcons => throw _privateConstructorUsedError;
@@ -41,16 +41,19 @@ abstract class $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      InvalidType cafeInfos,
+      List<Cafe> cafes,
+      Cafe selectedCafe,
+      CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
-      InvalidType selectedCafeInfo,
-      InvalidType selectedCafe,
       NaverMapController? mapController,
       double updatedCrowded,
       IconData thumbIcons,
       PageController pageController,
       bool topVisible,
       bool topImageVisible});
+
+  $CafeCopyWith<$Res> get selectedCafe;
+  $CafeFloorCopyWith<$Res> get selectedCafeFloor;
 }
 
 /// @nodoc
@@ -67,10 +70,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? cafeInfos = freezed,
+    Object? cafes = null,
+    Object? selectedCafe = null,
+    Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
-    Object? selectedCafeInfo = freezed,
-    Object? selectedCafe = freezed,
     Object? mapController = freezed,
     Object? updatedCrowded = null,
     Object? thumbIcons = null,
@@ -83,22 +86,22 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
-      cafeInfos: freezed == cafeInfos
-          ? _value.cafeInfos
-          : cafeInfos // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
+      cafes: null == cafes
+          ? _value.cafes
+          : cafes // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
+      selectedCafe: null == selectedCafe
+          ? _value.selectedCafe
+          : selectedCafe // ignore: cast_nullable_to_non_nullable
+              as Cafe,
+      selectedCafeFloor: null == selectedCafeFloor
+          ? _value.selectedCafeFloor
+          : selectedCafeFloor // ignore: cast_nullable_to_non_nullable
+              as CafeFloor,
       selectedMarker: freezed == selectedMarker
           ? _value.selectedMarker
           : selectedMarker // ignore: cast_nullable_to_non_nullable
               as NMarker?,
-      selectedCafeInfo: freezed == selectedCafeInfo
-          ? _value.selectedCafeInfo
-          : selectedCafeInfo // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
-      selectedCafe: freezed == selectedCafe
-          ? _value.selectedCafe
-          : selectedCafe // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
       mapController: freezed == mapController
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -125,6 +128,22 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
               as bool,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CafeCopyWith<$Res> get selectedCafe {
+    return $CafeCopyWith<$Res>(_value.selectedCafe, (value) {
+      return _then(_value.copyWith(selectedCafe: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CafeFloorCopyWith<$Res> get selectedCafeFloor {
+    return $CafeFloorCopyWith<$Res>(_value.selectedCafeFloor, (value) {
+      return _then(_value.copyWith(selectedCafeFloor: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -136,16 +155,21 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      InvalidType cafeInfos,
+      List<Cafe> cafes,
+      Cafe selectedCafe,
+      CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
-      InvalidType selectedCafeInfo,
-      InvalidType selectedCafe,
       NaverMapController? mapController,
       double updatedCrowded,
       IconData thumbIcons,
       PageController pageController,
       bool topVisible,
       bool topImageVisible});
+
+  @override
+  $CafeCopyWith<$Res> get selectedCafe;
+  @override
+  $CafeFloorCopyWith<$Res> get selectedCafeFloor;
 }
 
 /// @nodoc
@@ -160,10 +184,10 @@ class __$$_MapStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? cafeInfos = freezed,
+    Object? cafes = null,
+    Object? selectedCafe = null,
+    Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
-    Object? selectedCafeInfo = freezed,
-    Object? selectedCafe = freezed,
     Object? mapController = freezed,
     Object? updatedCrowded = null,
     Object? thumbIcons = null,
@@ -176,22 +200,22 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
-      cafeInfos: freezed == cafeInfos
-          ? _value.cafeInfos
-          : cafeInfos // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
+      cafes: null == cafes
+          ? _value._cafes
+          : cafes // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
+      selectedCafe: null == selectedCafe
+          ? _value.selectedCafe
+          : selectedCafe // ignore: cast_nullable_to_non_nullable
+              as Cafe,
+      selectedCafeFloor: null == selectedCafeFloor
+          ? _value.selectedCafeFloor
+          : selectedCafeFloor // ignore: cast_nullable_to_non_nullable
+              as CafeFloor,
       selectedMarker: freezed == selectedMarker
           ? _value.selectedMarker
           : selectedMarker // ignore: cast_nullable_to_non_nullable
               as NMarker?,
-      selectedCafeInfo: freezed == selectedCafeInfo
-          ? _value.selectedCafeInfo
-          : selectedCafeInfo // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
-      selectedCafe: freezed == selectedCafe
-          ? _value.selectedCafe
-          : selectedCafe // ignore: cast_nullable_to_non_nullable
-              as InvalidType,
       mapController: freezed == mapController
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -225,27 +249,34 @@ class __$$_MapStateCopyWithImpl<$Res>
 class _$_MapState implements _MapState {
   _$_MapState(
       {required this.bottomSheetController,
-      required this.cafeInfos,
-      required this.selectedMarker,
-      required this.selectedCafeInfo,
+      required final List<Cafe> cafes,
       required this.selectedCafe,
+      required this.selectedCafeFloor,
+      required this.selectedMarker,
       required this.mapController,
       required this.updatedCrowded,
       required this.thumbIcons,
       required this.pageController,
       required this.topVisible,
-      required this.topImageVisible});
+      required this.topImageVisible})
+      : _cafes = cafes;
 
   @override
   final PanelController bottomSheetController;
+  final List<Cafe> _cafes;
   @override
-  final InvalidType cafeInfos;
+  List<Cafe> get cafes {
+    if (_cafes is EqualUnmodifiableListView) return _cafes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cafes);
+  }
+
+  @override
+  final Cafe selectedCafe;
+  @override
+  final CafeFloor selectedCafeFloor;
   @override
   final NMarker? selectedMarker;
-  @override
-  final InvalidType selectedCafeInfo;
-  @override
-  final InvalidType selectedCafe;
   @override
   final NaverMapController? mapController;
   @override
@@ -261,7 +292,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafeInfos: $cafeInfos, selectedMarker: $selectedMarker, selectedCafeInfo: $selectedCafeInfo, selectedCafe: $selectedCafe, mapController: $mapController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
   }
 
   @override
@@ -271,13 +302,13 @@ class _$_MapState implements _MapState {
             other is _$_MapState &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
-            const DeepCollectionEquality().equals(other.cafeInfos, cafeInfos) &&
+            const DeepCollectionEquality().equals(other._cafes, _cafes) &&
+            (identical(other.selectedCafe, selectedCafe) ||
+                other.selectedCafe == selectedCafe) &&
+            (identical(other.selectedCafeFloor, selectedCafeFloor) ||
+                other.selectedCafeFloor == selectedCafeFloor) &&
             (identical(other.selectedMarker, selectedMarker) ||
                 other.selectedMarker == selectedMarker) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedCafeInfo, selectedCafeInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedCafe, selectedCafe) &&
             (identical(other.mapController, mapController) ||
                 other.mapController == mapController) &&
             (identical(other.updatedCrowded, updatedCrowded) ||
@@ -296,10 +327,10 @@ class _$_MapState implements _MapState {
   int get hashCode => Object.hash(
       runtimeType,
       bottomSheetController,
-      const DeepCollectionEquality().hash(cafeInfos),
+      const DeepCollectionEquality().hash(_cafes),
+      selectedCafe,
+      selectedCafeFloor,
       selectedMarker,
-      const DeepCollectionEquality().hash(selectedCafeInfo),
-      const DeepCollectionEquality().hash(selectedCafe),
       mapController,
       updatedCrowded,
       thumbIcons,
@@ -317,10 +348,10 @@ class _$_MapState implements _MapState {
 abstract class _MapState implements MapState {
   factory _MapState(
       {required final PanelController bottomSheetController,
-      required final InvalidType cafeInfos,
+      required final List<Cafe> cafes,
+      required final Cafe selectedCafe,
+      required final CafeFloor selectedCafeFloor,
       required final NMarker? selectedMarker,
-      required final InvalidType selectedCafeInfo,
-      required final InvalidType selectedCafe,
       required final NaverMapController? mapController,
       required final double updatedCrowded,
       required final IconData thumbIcons,
@@ -331,13 +362,13 @@ abstract class _MapState implements MapState {
   @override
   PanelController get bottomSheetController;
   @override
-  InvalidType get cafeInfos;
+  List<Cafe> get cafes;
+  @override
+  Cafe get selectedCafe;
+  @override
+  CafeFloor get selectedCafeFloor;
   @override
   NMarker? get selectedMarker;
-  @override
-  InvalidType get selectedCafeInfo;
-  @override
-  InvalidType get selectedCafe;
   @override
   NaverMapController? get mapController;
   @override

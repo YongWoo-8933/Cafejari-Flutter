@@ -1,5 +1,5 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/components/alert_dialog.dart';
+import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
 import 'package:cafejari_flutter/ui/components/snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';

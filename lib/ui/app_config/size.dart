@@ -36,6 +36,10 @@ class TextSize {
       fontSize: 14,
       color: AppColor.black
   );
+  static const textSize_grey_14 = TextStyle(
+      fontSize: 14,
+      color: AppColor.textColorOnContainer
+  );
   static const textSize_bold_14 = TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold
@@ -53,7 +57,7 @@ class TextSize {
   );
   static const textSize_grey_12 = TextStyle(
       fontSize: 12,
-      color: AppColor.grey_500
+      color: AppColor.textColorOnContainer
   );
   static const textSize_bold_12 = TextStyle(
       fontSize: 12,
