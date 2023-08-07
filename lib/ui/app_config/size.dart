@@ -63,5 +63,9 @@ class TextSize {
       fontSize: 12,
       fontWeight: FontWeight.bold
   );
+  static const textSize_grey_10 = TextStyle(
+      fontSize: 10,
+      color: AppColor.textColorOnContainer
+  );
 
 }

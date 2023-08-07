@@ -92,6 +92,8 @@ dependencies:
 
   another_xlider: ^3.0.1
 
+  async: ^2.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

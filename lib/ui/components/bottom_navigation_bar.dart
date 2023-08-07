@@ -84,13 +84,14 @@ class _BottomBarUnit extends StatelessWidget {
           children: [
             Icon(icon, size: 24, color: isSelected ? AppColor.brown_500 : AppColor.grey_300),
             Padding(
-                padding: const EdgeInsets.only(top: 2.0),
+                padding: const EdgeInsets.only(bottom: 2.0),
                 child: Text(description,
                     style: TextStyle(
                         fontSize: 10.0,
                         fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                         color: isSelected ? AppColor.brown_500 : AppColor.grey_300)))
           ],
-        ));
+        ),
+    );
   }
 }

@@ -1,6 +1,9 @@
 
+import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,19 +16,20 @@ class BottomSheetSmallSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
-    double slider_Width = ((MediaQuery.of(context).size.width / 2)-60);
+    double slider_Width = (globalState.deviceSize.width/2)-70;
 
     return Container(
-      padding: AppPadding.padding_horizon_10,
+      padding: AppPadding.padding_horizon_15,
       child: Column(
         children: [
-          // Row(
-            // children: [
-              //SizedBox(width: (slider_Width/100)*mapState.selectedCafe.crowded),
-          //     Text("${mapState.selectedCafe.crowded}"),
-          //   ],
+          // Container(
+          //   width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty ? ((slider_Width+60/100)*(mapState.selectedCafeFloor.recentUpdates.last.occupancyRate*100)) : 0,
+          //   alignment: Alignment.bottomRight,
+          //   child: Text(mapState.selectedCafeFloor.recentUpdates.isNotEmpty
+          //         ? "${((mapState.selectedCafeFloor.recentUpdates.last.occupancyRate)*100).floor()}%" : ""),
           // ),
           SizedBox(height: 10),
           Row(
@@ -53,19 +57,17 @@ class BottomSheetSmallSlider extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              //SizedBox(width: (slider_Width/100)*mapState.selectedCafe.crowded),
-              // Transform.rotate(
-              //   angle: 3.14,
-              //   child: Image.asset(
-              //     mapState.selectedCafe.crowded.toCrowded().image,
-              //     width: 20,
-              //     height: 20,
-              // ),),
-            ],
+          Container(
+            width: slider_Width,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("한적", style: TextSize.textSize_grey_10),
+                Text("만석", style: TextSize.textSize_grey_10)
+              ],
+            ),
           ),
+          // SizedBox(height: 10),
         ],
       ),
     );

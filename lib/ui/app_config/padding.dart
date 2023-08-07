@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class AppPadding {
   static const padding_horizon_10 = EdgeInsets.symmetric(horizontal: 10.0);
+  static const padding_horizon_15 = EdgeInsets.symmetric(horizontal: 15.0);
   static const padding_horizon_20 = EdgeInsets.symmetric(horizontal: 20.0);
   static const padding_7 = EdgeInsets.all(7);
   static const padding_10 = EdgeInsets.all(10);

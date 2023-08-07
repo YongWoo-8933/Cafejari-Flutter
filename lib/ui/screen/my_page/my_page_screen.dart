@@ -1,4 +1,7 @@
 
+import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_point.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_shop.dart';
@@ -19,22 +22,22 @@ class MyPageScreen extends ConsumerWidget {
 
 
     return Scaffold(
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          children: [
-            Container(
-              child: FloatingActionButton(
-                child: Text("url"),
-                onPressed: () async {
-                  await launchUrlString(_url);
-                },
-              ),
-            ),
-            MyPageImage(),
-            MyPagePoint(),
-            MyPageShop(),
-          ]
-        )
+        // body: ListView(
+        //   padding: EdgeInsets.symmetric(horizontal: 20),
+        //   children: [
+        //     Container(
+        //       child: FloatingActionButton(
+        //         child: Text("url"),
+        //         onPressed: () async {
+        //           await launchUrlString(_url);
+        //         },
+        //       ),
+        //     ),
+        //     MyPageImage(),
+        //     MyPagePoint(),
+        //     MyPageShop(),
+        //   ]
+      body: CATIBlocks(is_clicked_1: true, is_clicked_2: false,is_clicked_3: true, is_clicked_4: false),
     );
   }
 }

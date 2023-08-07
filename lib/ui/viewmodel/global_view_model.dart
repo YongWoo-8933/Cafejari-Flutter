@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
@@ -10,6 +12,10 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   // final LoginUseCase tokenUseCase;
 
   GlobalViewModel(this._tokenUseCase) : super(GlobalState.empty());
+
+  init(Size devicesize){
+    state = state.copyWith(deviceSize: devicesize);
+  }
 
   void logout() {
     // 로그아웃 로직
