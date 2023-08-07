@@ -82,6 +82,10 @@ class MapViewModel extends StateNotifier<MapState> {
     state = state.copyWith(selectedCafe: changedSelectedCafe);
   }
 
+  changeSelectedCafeFloor(CafeFloor changedSelectedCafeFloor){
+    state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
+  }
+
   changeUpdatedCrowded(double changedUpdatedCrowded){
     state = state.copyWith(updatedCrowded: changedUpdatedCrowded);
   }

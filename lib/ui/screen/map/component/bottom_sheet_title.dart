@@ -28,7 +28,7 @@ class BottomSheetTitle extends ConsumerWidget {
                 child: Row(
                   children: [
                     Image.asset(
-                      mapState.selectedCafe.recentUpdatedOccupancyRate.toOccupancyLevel().pinImagePath,
+                      "asset/image/icon_small_pin.png",
                       width: 12,
                       height: 12,
                     ),

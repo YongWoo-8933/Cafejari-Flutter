@@ -15,7 +15,7 @@ class ActionButtonPrimary extends StatelessWidget {
     required this.buttonHeight,
     required this.title,
     this.onPressed,
-    this.icon
+    this.icon,
   });
 
   @override
@@ -35,13 +35,14 @@ class ActionButtonPrimary extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            children: [
+              if (icon != null) // Conditionally add Icon widget
                 Icon(icon, color: AppColor.white),
-                Text(
-                  title,
-                  style: TextSize.textSize_white_20,
-                ),
-              ]
+              Text(
+                title,
+                style: TextSize.textSize_white_20,
+              ),
+            ],
           ),
         ),
       ),

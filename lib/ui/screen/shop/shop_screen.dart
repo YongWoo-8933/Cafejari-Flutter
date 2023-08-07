@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
 import 'package:cafejari_flutter/ui/components/snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
@@ -18,6 +19,8 @@ class ShopScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ShopViewModel shopViewModel = ref.read(shopViewModelProvider.notifier);
     final ShopState shopState = ref.watch(shopViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
+
 
     return Center(child: SizedBox(
         width: double.infinity,
@@ -55,15 +58,15 @@ class ShopScreen extends ConsumerWidget {
             //     );
             //   },
             // );
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                settings: RouteSettings(name: "SamplePage1"),
-                builder: (context) => LoginScreen(),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     settings: RouteSettings(name: "SamplePage1"),
+            //     builder: (context) => LoginScreen(),
+            //   ),
+            // );
           },
-          child: const Text('다른 페이지로 이동'),
+          child: Text("${globalState.deviceSize.width}, ${globalState.deviceSize.height}"),
         ),
     ));
   }

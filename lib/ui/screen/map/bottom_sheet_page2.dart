@@ -28,6 +28,7 @@ class BottomSheetPage2 extends ConsumerWidget {
             Container(
               padding: AppPadding.padding_30,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const BottomSheetTitle(),
                   const SizedBox(height: 30),
@@ -50,19 +51,30 @@ class BottomSheetPage2 extends ConsumerWidget {
               ),
             ),
             Container(
+              decoration: const BoxDecoration(
+                color: AppColor.secondaryContainer
+              ),
               padding: AppPadding.padding_30,
-              child: const Column(
+              child:  const Column(
                 children: [
                   SizedBox(height: 10),
-                  BottomSheetCafeJigi(),
+                  Text("CATI", style: TextSize.textSize_bold_16),
+                  // BottomSheetCATI(),
                   SizedBox(height: 10)
                 ],
               ),
             ),
-            SizedBox(height: 10),
-            Text("카페지기", style: TextSize.textSize_bold_16),
-            SizedBox(height: 10),
-            BottomSheetCafeJigi(),
+            Container(
+              padding: AppPadding.padding_30,
+              child: const Column(
+                children: [
+                  Text("카페지기", style: TextSize.textSize_bold_16),
+                  SizedBox(height: 10),
+                  BottomSheetCafeVIP(),
+                  SizedBox(height: 10)
+                ],
+              ),
+            ),
             SizedBox(height: 30),
             Text("상세 정보", style: TextSize.textSize_bold_16),
             BottomSheetMoreInfo(),

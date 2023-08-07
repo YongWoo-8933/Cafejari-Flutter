@@ -1,4 +1,6 @@
 
+import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,28 +35,32 @@ class BottomSheetDetailFloor extends ConsumerWidget {
                 children: [
                   Text("$floor층", style: TextSize.textSize_bold_16,),
                   SizedBox(height: 10),
-                  // Image.asset(
-                  //   cafeFloor.occupancy.toCrowded().image,
-                  //   width: 30,
-                  //   height: 30,
-                  // ),
+                  Image.asset(
+                    cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().thumbImagePath,
+                    width: 50,
+                    height: 50,
+                  ),
                   SizedBox(height: 10),
-                  // Text("${cafeFloor.crowded.toCrowded().stringValue}"),
+                  Text("${cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue}", style: TextSize.textSize_bold_16,),
                   SizedBox(height: 7),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("혼잡도 ", style: TextSize.textSize_grey_12),
-                      Text("%", style: TextSize.textSize_bold_12,)
+                      Text("${(cafeFloor.recentUpdates.first.occupancyRate*100).floor()}%", style: TextSize.textSize_bold_12,)
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //Text("콘센트 비율 ", style: TextSize.textSize_grey_12),
-                      // Text("${cafeFloor.wallSocket}", style: TextSize.textSize_bold_12)
+                      Text("콘센트 비율 ", style: TextSize.textSize_grey_12),
+                      Text(cafeFloor.wallSocketRate.isNotNull ? "${(cafeFloor.wallSocketRate!*100).floor()}%" : "정보없음", style: TextSize.textSize_bold_12)
                     ],
                   ),
+                  FittedBox(
+                    child: Text(cafeFloor.restroom.isNotNull ? cafeFloor.restroom! : "", style: TextSize.textSize_bold_12)
+                    ,
+                  )
                 ],
               ),
             );

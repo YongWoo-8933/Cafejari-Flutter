@@ -27,6 +27,7 @@ class BookmarkButton extends StatelessWidget {
             onPressed!(); // 콜백 함수 호출
           }
         },
+        elevation: 0,
         backgroundColor: isBookmarked ? AppColor.secondary : AppColor.bookMark,
         child: const Icon(
           CupertinoIcons.heart,

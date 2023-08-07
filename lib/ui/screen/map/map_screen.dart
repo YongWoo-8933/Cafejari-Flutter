@@ -74,16 +74,16 @@ class MapScreen extends ConsumerWidget {
               mapState.pageController.jumpToPage(0)
             },
             onPanelSlide: (double slideOffset) {
-              if (slideOffset <= 0.31) {
-                ref.read(mapViewModelProvider.notifier).updateTopVisible(true);
-                //mapState.pageController.jumpToPage(0);
-              } else if(0.31 < slideOffset && slideOffset < 0.7){
-                ref.read(mapViewModelProvider.notifier).updateTopVisible(false);
-                ref.read(mapViewModelProvider.notifier).updateTopImageVisible(false);
-                mapState.pageController.jumpToPage(1);
-              }else{
-                ref.read(mapViewModelProvider.notifier).updateTopImageVisible(true);
-              }
+              // if (slideOffset <= 0.31) {
+              //   ref.read(mapViewModelProvider.notifier).updateTopVisible(true);
+              //   //mapState.pageController.jumpToPage(0);
+              // } else if(0.31 < slideOffset && slideOffset < 0.7){
+              //   ref.read(mapViewModelProvider.notifier).updateTopVisible(false);
+              //   ref.read(mapViewModelProvider.notifier).updateTopImageVisible(false);
+              //   mapState.pageController.jumpToPage(1);
+              // }else{
+              //   ref.read(mapViewModelProvider.notifier).updateTopImageVisible(true);
+              // }
             },
           ),
           Visibility(

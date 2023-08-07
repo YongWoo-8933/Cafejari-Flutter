@@ -43,14 +43,6 @@ class LoginScreen extends ConsumerWidget {
             onPressed: () => {},
           ),
           const SizedBox(height: 30),
-          LoginButton(
-            buttonWidth: 230,
-            buttonHeight: 40,
-            buttonColor: AppColor.white,
-            title: const Text("Google 계정으로 시작", style: TextSize.textSize_16),
-            icon: Image.asset('asset/image/google_icon.png'),
-            onPressed: () => {},
-          ),
         ],
       ),
     );

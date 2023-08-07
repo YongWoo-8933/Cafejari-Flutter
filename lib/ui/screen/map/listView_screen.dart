@@ -11,7 +11,6 @@ class ListViewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Center(child: SizedBox(
       width: double.infinity,
       height: 200,

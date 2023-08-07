@@ -45,6 +45,10 @@ class _RootScreen extends ConsumerWidget {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
+    Future.delayed(Duration.zero, () {
+      globalViewModel.init(MediaQuery.of(context).size);
+    });
+
     return WillPopScope(
       onWillPop: () async {
       if (globalState.currentPage.index != 0) {
