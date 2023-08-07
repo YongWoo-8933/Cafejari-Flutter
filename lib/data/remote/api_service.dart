@@ -24,7 +24,7 @@ class APIService {
       String? accessToken,
       Map<String, dynamic>? body,
       Map<String, dynamic>? query}) async {
-    Map<String, String> headers = {"Content-Type": "application/json"};
+    Map<String, String> headers = {"Content-Type": "application/x-www-form-urlencoded"};
     if (accessToken.isNotNull) headers["Authorization"] = "Bearer $accessToken";
     final stringQuery = query?.map((key, value) => MapEntry(key, value.toString()));
 
@@ -55,7 +55,6 @@ class APIService {
     } else if (response.statusCode < 500) {
       print(response);
       print(response.body);
-      print(response.bodyBytes);
       // 400, 300번대 에러
       switch (response.statusCode) {
         case 400:

@@ -8,7 +8,8 @@ class LoginButton extends StatelessWidget {
   final Text title;
   final Image? icon; // Image 타입으로 변경합니다.
 
-  LoginButton({
+  const LoginButton({
+    super.key,
     required this.buttonWidth,
     required this.buttonHeight,
     required this.buttonColor,
@@ -27,7 +28,7 @@ class LoginButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(buttonHeight ?? 0 / 2),
           ),
         ),
         child: Row(
@@ -35,7 +36,7 @@ class LoginButton extends StatelessWidget {
           children: [
             if (icon != null)
               Padding(
-                padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                padding: const EdgeInsets.only(right: 12.0, left: 8.0),
                 child: icon!, // Image 위젯을 그대로 아이콘으로 사용합니다.
               ),
             FittedBox(

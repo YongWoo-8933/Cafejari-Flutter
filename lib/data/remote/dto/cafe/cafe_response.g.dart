@@ -162,7 +162,7 @@ OpeningHourResponse _$OpeningHourResponseFromJson(Map<String, dynamic> json) =>
       thu: json['thu'] as String,
       fri: json['fri'] as String,
       sat: json['sat'] as String,
-      son: json['son'] as String,
+      sun: json['sun'] as String,
     );
 
 Map<String, dynamic> _$OpeningHourResponseToJson(
@@ -175,7 +175,7 @@ Map<String, dynamic> _$OpeningHourResponseToJson(
       'thu': instance.thu,
       'fri': instance.fri,
       'sat': instance.sat,
-      'son': instance.son,
+      'sun': instance.sun,
     };
 
 CafePageResponse _$CafePageResponseFromJson(Map<String, dynamic> json) =>

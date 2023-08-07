@@ -10,8 +10,10 @@ import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
+import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
+import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/my_page_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
@@ -148,4 +150,10 @@ final leaderboardViewModelProvider = StateNotifierProvider<LeaderboardViewModel,
 final shopViewModelProvider = StateNotifierProvider<ShopViewModel, ShopState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   return ShopViewModel(globalViewModel: viewModel);
+});
+
+final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>((ref) {
+  final viewModel = ref.watch(globalViewModelProvider.notifier);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return LoginViewModel(userUseCase: userUseCase, globalViewModel: viewModel);
 });

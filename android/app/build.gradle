@@ -56,6 +56,8 @@ android {
         versionName flutterVersionName
         // local noti
         multiDexEnabled true
+        // manifest 환경변수 설정
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = localProperties.getProperty('kakao.native.app.key')
     }
 
     buildTypes {

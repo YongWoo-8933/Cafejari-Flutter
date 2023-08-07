@@ -22,7 +22,6 @@ class BottomSheetPage1 extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
 
-
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [

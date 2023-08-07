@@ -165,18 +165,16 @@ Map<String, dynamic> _$NicknameResponseToJson(NicknameResponse instance) =>
       'nickname': instance.nickname,
     };
 
-LoginCallbackResponse _$LoginCallbackResponseFromJson(
+KakaoLoginCallbackResponse _$KakaoLoginCallbackResponseFromJson(
         Map<String, dynamic> json) =>
-    LoginCallbackResponse(
-      code: json['code'] as String,
+    KakaoLoginCallbackResponse(
       access_token: json['access_token'] as String,
       user_exists: json['user_exists'] as bool,
     );
 
-Map<String, dynamic> _$LoginCallbackResponseToJson(
-        LoginCallbackResponse instance) =>
+Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
+        KakaoLoginCallbackResponse instance) =>
     <String, dynamic>{
-      'code': instance.code,
       'access_token': instance.access_token,
       'user_exists': instance.user_exists,
     };

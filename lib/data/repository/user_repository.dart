@@ -5,6 +5,8 @@ import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 
 /// user application api와 통신하는 저장소
 abstract class UserRepository {
+  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
+  Future<LoginResponse> kakaoLoginFinish({required String accessToken});
   Future<List<GradeResponse>> fetchGrade();
   Future<NicknameResponse> validateNickname({
     required String nickname,
@@ -19,6 +21,36 @@ class UserRepositoryImpl implements UserRepository {
   APIService apiService;
 
   UserRepositoryImpl(this.apiService);
+
+  @override
+  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "kakao/login/callback/",
+          body: {"access_token": accessToken}
+      );
+      return KakaoLoginCallbackResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LoginResponse> kakaoLoginFinish({required String accessToken}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "kakao/login/finish/",
+          body: {"access_token": accessToken}
+      );
+      return LoginResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
 
   @override
   Future<List<GradeResponse>> fetchGrade() async {

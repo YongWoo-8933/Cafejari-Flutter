@@ -1,6 +1,6 @@
 
+import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'dart:ui';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
@@ -13,7 +13,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   GlobalViewModel(this._tokenUseCase) : super(GlobalState.empty());
 
-  init(Size devicesize){
+  init(Size devicesize) {
     state = state.copyWith(deviceSize: devicesize);
   }
 
@@ -26,4 +26,12 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   }
 
   void updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
+
+  void saveLoginResult({
+    required String accessToken,
+    required String refreshToken,
+    required User user}) {
+    state = state.copyWith(accessToken: accessToken, user: user);
+    _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken);
+  }
 }

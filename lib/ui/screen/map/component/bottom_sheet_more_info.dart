@@ -73,6 +73,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         Text("일요일 ", style: TextSize.textSize_grey_14),
                         Text(mapState.selectedCafe.openingHour?.son != null ? '${convertTo12HourFormat(mapState.selectedCafe.openingHour!.son)}' : '정보없음')
+                        Text(mapState.selectedCafe.openingHour?.sun != null ? '${convertTo12HourFormat(mapState.selectedCafe.openingHour!.sun)}' : '정보없음')
                       ],
                     ),
                   ],

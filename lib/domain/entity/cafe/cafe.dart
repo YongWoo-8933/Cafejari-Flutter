@@ -96,7 +96,7 @@ class OpeningHour with _$OpeningHour {
         required final String thu,
         required final String fri,
         required final String sat,
-        required final String son}) = _OpeningHour;
+        required final String sun}) = _OpeningHour;
 
   factory OpeningHour.empty() => OpeningHour(
       mon: "",
@@ -105,5 +105,5 @@ class OpeningHour with _$OpeningHour {
       thu: "",
       fri: "",
       sat: "",
-      son: "");
+      sun: "");
 }

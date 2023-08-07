@@ -145,19 +145,18 @@ class NicknameResponse {
       _$NicknameResponseFromJson(json);
 }
 
-/// 로그인에 필요한 응답 DTO
+/// 카카오 로그인에 필요한 응답 DTO
 @JsonSerializable()
-class LoginCallbackResponse {
-  final String code, access_token;
+class KakaoLoginCallbackResponse {
+  final String access_token;
   final bool user_exists;
 
-  LoginCallbackResponse({
-    required this.code,
+  KakaoLoginCallbackResponse({
     required this.access_token,
     required this.user_exists
   });
 
-  factory LoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$LoginCallbackResponseFromJson(json);
+  factory KakaoLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$KakaoLoginCallbackResponseFromJson(json);
 }
 
 @JsonSerializable()
