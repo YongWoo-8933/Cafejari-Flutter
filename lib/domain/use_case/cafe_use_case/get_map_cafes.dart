@@ -113,7 +113,7 @@ class GetMapCafes {
                 thu: cafeResponse.opening_hour.thu,
                 fri: cafeResponse.opening_hour.fri,
                 sat: cafeResponse.opening_hour.sat,
-                son: cafeResponse.opening_hour.son),
+                sun: cafeResponse.opening_hour.sun),
             imageUrls: imageUrls,
             vips: vips));
       }

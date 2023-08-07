@@ -18,8 +18,6 @@ class MyPageScreen extends ConsumerWidget {
     final myPageState = ref.watch(myPageViewModelProvider);
     final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
     String _url = "https://cafejari.software/information/tos/";
-    myPageViewModel.refreshUser();
-
 
     return Scaffold(
         // body: ListView(

@@ -60,7 +60,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
-    Object? deviceSize = freezed,
+    Object? deviceSize = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -79,7 +79,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
-      deviceSize: freezed == deviceSize
+      deviceSize: null == deviceSize
           ? _value.deviceSize
           : deviceSize // ignore: cast_nullable_to_non_nullable
               as Size,
@@ -129,7 +129,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
-    Object? deviceSize = freezed,
+    Object? deviceSize = null,
   }) {
     return _then(_$_GlobalState(
       accessToken: null == accessToken
@@ -148,7 +148,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
-      deviceSize: freezed == deviceSize
+      deviceSize: null == deviceSize
           ? _value.deviceSize
           : deviceSize // ignore: cast_nullable_to_non_nullable
               as Size,
@@ -194,13 +194,13 @@ class _$_GlobalState implements _GlobalState {
             (identical(other.user, user) || other.user == user) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
-            const DeepCollectionEquality()
-                .equals(other.deviceSize, deviceSize));
+            (identical(other.deviceSize, deviceSize) ||
+                other.deviceSize == deviceSize));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, accessToken, isLoggedIn, user,
-      currentPage, const DeepCollectionEquality().hash(deviceSize));
+  int get hashCode => Object.hash(
+      runtimeType, accessToken, isLoggedIn, user, currentPage, deviceSize);
 
   @JsonKey(ignore: true)
   @override

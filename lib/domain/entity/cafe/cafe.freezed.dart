@@ -939,7 +939,7 @@ mixin _$OpeningHour {
   String get thu => throw _privateConstructorUsedError;
   String get fri => throw _privateConstructorUsedError;
   String get sat => throw _privateConstructorUsedError;
-  String get son => throw _privateConstructorUsedError;
+  String get sun => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OpeningHourCopyWith<OpeningHour> get copyWith =>
@@ -959,7 +959,7 @@ abstract class $OpeningHourCopyWith<$Res> {
       String thu,
       String fri,
       String sat,
-      String son});
+      String sun});
 }
 
 /// @nodoc
@@ -981,7 +981,7 @@ class _$OpeningHourCopyWithImpl<$Res, $Val extends OpeningHour>
     Object? thu = null,
     Object? fri = null,
     Object? sat = null,
-    Object? son = null,
+    Object? sun = null,
   }) {
     return _then(_value.copyWith(
       mon: null == mon
@@ -1008,9 +1008,9 @@ class _$OpeningHourCopyWithImpl<$Res, $Val extends OpeningHour>
           ? _value.sat
           : sat // ignore: cast_nullable_to_non_nullable
               as String,
-      son: null == son
-          ? _value.son
-          : son // ignore: cast_nullable_to_non_nullable
+      sun: null == sun
+          ? _value.sun
+          : sun // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -1031,7 +1031,7 @@ abstract class _$$_OpeningHourCopyWith<$Res>
       String thu,
       String fri,
       String sat,
-      String son});
+      String sun});
 }
 
 /// @nodoc
@@ -1051,7 +1051,7 @@ class __$$_OpeningHourCopyWithImpl<$Res>
     Object? thu = null,
     Object? fri = null,
     Object? sat = null,
-    Object? son = null,
+    Object? sun = null,
   }) {
     return _then(_$_OpeningHour(
       mon: null == mon
@@ -1078,9 +1078,9 @@ class __$$_OpeningHourCopyWithImpl<$Res>
           ? _value.sat
           : sat // ignore: cast_nullable_to_non_nullable
               as String,
-      son: null == son
-          ? _value.son
-          : son // ignore: cast_nullable_to_non_nullable
+      sun: null == sun
+          ? _value.sun
+          : sun // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -1096,7 +1096,7 @@ class _$_OpeningHour implements _OpeningHour {
       required this.thu,
       required this.fri,
       required this.sat,
-      required this.son});
+      required this.sun});
 
   @override
   final String mon;
@@ -1111,11 +1111,11 @@ class _$_OpeningHour implements _OpeningHour {
   @override
   final String sat;
   @override
-  final String son;
+  final String sun;
 
   @override
   String toString() {
-    return 'OpeningHour(mon: $mon, tue: $tue, wed: $wed, thu: $thu, fri: $fri, sat: $sat, son: $son)';
+    return 'OpeningHour(mon: $mon, tue: $tue, wed: $wed, thu: $thu, fri: $fri, sat: $sat, sun: $sun)';
   }
 
   @override
@@ -1129,12 +1129,12 @@ class _$_OpeningHour implements _OpeningHour {
             (identical(other.thu, thu) || other.thu == thu) &&
             (identical(other.fri, fri) || other.fri == fri) &&
             (identical(other.sat, sat) || other.sat == sat) &&
-            (identical(other.son, son) || other.son == son));
+            (identical(other.sun, sun) || other.sun == sun));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, mon, tue, wed, thu, fri, sat, son);
+      Object.hash(runtimeType, mon, tue, wed, thu, fri, sat, sun);
 
   @JsonKey(ignore: true)
   @override
@@ -1151,7 +1151,7 @@ abstract class _OpeningHour implements OpeningHour {
       required final String thu,
       required final String fri,
       required final String sat,
-      required final String son}) = _$_OpeningHour;
+      required final String sun}) = _$_OpeningHour;
 
   @override
   String get mon;
@@ -1166,7 +1166,7 @@ abstract class _OpeningHour implements OpeningHour {
   @override
   String get sat;
   @override
-  String get son;
+  String get sun;
   @override
   @JsonKey(ignore: true)
   _$$_OpeningHourCopyWith<_$_OpeningHour> get copyWith =>

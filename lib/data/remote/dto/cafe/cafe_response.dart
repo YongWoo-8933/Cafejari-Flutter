@@ -129,7 +129,7 @@ class CafeImageResponse {
 @JsonSerializable()
 class OpeningHourResponse {
   final int id;
-  final String mon, tue, wed, thu, fri, sat, son;
+  final String mon, tue, wed, thu, fri, sat, sun;
 
   OpeningHourResponse(
       {required this.id,
@@ -139,7 +139,7 @@ class OpeningHourResponse {
         required this.thu,
         required this.fri,
         required this.sat,
-        required this.son});
+        required this.sun});
 
   factory OpeningHourResponse.fromJson(Map<String, dynamic> json) =>
       _$OpeningHourResponseFromJson(json);

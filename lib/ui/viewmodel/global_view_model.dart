@@ -13,7 +13,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   GlobalViewModel(this._tokenUseCase) : super(GlobalState.empty());
 
-  init(Size devicesize){
+  init(Size devicesize) {
     state = state.copyWith(deviceSize: devicesize);
   }
 

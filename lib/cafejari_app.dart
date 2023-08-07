@@ -1,5 +1,9 @@
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
+import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
+import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
+import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +36,32 @@ class CafejariApp extends ConsumerWidget  {
 
 final GoRouter _router = GoRouter(
     initialLocation: "/",
-    routes: [GoRoute(path: "/", builder: (context, state) => const _RootScreen())],
+    routes: [
+      GoRoute(
+        path: "/",
+        name: ScreenRoute.root,
+        builder: (_, __) => const _RootScreen(),
+        routes: [
+          GoRoute(
+            path: "login",
+            name: ScreenRoute.login,
+            builder: (_, __) => const LoginScreen(),
+            routes: [
+              GoRoute(
+                  path: "registration",
+                  name: ScreenRoute.registration,
+                  builder: (_, __) => const RegistrationScreen()
+              )
+            ]
+          )
+        ]
+      ),
+      GoRoute(
+          path: "/splash",
+          name: ScreenRoute.splash,
+          builder: (_, __) => const SplashScreen()
+      ),
+    ],
     observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)]);
 
 class _RootScreen extends ConsumerWidget {
@@ -45,9 +74,9 @@ class _RootScreen extends ConsumerWidget {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
-    Future.delayed(Duration.zero, () {
-      globalViewModel.init(MediaQuery.of(context).size);
-    });
+    // Future.delayed(Duration.zero, () {
+    //   globalViewModel.init(MediaQuery.of(context).size);
+    // });
 
     return WillPopScope(
       onWillPop: () async {
@@ -78,8 +107,7 @@ class _RootScreen extends ConsumerWidget {
           return exit ?? false;
           }
         }
-      }
-      ,
+      },
       child: Scaffold(
           body: IndexedStack(
             index: globalState.currentPage.index,

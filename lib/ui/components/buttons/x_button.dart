@@ -6,7 +6,7 @@ class XButton extends StatelessWidget { // 크기가 더 작아질시 icon크기
   final double? buttonSize;
   final Function? onPressed;
 
-  XButton({
+  const XButton({super.key,
     required this.buttonSize,
     this.onPressed,
   });
