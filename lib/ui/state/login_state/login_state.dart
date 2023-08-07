@@ -1,17 +1,15 @@
 
-import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
-part 'leaderboard_state.freezed.dart';
+part 'login_state.freezed.dart';
 
 @freezed
-class LeaderboardState with _$LeaderboardState {
-  factory LeaderboardState(
-      {required final PartialUsers monthRankers,
-        required final PartialUsers weekRankers,
-        required final PartialUsers totalRankers}) = _LeaderboardState;
+class LoginState with _$LoginState {
+  factory LoginState(
+      {required final List<({int id, String imageUrl})> profileImages,
+        required final String nickname,
+        required final String kakaoAccessToken}) = _LoginState;
 
-  factory LeaderboardState.empty() => LeaderboardState(
-      monthRankers: [], weekRankers: [], totalRankers: []);
+  factory LoginState.empty() => LoginState(profileImages: [], nickname: "", kakaoAccessToken: "");
 }

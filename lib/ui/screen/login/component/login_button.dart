@@ -8,7 +8,8 @@ class LoginButton extends StatelessWidget {
   final Text title;
   final Image? icon; // Image 타입으로 변경합니다.
 
-  LoginButton({
+  const LoginButton({
+    super.key,
     required this.buttonWidth,
     required this.buttonHeight,
     required this.buttonColor,

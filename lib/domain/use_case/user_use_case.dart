@@ -8,6 +8,8 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case/get_grades.dart';
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class UserUseCase {
+  Future<({bool isUserExist, String accessToken})> kakaoLogin({required String accessToken});
+  Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken});
   Future<User> getUser({required String accessToken});
   Future<Grades> getGrades();
   Future<String> validateNickname({required String nickname});
@@ -18,6 +20,26 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   final UserRepository userRepository;
 
   UserUseCaseImpl({required this.tokenRepository, required this.userRepository});
+
+  @override
+  Future<({String accessToken, bool isUserExist})> kakaoLogin({required String accessToken}) async {
+    try{
+        KakaoLoginCallbackResponse response = await userRepository.kakaoLogin(accessToken: accessToken);
+        return (accessToken: response.access_token, isUserExist: response.user_exists);
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken}) async {
+    try{
+      LoginResponse response = await userRepository.kakaoLoginFinish(accessToken: accessToken);
+      return (accessToken: response.access, refreshToken: response.refresh, user: parseUserFromUserResponse(response.user));
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
 
   @override
   Future<User> getUser({required String accessToken}) async {

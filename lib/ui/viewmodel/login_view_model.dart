@@ -1,26 +1,33 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
-import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
+import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
-  final LeaderboardUseCase _leaderboardUseCase;
+class LoginViewModel extends StateNotifier<LoginState> {
+  final UserUseCase _userUseCase;
   final GlobalViewModel globalViewModel;
 
-  LeaderboardViewModel({required LeaderboardUseCase leaderboardUseCase, required this.globalViewModel})
-      : _leaderboardUseCase = leaderboardUseCase,
-        super(LeaderboardState.empty());
+  LoginViewModel({required UserUseCase userUseCase, required this.globalViewModel})
+      : _userUseCase = userUseCase,
+        super(LoginState.empty());
 
-  refreshRankers() async {
+  kakaoLogin({required String accessToken}) async {
     try {
-      state = state.copyWith(
-          totalRankers: await _leaderboardUseCase.getTotalRankers(),
-          monthRankers: await _leaderboardUseCase.getMonthRankers(),
-          weekRankers: await _leaderboardUseCase.getWeekRankers()
-      );
-    } on RefreshTokenExpired {
-      globalViewModel.logout();
+      final loginRes = await _userUseCase.kakaoLogin(accessToken: accessToken);
+      if(loginRes.isUserExist) {
+        // 기존 유저
+        final loginFinishRes = await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
+        globalViewModel.saveLoginResult(
+            accessToken: loginFinishRes.accessToken,
+            refreshToken: loginFinishRes.refreshToken,
+            user: loginFinishRes.user);
+        // 화면 이동 로직
+      } else {
+        // 가입 유저
+        state = state.copyWith(kakaoAccessToken: loginRes.accessToken);
+        // 화면 이동 로직
+      }
     } on ErrorWithMessage {
       // 에러 메시지 출력
     }
