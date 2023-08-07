@@ -21,7 +21,7 @@ class BottomSheetTitle extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  "${mapState.selectedCafe.name}",
+                  mapState.selectedCafe.name,
                   style: TextSize.textSize_20),
               SizedBox(height: 3),
               Center(

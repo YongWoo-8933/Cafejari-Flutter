@@ -37,7 +37,8 @@ class MyPageScreen extends ConsumerWidget {
         //     MyPagePoint(),
         //     MyPageShop(),
         //   ]
-      body: CATIBlocks(is_clicked_1: true, is_clicked_2: false,is_clicked_3: true, is_clicked_4: false),
+      body: BottomSheetPage2()
+      //CATIBlocks(is_clicked_1: true, is_clicked_2: false,is_clicked_3: true, is_clicked_4: false),
     );
   }
 }

@@ -22,9 +22,7 @@ class BottomSheetPage1 extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
 
-    print(
-      "${(globalState.deviceSize.width/2-40)*(mapState.selectedCafeFloor.recentUpdates.first.occupancyRate)}"
-    );
+
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -74,7 +72,8 @@ class BottomSheetPage1 extends ConsumerWidget {
               const BottomSheetFloor(),
               const SizedBox(height: 10),
               Container( // 슬라이더 % 표시부분(슬라이더의 크기 벗어나기 위해 상위에 작성)
-                padding: EdgeInsets.only(left:(globalState.deviceSize.width/2-40)*(mapState.selectedCafeFloor.recentUpdates.first.occupancyRate)-7 ),
+                padding: EdgeInsets.only(left:mapState.selectedCafeFloor.recentUpdates.isNotEmpty ?
+                (globalState.deviceSize.width/2-40)*mapState.selectedCafeFloor.recentUpdates.first.occupancyRate-7 : 0 ),
                 decoration: BoxDecoration(
                   color: AppColor.brown_300
                 ),
@@ -84,16 +83,24 @@ class BottomSheetPage1 extends ConsumerWidget {
                     ? "${((mapState.selectedCafeFloor.recentUpdates.first.occupancyRate)*100).floor()}%" : ""),
               ),
               const BottomSheetSmallSlider(),
-              Container( // 슬라이더 % 표시부분(슬라이더의 크기 벗어나기 위해 상위에 작성) -> 재조정 필요
-                padding: EdgeInsets.only(left:(globalState.deviceSize.width/2-40)*(mapState.selectedCafeFloor.recentUpdates.first.occupancyRate)-60 ),
-                decoration: BoxDecoration(
-                    color: AppColor.brown_300
+              Container(
+                padding: EdgeInsets.only(
+                  left: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
+                      ? (globalState.deviceSize.width/2 - 40) * mapState.selectedCafeFloor.recentUpdates.first.occupancyRate - 60
+                      : 0,
                 ),
-                width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty ? (globalState.deviceSize.width/2-40) : 0,
-                // alignment: Alignment.bottomRight,
-                child: Image.asset(mapState.selectedCafeFloor.recentUpdates.isNotEmpty
-                    ? mapState.selectedCafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().pinImagePath : "",width: 30,height: 40,),
+                width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
+                    ? (globalState.deviceSize.width/2 - 40)
+                    : 0,
+                child: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
+                    ? Image.asset(
+                  mapState.selectedCafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().pinImagePath,
+                  width: 30,
+                  height: 40,
+                )
+                    : null, // 여기에 null 할당
               ),
+
               const SizedBox(height: 10),
               Row(
                 children: [

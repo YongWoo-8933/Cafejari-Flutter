@@ -36,18 +36,30 @@ class BottomSheetDetailFloor extends ConsumerWidget {
                   Text("$floor층", style: TextSize.textSize_bold_16,),
                   SizedBox(height: 10),
                   Image.asset(
-                    cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().thumbImagePath,
+                    cafeFloor.recentUpdates.isNotEmpty
+                        ? cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().thumbImagePath
+                        : 'asset/image/cafe_icon_0.png',
                     width: 50,
                     height: 50,
                   ),
                   SizedBox(height: 10),
-                  Text("${cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue}", style: TextSize.textSize_bold_16,),
+                  Text(
+                    cafeFloor.recentUpdates.isNotEmpty
+                        ? cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue
+                        : "정보없음",
+                    style: TextSize.textSize_bold_16,
+                  ),
                   SizedBox(height: 7),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("혼잡도 ", style: TextSize.textSize_grey_12),
-                      Text("${(cafeFloor.recentUpdates.first.occupancyRate*100).floor()}%", style: TextSize.textSize_bold_12,)
+                      Text(
+                        cafeFloor.recentUpdates.isNotEmpty
+                            ? "${(cafeFloor.recentUpdates.first.occupancyRate * 100).floor()}%"
+                            : "정보없음",
+                        style: TextSize.textSize_bold_12,
+                      ),
                     ],
                   ),
                   Row(
