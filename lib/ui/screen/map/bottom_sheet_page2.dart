@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dar
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_detail_floor.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_more_info.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_title.dart';
@@ -50,6 +51,7 @@ class BottomSheetPage2 extends ConsumerWidget {
                 ],
               ),
             ),
+            BottomSheetCATI(),
             Container(
               decoration: const BoxDecoration(
                 color: AppColor.secondaryContainer
@@ -70,7 +72,7 @@ class BottomSheetPage2 extends ConsumerWidget {
                 children: [
                   Text("카페지기", style: TextSize.textSize_bold_16),
                   SizedBox(height: 10),
-                  BottomSheetCafeVIP(),
+                  // BottomSheetCafeVIP(),
                   SizedBox(height: 10)
                 ],
               ),
