@@ -21,7 +21,7 @@ class BottomSheetDetailFloor extends ConsumerWidget {
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: mapState.selectedCafe.cafeFloors.length * 2 - 1, // 아이템과 디바이더 개수의 총합
+        itemCount: mapState.selectedCafe.cafeFloors.length * 2, // 아이템과 디바이더 개수의 총합
         itemBuilder: (context, index) {
           if (index.isEven) { // index가 짝수인 경우 (층 정보 위젯)
             final cafeIndex = index ~/ 2;
@@ -33,7 +33,7 @@ class BottomSheetDetailFloor extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("$floor층", style: TextSize.textSize_bold_16,),
+                  Text("$floor층", style: TextSize.textSize_bold_16),
                   SizedBox(height: 10),
                   Image.asset(
                     cafeFloor.recentUpdates.isNotEmpty

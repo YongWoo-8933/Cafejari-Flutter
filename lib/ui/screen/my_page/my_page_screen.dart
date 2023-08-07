@@ -18,27 +18,11 @@ class MyPageScreen extends ConsumerWidget {
     final myPageState = ref.watch(myPageViewModelProvider);
     final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
     String _url = "https://cafejari.software/information/tos/";
-    myPageViewModel.refreshUser();
+    // myPageViewModel.refreshUser();
 
 
-    return Scaffold(
-        // body: ListView(
-        //   padding: EdgeInsets.symmetric(horizontal: 20),
-        //   children: [
-        //     Container(
-        //       child: FloatingActionButton(
-        //         child: Text("url"),
-        //         onPressed: () async {
-        //           await launchUrlString(_url);
-        //         },
-        //       ),
-        //     ),
-        //     MyPageImage(),
-        //     MyPagePoint(),
-        //     MyPageShop(),
-        //   ]
-      body: BottomSheetPage2()
-      //CATIBlocks(is_clicked_1: true, is_clicked_2: false,is_clicked_3: true, is_clicked_4: false),
+    return const Scaffold(
+      body: BottomSheetCafeVIP(),
     );
   }
 }

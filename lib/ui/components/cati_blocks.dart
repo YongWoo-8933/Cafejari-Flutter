@@ -17,6 +17,7 @@ class CATIBlocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildCategoryColumn("개방", "아늑", is_clicked_1),
         SizedBox(width: 10),

@@ -36,7 +36,12 @@ class BottomSheetPage2 extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ActionButtonPrimary(buttonWidth: MediaQuery.of(context).size.width - 160, buttonHeight: 40, title: "혼잡도 등록",  onPressed: () => mapState.pageController.jumpToPage(2), ),
+                      ActionButtonPrimary(
+                        buttonWidth: MediaQuery.of(context).size.width - 160,
+                        buttonHeight: 40,
+                        title: "혼잡도 등록",
+                        onPressed: () => mapState.pageController.jumpToPage(2)
+                      ),
                       const SizedBox(width: 10),
                       ShareButton(buttonSize: 40,),
                       const SizedBox(width: 10),
@@ -52,31 +57,7 @@ class BottomSheetPage2 extends ConsumerWidget {
               ),
             ),
             BottomSheetCATI(),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColor.secondaryContainer
-              ),
-              padding: AppPadding.padding_30,
-              child:  const Column(
-                children: [
-                  SizedBox(height: 10),
-                  Text("CATI", style: TextSize.textSize_bold_16),
-                  // BottomSheetCATI(),
-                  SizedBox(height: 10)
-                ],
-              ),
-            ),
-            Container(
-              padding: AppPadding.padding_30,
-              child: const Column(
-                children: [
-                  Text("카페지기", style: TextSize.textSize_bold_16),
-                  SizedBox(height: 10),
-                  // BottomSheetCafeVIP(),
-                  SizedBox(height: 10)
-                ],
-              ),
-            ),
+            BottomSheetCafeVIP(),
             SizedBox(height: 30),
             Text("상세 정보", style: TextSize.textSize_bold_16),
             BottomSheetMoreInfo(),

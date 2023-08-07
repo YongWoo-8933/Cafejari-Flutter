@@ -4,11 +4,13 @@ import 'package:cafejari_flutter/ui/components/snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/shop_view_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -58,13 +60,7 @@ class ShopScreen extends ConsumerWidget {
             //     );
             //   },
             // );
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     settings: RouteSettings(name: "SamplePage1"),
-            //     builder: (context) => LoginScreen(),
-            //   ),
-            // );
+            GoRouter.of(context).pushNamed(ScreenRoute.splash);
           },
           child: Text("${globalState.deviceSize.width}, ${globalState.deviceSize.height}"),
         ),
