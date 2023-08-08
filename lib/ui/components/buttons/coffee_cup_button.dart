@@ -31,7 +31,7 @@ class CoffeeCupButton extends StatelessWidget { // 크기가 더 작아질시 ic
             },
             backgroundColor: AppColor.primary,
             child: Image.asset(
-              "/asset/image/icon_coffeeCup.png",
+              "asset/image/icon_coffeecup.png",
               width: 15,
               height: 15,
             ),

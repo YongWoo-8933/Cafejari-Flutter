@@ -97,15 +97,15 @@ class CustomSlider extends StatelessWidget {
     }
   }
 
-  Icon getIconsForValue(double value) {
+  Image getIconsForValue(double value) {
     if (value <= 25) {
-      return Icon(CupertinoIcons.person, color: Colors.black);
+      return Image.asset('asset/image/cafe_icon_1.png');
     } else if (value <= 50) {
-      return Icon(CupertinoIcons.person_2, color: Colors.white);
+      return Image.asset('asset/image/cafe_icon_2.png');
     } else if (value <= 75) {
-      return Icon(CupertinoIcons.person_3, color: Colors.white);
+      return Image.asset('asset/image/cafe_icon_3.png');
     } else {
-      return Icon(CupertinoIcons.person_3, color: Colors.white);
+      return Image.asset('asset/image/cafe_icon_4.png');
     }
   }
 

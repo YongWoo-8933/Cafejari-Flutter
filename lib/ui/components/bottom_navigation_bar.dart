@@ -26,33 +26,37 @@ class BottomNavBar extends ConsumerWidget {
         items:  [
           BottomNavigationBarItem(
             icon: _BottomBarUnit(
-              icon: CupertinoIcons.map_fill,
+              imageAsset: 'asset/image/icon_navigation_map_grey.png',
+              imageAssetSelected: 'asset/image/icon_navigation_map.png',
               isSelected: globalState.currentPage.index == PageType.map.index,
-              description: "지도",
+              description: "탐색",
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: _BottomBarUnit(
-              icon: Icons.military_tech,
+              imageAsset: 'asset/image/icon_medal_grey.png',
+              imageAssetSelected: 'asset/image/icon_medal.png',
               isSelected: globalState.currentPage.index == PageType.leaderboard.index,
-              description: "랭킹",
+              description: "챌린지",
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: _BottomBarUnit(
-              icon: Icons.shopping_cart,
+              imageAsset: 'asset/image/icon_plag_grey.png',
+              imageAssetSelected: 'asset/image/icon_plag.png',
               isSelected: globalState.currentPage.index == PageType.shop.index,
-              description: "상점",
+              description: "카페로그",
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: _BottomBarUnit(
-              icon: CupertinoIcons.profile_circled,
+              imageAsset: 'asset/image/icon_user_grey.png',
+              imageAssetSelected: 'asset/image/icon_user.png',
               isSelected: globalState.currentPage.index == PageType.profile.index,
-              description: "프로필",
+              description: "MY",
             ),
             label: "",
           ),
@@ -67,31 +71,43 @@ class BottomNavBar extends ConsumerWidget {
 }
 
 class _BottomBarUnit extends StatelessWidget {
-  final IconData icon;
+  final String imageAsset;
+  final String imageAssetSelected;
   final bool isSelected;
   final String description;
 
-  const _BottomBarUnit(
-      {Key? key, required this.icon, required this.isSelected, required this.description})
-      : super(key: key);
+  const _BottomBarUnit({
+    Key? key,
+    required this.imageAsset,
+    required this.imageAssetSelected,
+    required this.isSelected,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 36,
-        height: 40,
-        child: Column(
-          children: [
-            Icon(icon, size: 24, color: isSelected ? AppColor.brown_500 : AppColor.grey_300),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                child: Text(description,
-                    style: TextStyle(
-                        fontSize: 10.0,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                        color: isSelected ? AppColor.brown_500 : AppColor.grey_300)))
-          ],
-        ),
+      width: 50,
+      height: 42,
+      child: Column(
+        children: [
+          Image.asset(
+            isSelected ? imageAssetSelected : imageAsset,
+            width: 26,
+            height: 26,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2.0),
+            child: Text(
+              description,
+              style: TextStyle(
+                fontSize: 10.0,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

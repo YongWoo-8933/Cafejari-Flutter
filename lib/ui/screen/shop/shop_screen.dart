@@ -30,49 +30,61 @@ class ShopScreen extends ConsumerWidget {
           onPressed: () { print(GoRouter.of(context).routerDelegate.currentConfiguration.matches); },
         ),
         Center(
-            child: SizedBox(
-          width: double.infinity,
-          height: 200,
-          child: ElevatedButton(
-            onPressed: () {
-// final customSnackBar = CustomSnackBar(
-//   content: Text('커스텀 SnackBar'),
-//   action: SnackBarAction(
-//     label: '닫기',
-//     onPressed: () {},
-//   ),
-//   contentTextStyle: TextStyle(
-//     color: Colors.white,
-//     fontSize: 18.0,
-//   ),
-// );
-//
-// // 커스텀 SnackBar를 보여줍니다.
-// ScaffoldMessenger.of(context).showSnackBar(customSnackBar);
-// showDialog(
-//   context: context,
-//   builder: (BuildContext context) {
-//     return CustomAlertDialog(
-//       title: Text('알림'),
-//       content: Text('다이얼로그 내용'),
-//       actions: [
-//         FloatingActionButton(
-//           child: Text('확인'),
-//           onPressed: () {
-//             Navigator.of(context).pop();
-//           },
-//         ),
-//       ],
-//     );
-//   },
-// );
-              GoRouter.of(context).goNamed(ScreenRoute.login);
+          child: SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                GoRouter.of(context).goNamed(ScreenRoute.login);
+              },
+              child: null,
+            )
+          ),
+        )
+      ]
+    );
+
+    return Center(child: SizedBox(
+        width: double.infinity,
+        height: 200,
+        child: ElevatedButton(
+          onPressed: () {
+            // final customSnackBar = CustomSnackBar(
+            //   content: Text('커스텀 SnackBar'),
+            //   action: SnackBarAction(
+            //     label: '닫기',
+            //     onPressed: () {},
+            //   ),
+            //   contentTextStyle: TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 18.0,
+            //   ),
+            // );
+            //
+            // // 커스텀 SnackBar를 보여줍니다.
+            // ScaffoldMessenger.of(context).showSnackBar(customSnackBar);
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return CustomAlertDialog(
+            //       title: Text('알림'),
+            //       content: Text('다이얼로그 내용'),
+            //       actions: [
+            //         FloatingActionButton(
+            //           child: Text('확인'),
+            //           onPressed: () {
+            //             Navigator.of(context).pop();
+            //           },
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
+              GoRouter.of(context).goNamed(ScreenRoute.registration);
             },
             child: Text("${globalState.deviceSize.width}, ${globalState.deviceSize.height}"),
           ),
         )
-        )
-      ],
     );
   }
 }

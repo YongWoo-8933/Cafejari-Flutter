@@ -6,6 +6,9 @@ class ScreenRoute {
   static const String splash = "splash_screen";
   static const String login = "login_screen";
   static const String registration = "registration_screen";
+  static const String map = "map_screen";
+  static const String my_cafe = "my_cafe_screen";
+
 }
 
 enum PageType { map, leaderboard, shop, profile }

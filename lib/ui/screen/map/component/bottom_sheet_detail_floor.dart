@@ -33,7 +33,6 @@ class BottomSheetDetailFloor extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("$floor층", style: TextSize.textSize_bold_16,),
                   SizedBox(height: 10),
                   Image.asset(
                     cafeFloor.recentUpdates.isNotEmpty

@@ -50,6 +50,7 @@ class TextSize {
   );
   static const textSize_12 = TextStyle(
       fontSize: 12,
+      color: AppColor.black
   );
   static const textSize_white_12 = TextStyle(
     fontSize: 12,

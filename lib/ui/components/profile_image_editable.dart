@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ProfileImageFrame extends Container {
-  ProfileImageFrame({
+class ProfileImageEditable extends Container {
+  ProfileImageEditable({
     Key? key,
     required double size,
     required String imageUrl,
