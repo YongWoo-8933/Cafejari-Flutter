@@ -7,7 +7,8 @@ class AppColor {
   static const Color crowdedOrange = Color(0xFFfd9018);
   static const Color crowdedRed = Color(0xFFf33203);
 
-  static const Color grey_100 = Color(0xFFDEDFE4);
+  static const Color grey_100 = Color(0xFFF4F4F4);
+  static const Color grey_200 = Color(0xFFEFEFEF);
   static const Color grey_300 = Color(0xFFC1C2C7);
   static const Color grey_500 = Color(0xFF919297);
   static const Color grey_700 = Color(0xFF75767B);
@@ -30,6 +31,8 @@ class AppColor {
   static const Color transparentBlack_500 = Color(0x80272914);
   static const Color transparentBlack_600 = Color(0x99272914);
   static const Color transparentBlack_700 = Color(0xB3272914);
+
+  static const Color transparentGrey_300 = Color(0xCCF5F7FA);
 
   static const Color secondaryContainer = Color(0xFFF8F7F7);
   static const Color bookMark = Color(0xFFD0D0D0);

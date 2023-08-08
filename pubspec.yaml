@@ -78,6 +78,7 @@ dependencies:
   animations: ^2.0.7
 
   # 이미지
+  cached_network_image: ^3.2.3
   photo_view: ^0.14.0
 
   # bottom navigation bar
@@ -101,6 +102,9 @@ dependencies:
   # 보안 키 관리
   flutter_dotenv: ^5.1.0
   async: ^2.3.0
+
+  # 로딩 애니메이션
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:

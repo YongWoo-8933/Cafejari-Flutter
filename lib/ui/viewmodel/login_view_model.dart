@@ -12,7 +12,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       : _userUseCase = userUseCase,
         super(LoginState.empty());
 
-  kakaoLogin({required String accessToken}) async {
+  kakaoLogin({required String accessToken, required Function(bool) onLoginSuccess}) async {
     try {
       final loginRes = await _userUseCase.kakaoLogin(accessToken: accessToken);
       if(loginRes.isUserExist) {
@@ -23,13 +23,17 @@ class LoginViewModel extends StateNotifier<LoginState> {
             refreshToken: loginFinishRes.refreshToken,
             user: loginFinishRes.user);
         // 화면 이동 로직
+        onLoginSuccess(true);
       } else {
         // 가입 유저
         state = state.copyWith(kakaoAccessToken: loginRes.accessToken);
         // 화면 이동 로직
+        onLoginSuccess(false);
       }
     } on ErrorWithMessage {
       // 에러 메시지 출력
     }
   }
+
+  setKakaoLoginLoading(bool isLoading) => state = state.copyWith(isKakaoLoginLoading: isLoading);
 }

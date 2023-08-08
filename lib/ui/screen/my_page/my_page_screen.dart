@@ -1,5 +1,7 @@
 
+import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
@@ -20,23 +22,33 @@ class MyPageScreen extends ConsumerWidget {
     String _url = "https://cafejari.software/information/tos/";
 
     return Scaffold(
-        // body: ListView(
-        //   padding: EdgeInsets.symmetric(horizontal: 20),
-        //   children: [
-        //     Container(
-        //       child: FloatingActionButton(
-        //         child: Text("url"),
-        //         onPressed: () async {
-        //           await launchUrlString(_url);
-        //         },
-        //       ),
-        //     ),
-        //     MyPageImage(),
-        //     MyPagePoint(),
-        //     MyPageShop(),
-        //   ]
-      body: BottomSheetPage2()
-      //CATIBlocks(is_clicked_1: true, is_clicked_2: false,is_clicked_3: true, is_clicked_4: false),
+      body:  Container(
+        decoration: BoxDecoration(
+          color: AppColor.primary
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "간편하게",
+              style: TextStyle(
+                  color: AppColor.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800
+              ),
+            ),
+            HorizontalSpacer(4),
+            Text(
+              "로그인하세요!",
+              style: TextStyle(
+                color: AppColor.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

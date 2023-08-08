@@ -28,7 +28,7 @@ class CafejariApp extends ConsumerWidget  {
     bool darkMode = ref.watch(darkModeProvider);
 
     return MaterialApp.router(
-      theme: darkMode ? Themings.darkTheme : Themings.lightTheme,
+      theme: darkMode ? Theming.darkTheme : Theming.lightTheme,
       routerConfig: _router,
     );
   }
@@ -74,9 +74,9 @@ class _RootScreen extends ConsumerWidget {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
-    // Future.delayed(Duration.zero, () {
-    //   globalViewModel.init(MediaQuery.of(context).size);
-    // });
+    Future.delayed(Duration.zero, () {
+      globalViewModel.init(MediaQuery.of(context).size);
+    });
 
     return WillPopScope(
       onWillPop: () async {

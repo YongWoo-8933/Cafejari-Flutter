@@ -67,5 +67,4 @@ class TextSize {
       fontSize: 10,
       color: AppColor.textColorOnContainer
   );
-
 }

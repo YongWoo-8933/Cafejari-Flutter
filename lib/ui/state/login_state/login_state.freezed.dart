@@ -19,6 +19,8 @@ mixin _$LoginState {
   List<({int id, String imageUrl})> get profileImages =>
       throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
+  bool get isKakaoLoginLoading => throw _privateConstructorUsedError;
+  bool get isAppleLoginLoading => throw _privateConstructorUsedError;
   String get kakaoAccessToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,6 +37,8 @@ abstract class $LoginStateCopyWith<$Res> {
   $Res call(
       {List<({int id, String imageUrl})> profileImages,
       String nickname,
+      bool isKakaoLoginLoading,
+      bool isAppleLoginLoading,
       String kakaoAccessToken});
 }
 
@@ -53,6 +57,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   $Res call({
     Object? profileImages = null,
     Object? nickname = null,
+    Object? isKakaoLoginLoading = null,
+    Object? isAppleLoginLoading = null,
     Object? kakaoAccessToken = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +70,14 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
               as String,
+      isKakaoLoginLoading: null == isKakaoLoginLoading
+          ? _value.isKakaoLoginLoading
+          : isKakaoLoginLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppleLoginLoading: null == isAppleLoginLoading
+          ? _value.isAppleLoginLoading
+          : isAppleLoginLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
@@ -83,6 +97,8 @@ abstract class _$$_LoginStateCopyWith<$Res>
   $Res call(
       {List<({int id, String imageUrl})> profileImages,
       String nickname,
+      bool isKakaoLoginLoading,
+      bool isAppleLoginLoading,
       String kakaoAccessToken});
 }
 
@@ -99,6 +115,8 @@ class __$$_LoginStateCopyWithImpl<$Res>
   $Res call({
     Object? profileImages = null,
     Object? nickname = null,
+    Object? isKakaoLoginLoading = null,
+    Object? isAppleLoginLoading = null,
     Object? kakaoAccessToken = null,
   }) {
     return _then(_$_LoginState(
@@ -110,6 +128,14 @@ class __$$_LoginStateCopyWithImpl<$Res>
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
               as String,
+      isKakaoLoginLoading: null == isKakaoLoginLoading
+          ? _value.isKakaoLoginLoading
+          : isKakaoLoginLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppleLoginLoading: null == isAppleLoginLoading
+          ? _value.isAppleLoginLoading
+          : isAppleLoginLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
@@ -124,6 +150,8 @@ class _$_LoginState implements _LoginState {
   _$_LoginState(
       {required final List<({int id, String imageUrl})> profileImages,
       required this.nickname,
+      required this.isKakaoLoginLoading,
+      required this.isAppleLoginLoading,
       required this.kakaoAccessToken})
       : _profileImages = profileImages;
 
@@ -138,11 +166,15 @@ class _$_LoginState implements _LoginState {
   @override
   final String nickname;
   @override
+  final bool isKakaoLoginLoading;
+  @override
+  final bool isAppleLoginLoading;
+  @override
   final String kakaoAccessToken;
 
   @override
   String toString() {
-    return 'LoginState(profileImages: $profileImages, nickname: $nickname, kakaoAccessToken: $kakaoAccessToken)';
+    return 'LoginState(profileImages: $profileImages, nickname: $nickname, isKakaoLoginLoading: $isKakaoLoginLoading, isAppleLoginLoading: $isAppleLoginLoading, kakaoAccessToken: $kakaoAccessToken)';
   }
 
   @override
@@ -154,6 +186,10 @@ class _$_LoginState implements _LoginState {
                 .equals(other._profileImages, _profileImages) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
+            (identical(other.isKakaoLoginLoading, isKakaoLoginLoading) ||
+                other.isKakaoLoginLoading == isKakaoLoginLoading) &&
+            (identical(other.isAppleLoginLoading, isAppleLoginLoading) ||
+                other.isAppleLoginLoading == isAppleLoginLoading) &&
             (identical(other.kakaoAccessToken, kakaoAccessToken) ||
                 other.kakaoAccessToken == kakaoAccessToken));
   }
@@ -163,6 +199,8 @@ class _$_LoginState implements _LoginState {
       runtimeType,
       const DeepCollectionEquality().hash(_profileImages),
       nickname,
+      isKakaoLoginLoading,
+      isAppleLoginLoading,
       kakaoAccessToken);
 
   @JsonKey(ignore: true)
@@ -176,12 +214,18 @@ abstract class _LoginState implements LoginState {
   factory _LoginState(
       {required final List<({int id, String imageUrl})> profileImages,
       required final String nickname,
+      required final bool isKakaoLoginLoading,
+      required final bool isAppleLoginLoading,
       required final String kakaoAccessToken}) = _$_LoginState;
 
   @override
   List<({int id, String imageUrl})> get profileImages;
   @override
   String get nickname;
+  @override
+  bool get isKakaoLoginLoading;
+  @override
+  bool get isAppleLoginLoading;
   @override
   String get kakaoAccessToken;
   @override

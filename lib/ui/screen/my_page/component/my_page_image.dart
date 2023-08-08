@@ -25,7 +25,8 @@ class MyPageImage extends ConsumerWidget {
           child:  ClipOval(
             child: Image.network("${myPageState.user.imageUrl}",
               fit: BoxFit.fill),
-          )),
+          )
+        ),
       ],
     );
   }

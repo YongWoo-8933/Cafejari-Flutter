@@ -28,7 +28,7 @@ class CloseButton extends StatelessWidget {
           ),
           side: const BorderSide(
             color: AppColor.primary, // 테두리 색을 지정합니다.
-            width: 2.0, // 테두리 두께를 설정합니다.
+            width: 1.0, // 테두리 두께를 설정합니다.
           )
         ),
         child: const FittedBox(
