@@ -8,56 +8,53 @@ import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 class BottomSheetFloorDeco extends ConsumerWidget {
   const BottomSheetFloorDeco({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
-    return  Column(
+    return Column(children: [
+      Row(
         children: [
-          Row(
-            children: [
-              // for(int i=0; i<mapState.selectedCafeInfo.cafes.length; i++)
-              //   FittedBox(
-              //     child: SizedBox(
-              //       child: Row(
-              //         children: [
-              //           InkWell(
-              //             onTap: (){mapViewModel.changeSelectedCafe(mapState.selectedCafeInfo.cafes[i]);},
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                 borderRadius: BorderRadius.circular(30),
-              //                 color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.secondary : AppColor.white,
-              //                 border: Border.all(
-              //                   color: AppColor.secondary,
-              //                   width: 1
-              //                 )
-              //               ),
-              //               width: 50,
-              //               height: 40.0,
-              //               child: Center(
-              //                 child: Text(
-              //                   " ${mapState.selectedCafeInfo.firstFloor + i}층 ",
-              //                   style: TextStyle(
-              //                       fontWeight: FontWeight.bold,
-              //                       color: mapState.selectedCafe.id == mapState.selectedCafeInfo.cafes[i].id ? AppColor.white : AppColor.brown_300
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //           SizedBox(width: 10,height: 30,)
-              //           //Text("${mapState.selectedCafeInfo.cafes[i].crowded}"),
-              //         ],
-              //       ),
-              //     ),
-              //   )
-            ],
-          ),
-        ]
-    );
+          for (int i = 0; i < mapState.selectedCafe.cafeFloors.length; i++)
+            FittedBox(
+              child: SizedBox(
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        mapViewModel.changeSelectedCafeFloor(
+                            mapState.selectedCafe.cafeFloors[i]);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: mapState.selectedCafeFloor.id == mapState.selectedCafe.cafeFloors[i].id
+                                ? AppColor.secondary
+                                : AppColor.white,
+                            border: Border.all(
+                                color: AppColor.secondary, width: 1)),
+                        width: 50,
+                        height: 40.0,
+                        child: Center(
+                          child: Text(
+                            " ${mapState.selectedCafe.cafeFloors[i].floor}층 ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: mapState.selectedCafeFloor.id == mapState.selectedCafe.cafeFloors[i].id
+                                    ? AppColor.white
+                                    : AppColor.brown_300),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10, height: 30)
+                  ],
+                ),
+              ),
+            )
+        ],
+      ),
+    ]);
   }
-
 }
-

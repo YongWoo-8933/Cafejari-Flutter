@@ -57,8 +57,8 @@ class MapScreen extends ConsumerWidget {
                 controller: mapState.pageController,
                 physics: NeverScrollableScrollPhysics(),
                 children: const [
-                  BottomSheetPage1(),
-                  BottomSheetPage2(),
+                  // BottomSheetPage1(),
+                  // BottomSheetPage2(),
                   BottomSheetPage3(),
                 ]
               );

@@ -2,6 +2,7 @@
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
+import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_point.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_shop.dart';
@@ -21,8 +22,13 @@ class MyPageScreen extends ConsumerWidget {
     // myPageViewModel.refreshUser();
 
 
-    return const Scaffold(
-      body: BottomSheetCafeVIP(),
+    return  Scaffold(
+      body: Column(
+        children: [
+          BookMarkedCard(cafeName: "설빙 신촌점1", cafeAddress: "여기저기 어딘가",),
+          BookMarkedCard(cafeName: "설빙 신촌점2", cafeAddress: "여기저기 어딘가",),
+        ],
+      )
     );
   }
 }

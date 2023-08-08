@@ -1,9 +1,12 @@
 
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/buttons/coffee_cup_button.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class TopComponents extends ConsumerWidget {
   const TopComponents({Key? key}) : super(key: key);
@@ -31,6 +34,7 @@ class TopComponents extends ConsumerWidget {
                   )
                 ]
               ),
+              padding: AppPadding.padding_horizon_10,
               child: const Row(
                 children: [
                   Center(
@@ -38,19 +42,10 @@ class TopComponents extends ConsumerWidget {
                   )
                 ],
               ),
-              padding: AppPadding.padding_horizon_10,
             )
           ),
-          SizedBox(width: 10,),
-          Container(
-            height: 40,
-            width: 40,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColor.black
-            ),
-            child: const Icon(Icons.ac_unit, color: AppColor.white),
-          )
+          const SizedBox(width: 10),
+          CoffeeCupButton(isAlert: true, buttonSize: 40, onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.my_cafe);})
         ],
       ),
 

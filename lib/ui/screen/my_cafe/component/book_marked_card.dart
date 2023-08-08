@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 class BookMarkedCard extends StatelessWidget {
   final String cafeName;
-  final String cafeAdress;
+  final String cafeAddress;
   final VoidCallback? onPressed;
   final String? cafeImage;
 
   BookMarkedCard({
     required this.cafeName,
-    required this.cafeAdress,
+    required this.cafeAddress,
     this.onPressed,
     this.cafeImage
   });
@@ -29,30 +29,44 @@ class BookMarkedCard extends StatelessWidget {
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(cafeImage ?? " ")
+                image: AssetImage('asset/image/cafe_icon_2.png')
+                // NetworkImage(cafeImage ?? " ")
               ),
             ),
           ),
           SizedBox(height: 10),
           Text(cafeName, style: TextSize.textSize_bold_14),
-          Text(cafeAdress, style: TextSize.textSize_grey_12),
+          Text(cafeAddress, style: TextSize.textSize_grey_12),
           SizedBox(height: 10),
-          TextButton(
-            onPressed: () => {}, // 즐겨찾기에서 빼는 동작
-            style: TextButton.styleFrom(
+          ElevatedButton(
+            onPressed: () {
+              onPressed;
+            },
+            style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(color: AppColor.grey_300), // Add a gray border
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(color: AppColor.grey_300),
               ),
+              backgroundColor: AppColor.white,
+              elevation: 0,
+              minimumSize: Size(0, 30),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(CupertinoIcons.clear),
-                Text("취소"),
+                Text(
+                  "삭제",
+                  style: TextSize.textSize_12,
+                ),
+                Icon(
+                  CupertinoIcons.clear,
+                  size: 12,
+                  color: AppColor.black,
+                ),
               ],
             ),
-          ),
+          )
+
         ],
       ),
     );

@@ -40,7 +40,7 @@ class CATIBlocks extends StatelessWidget {
             width: 53,
             height: 32,
             decoration: BoxDecoration(
-              color: clicked ? AppColor.secondary : AppColor.white,
+              color: clicked ? AppColor.secondary : AppColor.unselectedButtonColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(5),
                 topRight: Radius.circular(5),
@@ -50,7 +50,7 @@ class CATIBlocks extends StatelessWidget {
               text1,
               style: TextStyle(
                 fontSize: 12,
-                color: clicked ? AppColor.white : AppColor.black,
+                color: clicked ? AppColor.unselectedButtonColor : AppColor.black,
               ),
             ),
           ),
@@ -62,7 +62,7 @@ class CATIBlocks extends StatelessWidget {
             width: 53,
             height: 32,
             decoration: BoxDecoration(
-              color: !clicked ? AppColor.secondary : AppColor.white,
+              color: !clicked ? AppColor.secondary : AppColor.unselectedButtonColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(5),
                 bottomRight: Radius.circular(5),
@@ -72,7 +72,7 @@ class CATIBlocks extends StatelessWidget {
               text2,
               style: TextStyle(
                 fontSize: 12,
-                color: !clicked ? AppColor.white : AppColor.black,
+                color: !clicked ? AppColor.unselectedButtonColor : AppColor.black,
               ),
             ),
           ),

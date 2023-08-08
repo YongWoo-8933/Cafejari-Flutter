@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
+import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
@@ -53,7 +54,12 @@ final GoRouter _router = GoRouter(
                   builder: (_, __) => const RegistrationScreen()
               )
             ]
-          )
+          ),
+          GoRoute(
+            path: "my_cafe",
+            name: ScreenRoute.my_cafe,
+            builder: (_, __) => const MyCafeScreen(),
+          ),
         ]
       ),
       GoRoute(
@@ -74,9 +80,9 @@ class _RootScreen extends ConsumerWidget {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
-    // Future.delayed(Duration.zero, () {
-    //   globalViewModel.init(MediaQuery.of(context).size);
-    // });
+    Future.delayed(Duration.zero, () {
+      globalViewModel.init(MediaQuery.of(context).size);
+    });
 
     return WillPopScope(
       onWillPop: () async {

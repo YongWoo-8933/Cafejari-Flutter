@@ -51,7 +51,6 @@ class BottomSheetCafeVIP extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-
                       width: 300,
                       height: 50,
                       child: Stack(

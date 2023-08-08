@@ -41,8 +41,8 @@ class AppColor {
   static const Color onSecondaryContainer = Color(0xFFF4EDEB);
   static const Color textColorOnContainer = Color(0xFFA1A7AE);
 
-
   static const Color explanationButton = Color(0xFFCACACA);
+  static const Color unselectedButtonColor = Color(0xFFD4D2D2);
   static const Color occupancyLevel1 = Color(0xFFAAA29B);
   static const Color occupancyLevel2 = Color(0xFF5A4F4F);
 }

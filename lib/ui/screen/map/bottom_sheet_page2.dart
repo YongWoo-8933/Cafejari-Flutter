@@ -10,7 +10,9 @@ import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart'
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_detail_floor.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_more_info.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_title.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +22,7 @@ class BottomSheetPage2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
 
     return SingleChildScrollView( // 세로 스크롤 설정
       child: Container(
@@ -58,10 +61,18 @@ class BottomSheetPage2 extends ConsumerWidget {
             ),
             BottomSheetCATI(),
             BottomSheetCafeVIP(),
-            SizedBox(height: 30),
-            Text("상세 정보", style: TextSize.textSize_bold_16),
             BottomSheetMoreInfo(),
             SizedBox(height: 10),
+            Container(
+              alignment: Alignment.center,
+              child: ActionButtonPrimary(
+                buttonWidth: globalState.deviceSize.width*0.6,
+                buttonHeight: 40,
+                title: " 매장정보 제보하고 포인트받기",
+                icon: CupertinoIcons.square_pencil,
+                onPressed: () => {},
+              ),
+            )
           ],
         ),
       ),

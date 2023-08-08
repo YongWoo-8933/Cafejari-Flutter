@@ -72,14 +72,24 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         Text("일요일 ", style: TextSize.textSize_grey_14),
-                        Text(mapState.selectedCafe.openingHour?.son != null ? '${convertTo12HourFormat(mapState.selectedCafe.openingHour!.son)}' : '정보없음')
                         Text(mapState.selectedCafe.openingHour?.sun != null ? '${convertTo12HourFormat(mapState.selectedCafe.openingHour!.sun)}' : '정보없음')
                       ],
                     ),
                   ],
                 )
               ],
-            )
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                  Image.asset('asset/image/icon_tissue_grey.png'),
+                  SizedBox(width: 10),
+                  Text("화장실 ", style: TextSize.textSize_grey_14),
+                for(int i=0; i<mapState.selectedCafe.cafeFloors.length; i++)
+                  Text(mapState.selectedCafe.cafeFloors[i].restroom.isNotNull ? "${mapState.selectedCafe.cafeFloors[i].floor}층": "")
+              ],
+            ),
+
           ],
       ),
     );
