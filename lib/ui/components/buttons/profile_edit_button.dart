@@ -1,14 +1,15 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:flutter/material.dart';
 
-class ProfileEditButton extends StatelessWidget { // 크기가 더 작아질시 icon크기 조절 필
-  final double? buttonSize;
-  final Function? onPressed;
+class ProfileEditButton extends StatelessWidget {
+  final double buttonSize;
+  final VoidCallback onPressed;
 
-  ProfileEditButton({
+  const ProfileEditButton({
+    super.key,
     required this.buttonSize,
-    this.onPressed,
+    required this.onPressed,
   });
 
   @override
@@ -17,23 +18,30 @@ class ProfileEditButton extends StatelessWidget { // 크기가 더 작아질시 
       width: buttonSize,
       height: buttonSize,
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-              color: AppColor.secondary,
-              width: 1.0
-          )
-      ),
-      child: FloatingActionButton(
-        onPressed: () {
-          if (onPressed != null) {
-            onPressed!(); // 콜백 함수 호출
-          }
-        },
-        backgroundColor: AppColor.white,
-        child: const Icon(
-          CupertinoIcons.pencil,
+        shape: BoxShape.circle,
+        border: Border.all(
           color: AppColor.secondary,
-          size: 15,
+          width: 1.0
+        )
+      ),
+      child: SizedBox(
+          width: buttonSize,
+          height: buttonSize,
+          child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(buttonSize / 2),
+            ),
+            elevation: 1.0,
+            padding: AppPadding.padding_0
+          ),
+          child: Icon(
+            Icons.edit,
+            size: buttonSize / 2,
+            color: AppColor.secondary,
+          ),
         ),
       ),
     );

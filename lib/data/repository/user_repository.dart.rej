@@ -1,0 +1,14 @@
+diff a/lib/data/repository/user_repository.dart b/lib/data/repository/user_repository.dart	(rejected hunks)
+@@ -8,12 +8,6 @@
+   Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
+   Future<LoginResponse> kakaoLoginFinish({required String accessToken});
+   Future<List<GradeResponse>> fetchGrade();
+-  Future<NicknameResponse> validateNickname({
+-    required String nickname,
+-  });
+-  Future<UserResponse> fetchUser({
+-    required String accessToken,
+-  });
+   Future<NicknameResponse> validateNickname({required String nickname});
+   Future<NicknameResponse> autoGenerateNickname();
+   Future<UserResponse> fetchUser({required String accessToken});

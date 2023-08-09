@@ -1,0 +1,10 @@
+diff a/lib/cafejari_app.dart b/lib/cafejari_app.dart	(rejected hunks)
+@@ -132,7 +132,7 @@
+       child: Scaffold(
+           body: IndexedStack(
+             index: globalState.currentPage.index,
+-            children: const [MapScreen(), LeaderboardScreen(), ShopScreen(), MyPageScreen()],
++            children: const [MapScreen(), ChallengeScreen(), ShopScreen(), MyPageScreen()],
+           ),
+           bottomNavigationBar: const BottomNavBar(),
+           backgroundColor: Colors.transparent),
