@@ -48,6 +48,7 @@ class AppColor {
   static const Color unselectedButtonColor = Color(0xFFD4D2D2);
   static const Color occupancyLevel1 = Color(0xFFAAA29B);
   static const Color occupancyLevel2 = Color(0xFF5A4F4F);
+  static const Color challengeBlock = Color(0xFFF5F5F5);
 }
 ///Color? primary,
 ///Color? onPrimary,
