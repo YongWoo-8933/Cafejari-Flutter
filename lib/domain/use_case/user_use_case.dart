@@ -13,6 +13,8 @@ abstract class UserUseCase {
   Future<User> getUser({required String accessToken});
   Future<Grades> getGrades();
   Future<String> validateNickname({required String nickname});
+  Future<String> autoGenerateNickname();
+  Future<List<(int profileImageId, String imageUrl)>> getDefaultProfileImages();
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
@@ -76,6 +78,30 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     try {
       NicknameResponse res = await userRepository.validateNickname(nickname: nickname);
       return res.nickname;
+    }on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> autoGenerateNickname() async {
+    try {
+      NicknameResponse res = await userRepository.autoGenerateNickname();
+      return res.nickname;
+    }on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<(int, String)>> getDefaultProfileImages() async {
+    try {
+      List<ProfileImageResponse> profileImageResponseList = await userRepository.fetchProfileImage();
+      List<(int, String)> profileImageSets = [];
+      for(ProfileImageResponse profileImageResponse in profileImageResponseList) {
+        profileImageSets.add((profileImageResponse.id, profileImageResponse.image));
+      }
+      return profileImageSets;
     }on ErrorWithMessage {
       rethrow;
     }

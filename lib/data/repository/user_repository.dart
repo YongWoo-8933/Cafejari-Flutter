@@ -8,12 +8,10 @@ abstract class UserRepository {
   Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
   Future<LoginResponse> kakaoLoginFinish({required String accessToken});
   Future<List<GradeResponse>> fetchGrade();
-  Future<NicknameResponse> validateNickname({
-    required String nickname,
-  });
-  Future<UserResponse> fetchUser({
-    required String accessToken,
-  });
+  Future<NicknameResponse> validateNickname({required String nickname});
+  Future<NicknameResponse> autoGenerateNickname();
+  Future<UserResponse> fetchUser({required String accessToken});
+  Future<List<ProfileImageResponse>> fetchProfileImage();
 }
 
 /// user repository의 구현부
@@ -93,6 +91,34 @@ class UserRepositoryImpl implements UserRepository {
           query: {"nickname": nickname}
       );
       return NicknameResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<NicknameResponse> autoGenerateNickname() async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "user",
+          endpoint: "profile/auto_generate_nickname/"
+      );
+      return NicknameResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ProfileImageResponse>> fetchProfileImage() async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "user",
+          endpoint: "profile_image/"
+      );
+      return response.map((dynamic e) => NicknameResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     }

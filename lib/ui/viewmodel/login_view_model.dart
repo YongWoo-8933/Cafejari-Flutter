@@ -19,9 +19,9 @@ class LoginViewModel extends StateNotifier<LoginState> {
         // 기존 유저
         final loginFinishRes = await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
         globalViewModel.saveLoginResult(
-            accessToken: loginFinishRes.accessToken,
-            refreshToken: loginFinishRes.refreshToken,
-            user: loginFinishRes.user);
+          accessToken: loginFinishRes.accessToken,
+          refreshToken: loginFinishRes.refreshToken,
+          user: loginFinishRes.user);
         // 화면 이동 로직
         onLoginSuccess(true);
       } else {
@@ -36,4 +36,28 @@ class LoginViewModel extends StateNotifier<LoginState> {
   }
 
   setKakaoLoginLoading(bool isLoading) => state = state.copyWith(isKakaoLoginLoading: isLoading);
+
+  autoGenerateNickname() async {
+    try {
+      final nickname = await _userUseCase.autoGenerateNickname();
+      state.nicknameController.text = nickname;
+    } on ErrorWithMessage catch(e) {
+      // 에러 메시지
+    }
+  }
+
+  Future<String> validateNickname() async {
+    if(state.nicknameController.text.length < 2) {
+      return "닉네임은 2자 이상이어야 합니다";
+    } else if(state.nicknameController.text.length > 10) {
+      return "닉네임은 최대 10자입니다";
+    } else {
+      try {
+        state = state.copyWith(nickname: await _userUseCase.validateNickname(nickname: state.nicknameController.text));
+        return "";
+      } on ErrorWithMessage catch(e) {
+        return e.message;
+      }
+    }
+  }
 }

@@ -1,10 +1,9 @@
 
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/buttons/profile_edit_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProfileImageEditable extends Container {
   ProfileImageEditable({
@@ -24,30 +23,7 @@ class ProfileImageEditable extends Container {
         ),
         Align(
           alignment: Alignment.bottomRight,
-          child: SizedBox(
-            width: 48,
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onEditButtonClick,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColor.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                side: const BorderSide(
-                  color: AppColor.secondary,
-                  width: 1.0,
-                ),
-                elevation: 1.0,
-                padding: AppPadding.padding_0
-              ),
-              child: const Icon(
-                Icons.edit,
-                size: 24,
-                color: AppColor.secondary,
-              ),
-            ),
-          ),
+          child: ProfileEditButton(buttonSize: 40, onPressed: () {})
         )
       ],
     )
