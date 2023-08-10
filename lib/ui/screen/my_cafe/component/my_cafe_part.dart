@@ -14,14 +14,14 @@ class MyCafePart extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: AppPadding.padding_30,
+      padding: AppPadding.padding_horizon_30,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("내 카페 PICK", style: TextSize.textSize_bold_16),
           SizedBox(height: 10),
           SizedBox(
-            height: 200, // 원하는 높이로 조정하세요
+            height: 180, // 원하는 높이로 조정하세요
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [

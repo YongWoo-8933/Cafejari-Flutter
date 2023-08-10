@@ -9,11 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class RegistrationScreen extends ConsumerWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends ConsumerStatefulWidget {
+  const RegistrationScreen({Key? key}): super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  RegistrationScreenState createState() => RegistrationScreenState();
+}
+
+class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.watch(loginViewModelProvider.notifier).autoGenerateNickname();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final loginState = ref.watch(loginViewModelProvider);
     final globalState = ref.watch(globalViewModelProvider);
     final loginViewModel = ref.watch(loginViewModelProvider.notifier);
@@ -21,42 +32,42 @@ class RegistrationScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: BackButtonAppBar(
-          backGroundColor: AppColor.white,
-          onBack: () => GoRouter.of(context).pop()
-        ),
-        body: SlidingUpPanel(
-          controller: loginState.bottomSheetController,
-          minHeight: 0,
-          maxHeight: globalState.deviceSize.height * 0.9,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.elliptical(20.0, 20.0),
-            topRight: Radius.elliptical(20.0, 20.0)
+          appBar: BackButtonAppBar(
+              backGroundColor: AppColor.white,
+              onBack: () => GoRouter.of(context).pop()
           ),
-          body: ListView(
-            children: const [
-              ProfilePart(),
-              AgreementPart(),
-            ],
-          ),
-          panelBuilder: (ScrollController sc) {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 80,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 1
-              ),
-              itemCount: 30,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  color: AppColor.crowdedGreen,
-                  child: Text("$index"),
-                );
-              },
-            );
-          },
-        )
+          body: SlidingUpPanel(
+            controller: loginState.bottomSheetController,
+            minHeight: 0,
+            maxHeight: globalState.deviceSize.height * 0.9,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.elliptical(20.0, 20.0),
+                topRight: Radius.elliptical(20.0, 20.0)
+            ),
+            body: ListView(
+              children: const [
+                ProfilePart(),
+                AgreementPart(),
+              ],
+            ),
+            panelBuilder: (ScrollController sc) {
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 80,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 1
+                ),
+                itemCount: 30,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    color: AppColor.crowdedGreen,
+                    child: Text("$index"),
+                  );
+                },
+              );
+            },
+          )
       ),
     );
   }

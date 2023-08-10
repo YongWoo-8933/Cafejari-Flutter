@@ -48,6 +48,11 @@ class TextSize {
       fontSize: 14,
       color: AppColor.white
   );
+  static const textSize_bold_white_14 = TextStyle(
+      fontSize: 14,
+      color: AppColor.white,
+      fontWeight: FontWeight.bold
+  );
   static const textSize_12 = TextStyle(
       fontSize: 12,
       color: AppColor.black

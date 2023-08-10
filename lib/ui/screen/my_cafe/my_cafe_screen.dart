@@ -1,4 +1,3 @@
-
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
@@ -28,22 +27,25 @@ class MyCafeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('내 카페', style: TextSize.textSize_16),
         leading: IconButton(
-              onPressed: () {context.go('/map');} ,
-              icon: const Icon(CupertinoIcons.left_chevron, color: AppColor.black,)),
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(CupertinoIcons.left_chevron, color: AppColor.black),
+        ),
         backgroundColor: AppColor.white,
         elevation: 0,
-
       ),
       backgroundColor: AppColor.white,
-      body: const Column(
-        children: [
-          MyCafePart(),
-          MyCATIPart(),
-          CafeRefPart()
-        ],
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            MyCafePart(),
+            MyCATIPart(),
+            SizedBox(height: 10),
+            CafeRefPart(),
+          ],
+        ),
       ),
-
     );
   }
 }
-

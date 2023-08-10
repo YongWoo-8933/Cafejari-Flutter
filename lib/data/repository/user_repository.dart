@@ -54,9 +54,9 @@ class UserRepositoryImpl implements UserRepository {
   Future<List<GradeResponse>> fetchGrade() async {
     try {
       List<dynamic> response = await apiService.request(
-        method: HttpMethod.get,
-        appLabel: "user",
-        endpoint: "grade/"
+          method: HttpMethod.get,
+          appLabel: "user",
+          endpoint: "grade/"
       );
       return response.map((dynamic e) => GradeResponse.fromJson(e)).toList();
     } on ErrorWithMessage {

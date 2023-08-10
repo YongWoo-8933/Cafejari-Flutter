@@ -1,5 +1,8 @@
 
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
+import 'package:cafejari_flutter/ui/screen/challenge/challenge_info_screen.dart';
+import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.dart';
+import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
@@ -61,6 +64,18 @@ final GoRouter _router = GoRouter(
             name: ScreenRoute.my_cafe,
             builder: (_, __) => const MyCafeScreen(),
           ),
+          GoRoute(
+            path: "challenge_info",
+            name: ScreenRoute.challenge_info,
+            builder: (_, __) => const ChallengeInfoScreen(),
+              routes: [
+                GoRoute(
+                    path: "challenge_progress",
+                    name: ScreenRoute.challenge_progress,
+                    builder: (_, __) => const ChallengeProgressScreen()
+                )
+              ]
+          ),
         ]
       ),
       GoRoute(
@@ -81,10 +96,6 @@ class _RootScreen extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
-    // if (globalState.deviceSize == Size.zero) {
-    //   globalViewModel.setDeviceSize(MediaQuery.of(context).size);
-    //   print("알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄");
-    // }
 
     return WillPopScope(
       onWillPop: () async {
@@ -119,7 +130,7 @@ class _RootScreen extends ConsumerWidget {
       child: Scaffold(
           body: IndexedStack(
             index: globalState.currentPage.index,
-            children: const [MapScreen(), LeaderboardScreen(), ShopScreen(), MyPageScreen()],
+            children: const [MapScreen(), ChallengeScreen(), ShopScreen(), MyPageScreen()],
           ),
           bottomNavigationBar: const BottomNavBar(),
           backgroundColor: Colors.transparent),

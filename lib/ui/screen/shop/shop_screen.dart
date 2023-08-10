@@ -17,32 +17,55 @@ import 'package:photo_view/photo_view_gallery.dart';
 class ShopScreen extends ConsumerWidget {
   const ShopScreen({super.key});
 
+  void _showAlertDialog(BuildContext context) {
+    final alertDialog = SquareAlertDialog(
+      content: Text("This is the content of the alert dialog."),
+      title: "Alert",
+      leftButton: "Cancel",
+      rightButton: "OK",
+    );
+
+    alertDialog.showTimed(context);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ShopViewModel shopViewModel = ref.read(shopViewModelProvider.notifier);
     final ShopState shopState = ref.watch(shopViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
 
-    return Column(
-      children: [
-        ElevatedButton(
-          child: Text("스택확인"),
-          onPressed: () { print(GoRouter.of(context).routerDelegate.currentConfiguration.matches); },
+    return Scaffold(
+      appBar: AppBar(title: Text("AlertDialog Example")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            _showAlertDialog(context);
+          },
+          child: Text("Show Alert"),
         ),
-        Center(
-          child: SizedBox(
-            width: double.infinity,
-            height: 200,
-            child: ElevatedButton(
-              onPressed: () {
-                GoRouter.of(context).goNamed(ScreenRoute.login);
-              },
-              child: null,
-            )
-          ),
-        )
-      ]
+      ),
     );
+
+    // return Column(
+    //   children: [
+    //     ElevatedButton(
+    //       child: Text("스택확인"),
+    //       onPressed: () { print(GoRouter.of(context).routerDelegate.currentConfiguration.matches); },
+    //     ),
+    //     Center(
+    //       child: SizedBox(
+    //         width: double.infinity,
+    //         height: 200,
+    //         child: ElevatedButton(
+    //           onPressed: () {
+    //             GoRouter.of(context).goNamed(ScreenRoute.login);
+    //           },
+    //           child: null,
+    //         )
+    //       ),
+    //     )
+    //   ]
+    // );
 
     return Center(child: SizedBox(
         width: double.infinity,

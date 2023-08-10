@@ -26,8 +26,8 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   @override
   Future<({String accessToken, bool isUserExist})> kakaoLogin({required String accessToken}) async {
     try{
-        KakaoLoginCallbackResponse response = await userRepository.kakaoLogin(accessToken: accessToken);
-        return (accessToken: response.access_token, isUserExist: response.user_exists);
+      KakaoLoginCallbackResponse response = await userRepository.kakaoLogin(accessToken: accessToken);
+      return (accessToken: response.access_token, isUserExist: response.user_exists);
     } on ErrorWithMessage{
       rethrow;
     }

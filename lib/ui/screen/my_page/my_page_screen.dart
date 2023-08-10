@@ -8,9 +8,11 @@ import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.da
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_point.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_shop.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
+import 'package:go_router/go_router.dart';
 
 class MyPageScreen extends ConsumerWidget {
   const MyPageScreen({super.key});
@@ -23,6 +25,9 @@ class MyPageScreen extends ConsumerWidget {
     // myPageViewModel.refreshUser();
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => GoRouter.of(context).go(ScreenRoute.login),
+      ),
       body:  Container(
         decoration: BoxDecoration(
           color: AppColor.primary
