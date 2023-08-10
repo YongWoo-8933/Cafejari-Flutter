@@ -17,6 +17,7 @@ class ChallengeInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +48,7 @@ class ChallengeInfoScreen extends ConsumerWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0), // Added padding to the bottom navigation bar
         child: ActionButtonPrimary(
-          buttonWidth: globalState.deviceSize.width - 60,
+          buttonWidth: deviceSize.width - 60,
           buttonHeight: 40,
           title: "참여하기",
           onPressed: () {

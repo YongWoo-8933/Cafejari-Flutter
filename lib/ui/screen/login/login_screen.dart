@@ -21,9 +21,9 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final LoginState loginState = ref.watch(loginViewModelProvider);
     final LoginViewModel loginViewModel = ref.watch(loginViewModelProvider.notifier);
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return DefaultTextStyle(
       style: const TextStyle(
@@ -79,7 +79,7 @@ class LoginScreen extends ConsumerWidget {
               ),
               const VerticalSpacer(28),
               LoginButton(
-                buttonWidth: globalState.deviceSize.width * 56 / 100,
+                buttonWidth: deviceSize.width * 56 / 100,
                 buttonHeight: 48,
                 textColor: AppColor.black,
                 backgroundColor: AppColor.kakaoYellow,
@@ -106,7 +106,7 @@ class LoginScreen extends ConsumerWidget {
               ),
               const VerticalSpacer(24),
               LoginButton(
-                buttonWidth: globalState.deviceSize.width * 56 / 100,
+                buttonWidth: deviceSize.width * 56 / 100,
                 buttonHeight: 48,
                 textColor: AppColor.white,
                 backgroundColor: AppColor.black,
@@ -119,7 +119,7 @@ class LoginScreen extends ConsumerWidget {
               ),
               const VerticalSpacer(60),
               SizedBox(
-                width: globalState.deviceSize.width * 56 / 100,
+                width: deviceSize.width * 56 / 100,
                 height: 60,
                 child: FloatingActionButton(
                   foregroundColor: AppColor.black,

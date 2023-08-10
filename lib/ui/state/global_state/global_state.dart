@@ -13,13 +13,11 @@ class GlobalState with _$GlobalState {
       {required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
-      required final PageType currentPage,
-      required final Size deviceSize}) = _GlobalState;
+      required final PageType currentPage}) = _GlobalState;
 
   factory GlobalState.empty() => GlobalState(
       accessToken: "",
       isLoggedIn: false,
       user: User.empty(),
-      currentPage: PageType.map,
-      deviceSize: Size.zero);
+      currentPage: PageType.map,);
 }

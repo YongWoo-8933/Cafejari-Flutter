@@ -105,7 +105,7 @@ class ShopScreen extends ConsumerWidget {
             // );
               GoRouter.of(context).goNamed(ScreenRoute.registration);
             },
-            child: Text("${globalState.deviceSize.width}, ${globalState.deviceSize.height}"),
+            child: Text(" "),
           ),
         )
     );

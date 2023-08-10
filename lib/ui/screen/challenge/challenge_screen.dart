@@ -21,7 +21,7 @@ class ChallengeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -42,8 +42,8 @@ class ChallengeScreen extends ConsumerWidget {
                     challengeImage: 'asset/image/login_background.png',
                     title: "학습 챌린지 응원 이벤트",
                     point: 600,
-                    width: globalState.deviceSize.width * 0.70,
-                    height: globalState.deviceSize.height * 0.47,
+                    width: deviceSize.width * 0.70,
+                    height: deviceSize.height * 0.47,
                     onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.challenge_info);}
                   ),
                   SizedBox(width: 10),
@@ -51,8 +51,8 @@ class ChallengeScreen extends ConsumerWidget {
                     challengeImage: 'asset/image/login_background.png',
                     title: "학습 챌린지 응원 이벤트",
                     point: 600,
-                    width: globalState.deviceSize.width * 0.77,
-                    height: globalState.deviceSize.height * 0.47,
+                    width: deviceSize.width * 0.77,
+                    height: deviceSize.height * 0.47,
                     onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.challenge_info);}
                   ),
                   // 추가적으로 ChallengeBlock을 더 추가할 수 있음

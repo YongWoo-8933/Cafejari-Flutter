@@ -26,7 +26,7 @@ class MyPageScreen extends ConsumerWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => GoRouter.of(context).go(ScreenRoute.login),
+        onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
       ),
       body:  Container(
         decoration: BoxDecoration(

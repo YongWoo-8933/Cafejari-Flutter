@@ -15,8 +15,8 @@ class BottomSheetCafeVIP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
-    final double imageWidth = (globalState.deviceSize.width-60) / 8;
+    final Size deviceSize = MediaQuery.of(context).size;
+    final double imageWidth = (deviceSize.width-60) / 8;
 
     // 이미지들의 리스트를 정의합니다.
     final List<Image> images = [

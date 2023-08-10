@@ -23,6 +23,7 @@ class BottomSheetPage2 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return SingleChildScrollView( // 세로 스크롤 설정
       child: Container(
@@ -66,7 +67,7 @@ class BottomSheetPage2 extends ConsumerWidget {
             Container(
               alignment: Alignment.center,
               child: ActionButtonPrimary(
-                buttonWidth: globalState.deviceSize.width*0.6,
+                buttonWidth: deviceSize.width*0.6,
                 buttonHeight: 40,
                 title: " 매장정보 제보하고 포인트받기",
                 icon: CupertinoIcons.square_pencil,
