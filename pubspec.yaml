@@ -101,6 +101,8 @@ dependencies:
 
   # 보안 키 관리
   flutter_dotenv: ^5.1.0
+
+  # 비동기 실행
   async: ^2.3.0
 
   # 로딩 애니메이션

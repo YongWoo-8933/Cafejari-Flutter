@@ -28,6 +28,7 @@ class BackButtonAppBar extends AppBar {
         ]
     ),
     elevation: 0,
+    scrolledUnderElevation: 1.0,
     backgroundColor: backGroundColor,
   );
 }

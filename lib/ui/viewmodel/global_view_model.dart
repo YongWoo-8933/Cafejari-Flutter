@@ -8,14 +8,12 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 
 class GlobalViewModel extends StateNotifier<GlobalState> {
   final TokenUseCase _tokenUseCase;
-
   // final LoginUseCase tokenUseCase;
+
 
   GlobalViewModel(this._tokenUseCase) : super(GlobalState.empty());
 
-  init(Size devicesize) {
-    state = state.copyWith(deviceSize: devicesize);
-  }
+  void setDeviceSize(Size size) => state = state.copyWith(deviceSize: size);
 
   void logout() {
     // 로그아웃 로직

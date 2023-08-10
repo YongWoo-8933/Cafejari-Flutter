@@ -28,7 +28,7 @@ class ActionButtonPrimary extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(buttonHeight ?? 0 / 2),
           ),
         ),
         child: FittedBox(

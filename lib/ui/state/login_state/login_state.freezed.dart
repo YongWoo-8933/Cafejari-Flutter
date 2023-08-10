@@ -18,11 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginState {
   List<({int id, String imageUrl})> get profileImages =>
       throw _privateConstructorUsedError;
-  String get nickname => throw _privateConstructorUsedError;
   TextEditingController get nicknameController =>
       throw _privateConstructorUsedError;
-  bool get isKakaoLoginLoading => throw _privateConstructorUsedError;
-  bool get isAppleLoginLoading => throw _privateConstructorUsedError;
+  PanelController get bottomSheetController =>
+      throw _privateConstructorUsedError;
   String get kakaoAccessToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,10 +37,8 @@ abstract class $LoginStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<({int id, String imageUrl})> profileImages,
-      String nickname,
       TextEditingController nicknameController,
-      bool isKakaoLoginLoading,
-      bool isAppleLoginLoading,
+      PanelController bottomSheetController,
       String kakaoAccessToken});
 }
 
@@ -59,10 +56,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @override
   $Res call({
     Object? profileImages = null,
-    Object? nickname = null,
     Object? nicknameController = null,
-    Object? isKakaoLoginLoading = null,
-    Object? isAppleLoginLoading = null,
+    Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
   }) {
     return _then(_value.copyWith(
@@ -70,22 +65,14 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.profileImages
           : profileImages // ignore: cast_nullable_to_non_nullable
               as List<({int id, String imageUrl})>,
-      nickname: null == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
       nicknameController: null == nicknameController
           ? _value.nicknameController
           : nicknameController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      isKakaoLoginLoading: null == isKakaoLoginLoading
-          ? _value.isKakaoLoginLoading
-          : isKakaoLoginLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAppleLoginLoading: null == isAppleLoginLoading
-          ? _value.isAppleLoginLoading
-          : isAppleLoginLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+      bottomSheetController: null == bottomSheetController
+          ? _value.bottomSheetController
+          : bottomSheetController // ignore: cast_nullable_to_non_nullable
+              as PanelController,
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
@@ -104,10 +91,8 @@ abstract class _$$_LoginStateCopyWith<$Res>
   @useResult
   $Res call(
       {List<({int id, String imageUrl})> profileImages,
-      String nickname,
       TextEditingController nicknameController,
-      bool isKakaoLoginLoading,
-      bool isAppleLoginLoading,
+      PanelController bottomSheetController,
       String kakaoAccessToken});
 }
 
@@ -123,10 +108,8 @@ class __$$_LoginStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? profileImages = null,
-    Object? nickname = null,
     Object? nicknameController = null,
-    Object? isKakaoLoginLoading = null,
-    Object? isAppleLoginLoading = null,
+    Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
   }) {
     return _then(_$_LoginState(
@@ -134,22 +117,14 @@ class __$$_LoginStateCopyWithImpl<$Res>
           ? _value._profileImages
           : profileImages // ignore: cast_nullable_to_non_nullable
               as List<({int id, String imageUrl})>,
-      nickname: null == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
-              as String,
       nicknameController: null == nicknameController
           ? _value.nicknameController
           : nicknameController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      isKakaoLoginLoading: null == isKakaoLoginLoading
-          ? _value.isKakaoLoginLoading
-          : isKakaoLoginLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAppleLoginLoading: null == isAppleLoginLoading
-          ? _value.isAppleLoginLoading
-          : isAppleLoginLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+      bottomSheetController: null == bottomSheetController
+          ? _value.bottomSheetController
+          : bottomSheetController // ignore: cast_nullable_to_non_nullable
+              as PanelController,
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
@@ -163,10 +138,8 @@ class __$$_LoginStateCopyWithImpl<$Res>
 class _$_LoginState implements _LoginState {
   _$_LoginState(
       {required final List<({int id, String imageUrl})> profileImages,
-      required this.nickname,
       required this.nicknameController,
-      required this.isKakaoLoginLoading,
-      required this.isAppleLoginLoading,
+      required this.bottomSheetController,
       required this.kakaoAccessToken})
       : _profileImages = profileImages;
 
@@ -179,19 +152,15 @@ class _$_LoginState implements _LoginState {
   }
 
   @override
-  final String nickname;
-  @override
   final TextEditingController nicknameController;
   @override
-  final bool isKakaoLoginLoading;
-  @override
-  final bool isAppleLoginLoading;
+  final PanelController bottomSheetController;
   @override
   final String kakaoAccessToken;
 
   @override
   String toString() {
-    return 'LoginState(profileImages: $profileImages, nickname: $nickname, nicknameController: $nicknameController, isKakaoLoginLoading: $isKakaoLoginLoading, isAppleLoginLoading: $isAppleLoginLoading, kakaoAccessToken: $kakaoAccessToken)';
+    return 'LoginState(profileImages: $profileImages, nicknameController: $nicknameController, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken)';
   }
 
   @override
@@ -201,14 +170,10 @@ class _$_LoginState implements _LoginState {
             other is _$_LoginState &&
             const DeepCollectionEquality()
                 .equals(other._profileImages, _profileImages) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
             (identical(other.nicknameController, nicknameController) ||
                 other.nicknameController == nicknameController) &&
-            (identical(other.isKakaoLoginLoading, isKakaoLoginLoading) ||
-                other.isKakaoLoginLoading == isKakaoLoginLoading) &&
-            (identical(other.isAppleLoginLoading, isAppleLoginLoading) ||
-                other.isAppleLoginLoading == isAppleLoginLoading) &&
+            (identical(other.bottomSheetController, bottomSheetController) ||
+                other.bottomSheetController == bottomSheetController) &&
             (identical(other.kakaoAccessToken, kakaoAccessToken) ||
                 other.kakaoAccessToken == kakaoAccessToken));
   }
@@ -217,10 +182,8 @@ class _$_LoginState implements _LoginState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_profileImages),
-      nickname,
       nicknameController,
-      isKakaoLoginLoading,
-      isAppleLoginLoading,
+      bottomSheetController,
       kakaoAccessToken);
 
   @JsonKey(ignore: true)
@@ -233,22 +196,16 @@ class _$_LoginState implements _LoginState {
 abstract class _LoginState implements LoginState {
   factory _LoginState(
       {required final List<({int id, String imageUrl})> profileImages,
-      required final String nickname,
       required final TextEditingController nicknameController,
-      required final bool isKakaoLoginLoading,
-      required final bool isAppleLoginLoading,
+      required final PanelController bottomSheetController,
       required final String kakaoAccessToken}) = _$_LoginState;
 
   @override
   List<({int id, String imageUrl})> get profileImages;
   @override
-  String get nickname;
-  @override
   TextEditingController get nicknameController;
   @override
-  bool get isKakaoLoginLoading;
-  @override
-  bool get isAppleLoginLoading;
+  PanelController get bottomSheetController;
   @override
   String get kakaoAccessToken;
   @override

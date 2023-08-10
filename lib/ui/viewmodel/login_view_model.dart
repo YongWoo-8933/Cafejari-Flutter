@@ -12,7 +12,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       : _userUseCase = userUseCase,
         super(LoginState.empty());
 
-  kakaoLogin({required String accessToken, required Function(bool) onLoginSuccess}) async {
+  Future<bool?> kakaoLogin({required String accessToken}) async {
     try {
       final loginRes = await _userUseCase.kakaoLogin(accessToken: accessToken);
       if(loginRes.isUserExist) {
@@ -22,20 +22,17 @@ class LoginViewModel extends StateNotifier<LoginState> {
           accessToken: loginFinishRes.accessToken,
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user);
-        // 화면 이동 로직
-        onLoginSuccess(true);
+        return true;
       } else {
         // 가입 유저
         state = state.copyWith(kakaoAccessToken: loginRes.accessToken);
-        // 화면 이동 로직
-        onLoginSuccess(false);
+        return false;
       }
     } on ErrorWithMessage {
       // 에러 메시지 출력
+      return null;
     }
   }
-
-  setKakaoLoginLoading(bool isLoading) => state = state.copyWith(isKakaoLoginLoading: isLoading);
 
   autoGenerateNickname() async {
     try {
@@ -53,7 +50,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       return "닉네임은 최대 10자입니다";
     } else {
       try {
-        state = state.copyWith(nickname: await _userUseCase.validateNickname(nickname: state.nicknameController.text));
+        state.nicknameController.text = await _userUseCase.validateNickname(nickname: state.nicknameController.text);
         return "";
       } on ErrorWithMessage catch(e) {
         return e.message;

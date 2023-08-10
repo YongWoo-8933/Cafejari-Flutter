@@ -49,7 +49,7 @@ class LoginButton extends StatelessWidget {
               opacity: isLoading ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 300),
               child: Center(
-                  child: LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20)
+                child: LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20)
               ),
             ),
             AnimatedOpacity(

@@ -1,3 +1,4 @@
+
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
@@ -70,6 +71,7 @@ final GoRouter _router = GoRouter(
     ],
     observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)]);
 
+
 class _RootScreen extends ConsumerWidget {
   const _RootScreen({Key? key}) : super(key: key);
 
@@ -79,38 +81,38 @@ class _RootScreen extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
-
-    Future.delayed(Duration.zero, () {
-      globalViewModel.init(MediaQuery.of(context).size);
-    });
+    // if (globalState.deviceSize == Size.zero) {
+    //   globalViewModel.setDeviceSize(MediaQuery.of(context).size);
+    //   print("알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄알랄랄랄");
+    // }
 
     return WillPopScope(
       onWillPop: () async {
-      if (globalState.currentPage.index != 0) {
-        globalViewModel.updateCurrentPageTo(0);
-        return false;
-      } else {
-        if(mapState.bottomSheetController.panelPosition != 0){
-          mapState.bottomSheetController.close();
+        if (globalState.currentPage.index != 0) {
+          globalViewModel.updateCurrentPageTo(0);
           return false;
-        }else{
-          final exit = await showDialog<bool>(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: const Text("앱을 종료하시겠습니까?"),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  child: const Text('확인'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  child: const Text('취소'),
-                ),
-              ],
-            ),
-          );
-          return exit ?? false;
+        } else {
+          if(mapState.bottomSheetController.panelPosition != 0){
+            mapState.bottomSheetController.close();
+            return false;
+          }else{
+            final exit = await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                content: const Text("앱을 종료하시겠습니까?"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('확인'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('취소'),
+                  ),
+                ],
+              ),
+            );
+            return exit ?? false;
           }
         }
       },

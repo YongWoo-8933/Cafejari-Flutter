@@ -13,6 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
+final _kakaoLoginLoadingProvider = StateProvider<bool>((ref) => false);
+final _appleLoginLoadingProvider = StateProvider<bool>((ref) => false);
+
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
@@ -82,22 +85,22 @@ class LoginScreen extends ConsumerWidget {
                 backgroundColor: AppColor.kakaoYellow,
                 text: "카카오 계정으로 시작",
                 imagePath: 'asset/image/kakao_icon.png',
-                isLoading: loginState.isKakaoLoginLoading,
+                isLoading: ref.watch(_kakaoLoginLoadingProvider),
                 onPressed: () async {
-                  if(!loginState.isKakaoLoginLoading) {
-                    loginViewModel.setKakaoLoginLoading(true);
+                  if(!ref.watch(_kakaoLoginLoadingProvider)) {
+                    ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => true);
+                    await UserApi.instance.logout();
                     OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-                    await loginViewModel.kakaoLogin(
-                        accessToken: token.accessToken,
-                        onLoginSuccess: (isUserExist) {
-                          if (isUserExist) {
-                            GoRouter.of(context).pop();
-                          } else {
-                            GoRouter.of(context).goNamed(ScreenRoute.registration);
-                          }
-                          loginViewModel.setKakaoLoginLoading(false);
-                        }
-                    );
+                    final bool? isUserExist = await loginViewModel.kakaoLogin(accessToken: token.accessToken);
+                    ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
+                    switch(isUserExist) {
+                      case true:
+                        if (context.mounted) GoRouter.of(context).pop();
+                      case false:
+                        if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
+                      default:
+                        print("로그인 실패");
+                    }
                   }
                 },
               ),
@@ -109,9 +112,9 @@ class LoginScreen extends ConsumerWidget {
                 backgroundColor: AppColor.black,
                 text: "Apple 계정으로 시작",
                 imagePath: 'asset/image/apple_icon.png',
-                isLoading: loginState.isAppleLoginLoading,
+                isLoading: ref.watch(_appleLoginLoadingProvider),
                 onPressed: () async {
-                  GoRouter.of(context).goNamed(ScreenRoute.registration);
+                  GoRouter.of(context).pushNamed(ScreenRoute.registration);
                 },
               ),
               const VerticalSpacer(60),
