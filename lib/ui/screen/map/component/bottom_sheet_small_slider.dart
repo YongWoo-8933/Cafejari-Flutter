@@ -16,10 +16,10 @@ class BottomSheetSmallSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+    final Size deviceSize = MediaQuery.of(context).size;
 
-    double slider_Width = (globalState.deviceSize.width/2)-70;
+    double slider_Width = (deviceSize.width/2)-70;
 
     return Container(
       padding: AppPadding.padding_horizon_15,

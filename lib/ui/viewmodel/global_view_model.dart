@@ -13,10 +13,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   GlobalViewModel(this._tokenUseCase) : super(GlobalState.empty());
 
-  init(Size devicesize) {
-    state = state.copyWith(deviceSize: devicesize);
-  }
-
   void logout() {
     // 로그아웃 로직
   }

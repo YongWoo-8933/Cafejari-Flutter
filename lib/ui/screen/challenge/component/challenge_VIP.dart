@@ -15,8 +15,7 @@ class ChallengeVIP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
-    final double imageWidth = (globalState.deviceSize.width-60) / 8;
+    final double imageWidth = (MediaQuery.of(context).size.width-60) / 8;
 
     // 이미지들의 리스트를 정의합니다.
     final List<Image> images = [

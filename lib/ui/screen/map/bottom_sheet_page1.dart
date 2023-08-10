@@ -20,7 +20,8 @@ class BottomSheetPage1 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
+    final Size deviceSize = MediaQuery.of(context).size;
+
 
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -34,11 +35,11 @@ class BottomSheetPage1 extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("#대표테그", style: TextSize.textSize_12,),
-                  BookmarkButton(isBookmarked: false, buttonSize: ((globalState.deviceSize.width/2)-50)/4*1)
+                  BookmarkButton(isBookmarked: false, buttonSize: ((deviceSize.width/2)-50)/4*1)
                 ],
               ),
               Container( // 재조정 필요
-                width: (globalState.deviceSize.width / 2 - 30),
+                width: (deviceSize.width / 2 - 30),
                 child: Text(
                   "${mapState.selectedCafe.name}",
                   style: TextSize.textSize_24,
@@ -49,13 +50,13 @@ class BottomSheetPage1 extends ConsumerWidget {
               Row(
                 children: [
                   ActionButtonPrimary(
-                    buttonWidth: ((globalState.deviceSize.width/2)-50)/4*3,
-                    buttonHeight: ((globalState.deviceSize.width/2)-50)/4*1,
+                    buttonWidth: ((deviceSize.width/2)-50)/4*3,
+                    buttonHeight: ((deviceSize.width/2)-50)/4*1,
                     title: "혼잡도 등록",
                     onPressed: () => mapState.pageController.jumpToPage(2),
                   ),
                   const SizedBox(width: 10),
-                  ShareButton(buttonSize: ((globalState.deviceSize.width/2)-50)/4*1),
+                  ShareButton(buttonSize: ((deviceSize.width/2)-50)/4*1),
                 ],
               )
             ],
@@ -72,11 +73,11 @@ class BottomSheetPage1 extends ConsumerWidget {
               const SizedBox(height: 10),
               Container( // 슬라이더 % 표시부분(슬라이더의 크기 벗어나기 위해 상위에 작성)
                 padding: EdgeInsets.only(left:mapState.selectedCafeFloor.recentUpdates.isNotEmpty ?
-                (globalState.deviceSize.width/2-40)*mapState.selectedCafeFloor.recentUpdates.first.occupancyRate-7 : 0 ),
+                (deviceSize.width/2-40)*mapState.selectedCafeFloor.recentUpdates.first.occupancyRate-7 : 0 ),
                 decoration: BoxDecoration(
                   color: AppColor.brown_300
                 ),
-                width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty ? (globalState.deviceSize.width/2-40) : 0,
+                width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty ? (deviceSize.width/2-40) : 0,
                 // alignment: Alignment.bottomRight,
                 child: Text(mapState.selectedCafeFloor.recentUpdates.isNotEmpty
                     ? "${((mapState.selectedCafeFloor.recentUpdates.first.occupancyRate)*100).floor()}%" : ""),
@@ -85,11 +86,11 @@ class BottomSheetPage1 extends ConsumerWidget {
               Container(
                 padding: EdgeInsets.only(
                   left: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
-                      ? (globalState.deviceSize.width/2 - 40) * mapState.selectedCafeFloor.recentUpdates.first.occupancyRate - 60
+                      ? (deviceSize.width/2 - 40) * mapState.selectedCafeFloor.recentUpdates.first.occupancyRate - 60
                       : 0,
                 ),
                 width: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
-                    ? (globalState.deviceSize.width/2 - 40)
+                    ? (deviceSize.width/2 - 40)
                     : 0,
                 child: mapState.selectedCafeFloor.recentUpdates.isNotEmpty
                     ? Image.asset(

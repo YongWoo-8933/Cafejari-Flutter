@@ -20,7 +20,6 @@ mixin _$GlobalState {
   bool get isLoggedIn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   PageType get currentPage => throw _privateConstructorUsedError;
-  Size get deviceSize => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -34,11 +33,7 @@ abstract class $GlobalStateCopyWith<$Res> {
       _$GlobalStateCopyWithImpl<$Res, GlobalState>;
   @useResult
   $Res call(
-      {String accessToken,
-      bool isLoggedIn,
-      User user,
-      PageType currentPage,
-      Size deviceSize});
+      {String accessToken, bool isLoggedIn, User user, PageType currentPage});
 
   $UserCopyWith<$Res> get user;
 }
@@ -60,7 +55,6 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
-    Object? deviceSize = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -79,10 +73,6 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
-      deviceSize: null == deviceSize
-          ? _value.deviceSize
-          : deviceSize // ignore: cast_nullable_to_non_nullable
-              as Size,
     ) as $Val);
   }
 
@@ -104,11 +94,7 @@ abstract class _$$_GlobalStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String accessToken,
-      bool isLoggedIn,
-      User user,
-      PageType currentPage,
-      Size deviceSize});
+      {String accessToken, bool isLoggedIn, User user, PageType currentPage});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -129,7 +115,6 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
-    Object? deviceSize = null,
   }) {
     return _then(_$_GlobalState(
       accessToken: null == accessToken
@@ -148,10 +133,6 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
-      deviceSize: null == deviceSize
-          ? _value.deviceSize
-          : deviceSize // ignore: cast_nullable_to_non_nullable
-              as Size,
     ));
   }
 }
@@ -163,8 +144,7 @@ class _$_GlobalState implements _GlobalState {
       {required this.accessToken,
       required this.isLoggedIn,
       required this.user,
-      required this.currentPage,
-      required this.deviceSize});
+      required this.currentPage});
 
   @override
   final String accessToken;
@@ -174,12 +154,10 @@ class _$_GlobalState implements _GlobalState {
   final User user;
   @override
   final PageType currentPage;
-  @override
-  final Size deviceSize;
 
   @override
   String toString() {
-    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage, deviceSize: $deviceSize)';
+    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage)';
   }
 
   @override
@@ -193,14 +171,12 @@ class _$_GlobalState implements _GlobalState {
                 other.isLoggedIn == isLoggedIn) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.deviceSize, deviceSize) ||
-                other.deviceSize == deviceSize));
+                other.currentPage == currentPage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, accessToken, isLoggedIn, user, currentPage, deviceSize);
+  int get hashCode =>
+      Object.hash(runtimeType, accessToken, isLoggedIn, user, currentPage);
 
   @JsonKey(ignore: true)
   @override
@@ -214,8 +190,7 @@ abstract class _GlobalState implements GlobalState {
       {required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
-      required final PageType currentPage,
-      required final Size deviceSize}) = _$_GlobalState;
+      required final PageType currentPage}) = _$_GlobalState;
 
   @override
   String get accessToken;
@@ -225,8 +200,6 @@ abstract class _GlobalState implements GlobalState {
   User get user;
   @override
   PageType get currentPage;
-  @override
-  Size get deviceSize;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>

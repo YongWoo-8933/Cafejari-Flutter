@@ -17,8 +17,8 @@ class BottomSheetCATI extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return  Container(
       padding: AppPadding.padding_30,
@@ -57,7 +57,7 @@ class BottomSheetCATI extends ConsumerWidget {
               CATIBlocks(is_clicked_1: true, is_clicked_2: true, is_clicked_3: true, is_clicked_4: true),
               SizedBox(height: 20,),
               ActionButtonPrimary(
-                  buttonWidth: globalState.deviceSize.width/3,
+                  buttonWidth: deviceSize.width/3,
                   buttonHeight: 30,
                   title: "CATI평가하기",
                   onPressed: () =>{ },
