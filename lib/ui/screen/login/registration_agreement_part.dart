@@ -6,15 +6,17 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 
 final _isServiceAgreedProvider = StateProvider<bool>((ref) => false);
-final _isServiceExpandedProvider = StateProvider<bool>((ref) => false);
 final _isPrivacyAgreedProvider = StateProvider<bool>((ref) => false);
+final _isMarketingAgreedProvider = StateProvider<bool>((ref) => false);
+final _isServiceExpandedProvider = StateProvider<bool>((ref) => true);
 final _isPrivacyExpandedProvider = StateProvider<bool>((ref) => true);
-final _isMarketingAgreedProvider = StateProvider<bool>((ref) => true);
 final _isMarketingExpandedProvider = StateProvider<bool>((ref) => false);
+final _isRegistrationLoading = StateProvider<bool>((ref) => false);
 
 class AgreementPart extends ConsumerWidget {
   const AgreementPart({Key? key}) : super(key: key);
@@ -67,7 +69,20 @@ class AgreementPart extends ConsumerWidget {
                 onArrowClick: () => ref.watch(_isMarketingExpandedProvider.notifier).update((state) => !state)
             ),
             const VerticalSpacer(40),
-            _RegistrationButton(onClick: () {},),
+            _RegistrationButton(
+              enabled: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
+                  loginState.nicknameErrorMessage.isEmpty,
+              isLoading: ref.watch(_isRegistrationLoading),
+              onClick: () async {
+                if (loginState.kakaoAccessToken.isNotEmpty) {
+                  ref.watch(_isRegistrationLoading.notifier).update((state) => true);
+                  await loginViewModel.registerAsKakaoUser();
+                } else if (loginState.appleAccessToken.isNotEmpty) {
+                  // loginViewModel.registerAsKakaoUser();
+                }
+                ref.watch(_isRegistrationLoading.notifier).update((state) => false);
+              }
+            ),
             const VerticalSpacer(100),
           ],
         ),
@@ -229,10 +244,14 @@ class _AgreementBox extends StatelessWidget {
 
 class _RegistrationButton extends StatelessWidget {
   final VoidCallback onClick;
+  final bool enabled;
+  final bool isLoading;
 
   const _RegistrationButton({
     super.key,
     required this.onClick,
+    required this.enabled,
+    required this.isLoading
   });
 
   @override
@@ -241,27 +260,38 @@ class _RegistrationButton extends StatelessWidget {
       width: double.infinity,
       height: 48,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: enabled ? onClick : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
         ),
-        child: const FittedBox(
+        child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              Text(
-                "가입하기",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.white
-                ),
+              AnimatedOpacity(
+                opacity: isLoading ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: Center(
+                  child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
+                )
               ),
-            ],
+              AnimatedOpacity(
+                opacity: isLoading ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 300),
+                child: const Text(
+                  "가입하기",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.white
+                  )
+                )
+              )
+            ]
           ),
         ),
       ),

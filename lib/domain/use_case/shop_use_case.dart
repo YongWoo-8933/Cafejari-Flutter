@@ -28,12 +28,9 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   Future<Brands> getBrands() async {
     try {
       List<BrandResponse> brandResponseList = await shopRepository.fetchBrand();
-      Brands brands = [];
-      for(BrandResponse brandResponse in brandResponseList) {
-        brands.add(Brand(
-            id: brandResponse.id, name: brandResponse.name, imageUrl: brandResponse.image ?? ""));
-      }
-      return brands;
+      return brandResponseList.map((e) {
+        return Brand(id: e.id, name: e.name, imageUrl: e.image ?? "");
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
@@ -43,15 +40,14 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   Future<Coupons> getCoupons() async {
     try {
       List<CouponResponse> couponResponseList = await shopRepository.fetchCoupon();
-      Coupons coupons = [];
-      for(CouponResponse couponResponse in couponResponseList) {
-        coupons.add(Coupon(
-            id: couponResponse.id,
-            name: couponResponse.name,
-            description: couponResponse.description,
-            imageUrl: couponResponse.image));
-      }
-      return coupons;
+      return couponResponseList.map((couponResponse) {
+        return Coupon(
+          id: couponResponse.id,
+          name: couponResponse.name,
+          description: couponResponse.description,
+          imageUrl: couponResponse.image
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
@@ -61,19 +57,18 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   Future<Items> getItems() async {
     try {
       List<ItemResponse> itemResponseList = await shopRepository.fetchItem();
-      Items items = [];
-      for(ItemResponse itemResponse in itemResponseList) {
-        items.add(Item(
-            itemId: itemResponse.id,
-            brandId: itemResponse.brand,
-            price: itemResponse.price,
-            limitDay: itemResponse.limit_day,
-            name: itemResponse.name,
-            description: itemResponse.description,
-            smallImageUrl: itemResponse.small_image_url,
-            largeImageUrl: itemResponse.large_image_url));
-      }
-      return items;
+      return itemResponseList.map((itemResponse) {
+        return Item(
+          itemId: itemResponse.id,
+          brandId: itemResponse.brand,
+          price: itemResponse.price,
+          limitDay: itemResponse.limit_day,
+          name: itemResponse.name,
+          description: itemResponse.description,
+          smallImageUrl: itemResponse.small_image_url,
+          largeImageUrl: itemResponse.large_image_url
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

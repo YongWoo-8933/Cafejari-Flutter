@@ -23,7 +23,7 @@ class ProfileImageEditable extends Container {
         ),
         Align(
           alignment: Alignment.bottomRight,
-          child: ProfileEditButton(buttonSize: 40, onPressed: () {})
+          child: ProfileEditButton(buttonSize: 40, onPressed: onEditButtonClick)
         )
       ],
     )

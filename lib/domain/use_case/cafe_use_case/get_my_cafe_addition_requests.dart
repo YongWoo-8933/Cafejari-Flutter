@@ -10,24 +10,23 @@ class GetMyCafeAdditionRequests {
     required RequestRepository requestRepository, required String accessToken}) async {
     try {
       List<CafeAdditionRequestResponse> requestResponseList = await requestRepository.fetchMyCafeAdditionRequest(accessToken: accessToken);
-      CafeAdditionRequests cafeAdditionRequests = [];
-      for (CafeAdditionRequestResponse requestResponse in requestResponseList) {
-        cafeAdditionRequests.add(CafeAdditionRequest(
-            id: requestResponse.id,
-            totalFloor: 1,
-            firstFloor: 1,
-            cafeName: requestResponse.cafe.name,
-            dongAddress: "",
-            roadAddress: requestResponse.cafe.address,
-            etc: "",
-            rejectionReason: requestResponse.rejection_reason,
-            isApproved: requestResponse.is_approved,
-            requestedAt: DateTime.parse(requestResponse.request_at),
-            answeredAt: DateTime.parse(requestResponse.answered_at),
-            wallSocketRates: [],
-            openingHour: null));
-      }
-      return cafeAdditionRequests;
+      return requestResponseList.map((requestResponse) {
+        return CafeAdditionRequest(
+          id: requestResponse.id,
+          totalFloor: 1,
+          firstFloor: 1,
+          cafeName: requestResponse.cafe.name,
+          dongAddress: "",
+          roadAddress: requestResponse.cafe.address,
+          etc: "",
+          rejectionReason: requestResponse.rejection_reason,
+          isApproved: requestResponse.is_approved,
+          requestedAt: DateTime.parse(requestResponse.request_at),
+          answeredAt: DateTime.parse(requestResponse.answered_at),
+          wallSocketRates: [],
+          openingHour: null
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     } on AccessTokenExpired {

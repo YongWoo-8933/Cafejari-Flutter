@@ -21,14 +21,12 @@ class GetRankers {
         case GetRankerType.week:
           rankerResponseList = await leaderboardRepository.fetchWeekRanker();
       }
-      PartialUsers partialUsers = [];
-      for(RankerResponse rankerResponse in rankerResponseList) {
-        partialUsers.add(
-            parsePartialUserFromPartialUserResponse(
-                partialUserResponse: rankerResponse.user,
-                updateCount: rankerResponse.sharing_count));
-      }
-      return partialUsers;
+      return rankerResponseList.map((e) {
+        return parsePartialUserFromPartialUserResponse(
+          partialUserResponse: e.user,
+          updateCount: e.sharing_count
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

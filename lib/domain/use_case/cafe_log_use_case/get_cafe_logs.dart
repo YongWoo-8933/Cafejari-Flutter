@@ -25,15 +25,13 @@ class GetCafeLogs {
         case GetCafeLogType.my:
           cafeLogPageResponse = await cafeLogRepository.fetchMyCafeLog(accessToken: accessToken);
       }
-      CafeLogs results = [];
-      for(CafeLogResponse cafeLogResponse in cafeLogPageResponse.results) {
-        results.add(parseCafeLogFromCafeLogResponse(cafeLogResponse: cafeLogResponse));
-      }
       return Pagination(
-          count: cafeLogPageResponse.count,
-          nextPageUrl: cafeLogPageResponse.next,
-          previousPageUrl: cafeLogPageResponse.previous,
-          results: results);
+        count: cafeLogPageResponse.count,
+        nextPageUrl: cafeLogPageResponse.next,
+        previousPageUrl: cafeLogPageResponse.previous,
+        results: cafeLogPageResponse.results.map((e) {
+          return parseCafeLogFromCafeLogResponse(cafeLogResponse: e);}).toList()
+      );
     } on AccessTokenExpired {
       rethrow;
     } on ErrorWithMessage {

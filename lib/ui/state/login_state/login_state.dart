@@ -6,18 +6,26 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 part 'login_state.freezed.dart';
 
+enum SocialType { kakao, apple }
+
 @freezed
 class LoginState with _$LoginState {
   factory LoginState(
-      {required final List<({int id, String imageUrl})> profileImages,
+      {required final List<({int profileImageId, String imageUrl})> profileImages,
+        required final ({int profileImageId, String imageUrl}) selectedProfileImage,
         required final TextEditingController nicknameController,
+        required final String nicknameErrorMessage,
         required final PanelController bottomSheetController,
-        required final String kakaoAccessToken}) = _LoginState;
+        required final String kakaoAccessToken,
+        required final String appleAccessToken}) = _LoginState;
 
   factory LoginState.empty() => LoginState(
-      profileImages: [],
-      nicknameController: TextEditingController(text: ""),
-      bottomSheetController: PanelController(),
-      kakaoAccessToken: ""
+    profileImages: [],
+    selectedProfileImage: (profileImageId: 0, imageUrl: ""),
+    nicknameController: TextEditingController(text: ""),
+    nicknameErrorMessage: "",
+    bottomSheetController: PanelController(),
+    kakaoAccessToken: "",
+    appleAccessToken: ""
   );
 }

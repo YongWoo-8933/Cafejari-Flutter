@@ -87,35 +87,31 @@ class GetMapCafes {
           }
         }
         // 이미지 정리
-        List<String> imageUrls = [];
-        for(CafeImageResponse cafeImageResponse in cafeResponse.cafe_image) {
-          imageUrls.add(cafeImageResponse.image);
-        }
+        List<String> imageUrls = cafeResponse.cafe_image.map((e) => e.image).toList();
         // vip 정리
-        List<PartialUser> vips = [];
-        for(CafeVIPResponse cafeVIPResponse in cafeResponse.cafe_vip) {
-          vips.add(parsePartialUserFromPartialUserResponse(partialUserResponse: cafeVIPResponse.user, updateCount: 0));
-        }
+        List<PartialUser> vips = cafeResponse.cafe_vip.map((e) {
+          return parsePartialUserFromPartialUserResponse(partialUserResponse: e.user, updateCount: 0);
+        }).toList();
         // 최종 입력
         cafes.add(Cafe(
-            id: cafeResponse.id,
-            recentUpdatedFloor: recentUpdatedFloor,
-            recentUpdatedOccupancyRate: recentUpdatedOccupancyRate,
-            isClosed: cafeResponse.is_closed,
-            name: cafeResponse.name,
-            address: cafeResponse.address,
-            latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
-            cafeFloors: cafeFloors,
-            openingHour: OpeningHour(
-                mon: cafeResponse.opening_hour.mon,
-                tue: cafeResponse.opening_hour.tue,
-                wed: cafeResponse.opening_hour.wed,
-                thu: cafeResponse.opening_hour.thu,
-                fri: cafeResponse.opening_hour.fri,
-                sat: cafeResponse.opening_hour.sat,
-                sun: cafeResponse.opening_hour.sun),
-            imageUrls: imageUrls,
-            vips: vips));
+          id: cafeResponse.id,
+          recentUpdatedFloor: recentUpdatedFloor,
+          recentUpdatedOccupancyRate: recentUpdatedOccupancyRate,
+          isClosed: cafeResponse.is_closed,
+          name: cafeResponse.name,
+          address: cafeResponse.address,
+          latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
+          cafeFloors: cafeFloors,
+          openingHour: OpeningHour(
+              mon: cafeResponse.opening_hour.mon,
+              tue: cafeResponse.opening_hour.tue,
+              wed: cafeResponse.opening_hour.wed,
+              thu: cafeResponse.opening_hour.thu,
+              fri: cafeResponse.opening_hour.fri,
+              sat: cafeResponse.opening_hour.sat,
+              sun: cafeResponse.opening_hour.sun),
+          imageUrls: imageUrls,
+          vips: vips));
       }
       return cafes;
     } on ErrorWithMessage {

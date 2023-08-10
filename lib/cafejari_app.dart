@@ -8,12 +8,12 @@ import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
+import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/ui/screen/leaderboard/leaderboard_screen.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
@@ -106,7 +106,7 @@ class _RootScreen extends ConsumerWidget {
           if(mapState.bottomSheetController.panelPosition != 0){
             mapState.bottomSheetController.close();
             return false;
-          }else{
+          } else {
             final exit = await showDialog<bool>(
               context: context,
               builder: (context) => AlertDialog(

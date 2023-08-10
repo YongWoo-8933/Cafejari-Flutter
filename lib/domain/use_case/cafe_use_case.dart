@@ -48,15 +48,13 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   Future<Cafes> getSearchCafes({required String query}) async {
     try {
       List<CafeSearchResponse> cafeSearchResponseList = await cafeRepository.fetchSearchCafe(query: query);
-      Cafes cafes = [];
-      for(CafeSearchResponse cafeSearchResponse in cafeSearchResponseList) {
-        cafes.add(
-            Cafe.empty().copyWith(
-                id: cafeSearchResponse.id,
-                name: cafeSearchResponse.name,
-                address: cafeSearchResponse.address));
-      }
-      return cafes;
+      return cafeSearchResponseList.map((cafeSearchResponse) {
+        return Cafe.empty().copyWith(
+          id: cafeSearchResponse.id,
+          name: cafeSearchResponse.name,
+          address: cafeSearchResponse.address
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
