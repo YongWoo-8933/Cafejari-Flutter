@@ -40,7 +40,7 @@ class ChallengeProgressScreen extends ConsumerWidget {
             ChallengeSlider( // 1, 29, 30 -> 이미지의 크기가 화면 전체넓이를 넘어가는경우
               challengePoint: [300, 600, 900, 1000],
               challengeTarget: [1,10,20,30],
-              currentProgress: 15,
+              currentProgress: 1,
             ),
             SizedBox(height: 30),
             ChallengeRecord()

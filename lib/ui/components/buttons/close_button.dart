@@ -3,12 +3,12 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CloseButton extends StatelessWidget {
+class CustomCloseButton extends StatelessWidget {
   final double? buttonWidth;
   final double? buttonHeight;
   final VoidCallback? onPressed;
 
-  CloseButton({
+  CustomCloseButton({
     required this.buttonWidth,
     required this.buttonHeight,
     this.onPressed,

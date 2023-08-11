@@ -15,7 +15,7 @@ class ChallengeRecordBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double deviceWidth = MediaQuery.of(context).size.width - 20;
+    final double deviceWidth = MediaQuery.of(context).size.width - 60;
 
     return Container(
       child: Row(

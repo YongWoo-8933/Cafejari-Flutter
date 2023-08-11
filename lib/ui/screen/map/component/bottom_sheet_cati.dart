@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
@@ -30,24 +31,7 @@ class BottomSheetCATI extends ConsumerWidget {
           Row(
             children: [
               Text("CATI ", style: TextSize.textSize_bold_16),
-              Container(
-                width: 18,
-                height: 18,
-                decoration: const BoxDecoration(
-                  color: AppColor.explanationButton, // 원하는 회색 색상
-                  shape: BoxShape.circle,
-                ),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.transparent, // 버튼 배경을 투명하게 설정
-                    shadowColor: AppColor.transparent, // 그림자 제거
-                      padding: EdgeInsets.all(3),
-                    elevation: 0
-                  ),
-                  child: Icon(CupertinoIcons.question, color: Colors.white, size: 14),
-                ),
-              )
+              QuestionButton()
             ],
           ),
           SizedBox(height: 10,),
@@ -61,6 +45,7 @@ class BottomSheetCATI extends ConsumerWidget {
                   buttonHeight: 30,
                   title: "CATI평가하기",
                   onPressed: () =>{ },
+                primaryColor: true,
               )
             ],
           )

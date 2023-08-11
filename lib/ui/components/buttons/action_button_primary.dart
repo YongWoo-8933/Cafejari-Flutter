@@ -1,6 +1,4 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActionButtonPrimary extends StatelessWidget {
@@ -8,12 +6,14 @@ class ActionButtonPrimary extends StatelessWidget {
   final double? buttonHeight;
   final VoidCallback? onPressed;
   final String title;
-  final IconData? icon;
+  final Widget? icon; // Changed type to Widget
+  final bool primaryColor;
 
   ActionButtonPrimary({
     required this.buttonWidth,
     required this.buttonHeight,
     required this.title,
+    required this.primaryColor,
     this.onPressed,
     this.icon,
   });
@@ -26,10 +26,12 @@ class ActionButtonPrimary extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primary,
+          backgroundColor: primaryColor ? AppColor.primary : AppColor.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(buttonHeight ?? 0 / 2),
+            side: BorderSide(color: AppColor.grey_300, width: 1.0),
           ),
+          elevation: 0,
         ),
         child: FittedBox(
           fit: BoxFit.scaleDown,
@@ -37,10 +39,13 @@ class ActionButtonPrimary extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (icon != null) // Conditionally add Icon widget
-                Icon(icon, color: AppColor.white),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0), // Adjust as needed
+                  child: icon!,
+                ),
               Text(
                 title,
-                style: TextSize.textSize_white_20,
+                style: TextStyle(fontSize: 20, color: primaryColor ? AppColor.white : AppColor.primary),
               ),
             ],
           ),

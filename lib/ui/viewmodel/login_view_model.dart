@@ -50,7 +50,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       return "닉네임은 최대 10자입니다";
     } else {
       try {
-        state.nicknameController.text = await _userUseCase.validateNickname(nickname: state.nicknameController.text);
+        await _userUseCase.validateNickname(nickname: state.nicknameController.text);
         return "";
       } on ErrorWithMessage catch(e) {
         return e.message;

@@ -48,7 +48,7 @@ class ActionButtonSecondary extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w300,
                     color: isClicked? AppColor.white : AppColor.secondary
                   ),
                 ),

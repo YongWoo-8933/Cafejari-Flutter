@@ -54,6 +54,7 @@ class BottomSheetPage1 extends ConsumerWidget {
                     buttonHeight: ((deviceSize.width/2)-50)/4*1,
                     title: "혼잡도 등록",
                     onPressed: () => mapState.pageController.jumpToPage(2),
+                    primaryColor: true,
                   ),
                   const SizedBox(width: 10),
                   ShareButton(buttonSize: ((deviceSize.width/2)-50)/4*1),

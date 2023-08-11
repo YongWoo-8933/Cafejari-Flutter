@@ -53,14 +53,15 @@ class MapScreen extends ConsumerWidget {
                   onCameraIdle: () {},
                 )),
             panelBuilder: (ScrollController sc) {
-              return PageView(
-                controller: mapState.pageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: const [
-                 // BottomSheetPage1(),
-                   BottomSheetPage2(),
-                  BottomSheetPage3(),
-                ]
+              return SingleChildScrollView( // 스크롤 가능한 뷰로 변경
+                controller: sc, // 스크롤 컨트롤러를 전달
+                child: Column(
+                  children: const [
+                    BottomSheetPage1(),
+                    BottomSheetPage2(),
+                    BottomSheetPage3(),
+                  ],
+                ),
               );
             },
             minHeight: 0,

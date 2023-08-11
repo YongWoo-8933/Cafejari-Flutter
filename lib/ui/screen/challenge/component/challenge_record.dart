@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 class ChallengeRecord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double deviceWidth = MediaQuery.of(context).size.width - 20;
+    final double deviceWidth = MediaQuery.of(context).size.width - 60;
 
     return Container(
-      padding: AppPadding.padding_10,
+      padding: AppPadding.padding_30,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

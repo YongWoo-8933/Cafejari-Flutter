@@ -2,7 +2,6 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,16 +18,21 @@ class ChallengeSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double progressWidth = currentProgress.isNotNull && challengeTarget.last != 0
-        ? (MediaQuery.of(context).size.width - 20) * (currentProgress! / challengeTarget.last)
-        : 0;
+    double progressWidth;
 
+    if (currentProgress.isNotNull && challengeTarget.last != 0) {
+      progressWidth = (MediaQuery.of(context).size.width - 60) * (currentProgress! / challengeTarget.last);
+    } else if(currentProgress == 0.0){
+      progressWidth = (MediaQuery.of(context).size.width - 60) * (1 / challengeTarget.last);
+    }else{
+      progressWidth = 1;
+    }
     return Container(
-      child: Column(
+      child: Column( //말충선
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: progressWidth+43,
+            width: progressWidth+63 ,
             alignment: Alignment.topRight,
             child: Stack(
               children: [
@@ -48,16 +52,16 @@ class ChallengeSlider extends StatelessWidget {
             ),
           ),
           SizedBox(height: 6),
-          Container(
-            width: progressWidth+14,
+          Container( // 핀
+            width: progressWidth+34,
             alignment: Alignment.topRight,
             child: Image.asset('asset/image/cafe_icon_0.png', width: 17, height: 22),
           ),
           SizedBox(height: 6),
           Container(
             alignment: Alignment.centerLeft,
-            width: MediaQuery.of(context).size.width - 20,
-            margin: AppPadding.padding_horizon_10,
+            width: MediaQuery.of(context).size.width - 60,
+            margin: AppPadding.padding_horizon_30,
             height: 20,
             decoration: BoxDecoration(
               color: AppColor.background,
@@ -72,7 +76,7 @@ class ChallengeSlider extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(challengeTarget.length, (index) {

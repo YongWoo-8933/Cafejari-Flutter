@@ -4,27 +4,32 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/close_button.dart';
 import 'package:cafejari_flutter/ui/components/buttons/x_button.dart';
+import 'package:cafejari_flutter/ui/components/cati_slider.dart';
+import 'package:cafejari_flutter/ui/components/slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SquareAlertDialog extends StatelessWidget {
-  final String title, leftButton, rightButton;
+class CATIDialog extends StatelessWidget {
+  final String title, subTitle, leftButton, rightButton;
   final Function? leftButtonPressed, rightButtonPressed;
-  final Widget content;
+  final double cati1, cati2, cati3, cati4;
 
-  SquareAlertDialog({
-    required this.content,
+  CATIDialog({
     required this.title,
+    required this.subTitle,
     required this.leftButton,
     required this.rightButton,
+    required this.cati1,
+    required this.cati2,
+    required this.cati3,
+    required this.cati4,
     this.leftButtonPressed,
-    this.rightButtonPressed
+    this.rightButtonPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: content,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -34,10 +39,7 @@ class SquareAlertDialog extends StatelessWidget {
 
 
   void showTimed(BuildContext context) {
-    final double deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final double deviceWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
@@ -51,7 +53,7 @@ class SquareAlertDialog extends StatelessWidget {
           child: Container(
             padding: AppPadding.padding_20,
             width: deviceWidth - 60,
-            height: 160,
+            height: 550,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,12 +78,72 @@ class SquareAlertDialog extends StatelessWidget {
                         ),
                       ),
                       const Flexible(
-                        flex: 1,
-                        child: XButton(buttonSize: 20)
+                          flex: 1,
+                          child: XButton(buttonSize: 20)
                       ),
                     ],
                   ),
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(subTitle, style: TextSize.textSize_bold_16),
+                    const SizedBox(height: 10),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("아늑함", style: TextSize.textSize_bold_16),
+                        Text("개방적", style: TextSize.textSize_bold_16)
+                      ],
+                    ),
+                    CATISlider(
+                        value: cati1 ,
+                        onChanged: (double newValue) {
+                          // mapViewModel.changeUpdatedCrowded(newValue);
+                        },
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("아늑함", style: TextSize.textSize_bold_16),
+                        Text("개방적", style: TextSize.textSize_bold_16)
+                      ],
+                    ),
+                    CATISlider(
+                        value: cati1 ,
+                        onChanged: (double newValue) {
+                          // mapViewModel.changeUpdatedCrowded(newValue);
+                        },
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("아늑함", style: TextSize.textSize_bold_16),
+                        Text("개방적", style: TextSize.textSize_bold_16)
+                      ],
+                    ),
+                    CATISlider(
+                        value: cati1 ,
+                        onChanged: (double newValue) {
+                          // mapViewModel.changeUpdatedCrowded(newValue);
+                        },
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("아늑함", style: TextSize.textSize_bold_16),
+                        Text("개방적", style: TextSize.textSize_bold_16)
+                      ],
+                    ),
+                    CATISlider(
+                        value: cati1 ,
+                        onChanged: (double newValue) {
+                          // mapViewModel.changeUpdatedCrowded(newValue);
+                        },
+                    ),
+                  ],
+                ),
+
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
