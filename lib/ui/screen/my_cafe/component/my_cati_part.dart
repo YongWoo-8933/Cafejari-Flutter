@@ -37,7 +37,6 @@ class MyCATIPart extends ConsumerWidget {
                   buttonHeight: 30,
                   title: "수정",
                   onPressed: () => {},
-                primaryColor: true,
               )
             ],
           ),

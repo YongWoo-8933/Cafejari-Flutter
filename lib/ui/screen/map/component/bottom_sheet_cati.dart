@@ -45,7 +45,6 @@ class BottomSheetCATI extends ConsumerWidget {
                   buttonHeight: 30,
                   title: "CATI평가하기",
                   onPressed: () =>{ },
-                primaryColor: true,
               )
             ],
           )

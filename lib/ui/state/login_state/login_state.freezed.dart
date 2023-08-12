@@ -16,13 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginState {
-  List<({int id, String imageUrl})> get profileImages =>
+  List<({String imageUrl, int profileImageId})> get profileImages =>
+      throw _privateConstructorUsedError;
+  ({String imageUrl, int profileImageId}) get selectedProfileImage =>
       throw _privateConstructorUsedError;
   TextEditingController get nicknameController =>
       throw _privateConstructorUsedError;
+  String get nicknameErrorMessage => throw _privateConstructorUsedError;
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
   String get kakaoAccessToken => throw _privateConstructorUsedError;
+  String get appleAccessToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -36,10 +40,13 @@ abstract class $LoginStateCopyWith<$Res> {
       _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
   $Res call(
-      {List<({int id, String imageUrl})> profileImages,
+      {List<({String imageUrl, int profileImageId})> profileImages,
+      ({String imageUrl, int profileImageId}) selectedProfileImage,
       TextEditingController nicknameController,
+      String nicknameErrorMessage,
       PanelController bottomSheetController,
-      String kakaoAccessToken});
+      String kakaoAccessToken,
+      String appleAccessToken});
 }
 
 /// @nodoc
@@ -56,19 +63,30 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @override
   $Res call({
     Object? profileImages = null,
+    Object? selectedProfileImage = null,
     Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
+    Object? appleAccessToken = null,
   }) {
     return _then(_value.copyWith(
       profileImages: null == profileImages
           ? _value.profileImages
           : profileImages // ignore: cast_nullable_to_non_nullable
-              as List<({int id, String imageUrl})>,
+              as List<({String imageUrl, int profileImageId})>,
+      selectedProfileImage: null == selectedProfileImage
+          ? _value.selectedProfileImage
+          : selectedProfileImage // ignore: cast_nullable_to_non_nullable
+              as ({String imageUrl, int profileImageId}),
       nicknameController: null == nicknameController
           ? _value.nicknameController
           : nicknameController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -76,6 +94,10 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      appleAccessToken: null == appleAccessToken
+          ? _value.appleAccessToken
+          : appleAccessToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -90,10 +112,13 @@ abstract class _$$_LoginStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<({int id, String imageUrl})> profileImages,
+      {List<({String imageUrl, int profileImageId})> profileImages,
+      ({String imageUrl, int profileImageId}) selectedProfileImage,
       TextEditingController nicknameController,
+      String nicknameErrorMessage,
       PanelController bottomSheetController,
-      String kakaoAccessToken});
+      String kakaoAccessToken,
+      String appleAccessToken});
 }
 
 /// @nodoc
@@ -108,19 +133,30 @@ class __$$_LoginStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? profileImages = null,
+    Object? selectedProfileImage = null,
     Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
+    Object? appleAccessToken = null,
   }) {
     return _then(_$_LoginState(
       profileImages: null == profileImages
           ? _value._profileImages
           : profileImages // ignore: cast_nullable_to_non_nullable
-              as List<({int id, String imageUrl})>,
+              as List<({String imageUrl, int profileImageId})>,
+      selectedProfileImage: null == selectedProfileImage
+          ? _value.selectedProfileImage
+          : selectedProfileImage // ignore: cast_nullable_to_non_nullable
+              as ({String imageUrl, int profileImageId}),
       nicknameController: null == nicknameController
           ? _value.nicknameController
           : nicknameController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -128,6 +164,10 @@ class __$$_LoginStateCopyWithImpl<$Res>
       kakaoAccessToken: null == kakaoAccessToken
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      appleAccessToken: null == appleAccessToken
+          ? _value.appleAccessToken
+          : appleAccessToken // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -137,30 +177,40 @@ class __$$_LoginStateCopyWithImpl<$Res>
 
 class _$_LoginState implements _LoginState {
   _$_LoginState(
-      {required final List<({int id, String imageUrl})> profileImages,
+      {required final List<({String imageUrl, int profileImageId})>
+          profileImages,
+      required this.selectedProfileImage,
       required this.nicknameController,
+      required this.nicknameErrorMessage,
       required this.bottomSheetController,
-      required this.kakaoAccessToken})
+      required this.kakaoAccessToken,
+      required this.appleAccessToken})
       : _profileImages = profileImages;
 
-  final List<({int id, String imageUrl})> _profileImages;
+  final List<({String imageUrl, int profileImageId})> _profileImages;
   @override
-  List<({int id, String imageUrl})> get profileImages {
+  List<({String imageUrl, int profileImageId})> get profileImages {
     if (_profileImages is EqualUnmodifiableListView) return _profileImages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_profileImages);
   }
 
   @override
+  final ({String imageUrl, int profileImageId}) selectedProfileImage;
+  @override
   final TextEditingController nicknameController;
+  @override
+  final String nicknameErrorMessage;
   @override
   final PanelController bottomSheetController;
   @override
   final String kakaoAccessToken;
+  @override
+  final String appleAccessToken;
 
   @override
   String toString() {
-    return 'LoginState(profileImages: $profileImages, nicknameController: $nicknameController, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken)';
+    return 'LoginState(profileImages: $profileImages, selectedProfileImage: $selectedProfileImage, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken, appleAccessToken: $appleAccessToken)';
   }
 
   @override
@@ -170,21 +220,30 @@ class _$_LoginState implements _LoginState {
             other is _$_LoginState &&
             const DeepCollectionEquality()
                 .equals(other._profileImages, _profileImages) &&
+            (identical(other.selectedProfileImage, selectedProfileImage) ||
+                other.selectedProfileImage == selectedProfileImage) &&
             (identical(other.nicknameController, nicknameController) ||
                 other.nicknameController == nicknameController) &&
+            (identical(other.nicknameErrorMessage, nicknameErrorMessage) ||
+                other.nicknameErrorMessage == nicknameErrorMessage) &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
             (identical(other.kakaoAccessToken, kakaoAccessToken) ||
-                other.kakaoAccessToken == kakaoAccessToken));
+                other.kakaoAccessToken == kakaoAccessToken) &&
+            (identical(other.appleAccessToken, appleAccessToken) ||
+                other.appleAccessToken == appleAccessToken));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_profileImages),
+      selectedProfileImage,
       nicknameController,
+      nicknameErrorMessage,
       bottomSheetController,
-      kakaoAccessToken);
+      kakaoAccessToken,
+      appleAccessToken);
 
   @JsonKey(ignore: true)
   @override
@@ -195,19 +254,32 @@ class _$_LoginState implements _LoginState {
 
 abstract class _LoginState implements LoginState {
   factory _LoginState(
-      {required final List<({int id, String imageUrl})> profileImages,
+      {required final List<({String imageUrl, int profileImageId})>
+          profileImages,
+      required final ({
+        String imageUrl,
+        int profileImageId
+      }) selectedProfileImage,
       required final TextEditingController nicknameController,
+      required final String nicknameErrorMessage,
       required final PanelController bottomSheetController,
-      required final String kakaoAccessToken}) = _$_LoginState;
+      required final String kakaoAccessToken,
+      required final String appleAccessToken}) = _$_LoginState;
 
   @override
-  List<({int id, String imageUrl})> get profileImages;
+  List<({String imageUrl, int profileImageId})> get profileImages;
+  @override
+  ({String imageUrl, int profileImageId}) get selectedProfileImage;
   @override
   TextEditingController get nicknameController;
+  @override
+  String get nicknameErrorMessage;
   @override
   PanelController get bottomSheetController;
   @override
   String get kakaoAccessToken;
+  @override
+  String get appleAccessToken;
   @override
   @JsonKey(ignore: true)
   _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>

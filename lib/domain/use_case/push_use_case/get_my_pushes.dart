@@ -11,16 +11,15 @@ class GetPushes {
     required PushRepository pushRepository, required String accessToken}) async {
     try {
       List<PushResponse> pushResponseList = await pushRepository.fetchMyPush(accessToken: accessToken);
-      Pushes pushes = [];
-      for(PushResponse pushResponse in pushResponseList) {
-        pushes.add(Push(
+      return pushResponseList.map((pushResponse) {
+        return Push(
             id: pushResponse.id,
             title: pushResponse.title,
             body: pushResponse.body,
             pushedAt: DateTime.parse(pushResponse.pushed_at),
-            type: pushResponse.type.toPushType()));
-      }
-      return pushes;
+            type: pushResponse.type.toPushType()
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

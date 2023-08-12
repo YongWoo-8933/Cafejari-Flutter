@@ -39,12 +39,6 @@ class MyPageRanking extends StatelessWidget {
               buttonWidth: 110,
               buttonHeight: 45,
               title: '명예의 전당',
-              primaryColor: true,
-              icon: ImageIcon(
-                AssetImage('asset/image/icon_trophy.png'),
-                color: Colors.white,
-                size: 20,
-              ),
               onPressed: () {},
           )
         ],

@@ -87,15 +87,11 @@ class GetMapCafes {
           }
         }
         // 이미지 정리
-        List<String> imageUrls = [];
-        for(CafeImageResponse cafeImageResponse in cafeResponse.cafe_image) {
-          imageUrls.add(cafeImageResponse.image);
-        }
+        List<String> imageUrls = cafeResponse.cafe_image.map((e) => e.image).toList();
         // vip 정리
-        List<PartialUser> vips = [];
-        for(CafeVIPResponse cafeVIPResponse in cafeResponse.cafe_vip) {
-          vips.add(parsePartialUserFromPartialUserResponse(partialUserResponse: cafeVIPResponse.user, updateCount: 0));
-        }
+        List<PartialUser> vips = cafeResponse.cafe_vip.map((e) {
+          return parsePartialUserFromPartialUserResponse(partialUserResponse: e.user, updateCount: 0);
+        }).toList();
         // 최종 입력
         cafes.add(Cafe(
             id: cafeResponse.id,

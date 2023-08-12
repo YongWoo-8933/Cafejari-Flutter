@@ -54,7 +54,6 @@ class ChallengeInfoScreen extends ConsumerWidget {
           onPressed: () {
             GoRouter.of(context).goNamed(ScreenRoute.challenge_progress);
           },
-          primaryColor: true,
         ),
       ),
     );

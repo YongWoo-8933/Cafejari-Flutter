@@ -21,12 +21,9 @@ class GetMyOccupancyUpdates {
         case GetMyOccupancyUpdateType.recent:
           updateResponseList = await cafeRepository.fetchMyRecentOccupancyUpdate(accessToken: accessToken);
       }
-      OccupancyRateUpdates updates = [];
-      for(OccupancyRateUpdateResponse updateResponse in updateResponseList) {
-        updates.add(
-            parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: updateResponse));
-      }
-      return updates;
+      return updateResponseList.map((e) {
+        return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: e);
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

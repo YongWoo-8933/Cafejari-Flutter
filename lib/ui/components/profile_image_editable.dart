@@ -12,20 +12,20 @@ class ProfileImageEditable extends Container {
     required String imageUrl,
     required VoidCallback onEditButtonClick,
   }) : super(
-    key: key,
-    width: size,
-    height: size,
-    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.grey_200),
-    child: Stack(
-      children: [
-        Center(
-          child: CustomCachedNetworkImage(imageUrl: imageUrl, width: size * 0.7, height: size * 0.7),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: ProfileEditButton(buttonSize: 40, onPressed: () {})
-        )
-      ],
-    )
+      key: key,
+      width: size,
+      height: size,
+      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.grey_300),
+      child: Stack(
+        children: [
+          Center(
+            child: CustomCachedNetworkImage(imageUrl: imageUrl, width: size * 0.7, height: size * 0.7),
+          ),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: ProfileEditButton(buttonSize: 40, onPressed: onEditButtonClick)
+          )
+        ],
+      )
   );
 }

@@ -10,9 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-final _errorMessageProvider = StateProvider<String>((ref) => "");
-
 class ProfilePart extends ConsumerWidget {
   const ProfilePart({Key? key}) : super(key: key);
 
@@ -28,9 +25,9 @@ class ProfilePart extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ProfileImageEditable(
-            size: 160,
-            imageUrl: "https://cafejariimage.co.kr/user/profile/기본_프로필사진_7309711.png",
-            onEditButtonClick: () => loginState.bottomSheetController.open()
+              size: 160,
+              imageUrl: loginState.selectedProfileImage.imageUrl,
+              onEditButtonClick: () => loginState.bottomSheetController.open()
           ),
           const VerticalSpacer(20),
           Row(
@@ -50,21 +47,18 @@ class ProfilePart extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   maxLength: 10,
-                  onChanged: (value) async {
-                    final res = await loginViewModel.validateNickname();
-                    ref.watch(_errorMessageProvider.notifier).update((state) => res);
-                  },
+                  onChanged: (value) async => await loginViewModel.validateNickname(),
                   decoration: InputDecoration(
                     counter: null,
                     counterText: "",
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                          color: ref.watch(_errorMessageProvider).isEmpty ? AppColor.grey_200 : AppColor.error,
+                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_300 : AppColor.error,
                           width: 1),
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                          color: ref.watch(_errorMessageProvider).isEmpty ? AppColor.grey_100 : AppColor.error,
+                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_200 : AppColor.error,
                           width: 1),
                     ),
                   ),
@@ -72,17 +66,16 @@ class ProfilePart extends ConsumerWidget {
               ),
               RefreshButton(buttonSize: 40, onPressed: () async {
                 await loginViewModel.autoGenerateNickname();
-                ref.watch(_errorMessageProvider.notifier).update((state) => "");
                 FocusManager.instance.primaryFocus?.unfocus();
               })
             ],
           ),
           const VerticalSpacer(10),
           AnimatedOpacity(
-            opacity: ref.watch(_errorMessageProvider).isEmpty ? 0 : 1,
+            opacity: loginState.nicknameErrorMessage.isEmpty ? 0 : 1,
             duration: const Duration(milliseconds: 500),
             child: Text(
-              ref.watch(_errorMessageProvider),
+              loginState.nicknameErrorMessage,
               style: const TextStyle(
                   fontSize: 11,
                   color: AppColor.error

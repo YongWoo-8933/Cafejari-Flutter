@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/user_use_case/get_grades.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case/make_new_profile.dart';
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class UserUseCase {
@@ -14,7 +14,14 @@ abstract class UserUseCase {
   Future<Grades> getGrades();
   Future<String> validateNickname({required String nickname});
   Future<String> autoGenerateNickname();
-  Future<List<(int profileImageId, String imageUrl)>> getDefaultProfileImages();
+  Future<List<({int profileImageId, String imageUrl})>> getDefaultProfileImages();
+  Future<User> makeNewProfile({
+    required String accessToken,
+    required String fcmToken,
+    required String nickname,
+    required int userId,
+    required int profileImageId,
+  });
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
@@ -65,9 +72,20 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
 
   @override
   Future<Grades> getGrades() async {
-    final f = GetGrades();
     try {
-      return await f(userRepository: userRepository);
+      List<GradeResponse> gradeResponseList = await userRepository.fetchGrade();
+      return gradeResponseList.map((gradeResponse) {
+        return Grade(
+            id: gradeResponse.id,
+            step: gradeResponse.step,
+            updateCountRequirement: gradeResponse.sharing_count_requirement,
+            updateRestrictionPerCafe: gradeResponse.sharing_restriction_per_cafe,
+            stackRestrictionPerDay: gradeResponse.activity_stack_restriction_per_day,
+            name: gradeResponse.name,
+            imageUrl: gradeResponse.image ?? Grade.empty().imageUrl,
+            description: gradeResponse.description ?? Grade.empty().description
+        );
+      }).toList();
     }on ErrorWithMessage {
       rethrow;
     }
@@ -94,15 +112,50 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   }
 
   @override
-  Future<List<(int, String)>> getDefaultProfileImages() async {
+  Future<List<({int profileImageId, String imageUrl})>> getDefaultProfileImages() async {
     try {
       List<ProfileImageResponse> profileImageResponseList = await userRepository.fetchProfileImage();
-      List<(int, String)> profileImageSets = [];
-      for(ProfileImageResponse profileImageResponse in profileImageResponseList) {
-        profileImageSets.add((profileImageResponse.id, profileImageResponse.image));
-      }
-      return profileImageSets;
+      return profileImageResponseList.map((e) => (profileImageId: e.id, imageUrl: e.image)).toList();
     }on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<User> makeNewProfile({
+    required String accessToken,
+    required String fcmToken,
+    required String nickname,
+    required int userId,
+    required int profileImageId
+  }) async {
+    final f = MakeNewProfile();
+    try {
+      return f(
+          userRepository: userRepository,
+          accessToken: accessToken,
+          fcmToken: fcmToken,
+          nickname: nickname,
+          userId: userId,
+          profileImageId: profileImageId
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      try {
+        return f(
+            userRepository: userRepository,
+            accessToken: newToken,
+            fcmToken: fcmToken,
+            nickname: nickname,
+            userId: userId,
+            profileImageId: profileImageId
+        );
+      } on AccessTokenExpired{
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired{
+      rethrow;
+    } on ErrorWithMessage{
       rethrow;
     }
   }

@@ -9,17 +9,16 @@ class GetMyBrandcons {
   Future<Brandcons> call({required ShopRepository shopRepository, required String accessToken}) async {
     try {
       List<BrandconResponse> brandconResponseList = await shopRepository.fetchMyBrandcon(accessToken: accessToken);
-      Brandcons brandcons = [];
-      for(BrandconResponse brandconResponse in brandconResponseList) {
-        brandcons.add(Brandcon(
+      return brandconResponseList.map((brandconResponse) {
+        return Brandcon(
             brandconId: brandconResponse.id,
             itemId: brandconResponse.item,
             imageUrl: brandconResponse.image,
             description: brandconResponse.description,
             expirationDate: DateTime.parse(brandconResponse.expiration_period),
-            isUsed: brandconResponse.is_used));
-      }
-      return brandcons;
+            isUsed: brandconResponse.is_used
+        );
+      }).toList();
     } on AccessTokenExpired {
       rethrow;
     } on ErrorWithMessage {

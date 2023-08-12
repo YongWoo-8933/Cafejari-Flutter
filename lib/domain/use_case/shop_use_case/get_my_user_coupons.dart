@@ -9,18 +9,17 @@ class GetMyUserCoupons {
   Future<UserCoupons> call({required ShopRepository shopRepository, required String accessToken}) async {
     try {
       List<UserCouponResponse> userCouponResponseList = await shopRepository.fetchMyCoupon(accessToken: accessToken);
-      UserCoupons userCoupons = [];
-      for(UserCouponResponse userCouponResponse in userCouponResponseList) {
-        userCoupons.add(UserCoupon(
+      return userCouponResponseList.map((userCouponResponse) {
+        return UserCoupon(
             userCouponId: userCouponResponse.id,
             couponId: userCouponResponse.coupon.id,
             isUsed: userCouponResponse.is_used,
             name: userCouponResponse.coupon.name,
             description: userCouponResponse.coupon.description,
             imageUrl: userCouponResponse.coupon.image,
-            expirationPeriod: DateTime.parse(userCouponResponse.expiration_period)));
-      }
-      return userCoupons;
+            expirationPeriod: DateTime.parse(userCouponResponse.expiration_period)
+        );
+      }).toList();
     } on AccessTokenExpired {
       rethrow;
     } on ErrorWithMessage {

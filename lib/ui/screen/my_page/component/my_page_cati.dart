@@ -52,7 +52,6 @@ class MyPageCATI extends StatelessWidget {
                 buttonWidth: has_cati ? 50 : 80,
                 buttonHeight: 30,
                 title: has_cati ? '수정' : '등록하기',
-                primaryColor: true,
                 onPressed: () {_showAlertDialog(context);}, //catiDialog오픈
               )
             ],

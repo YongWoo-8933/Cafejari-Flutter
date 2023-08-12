@@ -146,6 +146,7 @@ class NicknameResponse {
 }
 
 /// 카카오 로그인에 필요한 응답 DTO
+/// 로그인, 회원가입에 필요한 응답 DTO
 @JsonSerializable()
 class KakaoLoginCallbackResponse {
   final String access_token;

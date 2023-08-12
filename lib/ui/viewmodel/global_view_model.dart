@@ -26,7 +26,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   void saveLoginResult({
     required String accessToken,
     required String refreshToken,
-    required User user}) {
+    required User user
+  }) {
     state = state.copyWith(accessToken: accessToken, user: user);
     _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken);
   }

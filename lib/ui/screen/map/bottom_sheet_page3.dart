@@ -41,7 +41,7 @@ class BottomSheetPage3 extends ConsumerWidget {
           SizedBox(height: 30),
           Container(
             alignment: Alignment.center,
-            child:ActionButtonPrimary(buttonWidth: 210, buttonHeight: 40, title: "등록하기", onPressed: () => {}, primaryColor: true,) ,
+            child:ActionButtonPrimary(buttonWidth: 210, buttonHeight: 40, title: "등록하기", onPressed: () => {}) ,
           )
         ],
       ),

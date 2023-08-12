@@ -45,7 +45,6 @@ class BottomSheetPage2 extends ConsumerWidget {
                         buttonHeight: 40,
                         title: "혼잡도 등록",
                         onPressed: () => mapState.pageController.jumpToPage(2),
-                        primaryColor: true,
                       ),
                       const SizedBox(width: 10),
                       ShareButton(buttonSize: 40,),
@@ -71,9 +70,8 @@ class BottomSheetPage2 extends ConsumerWidget {
                 buttonWidth: deviceSize.width*0.6,
                 buttonHeight: 40,
                 title: " 매장정보 제보하고 포인트받기",
-                icon: Icon(CupertinoIcons.square_pencil),
+                icon: CupertinoIcons.square_pencil,
                 onPressed: () => {},
-                primaryColor: true,
               ),
             )
           ],

@@ -46,7 +46,6 @@ class LeaderboardScreen extends ConsumerWidget {
                 onPressed: () async {
 
                 },
-              primaryColor: true,
             )
           ],
         )

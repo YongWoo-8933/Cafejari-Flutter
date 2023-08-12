@@ -3,7 +3,6 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
@@ -27,9 +26,9 @@ class LoginScreen extends ConsumerWidget {
 
     return DefaultTextStyle(
       style: const TextStyle(
-        color: AppColor.black,
-        fontSize: 20,
-        fontWeight: FontWeight.w400
+          color: AppColor.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w400
       ),
       child: Stack(
         alignment: Alignment.topCenter,
@@ -60,12 +59,7 @@ class LoginScreen extends ConsumerWidget {
                 children: [
                   Text(
                     "간편하게",
-                    style: TextStyle(
-                      // color: AppColor.black,
-                      // fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      // decoration: TextDecoration.none,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w800),
                   ),
                   HorizontalSpacer(4),
                   Text("로그인하세요!"),
@@ -114,7 +108,7 @@ class LoginScreen extends ConsumerWidget {
                 imagePath: 'asset/image/apple_icon.png',
                 isLoading: ref.watch(_appleLoginLoadingProvider),
                 onPressed: () async {
-                  GoRouter.of(context).pushNamed(ScreenRoute.registration);
+                  GoRouter.of(context).goNamed(ScreenRoute.registration);
                 },
               ),
               const VerticalSpacer(60),
@@ -122,28 +116,28 @@ class LoginScreen extends ConsumerWidget {
                 width: deviceSize.width * 56 / 100,
                 height: 60,
                 child: FloatingActionButton(
-                  foregroundColor: AppColor.black,
-                  backgroundColor: AppColor.transparentGrey_300,
-                  onPressed: () => {},
-                  elevation: 1,
-                  focusElevation: 0,
-                  hoverElevation: 0,
-                  highlightElevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60 / 2),
-                  ),
-                  child: const Padding(
-                    padding: AppPadding.padding_horizon_20,
-                    child: Text(
-                      "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12
-                      )
+                    foregroundColor: AppColor.black,
+                    backgroundColor: AppColor.transparentGrey_300,
+                    onPressed: () => {},
+                    elevation: 1,
+                    focusElevation: 0,
+                    hoverElevation: 0,
+                    highlightElevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60 / 2),
                     ),
-                  )
+                    child: const Padding(
+                      padding: AppPadding.padding_horizon_20,
+                      child: Text(
+                          "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColor.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12
+                          )
+                      ),
+                    )
                 ),
               )
             ],
@@ -153,4 +147,3 @@ class LoginScreen extends ConsumerWidget {
     );
   }
 }
-

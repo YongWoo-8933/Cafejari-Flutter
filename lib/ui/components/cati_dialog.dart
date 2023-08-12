@@ -152,13 +152,11 @@ class CATIDialog extends StatelessWidget {
                           buttonWidth: (deviceWidth - 60) / 2 - 40,
                           buttonHeight: 50,
                           title: leftButton,
-                          primaryColor: false,
                           onPressed: () => {}),
                       ActionButtonPrimary(
                           buttonWidth: (deviceWidth - 60) / 2 - 40,
                           buttonHeight: 50,
                           title: rightButton,
-                          primaryColor: true,
                           onPressed: () => {})
                     ],
                   ),

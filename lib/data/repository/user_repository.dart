@@ -5,6 +5,7 @@ import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 
 /// user application api와 통신하는 저장소
 abstract class UserRepository {
+  // GET
   Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
   Future<LoginResponse> kakaoLoginFinish({required String accessToken});
   Future<List<GradeResponse>> fetchGrade();
@@ -12,6 +13,14 @@ abstract class UserRepository {
   Future<NicknameResponse> autoGenerateNickname();
   Future<UserResponse> fetchUser({required String accessToken});
   Future<List<ProfileImageResponse>> fetchProfileImage();
+  // POST
+  Future<UserResponse> makeNewProfile({
+    required String accessToken,
+    required String fcmToken,
+    required String nickname,
+    required int userId,
+    required int profileImageId
+  });
 }
 
 /// user repository의 구현부
@@ -20,6 +29,7 @@ class UserRepositoryImpl implements UserRepository {
 
   UserRepositoryImpl(this.apiService);
 
+  // GET
   @override
   Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken}) async {
     try {
@@ -113,14 +123,38 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<List<ProfileImageResponse>> fetchProfileImage() async {
     try {
-      dynamic response = await apiService.request(
+      List<dynamic> response = await apiService.request(
           method: HttpMethod.get,
           appLabel: "user",
           endpoint: "profile_image/"
       );
-      return response.map((dynamic e) => NicknameResponse.fromJson(e)).toList();
+      return response.map((dynamic e) => ProfileImageResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
+    }
+  }
+
+  // POST
+  @override
+  Future<UserResponse> makeNewProfile({
+    required String accessToken,
+    required String fcmToken,
+    required String nickname,
+    required int userId,
+    required int profileImageId}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "$userId/make_new_profile/",
+          accessToken: accessToken,
+          body: {"nickname": nickname, "profile_image_id": profileImageId, "fcm_token": fcmToken}
+      );
+      return UserResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
     }
   }
 }
