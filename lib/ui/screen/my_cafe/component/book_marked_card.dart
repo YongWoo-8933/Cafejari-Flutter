@@ -45,7 +45,7 @@ class BookMarkedCard extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-                side: BorderSide(color: AppColor.grey_300),
+                side: BorderSide(color: AppColor.grey_400),
               ),
               backgroundColor: AppColor.white,
               elevation: 0,

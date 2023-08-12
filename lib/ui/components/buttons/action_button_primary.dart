@@ -10,7 +10,7 @@ class ActionButtonPrimary extends StatelessWidget {
   final String title;
   final IconData? icon;
 
-  ActionButtonPrimary({
+  const ActionButtonPrimary({super.key,
     required this.buttonWidth,
     required this.buttonHeight,
     required this.title,
@@ -40,7 +40,7 @@ class ActionButtonPrimary extends StatelessWidget {
                 Icon(icon, color: AppColor.white),
               Text(
                 title,
-                style: TextSize.textSize_white_20,
+                style: TextSize.textSize_white_14,
               ),
             ],
           ),

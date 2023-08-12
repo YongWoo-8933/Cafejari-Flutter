@@ -35,7 +35,7 @@ class RegistrationBottomSheet extends ConsumerWidget {
             loginState.bottomSheetController.close();
           },
           style: ElevatedButton.styleFrom(
-              backgroundColor: isSelected? AppColor.grey_100 : AppColor.white,
+              backgroundColor: isSelected? AppColor.grey_200 : AppColor.white,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

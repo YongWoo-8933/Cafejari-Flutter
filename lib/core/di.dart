@@ -1,17 +1,21 @@
 import 'package:cafejari_flutter/data/repository/cafe_log_repository.dart';
+import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
 import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
 import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/shop_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_log_use_case.dart';
+import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
+import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
+import 'package:cafejari_flutter/ui/viewmodel/challenge_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/my_page_view_model.dart';
@@ -74,6 +78,11 @@ final shopRepositoryProvider = Provider<ShopRepository>((ref) {
   return ShopRepositoryImpl(apiService);
 });
 
+final challengeRepositoryProvider = Provider<ChallengeRepository>((ref) {
+  APIService apiService = ref.watch(apiServiceProvider);
+  return ChallengeRepositoryImpl(apiService);
+});
+
 
 // use_case ----------------------------------------------------------------------------------------
 final tokenUseCaseProvider = Provider<TokenUseCase>((ref) {
@@ -122,6 +131,12 @@ final shopUseCaseProvider = Provider<ShopUseCase>((ref) {
   return ShopUseCaseImpl(tokenRepository: tokenRepository, shopRepository: shopRepository);
 });
 
+final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
+  TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
+  ChallengeRepository challengeRepository = ref.watch(challengeRepositoryProvider);
+  return ChallengeUseCaseImpl(tokenRepository: tokenRepository, challengeRepository: challengeRepository);
+});
+
 
 // view model --------------------------------------------------------------------------------------
 final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalState>((ref) {
@@ -156,4 +171,11 @@ final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
   return LoginViewModel(userUseCase: userUseCase, globalViewModel: viewModel);
+});
+
+final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, ChallengeState>((ref) {
+  final viewModel = ref.watch(globalViewModelProvider.notifier);
+  final ChallengeUseCase challengeUseCase = ref.watch(challengeUseCaseProvider);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return ChallengeViewModel(challengeUseCase: challengeUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
 });

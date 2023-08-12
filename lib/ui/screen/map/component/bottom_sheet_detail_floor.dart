@@ -77,7 +77,7 @@ class BottomSheetDetailFloor extends ConsumerWidget {
             );
           } else { // index가 홀수인 경우 (디바이더)
             return const VerticalDivider(
-              color: AppColor.grey_300,
+              color: AppColor.grey_400,
               thickness: 1,
               indent: 20,
               endIndent: 20,
