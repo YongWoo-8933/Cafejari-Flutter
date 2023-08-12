@@ -132,23 +132,23 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     final f = MakeNewProfile();
     try {
       return f(
-          userRepository: userRepository,
-          accessToken: accessToken,
-          fcmToken: fcmToken,
-          nickname: nickname,
-          userId: userId,
-          profileImageId: profileImageId
+        userRepository: userRepository,
+        accessToken: accessToken,
+        fcmToken: fcmToken,
+        nickname: nickname,
+        userId: userId,
+        profileImageId: profileImageId
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       try {
         return f(
-            userRepository: userRepository,
-            accessToken: newToken,
-            fcmToken: fcmToken,
-            nickname: nickname,
-            userId: userId,
-            profileImageId: profileImageId
+          userRepository: userRepository,
+          accessToken: newToken,
+          fcmToken: fcmToken,
+          nickname: nickname,
+          userId: userId,
+          profileImageId: profileImageId
         );
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");

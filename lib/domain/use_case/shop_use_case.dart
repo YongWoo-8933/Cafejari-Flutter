@@ -42,10 +42,10 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
       List<CouponResponse> couponResponseList = await shopRepository.fetchCoupon();
       return couponResponseList.map((couponResponse) {
         return Coupon(
-            id: couponResponse.id,
-            name: couponResponse.name,
-            description: couponResponse.description,
-            imageUrl: couponResponse.image
+          id: couponResponse.id,
+          name: couponResponse.name,
+          description: couponResponse.description,
+          imageUrl: couponResponse.image
         );
       }).toList();
     } on ErrorWithMessage {
@@ -59,14 +59,14 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
       List<ItemResponse> itemResponseList = await shopRepository.fetchItem();
       return itemResponseList.map((itemResponse) {
         return Item(
-            itemId: itemResponse.id,
-            brandId: itemResponse.brand,
-            price: itemResponse.price,
-            limitDay: itemResponse.limit_day,
-            name: itemResponse.name,
-            description: itemResponse.description,
-            smallImageUrl: itemResponse.small_image_url,
-            largeImageUrl: itemResponse.large_image_url
+          itemId: itemResponse.id,
+          brandId: itemResponse.brand,
+          price: itemResponse.price,
+          limitDay: itemResponse.limit_day,
+          name: itemResponse.name,
+          description: itemResponse.description,
+          smallImageUrl: itemResponse.small_image_url,
+          largeImageUrl: itemResponse.large_image_url
         );
       }).toList();
     } on ErrorWithMessage {

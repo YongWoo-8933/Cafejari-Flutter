@@ -94,24 +94,24 @@ class GetMapCafes {
         }).toList();
         // 최종 입력
         cafes.add(Cafe(
-            id: cafeResponse.id,
-            recentUpdatedFloor: recentUpdatedFloor,
-            recentUpdatedOccupancyRate: recentUpdatedOccupancyRate,
-            isClosed: cafeResponse.is_closed,
-            name: cafeResponse.name,
-            address: cafeResponse.address,
-            latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
-            cafeFloors: cafeFloors,
-            openingHour: OpeningHour(
-                mon: cafeResponse.opening_hour.mon,
-                tue: cafeResponse.opening_hour.tue,
-                wed: cafeResponse.opening_hour.wed,
-                thu: cafeResponse.opening_hour.thu,
-                fri: cafeResponse.opening_hour.fri,
-                sat: cafeResponse.opening_hour.sat,
-                sun: cafeResponse.opening_hour.sun),
-            imageUrls: imageUrls,
-            vips: vips));
+          id: cafeResponse.id,
+          recentUpdatedFloor: recentUpdatedFloor,
+          recentUpdatedOccupancyRate: recentUpdatedOccupancyRate,
+          isClosed: cafeResponse.is_closed,
+          name: cafeResponse.name,
+          address: cafeResponse.address,
+          latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
+          cafeFloors: cafeFloors,
+          openingHour: OpeningHour(
+              mon: cafeResponse.opening_hour.mon,
+              tue: cafeResponse.opening_hour.tue,
+              wed: cafeResponse.opening_hour.wed,
+              thu: cafeResponse.opening_hour.thu,
+              fri: cafeResponse.opening_hour.fri,
+              sat: cafeResponse.opening_hour.sat,
+              sun: cafeResponse.opening_hour.sun),
+          imageUrls: imageUrls,
+          vips: vips));
       }
       return cafes;
     } on ErrorWithMessage {

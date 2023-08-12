@@ -20,12 +20,12 @@ class LoginState with _$LoginState {
         required final String appleAccessToken}) = _LoginState;
 
   factory LoginState.empty() => LoginState(
-      profileImages: [],
-      selectedProfileImage: (profileImageId: 0, imageUrl: ""),
-      nicknameController: TextEditingController(text: ""),
-      nicknameErrorMessage: "",
-      bottomSheetController: PanelController(),
-      kakaoAccessToken: "",
-      appleAccessToken: ""
+    profileImages: [],
+    selectedProfileImage: (profileImageId: 0, imageUrl: ""),
+    nicknameController: TextEditingController(text: ""),
+    nicknameErrorMessage: "",
+    bottomSheetController: PanelController(),
+    kakaoAccessToken: "",
+    appleAccessToken: ""
   );
 }

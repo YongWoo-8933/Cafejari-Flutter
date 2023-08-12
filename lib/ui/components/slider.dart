@@ -40,12 +40,12 @@ class CustomSlider extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width - 80 - sliderWidth_padding) / 4,
                 height: 10,
-                color: AppColor.grey_100,
+                color: AppColor.grey_200,
               ),
               Container(
                 width: (MediaQuery.of(context).size.width - 80 - sliderWidth_padding) / 4,
                 height: 10,
-                color: AppColor.grey_300,
+                color: AppColor.grey_400,
               ),
               Container(
                 width: (MediaQuery.of(context).size.width - 80 - sliderWidth_padding) / 4,
@@ -87,9 +87,9 @@ class CustomSlider extends StatelessWidget {
 
   Color getColorForValue(double value) {
     if (value <= 25) {
-      return AppColor.grey_100;
+      return AppColor.grey_200;
     } else if (value <= 50) {
-      return AppColor.grey_300;
+      return AppColor.grey_400;
     } else if (value <= 75) {
       return AppColor.grey_500;
     } else {

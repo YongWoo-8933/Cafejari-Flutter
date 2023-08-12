@@ -34,14 +34,14 @@ class APIService {
         headers: headers,
       ),
       HttpMethod.post => await post(
-          Uri.https(_baseUrl, "/$appLabel/$endpoint"),
-          headers: headers,
-          body: body?.map((key, value) => MapEntry(key, value.toString()))
+        Uri.https(_baseUrl, "/$appLabel/$endpoint"),
+        headers: headers,
+        body: body?.map((key, value) => MapEntry(key, value.toString()))
       ),
       HttpMethod.put => await put(
-          Uri.https(_baseUrl, "/$appLabel/$endpoint"),
-          headers: headers,
-          body: body?.map((key, value) => MapEntry(key, value.toString()))
+        Uri.https(_baseUrl, "/$appLabel/$endpoint"),
+        headers: headers,
+        body: body?.map((key, value) => MapEntry(key, value.toString()))
       ),
       HttpMethod.delete => await delete(
         Uri.https(_baseUrl, "/$appLabel/$endpoint"),

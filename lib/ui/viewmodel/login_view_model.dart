@@ -21,7 +21,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       if (loginRes.isUserExist) {
         // 기존 유저
         final loginFinishRes =
-        await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
+            await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
         globalViewModel.saveLoginResult(
             accessToken: loginFinishRes.accessToken,
             refreshToken: loginFinishRes.refreshToken,
@@ -41,23 +41,23 @@ class LoginViewModel extends StateNotifier<LoginState> {
   Future<bool> registerAsKakaoUser() async {
     try {
       final ({String accessToken, String refreshToken, User user}) loginRes =
-      await _userUseCase.kakaoLoginFinish(accessToken: state.kakaoAccessToken);
+          await _userUseCase.kakaoLoginFinish(accessToken: state.kakaoAccessToken);
       globalViewModel.saveLoginResult(
-          accessToken: loginRes.accessToken,
-          refreshToken: loginRes.refreshToken,
-          user: loginRes.user);
+        accessToken: loginRes.accessToken,
+        refreshToken: loginRes.refreshToken,
+        user: loginRes.user);
       print(globalViewModel.state.accessToken);
       print(globalViewModel.state.user);
       globalViewModel.saveLoginResult(
+        accessToken: globalViewModel.state.accessToken,
+        refreshToken: loginRes.refreshToken,
+        user: await _userUseCase.makeNewProfile(
           accessToken: globalViewModel.state.accessToken,
-          refreshToken: loginRes.refreshToken,
-          user: await _userUseCase.makeNewProfile(
-              accessToken: globalViewModel.state.accessToken,
-              fcmToken: "",
-              nickname: state.nicknameController.text,
-              userId: globalViewModel.state.user.userId,
-              profileImageId: state.selectedProfileImage.profileImageId
-          )
+          fcmToken: "",
+          nickname: state.nicknameController.text,
+          userId: globalViewModel.state.user.userId,
+          profileImageId: state.selectedProfileImage.profileImageId
+        )
       );
       return true;
     } on RefreshTokenExpired {

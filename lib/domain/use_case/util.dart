@@ -3,9 +3,11 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/cafe_log.dart';
+import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
@@ -147,4 +149,32 @@ CafeLog parseCafeLogFromCafeLogResponse({required CafeLogResponse cafeLogRespons
       likeUserIds: likeUserIds,
       reportUserIds: reportUserIds,
       imageUrls: imageUrls);
+}
+
+/// ChallengeResponse로부터 Challenge 객체를 뽑아내는 함수
+Challenge parseChallengeFromChallengeResponse({required ChallengeResponse challengeResponse}) {
+  var totalPoint = 0;
+  for(ChallengeMilestoneResponse milestoneResponse in challengeResponse.challenge_milestone) {
+    totalPoint += milestoneResponse.point;
+  }
+  return Challenge(
+      id: challengeResponse.id,
+      participantLimit: challengeResponse.participant_limit,
+      goal: challengeResponse.goal,
+      totalPoint: totalPoint,
+      name: challengeResponse.name,
+      description: challengeResponse.description,
+      imageUrl: challengeResponse.image,
+      startAt: DateTime.parse(challengeResponse.start),
+      finishAt: DateTime.parse(challengeResponse.finish),
+      available: challengeResponse.available,
+      challengerUserIds: challengeResponse.challenger,
+      challengeMilestones: challengeResponse.challenge_milestone.map((e) {
+        return ChallengeMilestone(
+          id: e.id,
+          point: e.point,
+          count: e.count,
+          progressRate: double.parse(e.progress_rate),
+          description: e.description);
+      }).toList());
 }

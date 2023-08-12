@@ -23,8 +23,8 @@ class GetRankers {
       }
       return rankerResponseList.map((e) {
         return parsePartialUserFromPartialUserResponse(
-            partialUserResponse: e.user,
-            updateCount: e.sharing_count
+          partialUserResponse: e.user,
+          updateCount: e.sharing_count
         );
       }).toList();
     } on ErrorWithMessage {

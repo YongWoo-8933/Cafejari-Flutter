@@ -50,9 +50,9 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       List<CafeSearchResponse> cafeSearchResponseList = await cafeRepository.fetchSearchCafe(query: query);
       return cafeSearchResponseList.map((cafeSearchResponse) {
         return Cafe.empty().copyWith(
-            id: cafeSearchResponse.id,
-            name: cafeSearchResponse.name,
-            address: cafeSearchResponse.address
+          id: cafeSearchResponse.id,
+          name: cafeSearchResponse.name,
+          address: cafeSearchResponse.address
         );
       }).toList();
     } on ErrorWithMessage {

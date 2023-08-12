@@ -70,18 +70,18 @@ class AgreementPart extends ConsumerWidget {
             ),
             const VerticalSpacer(40),
             _RegistrationButton(
-                enabled: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
-                    loginState.nicknameErrorMessage.isEmpty,
-                isLoading: ref.watch(_isRegistrationLoading),
-                onClick: () async {
-                  if (loginState.kakaoAccessToken.isNotEmpty) {
-                    ref.watch(_isRegistrationLoading.notifier).update((state) => true);
-                    await loginViewModel.registerAsKakaoUser();
-                  } else if (loginState.appleAccessToken.isNotEmpty) {
-                    // loginViewModel.registerAsKakaoUser();
-                  }
-                  ref.watch(_isRegistrationLoading.notifier).update((state) => false);
+              enabled: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
+                  loginState.nicknameErrorMessage.isEmpty,
+              isLoading: ref.watch(_isRegistrationLoading),
+              onClick: () async {
+                if (loginState.kakaoAccessToken.isNotEmpty) {
+                  ref.watch(_isRegistrationLoading.notifier).update((state) => true);
+                  await loginViewModel.registerAsKakaoUser();
+                } else if (loginState.appleAccessToken.isNotEmpty) {
+                  // loginViewModel.registerAsKakaoUser();
                 }
+                ref.watch(_isRegistrationLoading.notifier).update((state) => false);
+              }
             ),
             const VerticalSpacer(100),
           ],
@@ -170,12 +170,12 @@ class _AgreementBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColor.white,
-          border: Border.all(
-            color: AppColor.grey_400,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(10)
+        color: AppColor.white,
+        border: Border.all(
+          color: AppColor.grey_400,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10)
       ),
       child: Column(
         children: [
@@ -184,12 +184,21 @@ class _AgreementBox extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               child: Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.check_mark_circled_solid,
-                      color: isChecked ? AppColor.secondary : AppColor.grey_400,
-                      size: 24,
+                children: [
+                  Icon(
+                    CupertinoIcons.check_mark_circled_solid,
+                    color: isChecked ? AppColor.secondary : AppColor.grey_400,
+                    size: 24,
+                  ),
+                  const HorizontalSpacer(8),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: isChecked ? AppColor.black : AppColor.grey_400,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700
                     ),
+                  ),
                     const HorizontalSpacer(8),
                     Text(
                       title,
@@ -223,15 +232,15 @@ class _AgreementBox extends StatelessWidget {
                 width: double.infinity,
                 height: isExpanded ? 160 : 0,
                 child: ListView(
-                    padding: AppPadding.padding_0,
-                    children: [
-                      const Divider(thickness: 1, height: 1, color: AppColor.grey_400),
-                      const VerticalSpacer(20),
-                      Padding(
-                        padding: AppPadding.padding_horizon_20,
-                        child: Text(content),
-                      )
-                    ]
+                  padding: AppPadding.padding_0,
+                  children: [
+                    const Divider(thickness: 1, height: 1, color: AppColor.grey_400),
+                    const VerticalSpacer(20),
+                    Padding(
+                      padding: AppPadding.padding_horizon_20,
+                      child: Text(content),
+                    )
+                  ]
                 ),
               ),
             ),
@@ -270,28 +279,28 @@ class _RegistrationButton extends StatelessWidget {
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Stack(
-              alignment: Alignment.center,
-              children: [
-                AnimatedOpacity(
-                    opacity: isLoading ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 300),
-                    child: Center(
-                        child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
-                    )
-                ),
-                AnimatedOpacity(
-                    opacity: isLoading ? 0.0 : 1.0,
-                    duration: const Duration(milliseconds: 300),
-                    child: const Text(
-                        "가입하기",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.white
-                        )
-                    )
+            alignment: Alignment.center,
+            children: [
+              AnimatedOpacity(
+                opacity: isLoading ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: Center(
+                  child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
                 )
-              ]
+              ),
+              AnimatedOpacity(
+                opacity: isLoading ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 300),
+                child: const Text(
+                  "가입하기",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.white
+                  )
+                )
+              )
+            ]
           ),
         ),
       ),

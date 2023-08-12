@@ -144,11 +144,11 @@ class UserRepositoryImpl implements UserRepository {
     required int profileImageId}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "$userId/make_new_profile/",
-          accessToken: accessToken,
-          body: {"nickname": nickname, "profile_image_id": profileImageId, "fcm_token": fcmToken}
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "$userId/make_new_profile/",
+        accessToken: accessToken,
+        body: {"nickname": nickname, "profile_image_id": profileImageId, "fcm_token": fcmToken}
       );
       return UserResponse.fromJson(response);
     } on ErrorWithMessage {

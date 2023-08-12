@@ -1,5 +1,6 @@
 
 import 'package:cafejari_flutter/core/extension/null.dart';
+import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,17 +17,18 @@ class BackButtonAppBar extends AppBar {
     required this.backGroundColor
   }) : super(
     leading: Row(
-        children: [
-          IconButton(
-              onPressed: onBack,
-              icon: const Icon(CupertinoIcons.left_chevron)
-          ),
-          Visibility(
-              visible: backButtonText.isNotNull,
-              child: Text(backButtonText ?? "")
-          )
-        ]
+      children: [
+        IconButton(
+            onPressed: onBack,
+            icon: const Icon(CupertinoIcons.left_chevron, color: AppColor.black)
+        ),
+        Visibility(
+            visible: backButtonText.isNotNull,
+            child: Text(backButtonText ?? "")
+        )
+      ]
     ),
+    leadingWidth: 160,
     elevation: 0,
     scrolledUnderElevation: 1.0,
     backgroundColor: backGroundColor,

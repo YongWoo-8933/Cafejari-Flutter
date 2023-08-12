@@ -11,13 +11,13 @@ class GetMyUserCoupons {
       List<UserCouponResponse> userCouponResponseList = await shopRepository.fetchMyCoupon(accessToken: accessToken);
       return userCouponResponseList.map((userCouponResponse) {
         return UserCoupon(
-            userCouponId: userCouponResponse.id,
-            couponId: userCouponResponse.coupon.id,
-            isUsed: userCouponResponse.is_used,
-            name: userCouponResponse.coupon.name,
-            description: userCouponResponse.coupon.description,
-            imageUrl: userCouponResponse.coupon.image,
-            expirationPeriod: DateTime.parse(userCouponResponse.expiration_period)
+          userCouponId: userCouponResponse.id,
+          couponId: userCouponResponse.coupon.id,
+          isUsed: userCouponResponse.is_used,
+          name: userCouponResponse.coupon.name,
+          description: userCouponResponse.coupon.description,
+          imageUrl: userCouponResponse.coupon.image,
+          expirationPeriod: DateTime.parse(userCouponResponse.expiration_period)
         );
       }).toList();
     } on AccessTokenExpired {

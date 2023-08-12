@@ -26,11 +26,11 @@ class GetCafeLogs {
           cafeLogPageResponse = await cafeLogRepository.fetchMyCafeLog(accessToken: accessToken);
       }
       return Pagination(
-          count: cafeLogPageResponse.count,
-          nextPageUrl: cafeLogPageResponse.next,
-          previousPageUrl: cafeLogPageResponse.previous,
-          results: cafeLogPageResponse.results.map((e) {
-            return parseCafeLogFromCafeLogResponse(cafeLogResponse: e);}).toList()
+        count: cafeLogPageResponse.count,
+        nextPageUrl: cafeLogPageResponse.next,
+        previousPageUrl: cafeLogPageResponse.previous,
+        results: cafeLogPageResponse.results.map((e) {
+          return parseCafeLogFromCafeLogResponse(cafeLogResponse: e);}).toList()
       );
     } on AccessTokenExpired {
       rethrow;

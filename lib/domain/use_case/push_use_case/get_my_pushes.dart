@@ -13,11 +13,11 @@ class GetPushes {
       List<PushResponse> pushResponseList = await pushRepository.fetchMyPush(accessToken: accessToken);
       return pushResponseList.map((pushResponse) {
         return Push(
-            id: pushResponse.id,
-            title: pushResponse.title,
-            body: pushResponse.body,
-            pushedAt: DateTime.parse(pushResponse.pushed_at),
-            type: pushResponse.type.toPushType()
+          id: pushResponse.id,
+          title: pushResponse.title,
+          body: pushResponse.body,
+          pushedAt: DateTime.parse(pushResponse.pushed_at),
+          type: pushResponse.type.toPushType()
         );
       }).toList();
     } on ErrorWithMessage {

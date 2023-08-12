@@ -10,5 +10,6 @@ class AppPadding {
   static const padding_7 = EdgeInsets.all(7);
   static const padding_10 = EdgeInsets.all(10);
   static const padding_20 = EdgeInsets.all(20);
+  static const padding_25 = EdgeInsets.all(25);
   static const padding_30 = EdgeInsets.all(30);
 }

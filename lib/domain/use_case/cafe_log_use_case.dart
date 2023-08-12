@@ -25,8 +25,8 @@ class CafeLogUseCaseImpl extends BaseUseCase implements CafeLogUseCase {
     final f = GetCafeLogs();
     try {
       return await f(
-          cafeLogRepository: cafeLogRepository,
-          type: GetCafeLogType.recent
+        cafeLogRepository: cafeLogRepository,
+        type: GetCafeLogType.recent
       );
     } on ErrorWithMessage {
       rethrow;
@@ -38,8 +38,8 @@ class CafeLogUseCaseImpl extends BaseUseCase implements CafeLogUseCase {
     final f = GetCafeLogs();
     try {
       return await f(
-          cafeLogRepository: cafeLogRepository,
-          type: GetCafeLogType.hot
+        cafeLogRepository: cafeLogRepository,
+        type: GetCafeLogType.hot
       );
     } on ErrorWithMessage {
       rethrow;

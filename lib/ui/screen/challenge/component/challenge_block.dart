@@ -1,23 +1,19 @@
+import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeBlock extends StatelessWidget {
-  final String challengeImage;
-  final String title;
-  final int point;
+  final List<String> smallProfileImageUrls;
+  final Challenge challenge;
   final VoidCallback? onPressed;
-  final double width, height;
 
-  ChallengeBlock({
-    required this.challengeImage,
-    required this.title,
-    required this.point,
-    required this.width,
-    required this.height,
+  const ChallengeBlock({
+    super.key,
+    required this.smallProfileImageUrls,
+    required this.challenge,
     this.onPressed,
   });
 
@@ -25,63 +21,61 @@ class ChallengeBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Column(
-        children: [
-          Container(
-            width: width,
-            height: height * 0.7,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColor.grey_300.withOpacity(0.5),
-                  blurRadius: 10, // 그림자 번짐 정도 조절
-                  offset: Offset(0, 3), // 그림자 위치 조정
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.grey_400.withOpacity(0.4),
+              blurRadius: 8, // 그림자 번짐 정도 조절
+              offset: const Offset(0, 4), // 그림자 위치 조정
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            color: AppColor.white,
+            width: 280,
+            height: 400,
+            child: Column(
+              children: [
+                CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: 280, height: 280),
+                SizedBox(
+                  width: 280,
+                  height: 100,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                    child: SizedBox(
+                      width: 280,
+                      height: 120,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "총 ${challenge.totalPoint}포인트 지급",
+                            style: const TextStyle(
+                                color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                          const VerticalSpacer(4),
+                          Text(
+                            "${challenge.name} (${challenge.challengerUserIds.length}/${challenge.participantLimit})",
+                            style: const TextStyle(
+                                color: AppColor.primary, fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          const VerticalSpacer(8),
+                          ChallengeSmallProfile(
+                            imageUrls: smallProfileImageUrls,
+                            participantCount: challenge.challengerUserIds.length
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
-              // color: AppColor.secondary, // 배경색을 주석 처리하거나 투명하게 설정
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-              child: Image.asset(
-                'asset/image/testimage.png',
-                fit: BoxFit.cover,
-              ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 5),
-            width: width,
-            height: height*0.3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColor.grey_300.withOpacity(0.5), // 그림자 색상과 불투명도
-                  blurRadius: 5, // 그림자 번짐 정도
-                  offset: Offset(1, 1), // 그림자 위치 조정
-                ),
-              ],
-              color: AppColor.white,
-            ),
-            padding: AppPadding.padding_10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${point}포인트 지급",
-                  style: TextStyle(color: AppColor.secondary, fontSize: 14),
-                ),
-                SizedBox(height: 5),
-                Text(title, style: TextSize.textSize_bold_16),
-                SizedBox(height: 5),
-                ChallengeSmallProfile(),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

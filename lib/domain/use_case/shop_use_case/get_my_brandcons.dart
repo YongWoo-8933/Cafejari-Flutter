@@ -11,12 +11,12 @@ class GetMyBrandcons {
       List<BrandconResponse> brandconResponseList = await shopRepository.fetchMyBrandcon(accessToken: accessToken);
       return brandconResponseList.map((brandconResponse) {
         return Brandcon(
-            brandconId: brandconResponse.id,
-            itemId: brandconResponse.item,
-            imageUrl: brandconResponse.image,
-            description: brandconResponse.description,
-            expirationDate: DateTime.parse(brandconResponse.expiration_period),
-            isUsed: brandconResponse.is_used
+          brandconId: brandconResponse.id,
+          itemId: brandconResponse.item,
+          imageUrl: brandconResponse.image,
+          description: brandconResponse.description,
+          expirationDate: DateTime.parse(brandconResponse.expiration_period),
+          isUsed: brandconResponse.is_used
         );
       }).toList();
     } on AccessTokenExpired {

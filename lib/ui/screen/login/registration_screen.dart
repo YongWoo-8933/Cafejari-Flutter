@@ -47,27 +47,27 @@ class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-            appBar: BackButtonAppBar(
-                backGroundColor: AppColor.white,
-                onBack: () => GoRouter.of(context).pop()
+          appBar: BackButtonAppBar(
+              backGroundColor: AppColor.white,
+              onBack: () => GoRouter.of(context).pop()
+          ),
+          body: SlidingUpPanel(
+            controller: loginState.bottomSheetController,
+            minHeight: 0,
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+            isDraggable: false,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.elliptical(20.0, 20.0),
+              topRight: Radius.elliptical(20.0, 20.0)
             ),
-            body: SlidingUpPanel(
-                controller: loginState.bottomSheetController,
-                minHeight: 0,
-                maxHeight: MediaQuery.of(context).size.height * 0.8,
-                isDraggable: false,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.elliptical(20.0, 20.0),
-                    topRight: Radius.elliptical(20.0, 20.0)
-                ),
-                body: ListView(
-                  children: const [
-                    ProfilePart(),
-                    AgreementPart(),
-                  ],
-                ),
-                panelBuilder: (ScrollController sc) => const RegistrationBottomSheet()
-            )
+            body: ListView(
+              children: const [
+                ProfilePart(),
+                AgreementPart(),
+              ],
+            ),
+            panelBuilder: (ScrollController sc) => const RegistrationBottomSheet()
+          )
         ),
       ),
     );

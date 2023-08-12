@@ -46,7 +46,7 @@ class RegistrationBottomSheet extends ConsumerWidget {
               )
           ),
           child: CustomCachedNetworkImage(
-              imageUrl: loginState.profileImages[index].imageUrl
+            imageUrl: loginState.profileImages[index].imageUrl
           ),
         );
       },

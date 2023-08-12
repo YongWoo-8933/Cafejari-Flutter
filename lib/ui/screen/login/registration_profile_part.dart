@@ -25,9 +25,9 @@ class ProfilePart extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ProfileImageEditable(
-              size: 160,
-              imageUrl: loginState.selectedProfileImage.imageUrl,
-              onEditButtonClick: () => loginState.bottomSheetController.open()
+            size: 160,
+            imageUrl: loginState.selectedProfileImage.imageUrl,
+            onEditButtonClick: () => loginState.bottomSheetController.open()
           ),
           const VerticalSpacer(20),
           Row(
@@ -41,8 +41,8 @@ class ProfilePart extends ConsumerWidget {
                   keyboardType: TextInputType.text,
                   cursorColor: AppColor.primary,
                   style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
                   ),
                   textAlign: TextAlign.center,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,

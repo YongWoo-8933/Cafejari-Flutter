@@ -90,6 +90,6 @@ class Theming {
     ),
     scaffoldBackgroundColor: AppColor.grey_500,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
-        .copyWith(background: AppColor.grey_300),
+        .copyWith(background: AppColor.grey_400),
   );
 }
