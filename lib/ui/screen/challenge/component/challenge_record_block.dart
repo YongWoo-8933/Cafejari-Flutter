@@ -3,27 +3,33 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeRecordBlock extends StatelessWidget {
+  final double width;
   final String updateTime;
   final int point;
-  final String? activityName;
+  final String activityName;
 
-  ChallengeRecordBlock({
+  const ChallengeRecordBlock({super.key,
+    required this.width,
     required this.updateTime,
     required this.point,
-    this.activityName,
+    required this.activityName,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double deviceWidth = MediaQuery.of(context).size.width - 20;
-
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      color: AppColor.white,
+      child: Column(
         children: [
-          _buildCell(deviceWidth, updateTime),
-          _buildCell(deviceWidth, activityName ?? "혼잡도 공유 활동"),
-          _buildCell(deviceWidth, "${point}p"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildCell(width / 3, updateTime),
+              _buildCell(width / 3, activityName),
+              _buildCell(width / 3, "${point}p"),
+            ],
+          ),
+          const Divider(height: 1, color: AppColor.grey_200, thickness: 1)
         ],
       ),
     );
@@ -31,17 +37,9 @@ class ChallengeRecordBlock extends StatelessWidget {
 
   Container _buildCell(double width, String text) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(
-            color: AppColor.background,
-            width: 1.0,
-          ),
-        ),
-      ),
       alignment: Alignment.center,
-      width: width / 3,
-      height: 50,
+      width: width,
+      height: 48,
       child: Text(text, style: TextSize.textSize_12),
     );
   }

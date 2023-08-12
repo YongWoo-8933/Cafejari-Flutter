@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_information.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_record.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_slier.dart';
@@ -22,16 +23,10 @@ class ChallengeProgressScreen extends ConsumerWidget {
     final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('진행 상황', style: TextSize.textSize_16),
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: const Icon(CupertinoIcons.left_chevron, color: AppColor.black),
-        ),
-        backgroundColor: AppColor.white,
-        elevation: 0,
+      appBar: BackButtonAppBar(
+        backGroundColor: AppColor.white,
+        backButtonText: "챌린지 정보",
+        onBack: GoRouter.of(context).pop,
       ),
       backgroundColor: AppColor.white,
       body: SingleChildScrollView(
