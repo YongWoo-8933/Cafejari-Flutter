@@ -31,18 +31,23 @@ class MyPagePoint extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              margin: AppPadding.padding_20,
-              child: Column(
-                children: [
-                  Text("포인트", style: TextSize.textSize_grey_14,),
-                  Row(
-                    children: [
-                      Text("45,000", style: TextSize.textSize_bold_20),
-                      Icon(CupertinoIcons.right_chevron, size: 16,)
-                    ],
-                  )
-                ],
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).goNamed(ScreenRoute.shop);
+              },
+              child: Container(
+                margin: AppPadding.padding_20,
+                child: Column(
+                  children: [
+                    Text("포인트", style: TextSize.textSize_grey_14,),
+                    Row(
+                      children: [
+                        Text("45,000", style: TextSize.textSize_bold_20),
+                        Icon(CupertinoIcons.right_chevron, size: 16,),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -53,10 +58,9 @@ class MyPagePoint extends ConsumerWidget {
                 title: "포인트SHOP",
                 isClicked: true,
                 icon: CupertinoIcons.shopping_cart,
-                onPressed: () { GoRouter.of(context).goNamed(ScreenRoute.login); },
+                onPressed: () { GoRouter.of(context).goNamed(ScreenRoute.login);},
               ),
             ),
-
           ],
         ),
       ),

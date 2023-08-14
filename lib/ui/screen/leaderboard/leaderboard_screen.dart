@@ -7,7 +7,6 @@ import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dar
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 
 
@@ -25,30 +24,30 @@ class LeaderboardScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: const Text("벑은"),
-          onPressed: () => FlutterLocalNotification.showNotification(title: "test", body: "zz"),
-        ),
-        body: Column(
-          children: [
-            Center(
-                child: Platform.isIOS
-                    ? CupertinoSwitch(
-                  value: darkMode,
-                  activeColor: AppColor.brown_300,
-                  onChanged: setDark,
-                )
-                    : Switch(value: darkMode, onChanged: setDark)),
-            ActionButtonPrimary(
-                buttonWidth: 100,
-                buttonHeight: 42,
-                title: "붵은",
-                onPressed: () async {
+      floatingActionButton: FloatingActionButton(
+        child: const Text("벑은"),
+        onPressed: () => FlutterLocalNotification.showNotification(title: "test", body: "zz"),
+      ),
+      body: Column(
+        children: [
+          Center(
+              child: Platform.isIOS
+                  ? CupertinoSwitch(
+                value: darkMode,
+                activeColor: AppColor.brown_300,
+                onChanged: setDark,
+              )
+                  : Switch(value: darkMode, onChanged: setDark)),
+          ActionButtonPrimary(
+              buttonWidth: 100,
+              buttonHeight: 42,
+              title: "붵은",
+              onPressed: () async {
 
-                },
-            )
-          ],
-        )
-      );
+              },
+          )
+        ],
+      )
+    );
   }
 }

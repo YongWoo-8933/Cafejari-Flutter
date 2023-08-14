@@ -5,6 +5,8 @@ import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.d
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
+import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
+import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -36,16 +38,26 @@ final GoRouter appRouter = GoRouter(
             builder: (_, __) => const MyCafeScreen(),
           ),
           GoRoute(
-              path: "challenge_info",
-              name: ScreenRoute.challengeInfo,
-              builder: (_, __) => const ChallengeInfoScreen(),
-              routes: [
-                GoRoute(
-                    path: "challenge_progress",
-                    name: ScreenRoute.challengeProgress,
-                    builder: (_, __) => const ChallengeProgressScreen()
-                )
-              ]
+            path: "challenge_info",
+            name: ScreenRoute.challengeInfo,
+            builder: (_, __) => const ChallengeInfoScreen(),
+            routes: [
+              GoRoute(
+                  path: "challenge_progress",
+                  name: ScreenRoute.challengeProgress,
+                  builder: (_, __) => const ChallengeProgressScreen()
+              )
+            ]
+          ),
+          GoRoute(
+            path: "shop",
+            name: ScreenRoute.shop,
+            builder: (_, __) => const ShopScreen(),
+          ),
+          GoRoute(
+            path: "point",
+            name: ScreenRoute.point,
+            builder: (_, __) => const PointScreen(),
           ),
         ]
     ),
