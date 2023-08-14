@@ -48,7 +48,7 @@ class ChallengeSmallProfile extends ConsumerWidget {
             style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                color: AppColor.grey_600
+                color: AppColor.grey_700
             )
           ),
         )

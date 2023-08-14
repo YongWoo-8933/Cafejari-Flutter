@@ -7,16 +7,32 @@ import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/viewmodel/challenge_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ChallengeInfoScreen extends ConsumerWidget {
+
+class ChallengeInfoScreen extends ConsumerStatefulWidget {
   const ChallengeInfoScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ChallengeInfoScreenState createState() => ChallengeInfoScreenState();
+}
+
+
+class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final viewModel = ref.watch(challengeViewModelProvider.notifier);
+      await viewModel.refreshChallengers();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
     final ChallengeState challengeState = ref.watch(challengeViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
@@ -40,12 +56,17 @@ class ChallengeInfoScreen extends ConsumerWidget {
           buttonHeight: 48,
           title: isParticipated ? "진행상황" : "참여하기",
           onPressed: () {
-            GoRouter.of(context).goNamed(ScreenRoute.challenge_progress);
+            if (isParticipated) {
+              GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
+              challengeViewModel.setChallenger();
+            } else {
+              GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
+              challengeViewModel.setDebugChallenger();
+            }
           },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling
     );
   }
 }

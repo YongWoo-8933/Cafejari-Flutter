@@ -31,7 +31,7 @@ class ChallengeInformation extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
-                  color: AppColor.grey_500
+                  color: AppColor.grey_600
                 )
               ),
               const VerticalSpacer(16),

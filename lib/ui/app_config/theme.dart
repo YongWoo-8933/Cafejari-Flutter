@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Theming {
   static const TextStyle darkText = TextStyle(
-    color: AppColor.grey_500,
+    color: AppColor.grey_600,
     fontFamily: AppFont.inter,
     fontWeight: FontWeight.w400
   );
@@ -88,7 +88,7 @@ class Theming {
       labelLarge: lightText,
       labelSmall: lightText,
     ),
-    scaffoldBackgroundColor: AppColor.grey_500,
+    scaffoldBackgroundColor: AppColor.grey_600,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
         .copyWith(background: AppColor.grey_400),
   );

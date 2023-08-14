@@ -1,109 +1,109 @@
-import 'package:cafejari_flutter/core/extension/null.dart';
+import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeSlider extends StatelessWidget {
-  final List<int> challengePoint;
-  final List<int> challengeTarget;
-  final double? currentProgress;
+  final Challenge challenge;
+  final Challenger challenger;
 
-  ChallengeSlider({
-    required this.challengePoint,
-    required this.challengeTarget,
-    this.currentProgress
+  const ChallengeSlider({super.key,
+    required this.challenge,
+    required this.challenger,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double progressWidth = currentProgress.isNotNull && challengeTarget.last != 0
-        ? (MediaQuery.of(context).size.width - 20) * (currentProgress! / challengeTarget.last)
-        : 0;
-
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: progressWidth+43,
-            alignment: Alignment.topRight,
-            child: Stack(
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 말풍선
+        Row(
+          children: [
+            HorizontalSpacer((deviceWidth - 80) * challenger.progressRate),
+            Stack(
+              alignment: Alignment.topCenter,
               children: [
                 Image.asset(
                   'asset/image/icon_speech_bubble.png',
                   fit: BoxFit.cover,
+                  width: 80,
                 ),
-                Positioned(
-                  bottom: 12,
-                  left: currentProgress.isNotNull && currentProgress! >= 10 ? 24 : 27,
+                Padding(
+                  padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    "${currentProgress?.floor()}회",
+                    '${(challenger.progressRate * 100).toInt()}%',
                     style: TextSize.textSize_bold_white_14,
                   ),
                 ),
               ],
             ),
+          ]
+        ),
+        // 핀
+        Row(
+            children: [
+              HorizontalSpacer((deviceWidth - 80) * challenger.progressRate + 30),
+              Image.asset('asset/image/cafe_icon_0.png', width: 20)
+            ]
+        ),
+        const VerticalSpacer(8),
+        // 바
+        Container(
+          alignment: Alignment.centerLeft,
+          width: deviceWidth - 72,
+          height: 20,
+          margin: const EdgeInsets.symmetric(horizontal: 36),
+          decoration: BoxDecoration(
+            color: AppColor.grey_100,
+            borderRadius: BorderRadius.circular(10)
           ),
-          SizedBox(height: 6),
-          Container(
-            width: progressWidth+14,
-            alignment: Alignment.topRight,
-            child: Image.asset('asset/image/cafe_icon_0.png', width: 17, height: 22),
-          ),
-          SizedBox(height: 6),
-          Container(
-            alignment: Alignment.centerLeft,
-            width: MediaQuery.of(context).size.width - 20,
-            margin: AppPadding.padding_horizon_10,
-            height: 20,
+          child: Container(
+            width: (deviceWidth - 72) * challenger.progressRate,
             decoration: BoxDecoration(
-              color: AppColor.background,
-              borderRadius: BorderRadius.circular(20)
-            ),
-            child: Container(
-              width: progressWidth,
-                decoration: BoxDecoration(
-                    color: AppColor.secondary,
-                    borderRadius: BorderRadius.circular(20)
-                )
-            ),
+              color: AppColor.secondary,
+              borderRadius: BorderRadius.circular(10)
+            )
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(challengeTarget.length, (index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 6),
-                    Text(
-                      '${challengeTarget[index]}P',
-                      style: TextStyle(
-                        color: AppColor.grey_700,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ...challenge.challengeMilestones.map((e) {
+                return SizedBox(
+                  width: 48,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${e.count}회',
+                        style: const TextStyle(
+                          color: AppColor.grey_700,
+                          fontSize: 10,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 6),
-                    Text(
-                      '${challengePoint[index]}P',
-                      style: TextStyle(
-                        color: AppColor.secondary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ]
+                      const VerticalSpacer(4),
+                      Text(
+                        '${e.point}P',
+                        style: const TextStyle(
+                          color: AppColor.secondary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ]
+                  ),
                 );
-              }),
-            ),
-          )
-        ]
-    ),
+              }).toList()
+            ]
+          ),
+        )
+      ]
     );
   }
 }

@@ -18,29 +18,30 @@ class MyPageBlock extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.white,
-          side: const BorderSide(
-            color: AppColor.secondary, // 테두리 색을 지정합니다.
-            width: 2.0, // 테두리 두께를 설정합니다.
-          )
+        backgroundColor: AppColor.white,
+        padding: EdgeInsets.zero, // Padding을 여기서 설정합니다.
       ),
       child: Container(
-        padding: AppPadding.padding_10,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
-              color: AppColor.unselectedTextColor
-            )
-          )
+            bottom: BorderSide(
+              color: AppColor.unselectedTextColor,
+              width: 1.0,
+            ),
+          ),
+          color: AppColor.white
         ),
-        child: Row(
+        child: Padding(
+          padding: AppPadding.padding_10,
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 title,
                 style: TextSize.textSize_14,
               ),
-            ]
+            ],
+          ),
         ),
       ),
     );

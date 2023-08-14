@@ -12,7 +12,7 @@ enum GetCafeLogType { recent, hot, my }
 /// getCafeLogs의 실제 구현부
 class GetCafeLogs {
   Future<Pagination<CafeLog>> call({
-    required CafeLogRepository cafeLogRepository, 
+    required CafeLogRepository cafeLogRepository,
     required GetCafeLogType type,
     String accessToken = ""}) async {
     try {

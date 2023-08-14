@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
@@ -23,13 +24,8 @@ class ChallengeBlock extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: AppColor.grey_400.withOpacity(0.4),
-              blurRadius: 8, // 그림자 번짐 정도 조절
-              offset: const Offset(0, 4), // 그림자 위치 조정
-            ),
-          ],
+          boxShadow: AppShadow.box,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),

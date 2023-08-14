@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 class ChallengeScreen extends ConsumerStatefulWidget {
@@ -21,6 +22,8 @@ class ChallengeScreen extends ConsumerStatefulWidget {
   @override
   ChallengeScreenState createState() => ChallengeScreenState();
 }
+
+final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
 
 class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
@@ -48,53 +51,60 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
         elevation: 0,
       ),
       backgroundColor: AppColor.grey_100,
-      body: Column(
-        children: [
-          Visibility(
-            visible: challengeState.availableChallenges.isNotEmpty,
-            child: SizedBox(
-              height: 444,
-              child: ListView.builder(
-                padding: AppPadding.padding_25,
-                scrollDirection: Axis.horizontal,
-                itemCount: challengeState.availableChallenges.length,
-                itemBuilder: (context, index) {
-                  final Challenge challenge = challengeState.availableChallenges[index];
-                  return Row(
-                    children: [
-                      ChallengeBlock(
-                        challenge: challenge,
-                        smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
-                        onPressed: () {
-                          challengeViewModel.selectChallenge(challenge);
-                          GoRouter.of(context).goNamed(ScreenRoute.challenge_info);
-                        },
-                      ),
-                      const HorizontalSpacer(16)
-                    ]
-                  );
-                },
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: () async {
+          await challengeViewModel.refreshChallenges();
+          _refreshController.refreshCompleted();
+        },
+        child: Column(
+          children: [
+            Visibility(
+              visible: challengeState.availableChallenges.isNotEmpty,
+              child: SizedBox(
+                height: 444,
+                child: ListView.builder(
+                  padding: AppPadding.padding_25,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: challengeState.availableChallenges.length,
+                  itemBuilder: (context, index) {
+                    final Challenge challenge = challengeState.availableChallenges[index];
+                    return Row(
+                      children: [
+                        ChallengeBlock(
+                          challenge: challenge,
+                          smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
+                          onPressed: () {
+                            challengeViewModel.selectChallenge(challenge);
+                            GoRouter.of(context).goNamed(ScreenRoute.challengeInfo);
+                          },
+                        ),
+                        const HorizontalSpacer(16)
+                      ]
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Visibility(
-            visible: challengeState.availableChallenges.isEmpty,
-            child: const SizedBox(
-              height: 444,
-              child: Text("진행중인 챌린지가 없습니다"),
+            Visibility(
+              visible: challengeState.availableChallenges.isEmpty,
+              child: const SizedBox(
+                height: 444,
+                child: Text("진행중인 챌린지가 없습니다"),
+              ),
             ),
-          ),
-          Container(
-            padding: AppPadding.padding_25,
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
-                ChallengeVIP()
-              ],
-            ),
-          )
-        ],
+            Container(
+              padding: AppPadding.padding_25,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
+                  ChallengeVIP()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

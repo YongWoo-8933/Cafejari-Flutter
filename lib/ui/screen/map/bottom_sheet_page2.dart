@@ -44,7 +44,7 @@ class BottomSheetPage2 extends ConsumerWidget {
                         buttonWidth: MediaQuery.of(context).size.width - 160,
                         buttonHeight: 40,
                         title: "혼잡도 등록",
-                        onPressed: () => mapState.pageController.jumpToPage(2)
+                        onPressed: () => mapState.pageController.jumpToPage(2),
                       ),
                       const SizedBox(width: 10),
                       ShareButton(buttonSize: 40,),

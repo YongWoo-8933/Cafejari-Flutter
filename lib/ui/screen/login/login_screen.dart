@@ -26,9 +26,9 @@ class LoginScreen extends ConsumerWidget {
 
     return DefaultTextStyle(
       style: const TextStyle(
-        color: AppColor.black,
-        fontSize: 20,
-        fontWeight: FontWeight.w400
+          color: AppColor.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w400
       ),
       child: Stack(
         alignment: Alignment.topCenter,
@@ -116,28 +116,28 @@ class LoginScreen extends ConsumerWidget {
                 width: deviceSize.width * 56 / 100,
                 height: 60,
                 child: FloatingActionButton(
-                  foregroundColor: AppColor.black,
-                  backgroundColor: AppColor.transparentGrey_300,
-                  onPressed: () => {},
-                  elevation: 1,
-                  focusElevation: 0,
-                  hoverElevation: 0,
-                  highlightElevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60 / 2),
-                  ),
-                  child: const Padding(
-                    padding: AppPadding.padding_horizon_20,
-                    child: Text(
-                      "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12
-                      )
+                    foregroundColor: AppColor.black,
+                    backgroundColor: AppColor.transparentGrey_300,
+                    onPressed: () => {},
+                    elevation: 1,
+                    focusElevation: 0,
+                    hoverElevation: 0,
+                    highlightElevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60 / 2),
                     ),
-                  )
+                    child: const Padding(
+                      padding: AppPadding.padding_horizon_20,
+                      child: Text(
+                          "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColor.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12
+                          )
+                      ),
+                    )
                 ),
               )
             ],
@@ -147,4 +147,3 @@ class LoginScreen extends ConsumerWidget {
     );
   }
 }
-

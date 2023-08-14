@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MapState {
+  GlobalKey<ScaffoldState> get scaffoldStateKey =>
+      throw _privateConstructorUsedError;
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
@@ -23,6 +25,8 @@ mixin _$MapState {
   CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
   NMarker? get selectedMarker => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
+  TextEditingController get searchQueryController =>
+      throw _privateConstructorUsedError;
   double get updatedCrowded => throw _privateConstructorUsedError;
   IconData get thumbIcons => throw _privateConstructorUsedError;
   PageController get pageController => throw _privateConstructorUsedError;
@@ -40,12 +44,14 @@ abstract class $MapStateCopyWith<$Res> {
       _$MapStateCopyWithImpl<$Res, MapState>;
   @useResult
   $Res call(
-      {PanelController bottomSheetController,
+      {GlobalKey<ScaffoldState> scaffoldStateKey,
+      PanelController bottomSheetController,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
+      TextEditingController searchQueryController,
       double updatedCrowded,
       IconData thumbIcons,
       PageController pageController,
@@ -69,12 +75,14 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? scaffoldStateKey = null,
     Object? bottomSheetController = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
+    Object? searchQueryController = null,
     Object? updatedCrowded = null,
     Object? thumbIcons = null,
     Object? pageController = null,
@@ -82,6 +90,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? topImageVisible = null,
   }) {
     return _then(_value.copyWith(
+      scaffoldStateKey: null == scaffoldStateKey
+          ? _value.scaffoldStateKey
+          : scaffoldStateKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<ScaffoldState>,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -106,6 +118,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
               as NaverMapController?,
+      searchQueryController: null == searchQueryController
+          ? _value.searchQueryController
+          : searchQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       updatedCrowded: null == updatedCrowded
           ? _value.updatedCrowded
           : updatedCrowded // ignore: cast_nullable_to_non_nullable
@@ -154,12 +170,14 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {PanelController bottomSheetController,
+      {GlobalKey<ScaffoldState> scaffoldStateKey,
+      PanelController bottomSheetController,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
+      TextEditingController searchQueryController,
       double updatedCrowded,
       IconData thumbIcons,
       PageController pageController,
@@ -183,12 +201,14 @@ class __$$_MapStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? scaffoldStateKey = null,
     Object? bottomSheetController = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
+    Object? searchQueryController = null,
     Object? updatedCrowded = null,
     Object? thumbIcons = null,
     Object? pageController = null,
@@ -196,6 +216,10 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? topImageVisible = null,
   }) {
     return _then(_$_MapState(
+      scaffoldStateKey: null == scaffoldStateKey
+          ? _value.scaffoldStateKey
+          : scaffoldStateKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<ScaffoldState>,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -220,6 +244,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
               as NaverMapController?,
+      searchQueryController: null == searchQueryController
+          ? _value.searchQueryController
+          : searchQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       updatedCrowded: null == updatedCrowded
           ? _value.updatedCrowded
           : updatedCrowded // ignore: cast_nullable_to_non_nullable
@@ -248,12 +276,14 @@ class __$$_MapStateCopyWithImpl<$Res>
 
 class _$_MapState implements _MapState {
   _$_MapState(
-      {required this.bottomSheetController,
+      {required this.scaffoldStateKey,
+      required this.bottomSheetController,
       required final List<Cafe> cafes,
       required this.selectedCafe,
       required this.selectedCafeFloor,
       required this.selectedMarker,
       required this.mapController,
+      required this.searchQueryController,
       required this.updatedCrowded,
       required this.thumbIcons,
       required this.pageController,
@@ -261,6 +291,8 @@ class _$_MapState implements _MapState {
       required this.topImageVisible})
       : _cafes = cafes;
 
+  @override
+  final GlobalKey<ScaffoldState> scaffoldStateKey;
   @override
   final PanelController bottomSheetController;
   final List<Cafe> _cafes;
@@ -280,6 +312,8 @@ class _$_MapState implements _MapState {
   @override
   final NaverMapController? mapController;
   @override
+  final TextEditingController searchQueryController;
+  @override
   final double updatedCrowded;
   @override
   final IconData thumbIcons;
@@ -292,7 +326,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
+    return 'MapState(scaffoldStateKey: $scaffoldStateKey, bottomSheetController: $bottomSheetController, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
   }
 
   @override
@@ -300,6 +334,8 @@ class _$_MapState implements _MapState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MapState &&
+            (identical(other.scaffoldStateKey, scaffoldStateKey) ||
+                other.scaffoldStateKey == scaffoldStateKey) &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
@@ -311,6 +347,8 @@ class _$_MapState implements _MapState {
                 other.selectedMarker == selectedMarker) &&
             (identical(other.mapController, mapController) ||
                 other.mapController == mapController) &&
+            (identical(other.searchQueryController, searchQueryController) ||
+                other.searchQueryController == searchQueryController) &&
             (identical(other.updatedCrowded, updatedCrowded) ||
                 other.updatedCrowded == updatedCrowded) &&
             (identical(other.thumbIcons, thumbIcons) ||
@@ -326,12 +364,14 @@ class _$_MapState implements _MapState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      scaffoldStateKey,
       bottomSheetController,
       const DeepCollectionEquality().hash(_cafes),
       selectedCafe,
       selectedCafeFloor,
       selectedMarker,
       mapController,
+      searchQueryController,
       updatedCrowded,
       thumbIcons,
       pageController,
@@ -347,18 +387,22 @@ class _$_MapState implements _MapState {
 
 abstract class _MapState implements MapState {
   factory _MapState(
-      {required final PanelController bottomSheetController,
+      {required final GlobalKey<ScaffoldState> scaffoldStateKey,
+      required final PanelController bottomSheetController,
       required final List<Cafe> cafes,
       required final Cafe selectedCafe,
       required final CafeFloor selectedCafeFloor,
       required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
+      required final TextEditingController searchQueryController,
       required final double updatedCrowded,
       required final IconData thumbIcons,
       required final PageController pageController,
       required final bool topVisible,
       required final bool topImageVisible}) = _$_MapState;
 
+  @override
+  GlobalKey<ScaffoldState> get scaffoldStateKey;
   @override
   PanelController get bottomSheetController;
   @override
@@ -371,6 +415,8 @@ abstract class _MapState implements MapState {
   NMarker? get selectedMarker;
   @override
   NaverMapController? get mapController;
+  @override
+  TextEditingController get searchQueryController;
   @override
   double get updatedCrowded;
   @override

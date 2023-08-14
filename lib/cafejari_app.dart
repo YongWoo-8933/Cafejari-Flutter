@@ -1,25 +1,23 @@
 
+import 'package:cafejari_flutter/router.dart';
+import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/challenge_info_screen.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
-import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
-import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page1.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page3.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
-import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
-import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
-import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
-import 'package:go_router/go_router.dart';
-import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
-
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'ui/state/map_state/map_state.dart';
 import 'ui/viewmodel/global_view_model.dart';
 
@@ -34,76 +32,43 @@ class CafejariApp extends ConsumerWidget  {
 
     return MaterialApp.router(
       theme: darkMode ? Theming.darkTheme : Theming.lightTheme,
-      routerConfig: _router,
+      routerConfig: appRouter,
     );
   }
 }
 
-final GoRouter _router = GoRouter(
-    initialLocation: "/",
-    routes: [
-      GoRoute(
-        path: "/",
-        name: ScreenRoute.root,
-        builder: (_, __) => const _RootScreen(),
-        routes: [
-          GoRoute(
-            path: "login",
-            name: ScreenRoute.login,
-            builder: (_, __) => const LoginScreen(),
-            routes: [
-              GoRoute(
-                  path: "registration",
-                  name: ScreenRoute.registration,
-                  builder: (_, __) => const RegistrationScreen()
-              )
-            ]
-          ),
-          GoRoute(
-            path: "my_cafe",
-            name: ScreenRoute.my_cafe,
-            builder: (_, __) => const MyCafeScreen(),
-          ),
-          GoRoute(
-            path: "challenge_info",
-            name: ScreenRoute.challenge_info,
-            builder: (_, __) => const ChallengeInfoScreen(),
-              routes: [
-                GoRoute(
-                    path: "challenge_progress",
-                    name: ScreenRoute.challenge_progress,
-                    builder: (_, __) => const ChallengeProgressScreen()
-                )
-              ]
-          ),
-        ]
-      ),
-      GoRoute(
-          path: "/splash",
-          name: ScreenRoute.splash,
-          builder: (_, __) => const SplashScreen()
-      ),
-    ],
-    observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)]);
-
-
-class _RootScreen extends ConsumerWidget {
-  const _RootScreen({Key? key}) : super(key: key);
+class RootScreen extends ConsumerStatefulWidget {
+  const RootScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  RootScreenState createState() => RootScreenState();
+}
+
+class RootScreenState extends ConsumerState<RootScreen> {
+  PersistentBottomSheetController? _bottomSheetController;
+
+  @override
+  Widget build(BuildContext context) {
 
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (globalState.currentPage.index != 0) {
-          globalViewModel.updateCurrentPageTo(0);
-          return false;
-        } else {
-          if(mapState.bottomSheetController.panelPosition != 0){
+    return RefreshConfiguration(
+      headerBuilder: () => const WaterDropMaterialHeader(backgroundColor: AppColor.primary),
+      headerTriggerDistance: 80.0,
+      springDescription: const SpringDescription(stiffness: 170, damping: 16, mass: 1.9),
+      maxOverScrollExtent :100,
+      maxUnderScrollExtent:0,
+      enableScrollWhenRefreshCompleted: true,
+      child: WillPopScope(
+        onWillPop: () async {
+          if (globalState.currentPage.index != 0) {
+            globalViewModel.updateCurrentPageTo(0);
+            return false;
+          } else if(mapState.bottomSheetController.panelPosition != 0) {
             mapState.bottomSheetController.close();
             return false;
           } else {
@@ -125,15 +90,95 @@ class _RootScreen extends ConsumerWidget {
             );
             return exit ?? false;
           }
-        }
-      },
-      child: Scaffold(
-          body: IndexedStack(
-            index: globalState.currentPage.index,
-            children: const [MapScreen(), ChallengeScreen(), ShopScreen(), MyPageScreen()],
+        },
+        child: SlidingUpPanel(
+          body: Scaffold(
+            key: mapState.scaffoldStateKey,
+            body: IndexedStack(
+              index: globalState.currentPage.index,
+              children: const [MapScreen(), MyCafeScreen(), ChallengeScreen(), MyPageScreen()],
+            ),
+            bottomNavigationBar: const BottomNavBar(),
+            backgroundColor: AppColor.transparent,
+            floatingActionButton: FloatingActionButton(
+              child: Text("모달열기"),
+              onPressed: () {
+                mapState.scaffoldStateKey.currentState!.showBottomSheet(enableDrag: true, (context) {
+                  return GestureDetector(
+                    onVerticalDragUpdate: (details) {
+                      if (details.delta.dy < 0 && details.delta.dy.abs() > 10.0) {
+                        showModalBottomSheet(context: context, builder: (context) {
+                          return Container(
+                            width: double.infinity,
+                            height: 500,
+                            child: Text("두번째 모달"),
+                          );
+                        });
+                        // showMaterialModalBottomSheet(
+                        //   context: context,
+                        //   builder: (context) {
+                        //     return Container(
+                        //       width: double.infinity,
+                        //       height: 500,
+                        //       child: Text("두번째 모달"),
+                        //     );
+                        //   }
+                        // );
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      child: SizedBox(
+                        width: 100,
+                        height: 48,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("fdsaf"),
+                        ),
+                      ),
+                    ),
+                  );
+                });
+              },
+            ),
           ),
-          bottomNavigationBar: const BottomNavBar(),
-          backgroundColor: Colors.transparent),
+          panelBuilder: (ScrollController sc) {
+            return SingleChildScrollView( // 스크롤 가능한 뷰로 변경
+              controller: sc, // 스크롤 컨트롤러를 전달
+              child: Column(
+                children: const [
+                  // BottomSheetPage1(),
+                  // BottomSheetPage2(),
+                  // BottomSheetPage3(),
+                ],
+              ),
+            );
+          },
+          controller: mapState.bottomSheetController,
+          minHeight: 0,
+          maxHeight: deviceHeight,
+          snapPoint: 0.3,
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          // onPanelClosed: () => {
+          //   mapViewModel.updateTopVisible(true),
+          //   mapViewModel.updateTopImageVisible(false),
+          //   mapState.pageController.jumpToPage(0)
+          // },
+          // onPanelSlide: (double slideOffset) {
+          //   if (slideOffset <= 0.31) {
+          //     ref.read(mapViewModelProvider.notifier).updateTopVisible(true);
+          //     //mapState.pageController.jumpToPage(0);
+          //   } else if(0.31 < slideOffset && slideOffset < 0.7){
+          //     ref.read(mapViewModelProvider.notifier).updateTopVisible(false);
+          //     ref.read(mapViewModelProvider.notifier).updateTopImageVisible(false);
+          //     mapState.pageController.jumpToPage(1);
+          //   }else{
+          //     ref.read(mapViewModelProvider.notifier).updateTopImageVisible(true);
+          //   }
+          // },
+        ),
+      ),
     );
   }
 }

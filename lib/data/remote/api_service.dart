@@ -19,11 +19,11 @@ class APIService {
   /// [query]는 get의 query parameter가 들어갈때 Map타입으로 작성한다.
   Future<dynamic> request(
       {required HttpMethod method,
-      required String appLabel,
-      required String endpoint,
-      String? accessToken,
-      Map<String, dynamic>? body,
-      Map<String, dynamic>? query}) async {
+        required String appLabel,
+        required String endpoint,
+        String? accessToken,
+        Map<String, dynamic>? body,
+        Map<String, dynamic>? query}) async {
     Map<String, String> headers = {"Content-Type": "application/x-www-form-urlencoded"};
     if (accessToken.isNotNull) headers["Authorization"] = "Bearer $accessToken";
     final stringQuery = query?.map((key, value) => MapEntry(key, value.toString()));
@@ -58,18 +58,18 @@ class APIService {
       // 400, 300번대 에러
       switch (response.statusCode) {
         case 400:
-          // validation 에러
+        // validation 에러
           throw ErrorWithMessage(code: 0, message: "잘못된 요청입니다");
         case 401:
-          // 토큰 불량 / 만료 에러
+        // 토큰 불량 / 만료 에러
           throw TokenExpired();
         case 409:
-          // 서비스 로직 에러
+        // 서비스 로직 에러
           ConflictErrorResponse errorResponse =
-              ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+          ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
           throw ErrorWithMessage(code: errorResponse.error_code, message: errorResponse.error_message);
         default:
-          // 이외 400번대 에러
+        // 이외 400번대 에러
           throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
       }
     } else if (response.statusCode < 600) {

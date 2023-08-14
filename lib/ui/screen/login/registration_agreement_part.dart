@@ -8,8 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-
-
 final _isServiceAgreedProvider = StateProvider<bool>((ref) => false);
 final _isPrivacyAgreedProvider = StateProvider<bool>((ref) => false);
 final _isMarketingAgreedProvider = StateProvider<bool>((ref) => false);
@@ -35,20 +33,20 @@ class AgreementPart extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _AllAgreeButton(
-              onClick: () {
-                ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
-                ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
-                ref.watch(_isMarketingAgreedProvider.notifier).update((state) => true);
-              }
+                onClick: () {
+                  ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
+                  ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
+                  ref.watch(_isMarketingAgreedProvider.notifier).update((state) => true);
+                }
             ),
             const VerticalSpacer(20),
             _AgreementBox(
-              isChecked: ref.watch(_isServiceAgreedProvider),
-              isExpanded: ref.watch(_isServiceExpandedProvider),
-              title: "(필수) 서비스 이용약관 동의",
-              content: "1. 개인정보 수집목적 및 이용목적\n\n가. 서비스 제공에 관한 블라블라는 블라블라인 것이므로 블라브라블라블라 띵동따라똥따라띵기딩강꽁깡",
-              onClick: () => ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state),
-              onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
+                isChecked: ref.watch(_isServiceAgreedProvider),
+                isExpanded: ref.watch(_isServiceExpandedProvider),
+                title: "(필수) 서비스 이용약관 동의",
+                content: "1. 개인정보 수집목적 및 이용목적\n\n가. 서비스 제공에 관한 블라블라는 블라블라인 것이므로 블라브라블라블라 띵동따라똥따라띵기딩강꽁깡",
+                onClick: () => ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state),
+                onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
             ),
             const VerticalSpacer(20),
             _AgreementBox(
@@ -199,18 +197,27 @@ class _AgreementBox extends StatelessWidget {
                       fontWeight: FontWeight.w700
                     ),
                   ),
-                  const Expanded(child: HorizontalSpacer(0)),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(
-                        isExpanded ? CupertinoIcons.chevron_up : CupertinoIcons.chevron_down,
-                        size: 20,
+                    const HorizontalSpacer(8),
+                    Text(
+                      title,
+                      style: TextStyle(
+                          color: isChecked ? AppColor.black : AppColor.grey_400,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700
                       ),
-                      onPressed: onArrowClick,
                     ),
-                  )
-                ]
+                    const Expanded(child: HorizontalSpacer(0)),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(
+                          isExpanded ? CupertinoIcons.chevron_up : CupertinoIcons.chevron_down,
+                          size: 20,
+                        ),
+                        onPressed: onArrowClick,
+                      ),
+                    )
+                  ]
               ),
             ),
           ),

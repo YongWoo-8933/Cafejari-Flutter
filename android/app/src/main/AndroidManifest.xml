@@ -8,7 +8,7 @@
     <application
         android:label="카페자리"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/cafejari_app_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,7 +30,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-
+            </intent-filter>
+            <intent-filter>
                 <!-- "kakao${YOUR_NATIVE_APP_KEY}://${PRODUCT_NAME}" 형식의 앱 실행 스킴 설정 -->
                 <!-- 카카오톡 공유, 카카오톡 메시지 -->
                 <data android:host="kakaolink"

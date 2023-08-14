@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
+import 'package:cafejari_flutter/ui/components/cati_dialog.dart';
 import 'package:cafejari_flutter/ui/components/snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';
@@ -18,11 +19,15 @@ class ShopScreen extends ConsumerWidget {
   const ShopScreen({super.key});
 
   void _showAlertDialog(BuildContext context) {
-    final alertDialog = SquareAlertDialog(
-      content: Text("This is the content of the alert dialog."),
-      title: "Alert",
-      leftButton: "Cancel",
-      rightButton: "OK",
+    final alertDialog = CATIDialog(
+      title: "CATI 등록",
+      subTitle: '이 카페의 분위기를 선택해주세요',
+        leftButton: "등록하기",
+      rightButton: "등록안하기",
+      cati1: 70,
+      cati2: 30,
+      cati3: 10,
+      cati4: 50,
     );
 
     alertDialog.showTimed(context);

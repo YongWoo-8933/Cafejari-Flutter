@@ -36,8 +36,8 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
     final f = GetMapCafes();
     try {
       return await f(
-        cafeRepository: cafeRepository,
-        cameraPosition: cameraPosition
+          cafeRepository: cafeRepository,
+          cameraPosition: cameraPosition
       );
     } on ErrorWithMessage {
       rethrow;
@@ -65,16 +65,16 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
     final f = GetMyOccupancyUpdates();
     try {
       return await f(
-        cafeRepository: cafeRepository,
-        accessToken: accessToken,
-        type: GetMyOccupancyUpdateType.all
+          cafeRepository: cafeRepository,
+          accessToken: accessToken,
+          type: GetMyOccupancyUpdateType.all
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       try {
         return f(
-          cafeRepository: cafeRepository,
-          accessToken: newToken,
+            cafeRepository: cafeRepository,
+            accessToken: newToken,
             type: GetMyOccupancyUpdateType.all
         );
       } on AccessTokenExpired {

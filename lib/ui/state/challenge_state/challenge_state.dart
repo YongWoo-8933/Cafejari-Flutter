@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 part 'challenge_state.freezed.dart';
 

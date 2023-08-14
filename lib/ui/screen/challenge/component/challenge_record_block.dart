@@ -1,22 +1,20 @@
+import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeRecordBlock extends StatelessWidget {
   final double width;
-  final String updateTime;
-  final int point;
-  final String activityName;
+  final ChallengePoint challengePoint;
 
   const ChallengeRecordBlock({super.key,
     required this.width,
-    required this.updateTime,
-    required this.point,
-    required this.activityName,
+    required this.challengePoint,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       color: AppColor.white,
       child: Column(
@@ -24,9 +22,9 @@ class ChallengeRecordBlock extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildCell(width / 3, updateTime),
-              _buildCell(width / 3, activityName),
-              _buildCell(width / 3, "${point}p"),
+              _buildCell(width / 3, challengePoint.rewardedAt.toString().substring(0, 11)),
+              _buildCell(width / 3, challengePoint.description),
+              _buildCell(width / 3, "${challengePoint.point}p"),
             ],
           ),
           const Divider(height: 1, color: AppColor.grey_200, thickness: 1)

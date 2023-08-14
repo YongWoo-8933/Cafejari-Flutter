@@ -45,7 +45,7 @@ class TopComponents extends ConsumerWidget {
             )
           ),
           const SizedBox(width: 10),
-          CoffeeCupButton(isAlert: true, buttonSize: 40, onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.my_cafe);})
+          CoffeeCupButton(isAlert: true, buttonSize: 40, onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.myCafe);})
         ],
       ),
 

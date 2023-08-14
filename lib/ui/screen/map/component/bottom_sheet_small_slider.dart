@@ -48,7 +48,7 @@ class BottomSheetSmallSlider extends ConsumerWidget {
               Container(
                 width: slider_Width / 4,
                 height: 10,
-                color: AppColor.grey_500,
+                color: AppColor.grey_600,
               ),
               Container(
                 width: slider_Width / 4,

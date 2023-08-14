@@ -51,9 +51,9 @@ class CafeLogUseCaseImpl extends BaseUseCase implements CafeLogUseCase {
     final f = GetCafeLogs();
     try {
       return await f(
-        cafeLogRepository: cafeLogRepository,
-        type: GetCafeLogType.hot,
-        accessToken: accessToken
+          cafeLogRepository: cafeLogRepository,
+          type: GetCafeLogType.hot,
+          accessToken: accessToken
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);

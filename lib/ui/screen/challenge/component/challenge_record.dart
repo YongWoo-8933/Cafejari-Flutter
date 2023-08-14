@@ -1,21 +1,20 @@
+import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_record_block.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeRecord extends StatelessWidget {
-  final Challenger challenger =  
+  final Challenger challenger;
 
-  const ChallengeRecord({super.key});
+  const ChallengeRecord({super.key, required this.challenger});
 
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final double tableWidth = MediaQuery.of(context).size.width - 40;
+    final double tableWidth = deviceWidth - 40;
 
     return Container(
       padding: AppPadding.padding_20,
@@ -38,11 +37,7 @@ class ChallengeRecord extends StatelessWidget {
               ],
             ),
           ),
-          ChallengeRecordBlock(width: tableWidth, updateTime: '2023-08-09', point: 250, activityName: "fdslfjldksajflkdjsakfdjslkafjdlksajflkdsajk"),
-          ChallengeRecordBlock(width: tableWidth, updateTime: '2023-08-09', point: 250, activityName: "fdslfjldksajflkdjsakfdjslkafjdlksajflkdsajk"),
-          ChallengeRecordBlock(width: tableWidth, updateTime: '2023-08-09', point: 250, activityName: "fdslfjldksajflkdjsakfdjslkafjdlksajflkdsajk"),
-          ChallengeRecordBlock(width: tableWidth, updateTime: '2023-08-09', point: 250, activityName: "fdslfjldksajflkdjsakfdjslkafjdlksajflkdsajk"),
-          ChallengeRecordBlock(width: tableWidth, updateTime: '2023-08-09', point: 250, activityName: "fdslfjldksajflkdjsakfdjslkafjdlksajflkdsajk"),
+          ...challenger.points.map((e) => ChallengeRecordBlock(width: tableWidth, challengePoint: e)).toList()
         ],
       ),
     );

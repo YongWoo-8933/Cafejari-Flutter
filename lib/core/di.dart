@@ -179,3 +179,8 @@ final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, Cha
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
   return ChallengeViewModel(challengeUseCase: challengeUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
 });
+
+
+// ui ----------------------------------------------------------------------------------------------
+final bottomSheetHeightProvider = Provider<double>((ref) => 65.0);
+final bottomSheetCornerRadiusProvider = Provider<double>((ref) => 20.0);
