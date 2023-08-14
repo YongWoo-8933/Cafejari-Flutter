@@ -7,6 +7,7 @@ import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
+import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
@@ -76,6 +77,23 @@ final GoRouter _router = GoRouter(
                   )
                 ]
             ),
+            GoRoute(
+              path: "my_page",
+              name: ScreenRoute.my_page,
+              builder: (_, __) => const MyPageScreen(),
+                routes: [
+                  GoRoute(
+                      path: "point",
+                      name: ScreenRoute.point,
+                      builder: (_, __) => const PointScreen()
+                  ),
+                  GoRoute(
+                      path: "shop",
+                      name: ScreenRoute.shop,
+                      builder: (_, __) => const ShopScreen()
+                  ),
+                ]
+            ),
           ]
       ),
       GoRoute(
@@ -130,7 +148,7 @@ class _RootScreen extends ConsumerWidget {
       child: Scaffold(
           body: IndexedStack(
             index: globalState.currentPage.index,
-            children: const [MapScreen(), ChallengeScreen(), ShopScreen(), MyPageScreen()],
+            children: const [MapScreen(), ChallengeScreen(), MyCafeScreen(), MyPageScreen()],
           ),
           bottomNavigationBar: const BottomNavBar(),
           backgroundColor: Colors.transparent),

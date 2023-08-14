@@ -52,6 +52,8 @@ class AppColor {
   static const Color occupancyLevel2 = Color(0xFF5A4F4F);
   static const Color challengeBlock = Color(0xFFF5F5F5);
   static const Color error = Color(0xFFFF6B68);
+  static const Color unselectedTabBarColor = Color(0xFF656565);
+
 }
 ///Color? primary,
 ///Color? onPrimary,

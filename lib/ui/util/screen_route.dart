@@ -10,7 +10,9 @@ class ScreenRoute {
   static const String my_cafe = "my_cafe_screen";
   static const String challenge_info = "challenge_info_screen";
   static const String challenge_progress = "challenge_progress_screen";
-
+  static const String my_page = "my_page_screen";
+  static const String point = "point_screen";
+  static const String shop = "shop_screen";
 
 }
 
