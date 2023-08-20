@@ -38,12 +38,14 @@ class ActionButtonSecondary extends StatelessWidget {
           )
         ),
         child: FittedBox(
-          fit: BoxFit.scaleDown,
+          fit: BoxFit.fill,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: AppColor.white),
-                const HorizontalSpacer(8),
+                if (icon != null)
+                  Icon(icon, color: AppColor.white),
+                if (icon != null)
+                  const HorizontalSpacer(8),
                 Text(
                   title,
                   style: TextStyle(

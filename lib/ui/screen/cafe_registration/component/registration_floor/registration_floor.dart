@@ -1,8 +1,8 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_floor_chage_button.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_floor_picker.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_floor/registration_floor_chage_button.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_floor/registration_floor_picker.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
 import 'package:flutter/cupertino.dart';

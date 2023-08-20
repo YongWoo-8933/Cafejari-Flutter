@@ -17,6 +17,7 @@ class ScreenRoute {
   static const String my_page = "my_page_screen";
   static const String point = "point_screen";
   static const String shop = "shop_screen";
+  static const String sample = "sample_screen";
 
 }
 

@@ -9,25 +9,7 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: AppColor.primary),
-        child: const Column(
-          children: [
-            Icon(CupertinoIcons.check_mark, size: 20),
-            Text(
-              "가입 완료",
-              style: TextSize.textSize_white_20,
-            )
-          ],
-        ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      backgroundColor: AppColor.primary,
-    );
+    return AlertDialog();
   }
 
   void showTimed(BuildContext context) {
@@ -36,6 +18,7 @@ class CustomAlertDialog extends StatelessWidget {
       builder: (context) {
         final alertDialog = AlertDialog(
           content: Container(
+            height: 50,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), color: AppColor.primary),
             child: const Column(

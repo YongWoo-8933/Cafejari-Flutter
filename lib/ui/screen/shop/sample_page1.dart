@@ -1,3 +1,5 @@
+import 'package:cafejari_flutter/ui/components/buttons/alert_dialog.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,34 +19,7 @@ class SamplePage1 extends ConsumerWidget {
 
     return PageView(
       children: [
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  settings: RouteSettings(name: "SamplePage1"),
-                  builder: (context) => SamplePage2(),
-                ),
-              );
-            },
-            child: const Text('다른 페이지로 이동1111'),
-          ),
-        ),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  settings: RouteSettings(name: "SamplePage1"),
-                  builder: (context) => SamplePage2(),
-                ),
-              );
-            },
-            child: const Text('옆 페이지로 이동'),
-          ),
-        ),
+        CafeRegistrationScreen()
       ]
     );
   }

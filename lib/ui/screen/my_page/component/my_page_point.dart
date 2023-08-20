@@ -33,7 +33,7 @@ class MyPagePoint extends ConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                GoRouter.of(context).goNamed(ScreenRoute.shop);
+                GoRouter.of(context).goNamed(ScreenRoute.sample);
               },
               child: Container(
                 margin: AppPadding.padding_20,

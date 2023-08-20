@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 showCupertinoPicker(BuildContext context, RequestState requestState, RequestViewModel requestViewModel, bool maxOrMin) async {
-
   await showDialog(
     context: context,
     barrierDismissible: true,
@@ -17,22 +16,13 @@ showCupertinoPicker(BuildContext context, RequestState requestState, RequestView
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
         ),
-        content: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(0),
-          height: 150.0,
-          color: AppColor.white,
-          child: CupertinoPicker(
-            itemExtent: 40.0,
-            onSelectedItemChanged: (int index) {
-              maxOrMin ? requestViewModel.selectMaxFloor(index) : requestViewModel.selectMinFloor(index) ;
-              print("${requestState.maxFloorIndex} @@ ${requestState.minFloorIndex}");
-
-            },
-            children: maxOrMin ? requestState.maxFloor.map((e) => Container(child: Text('$e'),alignment: Alignment.center,)).toList()
-                : requestState.minFloor.map((e) => Container(child: Text('$e'),alignment: Alignment.center,)).toList(),
-          ),
-        ),
+        // content: Container(
+        //   alignment: Alignment.center,
+        //   padding: EdgeInsets.all(0),
+        //   height: 150.0,
+        //   color: AppColor.white,
+        //   child:
+        // ),
         actions: [
           Container(
             padding: AppPadding.padding_7,

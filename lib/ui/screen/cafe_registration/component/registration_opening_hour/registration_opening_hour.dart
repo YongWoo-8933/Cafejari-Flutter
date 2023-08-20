@@ -2,7 +2,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_wallsocket/registration_wallsocket_slider.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_opening_hour/registration_opening_hour_dialog.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +18,7 @@ class RegistrationOpeningHour extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final RequestState requestState = ref.watch(requestViewModelProvider);
+    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
 
     return Container(
       padding: AppPadding.padding_horizon_30,
@@ -32,14 +33,14 @@ class RegistrationOpeningHour extends ConsumerWidget {
             DayInfo('토', requestState.openingHour.sat),
             DayInfo('일', requestState.openingHour.sun),
           ])
-            _buildOpeningHourRow(dayInfo),
+            _buildOpeningHourRow(dayInfo,context, requestState, requestViewModel),
 
         ],
       ),
     );
   }
 
-  Widget _buildOpeningHourRow(DayInfo dayInfo) {
+  Widget _buildOpeningHourRow(DayInfo dayInfo,BuildContext context, RequestState requestState, RequestViewModel requestViewModel) {
     return Column(
       children:[
         Row(
@@ -47,11 +48,14 @@ class RegistrationOpeningHour extends ConsumerWidget {
           children: [
             Text('${dayInfo.day}요일', style: TextSize.textSize_14),
             Row(
-              children: [
+              children:[
                 Text('${convertTo12HourFormat(dayInfo.hours)}  '),
-                Icon(Icons.edit, color: AppColor.secondary),
-              ],
-            ),
+                GestureDetector(
+                  onTap: () => showOpeningHourDialog(context, requestState, requestViewModel),
+                  child: Icon(Icons.edit, color: AppColor.secondary),
+                ),
+              ]
+            )
           ],
         ),
         VerticalSpacer(20),
