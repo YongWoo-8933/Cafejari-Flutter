@@ -61,6 +61,14 @@ class BrandGrid extends StatelessWidget {
             height: width / 2 - 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color:AppColor.grey_200,
+                  spreadRadius: 3,
+                  blurRadius: 10,
+                  offset: Offset(0, 2),
+                ),
+              ],
             ),
             child: ClipRRect( // 모서리를 둥글게 하기 위해 ClipRRect 사용
               borderRadius: BorderRadius.circular(10),

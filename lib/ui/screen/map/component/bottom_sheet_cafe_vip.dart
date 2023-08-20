@@ -1,13 +1,14 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:hive/hive.dart';
 
 class BottomSheetCafeVIP extends ConsumerWidget {
   const BottomSheetCafeVIP({Key? key}) : super(key: key);
@@ -15,74 +16,113 @@ class BottomSheetCafeVIP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final Size deviceSize = MediaQuery.of(context).size;
-    final double imageWidth = (deviceSize.width-60) / 8;
-
-    // 이미지들의 리스트를 정의합니다.
-    final List<Image> images = [
-      Image.asset("asset/image/cafe_icon_0.png", width: imageWidth, height: imageWidth),
-      Image.asset("asset/image/cafe_icon_1.png", width: imageWidth, height: imageWidth),
-      Image.asset("asset/image/cafe_icon_2.png", width: imageWidth, height: imageWidth),
-      Image.asset("asset/image/cafe_icon_3.png", width: imageWidth, height: imageWidth),
-      Image.asset("asset/image/cafe_icon_4.png", width: imageWidth, height: imageWidth),
-      Image.asset("asset/image/cafe_icon_0.png", width: imageWidth, height: imageWidth),
-    ];
-
-    // 이미지들을 반복하여 Positioned 위젯으로 감싸서 Stack에 추가합니다.
-    List<Widget> positionedImages = List.generate(
-      images.length,
-          (index) => Positioned(
-        left: (imageWidth * index)*0.7,
-        top: 0, // 이미지들을 상단에 정렬하도록 top 값을 0으로 설정합니다.
-        child: images[index],
-      ),
-    );
+    const int maximumVipCount = 2;
+    const double imageSize = 60;
 
     return Container(
-      padding: AppPadding.padding_30,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      alignment: Alignment.centerLeft,
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("카페지기", style: TextSize.textSize_bold_16),
-            Container(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("카페지기", style: TextSize.textSize_bold_16),
+          const VerticalSpacer(15),
+          Visibility(
+            visible: mapState.selectedCafe.vips.isNotEmpty,
+            child: Container(
               alignment: Alignment.center,
+              width: 300,
               height: 100,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 50,
-                      child: Stack(
-                        children: [
-                          ...positionedImages,
-                          Positioned(
-                            left: (imageWidth * 6)*0.7,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.transparent,
-                                  elevation: 0,
-                                  shape: CircleBorder()
+              padding: AppPadding.padding_10,
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Visibility(
+                    visible: mapState.selectedCafe.vips.length <= maximumVipCount,
+                    child: Stack(
+                      children: [
+                        ...mapState.selectedCafe.vips.map((e) {
+                          final int index = mapState.selectedCafe.vips.indexOf(e);
+                          return Positioned(
+                            left: (imageSize - 10.0) * index,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColor.white,
+                                borderRadius: BorderRadius.circular(imageSize / 2),
+                                boxShadow: AppShadow.box
                               ),
-                              onPressed: () => {},
+                              child: CustomCachedNetworkImage(
+                                imageUrl: e.imageUrl,
+                                width: imageSize,
+                                height: imageSize,
+                              )
+                            ),
+                          );
+                        }).toList()
+                      ],
+                    )
+                  ),
+                  Visibility(
+                    visible: mapState.selectedCafe.vips.length > maximumVipCount,
+                    child: Stack(
+                      children: [
+                        ...mapState.selectedCafe.vips.map((e) {
+                          final int index = mapState.selectedCafe.vips.indexOf(e);
+                          if(index > maximumVipCount) {
+                            return const HorizontalSpacer(1);
+                          } else {
+                            return Positioned(
+                              left: (imageSize - 10.0) * index,
                               child: Container(
-                                width: imageWidth,
-                                height: imageWidth,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColor.primary
+                                decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    borderRadius: BorderRadius.circular(imageSize / 2),
+                                    boxShadow: AppShadow.box
                                 ),
-                                child: const Icon(CupertinoIcons.plus),
+                                child: CustomCachedNetworkImage(
+                                  imageUrl: e.imageUrl,
+                                  width: imageSize,
+                                  height: imageSize,
+                                )
                               ),
+                            );
+                          }
+                        }).toList(),
+                        Positioned(
+                          left: (imageSize - 10.0) * maximumVipCount,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: imageSize,
+                            height: imageSize,
+                            decoration: BoxDecoration(
+                              color: AppColor.occupancyLevel1,
+                              borderRadius: BorderRadius.circular(imageSize / 2),
+                              boxShadow: AppShadow.box
+                            ),
+                            child: Text(
+                              "+${mapState.selectedCafe.vips.length - maximumVipCount} ",
+                              style: const TextStyle(color: AppColor.white),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ]
+                        )
+                      ],
+                    )
+                  ),
+                ],
               ),
             ),
-          ]
+          ),
+          Visibility(
+            visible: mapState.selectedCafe.vips.isEmpty,
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                "아직 이곳에 카페지기가 없습니다. 혼잡도를 공유하고 카페지기가 되어보세요!",
+                textAlign: TextAlign.center,
+              ),
+            )
+          ),
+        ]
       ),
     );
   }

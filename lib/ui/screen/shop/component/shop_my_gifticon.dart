@@ -53,7 +53,7 @@ class ShopMyBrandCon extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color:AppColor.grey_300,
+                  color:AppColor.grey_200,
                   spreadRadius: 3,
                   blurRadius: 10,
                   offset: Offset(0, 2),

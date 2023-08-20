@@ -1,13 +1,14 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BookmarkButton extends StatelessWidget {
   final bool isBookmarked;
   final double? buttonSize;
-  final Function? onPressed;
+  final VoidCallback? onPressed;
 
-  BookmarkButton({
+  const BookmarkButton({super.key,
     required this.isBookmarked,
     required this.buttonSize,
     this.onPressed,
@@ -21,18 +22,18 @@ class BookmarkButton extends StatelessWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle
       ),
-      child: FloatingActionButton(
-        onPressed: () {
-          if (onPressed != null) {
-            onPressed!(); // 콜백 함수 호출
-          }
-        },
-        elevation: 0,
-        backgroundColor: isBookmarked ? AppColor.secondary : AppColor.bookMark,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isBookmarked ? AppColor.secondary : AppColor.grey_300,
+          elevation: 0,
+          shape: const CircleBorder(),
+          padding: AppPadding.padding_0
+        ),
         child: const Icon(
           CupertinoIcons.heart,
           color: AppColor.white,
-          size: 15,
+          size: 16,
         ),
       ),
     );

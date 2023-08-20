@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
@@ -18,9 +17,9 @@ class MapViewModel extends StateNotifier<MapState> {
   final GlobalViewModel globalViewModel;
 
   MapViewModel({required CafeUseCase mapUseCase, required this.globalViewModel})
-      : _mapUseCase = mapUseCase, super(MapState.empty());
+      : _mapUseCase = mapUseCase, super(MapState.empty().copyWith());
 
-  refreshCafes() async {
+  refreshCafes(BuildContext context) async {
     try {
       final Cafes newCafes = await _mapUseCase.getMapCafes(
           cameraPosition:
@@ -37,32 +36,26 @@ class MapViewModel extends StateNotifier<MapState> {
           if (state.selectedMarker.isNotNull) {
             state.selectedMarker?.setSize(const Size(33, 46));
             state.selectedMarker?.setZIndex(1);
-            state.selectedMarker?.setCaption(const NOverlayCaption(text: ""));
-            state.selectedMarker?.setSubCaption(const NOverlayCaption(text: ""));
           }
           tappedMarker.setCaptionOffset(1.0);
-          tappedMarker.setSize(const Size(43, 50));
+          tappedMarker.setSize(const Size(42, 58));
           tappedMarker.setZIndex(3);
-          tappedMarker.setCaption(NOverlayCaption(text: cafe.name, textSize: 16.0));
-          tappedMarker.setSubCaption(NOverlayCaption(
-              text: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().stringValue,
-              textSize: 14.0,
-              color: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().complementaryColor,
-              haloColor: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().color));
           tappedMarker.setCaptionAligns([NAlign.top]);
           tappedMarker.setCaptionOffset(4.0);
-
           state = state.copyWith(
-              selectedCafe: cafe,
-              selectedMarker: tappedMarker,
-              selectedCafeFloor: cafe.cafeFloors.first);
+            selectedCafe: cafe,
+            selectedMarker: tappedMarker,
+            selectedCafeFloor: cafe.recentUpdatedFloor.isNull ? cafe.cafeFloors.first :
+              cafe.cafeFloors.firstWhere((e) => e.floor == cafe.recentUpdatedFloor)
+          );
           state.mapController?.updateCamera(
-              NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
-          await state.bottomSheetController.animatePanelToSnapPoint();
+            NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
+          openBottomSheetPreview();
+          // showBottomSheet(context);
+          // state.bottomSheetController.animatePanelToSnapPoint(duration: Duration(milliseconds: 200));
         });
         resSet.add(marker);
       }
-
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
@@ -74,35 +67,37 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
+  openBottomSheetPreview() {
+    state = state.copyWith(isBottomSheetPreviewOpened: true, isBottomSheetPreviewExpanded: true);
+  }
+
+  closeBottomSheetPreview() async {
+    state = state.copyWith(isBottomSheetPreviewExpanded: false);
+    await Future.delayed(const Duration(milliseconds: 200), () {
+      state = state.copyWith(isBottomSheetPreviewOpened: false);
+    });
+  }
+
   initMapController(NaverMapController mapController) {
     state = state.copyWith(mapController: mapController);
   }
 
-  changeSelectedCafe(Cafe changedSelectedCafe){
+  selectedCafe(Cafe changedSelectedCafe){
     state = state.copyWith(selectedCafe: changedSelectedCafe);
   }
 
-  changeSelectedCafeFloor(CafeFloor changedSelectedCafeFloor){
+  selectedCafeFloor(CafeFloor changedSelectedCafeFloor){
     state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
-  }
-
-  changeUpdatedCrowded(double changedUpdatedCrowded){
-    state = state.copyWith(updatedCrowded: changedUpdatedCrowded);
-  }
-
-  changeUpdatedThumbIcons(IconData changedUpdatedThumbIcon){
-    state = state.copyWith(thumbIcons: changedUpdatedThumbIcon);
   }
 
   changeCurrentPage(PageController changedCurrentPage){
     state = state.copyWith(pageController: changedCurrentPage);
   }
 
-  updateTopVisible(bool updateTopVisibility){
-    state = state.copyWith(topVisible: updateTopVisibility);
-  }
+  setRefreshButtonVisible(bool visible) => state = state.copyWith(isRefreshButtonVisible: visible);
 
-  updateTopImageVisible(bool updateTopImageVisibility){
-    state = state.copyWith(topImageVisible: updateTopImageVisibility);
-  }
+  setBottomSheetFullContentVisible(bool visible) => state = state.copyWith(isBottomSheetFullContentVisible: visible);
+
+  setCurrentPage(int page) => state = state.copyWith(currentPage: page);
+
 }

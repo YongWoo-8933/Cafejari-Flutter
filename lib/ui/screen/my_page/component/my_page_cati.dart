@@ -60,10 +60,10 @@ class MyPageCATI extends StatelessWidget {
           Visibility(
             visible: has_cati,
               child: CATIBlocks(
-                  is_clicked_1: true,
-                  is_clicked_2: false,
-                  is_clicked_3: true,
-                  is_clicked_4: false
+                  is1stBlockClicked: true,
+                  is2ndBlockClicked: false,
+                  is3rdBlockClicked: true,
+                  is4thBlockClicked: false
               )
           )
         ]

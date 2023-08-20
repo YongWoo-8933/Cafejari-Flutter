@@ -26,7 +26,7 @@ class AgreementPart extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
-      color: AppColor.grey_200,
+      color: AppColor.grey_100,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         child: Column(
@@ -170,7 +170,7 @@ class _AgreementBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColor.white,
         border: Border.all(
-          color: AppColor.grey_400,
+          color: AppColor.grey_300,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(10)
@@ -185,14 +185,14 @@ class _AgreementBox extends StatelessWidget {
                 children: [
                   Icon(
                     CupertinoIcons.check_mark_circled_solid,
-                    color: isChecked ? AppColor.secondary : AppColor.grey_400,
+                    color: isChecked ? AppColor.secondary : AppColor.grey_300,
                     size: 24,
                   ),
                   const HorizontalSpacer(8),
                   Text(
                     title,
                     style: TextStyle(
-                      color: isChecked ? AppColor.black : AppColor.grey_400,
+                      color: isChecked ? AppColor.black : AppColor.grey_300,
                       fontSize: 16,
                       fontWeight: FontWeight.w700
                     ),
@@ -201,7 +201,7 @@ class _AgreementBox extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                          color: isChecked ? AppColor.black : AppColor.grey_400,
+                          color: isChecked ? AppColor.black : AppColor.grey_300,
                           fontSize: 16,
                           fontWeight: FontWeight.w700
                       ),
@@ -232,7 +232,7 @@ class _AgreementBox extends StatelessWidget {
                 child: ListView(
                   padding: AppPadding.padding_0,
                   children: [
-                    const Divider(thickness: 1, height: 1, color: AppColor.grey_400),
+                    const Divider(thickness: 1, height: 1, color: AppColor.grey_300),
                     const VerticalSpacer(20),
                     Padding(
                       padding: AppPadding.padding_horizon_20,

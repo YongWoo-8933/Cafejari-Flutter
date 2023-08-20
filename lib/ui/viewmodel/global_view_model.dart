@@ -1,5 +1,6 @@
 
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
@@ -15,6 +16,18 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   void logout() {
     // 로그아웃 로직
+  }
+
+  void showSnackBar({required String content, required SnackBarType type}) {
+    state = state.copyWith(
+      snackBarText: content, snackBarType: type, isSnackBarOpened: true
+    );
+    Future.delayed(const Duration(milliseconds: 200), () {
+      state = state.copyWith(isSnackBarExpanded: true);
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        state = state.copyWith(isSnackBarOpened: false, isSnackBarExpanded: false);
+      });
+    });
   }
 
   void expireRefreshToken() {

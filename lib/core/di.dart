@@ -21,6 +21,7 @@ import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/my_page_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
@@ -191,3 +192,10 @@ final requestViewModelProvider = StateNotifierProvider<RequestViewModel, Request
 // ui ----------------------------------------------------------------------------------------------
 final bottomSheetHeightProvider = Provider<double>((ref) => 65.0);
 final bottomSheetCornerRadiusProvider = Provider<double>((ref) => 20.0);
+final bottomSheetPageControllerProvider = StateProvider((ref) => PageController());
+final bottomSheetDraggableProvider = StateProvider<bool>(
+  (ref) {
+    final double page = ref.watch(bottomSheetPageControllerProvider).page ?? 0;
+    return page == page.round();
+  }
+);

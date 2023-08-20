@@ -119,7 +119,7 @@ class ShopScreenState extends ConsumerState<ShopScreen>  {
                               ),
                             ),
                             labelColor: AppColor.black,
-                            unselectedLabelColor: AppColor.grey_400,
+                            unselectedLabelColor: AppColor.grey_300,
                             isScrollable: true, // 스크롤 가능하게 설정
                             tabs: List<Widget>.generate(
                               shopState.brandList.length,

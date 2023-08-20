@@ -32,8 +32,8 @@ class PointScreen extends ConsumerWidget {
               height: 90,
               decoration: const BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 1, color: AppColor.grey_300), // 위쪽 테두리
-                  bottom: BorderSide(width: 1, color:AppColor.grey_300), // 아래쪽 테두리
+                  top: BorderSide(width: 1, color: AppColor.grey_200), // 위쪽 테두리
+                  bottom: BorderSide(width: 1, color:AppColor.grey_200), // 아래쪽 테두리
                 ),
               ),
               child: Column(

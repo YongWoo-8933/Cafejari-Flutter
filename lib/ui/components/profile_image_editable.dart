@@ -15,7 +15,7 @@ class ProfileImageEditable extends Container {
     key: key,
     width: size,
     height: size,
-    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.grey_300),
+    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.grey_200),
     child: Stack(
       children: [
         Center(

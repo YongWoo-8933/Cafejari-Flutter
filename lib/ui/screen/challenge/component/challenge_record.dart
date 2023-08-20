@@ -26,7 +26,7 @@ class ChallengeRecord extends StatelessWidget {
           const VerticalSpacer(12),
           const Divider(height: 1, color: AppColor.primary, thickness: 1),
           Container(
-            color: AppColor.grey_200,
+            color: AppColor.grey_100,
             height: 48,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -3,30 +3,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class QuestionButton extends StatelessWidget {
-  final Function? onPressed;
+  final VoidCallback? onPressed;
 
-  QuestionButton({
+  const QuestionButton({
+    super.key,
     this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 18,
-      height: 18,
-      decoration: const BoxDecoration(
+      width: 20,
+      height: 20,
+      decoration: BoxDecoration(
         color: AppColor.explanationButton,
-        shape: BoxShape.circle,
+        borderRadius: BorderRadius.circular(10)
       ),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.transparent, // 버튼 배경을 투명하게 설정
-            shadowColor: AppColor.transparent, // 그림자 제거
-            padding: EdgeInsets.all(3),
-            elevation: 0
+          backgroundColor: AppColor.transparent,
+          disabledBackgroundColor: AppColor.transparent,
+          padding: const EdgeInsets.all(3),
+          elevation: 0,
+          shape: const CircleBorder()
         ),
-        child: Icon(CupertinoIcons.question, color: AppColor.white, size: 14),
+        child: const Icon(CupertinoIcons.question, color: AppColor.white, size: 14),
       ),
     );
   }

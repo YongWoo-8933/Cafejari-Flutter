@@ -5,7 +5,6 @@ import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dar
 import 'package:cafejari_flutter/ui/components/buttons/close_button.dart';
 import 'package:cafejari_flutter/ui/components/buttons/x_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_slider.dart';
-import 'package:cafejari_flutter/ui/components/slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

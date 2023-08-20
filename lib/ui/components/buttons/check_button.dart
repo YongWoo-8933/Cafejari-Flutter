@@ -27,7 +27,7 @@ class CheckButton extends StatelessWidget { // 크기가 더 작아질시 icon�
             onPressed!(); // 콜백 함수 호출
           }
         },
-        backgroundColor: isMarked ? AppColor.secondary : AppColor.bookMark,
+        backgroundColor: isMarked ? AppColor.secondary : AppColor.grey_300,
         child: const Icon(
           CupertinoIcons.check_mark,
           color: AppColor.white,

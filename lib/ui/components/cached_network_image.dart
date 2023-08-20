@@ -15,5 +15,6 @@ class CustomCachedNetworkImage extends CachedNetworkImage {
   }): super(
     placeholder: (context, url) => LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20),
     errorWidget: (context, url, error) => const Icon(CupertinoIcons.exclamationmark_circle),
+    fit: BoxFit.cover
   );
 }
