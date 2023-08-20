@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ class ShareButton extends StatelessWidget {
   final double? buttonSize;
   final Function? onPressed;
 
-  ShareButton({
+  const ShareButton({super.key,
     required this.buttonSize,
     this.onPressed,
   });
@@ -20,17 +21,21 @@ class ShareButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: FloatingActionButton(
+      child: ElevatedButton(
         onPressed: () {
           if (onPressed != null) {
             onPressed!(); // 콜백 함수 호출
           }
         },
-        backgroundColor: AppColor.primary,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
+          padding: AppPadding.padding_0,
+          shape: const CircleBorder(),
+        ),
         child: const Icon(
           CupertinoIcons.paperplane,
           color: AppColor.white,
-          size: 15,
+          size: 16,
         ),
       ),
     );

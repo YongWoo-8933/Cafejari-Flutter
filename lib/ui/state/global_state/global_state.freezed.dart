@@ -20,6 +20,10 @@ mixin _$GlobalState {
   bool get isLoggedIn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   PageType get currentPage => throw _privateConstructorUsedError;
+  bool get isSnackBarOpened => throw _privateConstructorUsedError;
+  bool get isSnackBarExpanded => throw _privateConstructorUsedError;
+  String get snackBarText => throw _privateConstructorUsedError;
+  SnackBarType get snackBarType => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -33,7 +37,14 @@ abstract class $GlobalStateCopyWith<$Res> {
       _$GlobalStateCopyWithImpl<$Res, GlobalState>;
   @useResult
   $Res call(
-      {String accessToken, bool isLoggedIn, User user, PageType currentPage});
+      {String accessToken,
+      bool isLoggedIn,
+      User user,
+      PageType currentPage,
+      bool isSnackBarOpened,
+      bool isSnackBarExpanded,
+      String snackBarText,
+      SnackBarType snackBarType});
 
   $UserCopyWith<$Res> get user;
 }
@@ -55,6 +66,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
+    Object? isSnackBarOpened = null,
+    Object? isSnackBarExpanded = null,
+    Object? snackBarText = null,
+    Object? snackBarType = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -73,6 +88,22 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
+      isSnackBarOpened: null == isSnackBarOpened
+          ? _value.isSnackBarOpened
+          : isSnackBarOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSnackBarExpanded: null == isSnackBarExpanded
+          ? _value.isSnackBarExpanded
+          : isSnackBarExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      snackBarText: null == snackBarText
+          ? _value.snackBarText
+          : snackBarText // ignore: cast_nullable_to_non_nullable
+              as String,
+      snackBarType: null == snackBarType
+          ? _value.snackBarType
+          : snackBarType // ignore: cast_nullable_to_non_nullable
+              as SnackBarType,
     ) as $Val);
   }
 
@@ -94,7 +125,14 @@ abstract class _$$_GlobalStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String accessToken, bool isLoggedIn, User user, PageType currentPage});
+      {String accessToken,
+      bool isLoggedIn,
+      User user,
+      PageType currentPage,
+      bool isSnackBarOpened,
+      bool isSnackBarExpanded,
+      String snackBarText,
+      SnackBarType snackBarType});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -115,6 +153,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? isLoggedIn = null,
     Object? user = null,
     Object? currentPage = null,
+    Object? isSnackBarOpened = null,
+    Object? isSnackBarExpanded = null,
+    Object? snackBarText = null,
+    Object? snackBarType = null,
   }) {
     return _then(_$_GlobalState(
       accessToken: null == accessToken
@@ -133,6 +175,22 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as PageType,
+      isSnackBarOpened: null == isSnackBarOpened
+          ? _value.isSnackBarOpened
+          : isSnackBarOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSnackBarExpanded: null == isSnackBarExpanded
+          ? _value.isSnackBarExpanded
+          : isSnackBarExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      snackBarText: null == snackBarText
+          ? _value.snackBarText
+          : snackBarText // ignore: cast_nullable_to_non_nullable
+              as String,
+      snackBarType: null == snackBarType
+          ? _value.snackBarType
+          : snackBarType // ignore: cast_nullable_to_non_nullable
+              as SnackBarType,
     ));
   }
 }
@@ -144,7 +202,11 @@ class _$_GlobalState implements _GlobalState {
       {required this.accessToken,
       required this.isLoggedIn,
       required this.user,
-      required this.currentPage});
+      required this.currentPage,
+      required this.isSnackBarOpened,
+      required this.isSnackBarExpanded,
+      required this.snackBarText,
+      required this.snackBarType});
 
   @override
   final String accessToken;
@@ -154,10 +216,18 @@ class _$_GlobalState implements _GlobalState {
   final User user;
   @override
   final PageType currentPage;
+  @override
+  final bool isSnackBarOpened;
+  @override
+  final bool isSnackBarExpanded;
+  @override
+  final String snackBarText;
+  @override
+  final SnackBarType snackBarType;
 
   @override
   String toString() {
-    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage)';
+    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType)';
   }
 
   @override
@@ -171,12 +241,28 @@ class _$_GlobalState implements _GlobalState {
                 other.isLoggedIn == isLoggedIn) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage));
+                other.currentPage == currentPage) &&
+            (identical(other.isSnackBarOpened, isSnackBarOpened) ||
+                other.isSnackBarOpened == isSnackBarOpened) &&
+            (identical(other.isSnackBarExpanded, isSnackBarExpanded) ||
+                other.isSnackBarExpanded == isSnackBarExpanded) &&
+            (identical(other.snackBarText, snackBarText) ||
+                other.snackBarText == snackBarText) &&
+            (identical(other.snackBarType, snackBarType) ||
+                other.snackBarType == snackBarType));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, accessToken, isLoggedIn, user, currentPage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      accessToken,
+      isLoggedIn,
+      user,
+      currentPage,
+      isSnackBarOpened,
+      isSnackBarExpanded,
+      snackBarText,
+      snackBarType);
 
   @JsonKey(ignore: true)
   @override
@@ -190,7 +276,11 @@ abstract class _GlobalState implements GlobalState {
       {required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
-      required final PageType currentPage}) = _$_GlobalState;
+      required final PageType currentPage,
+      required final bool isSnackBarOpened,
+      required final bool isSnackBarExpanded,
+      required final String snackBarText,
+      required final SnackBarType snackBarType}) = _$_GlobalState;
 
   @override
   String get accessToken;
@@ -200,6 +290,14 @@ abstract class _GlobalState implements GlobalState {
   User get user;
   @override
   PageType get currentPage;
+  @override
+  bool get isSnackBarOpened;
+  @override
+  bool get isSnackBarExpanded;
+  @override
+  String get snackBarText;
+  @override
+  SnackBarType get snackBarType;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>

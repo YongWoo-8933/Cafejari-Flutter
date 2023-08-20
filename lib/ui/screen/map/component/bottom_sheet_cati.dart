@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class BottomSheetCATI extends ConsumerWidget {
     final Size deviceSize = MediaQuery.of(context).size;
 
     return  Container(
-      padding: AppPadding.padding_30,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       decoration: const BoxDecoration(
         color: AppColor.background
       ),
@@ -30,21 +30,27 @@ class BottomSheetCATI extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text("CATI ", style: TextSize.textSize_bold_16),
-              QuestionButton()
+              const Text("CATI ", style: TextSize.textSize_bold_16),
+              const HorizontalSpacer(4),
+              QuestionButton(onPressed: () {})
             ],
           ),
-          SizedBox(height: 10,),
+          const VerticalSpacer(20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CATIBlocks(is_clicked_1: true, is_clicked_2: true, is_clicked_3: true, is_clicked_4: true),
-              SizedBox(height: 20,),
+              const CATIBlocks(
+                is1stBlockClicked: true,
+                is2ndBlockClicked: true,
+                is3rdBlockClicked: true,
+                is4thBlockClicked: true
+              ),
+              const VerticalSpacer(20),
               ActionButtonPrimary(
-                  buttonWidth: deviceSize.width/3,
-                  buttonHeight: 30,
-                  title: "CATI평가하기",
-                  onPressed: () =>{ },
+                buttonWidth: 120,
+                buttonHeight: 40,
+                title: "CATI 평가하기",
+                onPressed: () => { },
               )
             ],
           )

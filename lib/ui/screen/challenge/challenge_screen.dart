@@ -50,7 +50,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
         backgroundColor: AppColor.white,
         elevation: 0,
       ),
-      backgroundColor: AppColor.grey_100,
+      backgroundColor: AppColor.grey_0,
       body: SmartRefresher(
         controller: _refreshController,
         onRefresh: () async {

@@ -13,6 +13,8 @@ class Theming {
     color: AppColor.black,
     fontFamily: AppFont.inter,
     fontWeight: FontWeight.w400,
+    letterSpacing: 0,
+    fontSize: 14
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -78,7 +80,7 @@ class Theming {
       bodySmall: lightText,
       labelMedium: lightText,
       labelLarge: lightText,
-      labelSmall: lightText,
+      labelSmall: lightText
     ),
     textTheme: const TextTheme(
       bodyLarge: lightText,
@@ -86,10 +88,10 @@ class Theming {
       labelMedium: lightText,
       bodySmall: lightText,
       labelLarge: lightText,
-      labelSmall: lightText,
+      labelSmall: lightText
     ),
     scaffoldBackgroundColor: AppColor.grey_600,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
-        .copyWith(background: AppColor.grey_400),
+        .copyWith(background: AppColor.grey_300),
   );
 }

@@ -1,12 +1,17 @@
-
 import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
+import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_full_content.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_occupancy_update.dart';
+import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_preview.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
@@ -49,137 +54,124 @@ class RootScreenState extends ConsumerState<RootScreen> {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
     final double deviceHeight = MediaQuery.of(context).size.height;
+    const double bottomSheetPreviewHeight = 268;
+    const double bottomSheetPreviewCornerRadius = 20;
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
     return RefreshConfiguration(
       headerBuilder: () => const WaterDropMaterialHeader(backgroundColor: AppColor.primary),
       headerTriggerDistance: 80.0,
       springDescription: const SpringDescription(stiffness: 170, damping: 16, mass: 1.9),
-      maxOverScrollExtent :100,
-      maxUnderScrollExtent:0,
+      maxOverScrollExtent: 100,
+      maxUnderScrollExtent: 0,
       enableScrollWhenRefreshCompleted: true,
       child: WillPopScope(
         onWillPop: () async {
           if (globalState.currentPage.index != 0) {
             globalViewModel.updateCurrentPageTo(0);
             return false;
-          } else if(mapState.bottomSheetController.panelPosition != 0) {
+          } else if(mapState.bottomSheetOccupancyController.isPanelOpen) {
+            mapState.bottomSheetOccupancyController.close();
+            return false;
+          }  else if(mapState.bottomSheetController.isPanelOpen) {
             mapState.bottomSheetController.close();
             return false;
+          } else if(mapState.isBottomSheetPreviewOpened) {
+            await mapViewModel.closeBottomSheetPreview();
+            return false;
           } else {
-            final exit = await showDialog<bool>(
+            return await showDialog<bool>(
               context: context,
-              builder: (context) => AlertDialog(
-                content: const Text("앱을 종료하시겠습니까?"),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: const Text('확인'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: const Text('취소'),
-                  ),
-                ],
-              ),
-            );
-            return exit ?? false;
+              builder: (context) => SquareAlertDialog(
+                text: "앱을 종료하시겠습니까?",
+                negativeButtonText: "예",
+                positiveButtonText: "아니오",
+                onDismiss: () => Navigator.of(context).pop(),
+                onNegativeButtonPressed: () => SystemNavigator.pop(),
+                onPositiveButtonPressed: () {},
+              )
+            ) ?? false;
           }
         },
-        // child: SlidingUpPanel(
-        child: Scaffold(
-            key: mapState.scaffoldStateKey,
-            body: IndexedStack(
-              index: globalState.currentPage.index,
-              children: const [MapScreen(), MyCafeScreen(), ChallengeScreen(), MyPageScreen()],
-            ),
-            bottomNavigationBar: const BottomNavBar(),
-            backgroundColor: AppColor.transparent,
-            floatingActionButton: FloatingActionButton(
-              child: Text("모달열기"),
-              onPressed: () {
-                mapState.scaffoldStateKey.currentState!.showBottomSheet(enableDrag: true, (context) {
-                  return GestureDetector(
-                    onVerticalDragUpdate: (details) {
-                      if (details.delta.dy < 0 && details.delta.dy.abs() > 10.0) {
-                        showModalBottomSheet(context: context, builder: (context) {
-                          return Container(
-                            width: double.infinity,
-                            height: 500,
-                            child: Text("두번째 모달"),
-                          );
-                        });
-                        // showMaterialModalBottomSheet(
-                        //   context: context,
-                        //   builder: (context) {
-                        //     return Container(
-                        //       width: double.infinity,
-                        //       height: 500,
-                        //       child: Text("두번째 모달"),
-                        //     );
-                        //   }
-                        // );
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 200,
-                      child: SizedBox(
-                        width: 100,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("fdsaf"),
-                        ),
-                      ),
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            letterSpacing: 0,
+            color: AppColor.black,
+            fontSize: 14,
+            fontWeight: FontWeight.w400
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SlidingUpPanel(
+                controller: mapState.bottomSheetOccupancyController,
+                minHeight: 0,
+                maxHeight: 480,
+                backdropEnabled: true,
+                boxShadow: null,
+                color: AppColor.transparent,
+                body: SlidingUpPanel(
+                  controller: mapState.bottomSheetController,
+                  minHeight: mapState.isBottomSheetPreviewOpened ?
+                    bottomSheetPreviewHeight - bottomSheetPreviewCornerRadius : 0,
+                  maxHeight: deviceHeight,
+                  backdropEnabled: false,
+                  boxShadow: null,
+                  color: AppColor.transparent,
+                  onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
+                  onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
+                  body: Scaffold(
+                    body: IndexedStack(
+                      index: globalState.currentPage.index,
+                      children: const [
+                        MapScreen(),
+                        MyCafeScreen(),
+                        ChallengeScreen(),
+                        MyPageScreen()
+                      ],
                     ),
-                  );
-                });
-              },
-            )
-          )
-        )
-      // child: Scaffold(
-      //     body: IndexedStack(
-      //       index: globalState.currentPage.index,
-      //       children: const [MapScreen(), ChallengeScreen(), MyCafeScreen(), MyPageScreen()],
-      //     ),
-      //     panelBuilder: (ScrollController sc) {
-      //       return SingleChildScrollView( // 스크롤 가능한 뷰로 변경
-      //         controller: sc, // 스크롤 컨트롤러를 전달
-      //         child: Column(
-      //           children: const [
-      //             // BottomSheetPage1(),
-      //             // BottomSheetPage2(),
-      //             // BottomSheetPage3(),
-      //           ],
-      //         ),
-      //       );
-      //     },
-      //     controller: mapState.bottomSheetController,
-      //     minHeight: 0,
-      //     maxHeight: deviceHeight,
-      //     snapPoint: 0.3,
-      //     borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          // onPanelClosed: () => {
-          //   mapViewModel.updateTopVisible(true),
-          //   mapViewModel.updateTopImageVisible(false),
-          //   mapState.pageController.jumpToPage(0)
-          // },
-          // onPanelSlide: (double slideOffset) {
-          //   if (slideOffset <= 0.31) {
-          //     ref.read(mapViewModelProvider.notifier).updateTopVisible(true);
-          //     //mapState.pageController.jumpToPage(0);
-          //   } else if(0.31 < slideOffset && slideOffset < 0.7){
-          //     ref.read(mapViewModelProvider.notifier).updateTopVisible(false);
-          //     ref.read(mapViewModelProvider.notifier).updateTopImageVisible(false);
-          //     mapState.pageController.jumpToPage(1);
-          //   }else{
-          //     ref.read(mapViewModelProvider.notifier).updateTopImageVisible(true);
-          //   }
-          // },
-
-
+                    resizeToAvoidBottomInset: false,
+                    bottomNavigationBar: const BottomNavBar(),
+                    backgroundColor: AppColor.transparent,
+                    extendBody: true,
+                  ),
+                  // 카페 bottom sheet
+                  panelBuilder: (scrollController) {
+                    return Container(
+                      color: AppColor.transparent,
+                      child: AnimatedCrossFade(
+                        firstChild: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
+                            Container(
+                              color: AppColor.white,
+                              height: deviceHeight - bottomSheetPreviewHeight,
+                            ),
+                          ],
+                        ),
+                        secondChild: BottomSheetFullContent(scrollController: scrollController),
+                        crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                        duration: const Duration(milliseconds: 300)
+                      )
+                    );
+                  }
+                ),
+                // 카페 혼잡도 업데이트 패널
+                panelBuilder: (_) {
+                  return const BottomSheetOccupancyUpdate();
+                },
+              ),
+              CustomSnackBar(
+                isVisible: globalState.isSnackBarOpened,
+                isExpanded: globalState.isSnackBarExpanded,
+                content: globalState.snackBarText,
+                type: globalState.snackBarType,
+              )
+            ],
+          ),
+        ),
+      )
     );
   }
 }

@@ -58,7 +58,7 @@ class ChallengeSlider extends StatelessWidget {
           height: 20,
           margin: const EdgeInsets.symmetric(horizontal: 36),
           decoration: BoxDecoration(
-            color: AppColor.grey_100,
+            color: AppColor.grey_0,
             borderRadius: BorderRadius.circular(10)
           ),
           child: Container(

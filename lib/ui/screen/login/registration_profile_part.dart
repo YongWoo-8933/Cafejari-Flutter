@@ -53,12 +53,12 @@ class ProfilePart extends ConsumerWidget {
                     counterText: "",
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_300 : AppColor.error,
+                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_200 : AppColor.error,
                           width: 1),
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_200 : AppColor.error,
+                          color: loginState.nicknameErrorMessage.isEmpty ? AppColor.grey_100 : AppColor.error,
                           width: 1),
                     ),
                   ),

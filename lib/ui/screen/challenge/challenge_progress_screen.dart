@@ -4,7 +4,6 @@ import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_record.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_slier.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';

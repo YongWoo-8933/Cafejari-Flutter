@@ -16,10 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MapState {
-  GlobalKey<ScaffoldState> get scaffoldStateKey =>
-      throw _privateConstructorUsedError;
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
+  PanelController get bottomSheetOccupancyController =>
+      throw _privateConstructorUsedError;
+  PageController get pageController => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
   CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
@@ -27,11 +29,11 @@ mixin _$MapState {
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   TextEditingController get searchQueryController =>
       throw _privateConstructorUsedError;
-  double get updatedCrowded => throw _privateConstructorUsedError;
-  IconData get thumbIcons => throw _privateConstructorUsedError;
-  PageController get pageController => throw _privateConstructorUsedError;
-  bool get topVisible => throw _privateConstructorUsedError;
-  bool get topImageVisible => throw _privateConstructorUsedError;
+  bool get isBottomSheetPreviewOpened => throw _privateConstructorUsedError;
+  bool get isBottomSheetPreviewExpanded => throw _privateConstructorUsedError;
+  bool get isBottomSheetFullContentVisible =>
+      throw _privateConstructorUsedError;
+  bool get isRefreshButtonVisible => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MapStateCopyWith<MapState> get copyWith =>
@@ -44,19 +46,20 @@ abstract class $MapStateCopyWith<$Res> {
       _$MapStateCopyWithImpl<$Res, MapState>;
   @useResult
   $Res call(
-      {GlobalKey<ScaffoldState> scaffoldStateKey,
-      PanelController bottomSheetController,
+      {PanelController bottomSheetController,
+      PanelController bottomSheetOccupancyController,
+      PageController pageController,
+      int currentPage,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
-      double updatedCrowded,
-      IconData thumbIcons,
-      PageController pageController,
-      bool topVisible,
-      bool topImageVisible});
+      bool isBottomSheetPreviewOpened,
+      bool isBottomSheetPreviewExpanded,
+      bool isBottomSheetFullContentVisible,
+      bool isRefreshButtonVisible});
 
   $CafeCopyWith<$Res> get selectedCafe;
   $CafeFloorCopyWith<$Res> get selectedCafeFloor;
@@ -75,29 +78,38 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scaffoldStateKey = null,
     Object? bottomSheetController = null,
+    Object? bottomSheetOccupancyController = null,
+    Object? pageController = null,
+    Object? currentPage = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? searchQueryController = null,
-    Object? updatedCrowded = null,
-    Object? thumbIcons = null,
-    Object? pageController = null,
-    Object? topVisible = null,
-    Object? topImageVisible = null,
+    Object? isBottomSheetPreviewOpened = null,
+    Object? isBottomSheetPreviewExpanded = null,
+    Object? isBottomSheetFullContentVisible = null,
+    Object? isRefreshButtonVisible = null,
   }) {
     return _then(_value.copyWith(
-      scaffoldStateKey: null == scaffoldStateKey
-          ? _value.scaffoldStateKey
-          : scaffoldStateKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<ScaffoldState>,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
+      bottomSheetOccupancyController: null == bottomSheetOccupancyController
+          ? _value.bottomSheetOccupancyController
+          : bottomSheetOccupancyController // ignore: cast_nullable_to_non_nullable
+              as PanelController,
+      pageController: null == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
       cafes: null == cafes
           ? _value.cafes
           : cafes // ignore: cast_nullable_to_non_nullable
@@ -122,25 +134,21 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      updatedCrowded: null == updatedCrowded
-          ? _value.updatedCrowded
-          : updatedCrowded // ignore: cast_nullable_to_non_nullable
-              as double,
-      thumbIcons: null == thumbIcons
-          ? _value.thumbIcons
-          : thumbIcons // ignore: cast_nullable_to_non_nullable
-              as IconData,
-      pageController: null == pageController
-          ? _value.pageController
-          : pageController // ignore: cast_nullable_to_non_nullable
-              as PageController,
-      topVisible: null == topVisible
-          ? _value.topVisible
-          : topVisible // ignore: cast_nullable_to_non_nullable
+      isBottomSheetPreviewOpened: null == isBottomSheetPreviewOpened
+          ? _value.isBottomSheetPreviewOpened
+          : isBottomSheetPreviewOpened // ignore: cast_nullable_to_non_nullable
               as bool,
-      topImageVisible: null == topImageVisible
-          ? _value.topImageVisible
-          : topImageVisible // ignore: cast_nullable_to_non_nullable
+      isBottomSheetPreviewExpanded: null == isBottomSheetPreviewExpanded
+          ? _value.isBottomSheetPreviewExpanded
+          : isBottomSheetPreviewExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBottomSheetFullContentVisible: null == isBottomSheetFullContentVisible
+          ? _value.isBottomSheetFullContentVisible
+          : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRefreshButtonVisible: null == isRefreshButtonVisible
+          ? _value.isRefreshButtonVisible
+          : isRefreshButtonVisible // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -170,19 +178,20 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {GlobalKey<ScaffoldState> scaffoldStateKey,
-      PanelController bottomSheetController,
+      {PanelController bottomSheetController,
+      PanelController bottomSheetOccupancyController,
+      PageController pageController,
+      int currentPage,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
-      double updatedCrowded,
-      IconData thumbIcons,
-      PageController pageController,
-      bool topVisible,
-      bool topImageVisible});
+      bool isBottomSheetPreviewOpened,
+      bool isBottomSheetPreviewExpanded,
+      bool isBottomSheetFullContentVisible,
+      bool isRefreshButtonVisible});
 
   @override
   $CafeCopyWith<$Res> get selectedCafe;
@@ -201,29 +210,38 @@ class __$$_MapStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scaffoldStateKey = null,
     Object? bottomSheetController = null,
+    Object? bottomSheetOccupancyController = null,
+    Object? pageController = null,
+    Object? currentPage = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? searchQueryController = null,
-    Object? updatedCrowded = null,
-    Object? thumbIcons = null,
-    Object? pageController = null,
-    Object? topVisible = null,
-    Object? topImageVisible = null,
+    Object? isBottomSheetPreviewOpened = null,
+    Object? isBottomSheetPreviewExpanded = null,
+    Object? isBottomSheetFullContentVisible = null,
+    Object? isRefreshButtonVisible = null,
   }) {
     return _then(_$_MapState(
-      scaffoldStateKey: null == scaffoldStateKey
-          ? _value.scaffoldStateKey
-          : scaffoldStateKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<ScaffoldState>,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
+      bottomSheetOccupancyController: null == bottomSheetOccupancyController
+          ? _value.bottomSheetOccupancyController
+          : bottomSheetOccupancyController // ignore: cast_nullable_to_non_nullable
+              as PanelController,
+      pageController: null == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
       cafes: null == cafes
           ? _value._cafes
           : cafes // ignore: cast_nullable_to_non_nullable
@@ -248,25 +266,21 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      updatedCrowded: null == updatedCrowded
-          ? _value.updatedCrowded
-          : updatedCrowded // ignore: cast_nullable_to_non_nullable
-              as double,
-      thumbIcons: null == thumbIcons
-          ? _value.thumbIcons
-          : thumbIcons // ignore: cast_nullable_to_non_nullable
-              as IconData,
-      pageController: null == pageController
-          ? _value.pageController
-          : pageController // ignore: cast_nullable_to_non_nullable
-              as PageController,
-      topVisible: null == topVisible
-          ? _value.topVisible
-          : topVisible // ignore: cast_nullable_to_non_nullable
+      isBottomSheetPreviewOpened: null == isBottomSheetPreviewOpened
+          ? _value.isBottomSheetPreviewOpened
+          : isBottomSheetPreviewOpened // ignore: cast_nullable_to_non_nullable
               as bool,
-      topImageVisible: null == topImageVisible
-          ? _value.topImageVisible
-          : topImageVisible // ignore: cast_nullable_to_non_nullable
+      isBottomSheetPreviewExpanded: null == isBottomSheetPreviewExpanded
+          ? _value.isBottomSheetPreviewExpanded
+          : isBottomSheetPreviewExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBottomSheetFullContentVisible: null == isBottomSheetFullContentVisible
+          ? _value.isBottomSheetFullContentVisible
+          : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRefreshButtonVisible: null == isRefreshButtonVisible
+          ? _value.isRefreshButtonVisible
+          : isRefreshButtonVisible // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -276,25 +290,30 @@ class __$$_MapStateCopyWithImpl<$Res>
 
 class _$_MapState implements _MapState {
   _$_MapState(
-      {required this.scaffoldStateKey,
-      required this.bottomSheetController,
+      {required this.bottomSheetController,
+      required this.bottomSheetOccupancyController,
+      required this.pageController,
+      required this.currentPage,
       required final List<Cafe> cafes,
       required this.selectedCafe,
       required this.selectedCafeFloor,
       required this.selectedMarker,
       required this.mapController,
       required this.searchQueryController,
-      required this.updatedCrowded,
-      required this.thumbIcons,
-      required this.pageController,
-      required this.topVisible,
-      required this.topImageVisible})
+      required this.isBottomSheetPreviewOpened,
+      required this.isBottomSheetPreviewExpanded,
+      required this.isBottomSheetFullContentVisible,
+      required this.isRefreshButtonVisible})
       : _cafes = cafes;
 
   @override
-  final GlobalKey<ScaffoldState> scaffoldStateKey;
-  @override
   final PanelController bottomSheetController;
+  @override
+  final PanelController bottomSheetOccupancyController;
+  @override
+  final PageController pageController;
+  @override
+  final int currentPage;
   final List<Cafe> _cafes;
   @override
   List<Cafe> get cafes {
@@ -314,19 +333,17 @@ class _$_MapState implements _MapState {
   @override
   final TextEditingController searchQueryController;
   @override
-  final double updatedCrowded;
+  final bool isBottomSheetPreviewOpened;
   @override
-  final IconData thumbIcons;
+  final bool isBottomSheetPreviewExpanded;
   @override
-  final PageController pageController;
+  final bool isBottomSheetFullContentVisible;
   @override
-  final bool topVisible;
-  @override
-  final bool topImageVisible;
+  final bool isRefreshButtonVisible;
 
   @override
   String toString() {
-    return 'MapState(scaffoldStateKey: $scaffoldStateKey, bottomSheetController: $bottomSheetController, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, updatedCrowded: $updatedCrowded, thumbIcons: $thumbIcons, pageController: $pageController, topVisible: $topVisible, topImageVisible: $topImageVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentPage: $currentPage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -334,10 +351,16 @@ class _$_MapState implements _MapState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MapState &&
-            (identical(other.scaffoldStateKey, scaffoldStateKey) ||
-                other.scaffoldStateKey == scaffoldStateKey) &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
+            (identical(other.bottomSheetOccupancyController,
+                    bottomSheetOccupancyController) ||
+                other.bottomSheetOccupancyController ==
+                    bottomSheetOccupancyController) &&
+            (identical(other.pageController, pageController) ||
+                other.pageController == pageController) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
             (identical(other.selectedCafe, selectedCafe) ||
                 other.selectedCafe == selectedCafe) &&
@@ -349,34 +372,39 @@ class _$_MapState implements _MapState {
                 other.mapController == mapController) &&
             (identical(other.searchQueryController, searchQueryController) ||
                 other.searchQueryController == searchQueryController) &&
-            (identical(other.updatedCrowded, updatedCrowded) ||
-                other.updatedCrowded == updatedCrowded) &&
-            (identical(other.thumbIcons, thumbIcons) ||
-                other.thumbIcons == thumbIcons) &&
-            (identical(other.pageController, pageController) ||
-                other.pageController == pageController) &&
-            (identical(other.topVisible, topVisible) ||
-                other.topVisible == topVisible) &&
-            (identical(other.topImageVisible, topImageVisible) ||
-                other.topImageVisible == topImageVisible));
+            (identical(other.isBottomSheetPreviewOpened,
+                    isBottomSheetPreviewOpened) ||
+                other.isBottomSheetPreviewOpened ==
+                    isBottomSheetPreviewOpened) &&
+            (identical(other.isBottomSheetPreviewExpanded,
+                    isBottomSheetPreviewExpanded) ||
+                other.isBottomSheetPreviewExpanded ==
+                    isBottomSheetPreviewExpanded) &&
+            (identical(other.isBottomSheetFullContentVisible,
+                    isBottomSheetFullContentVisible) ||
+                other.isBottomSheetFullContentVisible ==
+                    isBottomSheetFullContentVisible) &&
+            (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) ||
+                other.isRefreshButtonVisible == isRefreshButtonVisible));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      scaffoldStateKey,
       bottomSheetController,
+      bottomSheetOccupancyController,
+      pageController,
+      currentPage,
       const DeepCollectionEquality().hash(_cafes),
       selectedCafe,
       selectedCafeFloor,
       selectedMarker,
       mapController,
       searchQueryController,
-      updatedCrowded,
-      thumbIcons,
-      pageController,
-      topVisible,
-      topImageVisible);
+      isBottomSheetPreviewOpened,
+      isBottomSheetPreviewExpanded,
+      isBottomSheetFullContentVisible,
+      isRefreshButtonVisible);
 
   @JsonKey(ignore: true)
   @override
@@ -387,24 +415,29 @@ class _$_MapState implements _MapState {
 
 abstract class _MapState implements MapState {
   factory _MapState(
-      {required final GlobalKey<ScaffoldState> scaffoldStateKey,
-      required final PanelController bottomSheetController,
+      {required final PanelController bottomSheetController,
+      required final PanelController bottomSheetOccupancyController,
+      required final PageController pageController,
+      required final int currentPage,
       required final List<Cafe> cafes,
       required final Cafe selectedCafe,
       required final CafeFloor selectedCafeFloor,
       required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
       required final TextEditingController searchQueryController,
-      required final double updatedCrowded,
-      required final IconData thumbIcons,
-      required final PageController pageController,
-      required final bool topVisible,
-      required final bool topImageVisible}) = _$_MapState;
+      required final bool isBottomSheetPreviewOpened,
+      required final bool isBottomSheetPreviewExpanded,
+      required final bool isBottomSheetFullContentVisible,
+      required final bool isRefreshButtonVisible}) = _$_MapState;
 
   @override
-  GlobalKey<ScaffoldState> get scaffoldStateKey;
-  @override
   PanelController get bottomSheetController;
+  @override
+  PanelController get bottomSheetOccupancyController;
+  @override
+  PageController get pageController;
+  @override
+  int get currentPage;
   @override
   List<Cafe> get cafes;
   @override
@@ -418,15 +451,13 @@ abstract class _MapState implements MapState {
   @override
   TextEditingController get searchQueryController;
   @override
-  double get updatedCrowded;
+  bool get isBottomSheetPreviewOpened;
   @override
-  IconData get thumbIcons;
+  bool get isBottomSheetPreviewExpanded;
   @override
-  PageController get pageController;
+  bool get isBottomSheetFullContentVisible;
   @override
-  bool get topVisible;
-  @override
-  bool get topImageVisible;
+  bool get isRefreshButtonVisible;
   @override
   @JsonKey(ignore: true)
   _$$_MapStateCopyWith<_$_MapState> get copyWith =>

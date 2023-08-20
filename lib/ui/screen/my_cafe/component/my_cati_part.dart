@@ -41,7 +41,7 @@ class MyCATIPart extends ConsumerWidget {
             ],
           ),
           SizedBox(height: 10),
-          CATIBlocks(is_clicked_1: true, is_clicked_2: true, is_clicked_3: true, is_clicked_4: true),
+          CATIBlocks(is1stBlockClicked: true, is2ndBlockClicked: true, is3rdBlockClicked: true, is4thBlockClicked: true),
         ],
       ),
     );

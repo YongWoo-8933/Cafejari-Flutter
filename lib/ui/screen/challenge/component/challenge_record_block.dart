@@ -27,7 +27,7 @@ class ChallengeRecordBlock extends StatelessWidget {
               _buildCell(width / 3, "${challengePoint.point}p"),
             ],
           ),
-          const Divider(height: 1, color: AppColor.grey_200, thickness: 1)
+          const Divider(height: 1, color: AppColor.grey_100, thickness: 1)
         ],
       ),
     );

@@ -85,7 +85,6 @@ dependencies:
   photo_view: ^0.14.0
 
   # bottom sheet
-  modal_bottom_sheet: ^3.0.0-pre
   sliding_up_panel: ^2.0.0+1
 
   # 카카오 서비스
@@ -97,8 +96,9 @@ dependencies:
   # 내 위치 찾기 패키지
   geolocator: ^9.0.2
 
-  # ??
+  # 슬라이더
   another_xlider: ^3.0.1
+  syncfusion_flutter_sliders: ^22.2.9
 
   # 보안 키 관리
   flutter_dotenv: ^5.1.0

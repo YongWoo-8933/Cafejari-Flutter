@@ -29,7 +29,7 @@ class RecommendCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColor.grey_400.withOpacity(0.5), // Shadow color and opacity
+            color: AppColor.grey_300.withOpacity(0.5), // Shadow color and opacity
             blurRadius: 5, // Spread of the shadow
             offset: Offset(1, 1),
           )

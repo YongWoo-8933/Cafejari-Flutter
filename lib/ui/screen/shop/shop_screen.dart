@@ -101,7 +101,7 @@ class ShopScreen extends ConsumerWidget {
                               ),
                             ),
                             labelColor: AppColor.black,
-                            unselectedLabelColor: AppColor.grey_400,
+                            unselectedLabelColor: AppColor.grey_300,
                             isScrollable: true, // 스크롤 가능하게 설정
                             tabs: [
                               Tab(text: "ALL"),

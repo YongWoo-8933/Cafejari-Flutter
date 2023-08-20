@@ -4,7 +4,6 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_page2.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_block.dart';

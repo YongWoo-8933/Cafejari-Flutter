@@ -39,9 +39,9 @@ class CATISlider extends StatelessWidget {
                 width: (MediaQuery.of(context).size.width - 140) / 4,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: AppColor.grey_100,
+                  color: AppColor.grey_0,
                   border: Border.all(
-                    color: AppColor.grey_300, // 테두리 색상 설정
+                    color: AppColor.grey_200, // 테두리 색상 설정
                     width: 1.0,          // 테두리 두께 설정
                   ),
                 ),
@@ -49,7 +49,7 @@ class CATISlider extends StatelessWidget {
               Container(
                 width: (MediaQuery.of(context).size.width - 140) / 4,
                 height: 10,
-                color: AppColor.grey_300,
+                color: AppColor.grey_200,
               ),
               Container(
                 width: (MediaQuery.of(context).size.width - 140) / 4,
