@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
+import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/permission_request.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,8 +43,8 @@ class MapScreenState extends ConsumerState<MapScreen> {
   Widget build(BuildContext context) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-    final double bottomNavBarHeight = ref.read(bottomSheetHeightProvider);
-    final double bottomNavBarCornerRadius = ref.read(bottomSheetCornerRadiusProvider);
+    final double bottomNavBarHeight = ref.read(bottomNavBarHeightProvider);
+    final double bottomNavBarCornerRadius = ref.read(bottomNavBarCornerRadiusProvider);
 
     return Padding(
       padding: EdgeInsets.only(bottom: bottomNavBarHeight - bottomNavBarCornerRadius),
@@ -51,6 +52,9 @@ class MapScreenState extends ConsumerState<MapScreen> {
         children: [
           _NaverMap(),
           OnMap(),
+          SearchPage(
+
+          )
         ],
       ),
     );

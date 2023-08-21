@@ -46,7 +46,7 @@ class CafeRepositoryImpl implements CafeRepository {
   @override
   Future<List<CafeSearchResponse>> fetchSearchCafe({required String query}) async {
     try {
-      final dynamic response = await apiService.request(
+      final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "search/",

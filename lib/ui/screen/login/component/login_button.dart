@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../../app_config/duration.dart';
+
 class LoginButton extends StatelessWidget {
   final double? buttonWidth;
   final double? buttonHeight;
@@ -47,14 +49,14 @@ class LoginButton extends StatelessWidget {
           children: [
             AnimatedOpacity(
               opacity: isLoading ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 300),
+              duration: AppDuration.animationDefault,
               child: Center(
                 child: LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20)
               ),
             ),
             AnimatedOpacity(
               opacity: isLoading ? 0.0 : 1.0,
-              duration: const Duration(milliseconds: 300),
+              duration: AppDuration.animationDefault,
               child: Row(
                 children: [
                   Padding(

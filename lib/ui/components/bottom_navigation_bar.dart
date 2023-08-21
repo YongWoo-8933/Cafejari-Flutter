@@ -16,8 +16,8 @@ class BottomNavBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
-    final double height = ref.read(bottomSheetHeightProvider);
-    final double cornerRadius = ref.read(bottomSheetCornerRadiusProvider);
+    final double height = ref.read(bottomNavBarHeightProvider);
+    final double cornerRadius = ref.read(bottomNavBarCornerRadiusProvider);
 
     return Container(
       height: height,

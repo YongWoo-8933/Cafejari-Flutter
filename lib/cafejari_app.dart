@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
 import 'package:cafejari_flutter/ui/components/alert_dialog_square.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
@@ -70,10 +71,13 @@ class RootScreenState extends ConsumerState<RootScreen> {
           if (globalState.currentPage.index != 0) {
             globalViewModel.updateCurrentPageTo(0);
             return false;
+          } else if(mapState.isSearchPageVisible) {
+            mapViewModel.closeSearchPage();
+            return false;
           } else if(mapState.bottomSheetOccupancyController.isPanelOpen) {
             mapState.bottomSheetOccupancyController.close();
             return false;
-          }  else if(mapState.bottomSheetController.isPanelOpen) {
+          } else if(mapState.bottomSheetController.isPanelOpen) {
             mapState.bottomSheetController.close();
             return false;
           } else if(mapState.isBottomSheetPreviewOpened) {
@@ -152,7 +156,7 @@ class RootScreenState extends ConsumerState<RootScreen> {
                         ),
                         secondChild: BottomSheetFullContent(scrollController: scrollController),
                         crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                        duration: const Duration(milliseconds: 300)
+                        duration: AppDuration.animationDefault
                       )
                     );
                   }

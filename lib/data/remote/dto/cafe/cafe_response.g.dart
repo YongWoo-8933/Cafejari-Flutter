@@ -47,6 +47,8 @@ CafeSearchResponse _$CafeSearchResponseFromJson(Map<String, dynamic> json) =>
     CafeSearchResponse(
       id: json['id'] as int,
       name: json['name'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
       address: json['address'] as String,
     );
 
@@ -55,6 +57,8 @@ Map<String, dynamic> _$CafeSearchResponseToJson(CafeSearchResponse instance) =>
       'id': instance.id,
       'name': instance.name,
       'address': instance.address,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };
 
 CafeFloorCafeRepResponse _$CafeFloorCafeRepResponseFromJson(

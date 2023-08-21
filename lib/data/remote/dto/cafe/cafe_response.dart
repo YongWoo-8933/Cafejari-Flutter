@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 
@@ -36,10 +38,13 @@ class CafeResponse {
 class CafeSearchResponse {
   final int id;
   final String name, address;
+  final double latitude, longitude;
 
   CafeSearchResponse(
       {required this.id,
       required this.name,
+      required this.latitude,
+      required this.longitude,
       required this.address});
 
   factory CafeSearchResponse.fromJson(Map<String, dynamic> json) => _$CafeSearchResponseFromJson(json);

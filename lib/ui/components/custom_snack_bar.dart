@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,7 @@ class CustomSnackBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: AppDuration.animationDefault,
       curve: Curves.easeInOut,
       width: isVisible ? (type == SnackBarType.complete ? 150 : 180) : 0,
       height: isVisible ? (type == SnackBarType.complete ? 150 : 180) : 0,

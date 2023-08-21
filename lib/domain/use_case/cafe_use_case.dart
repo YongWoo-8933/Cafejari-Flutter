@@ -52,7 +52,8 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
         return Cafe.empty().copyWith(
           id: cafeSearchResponse.id,
           name: cafeSearchResponse.name,
-          address: cafeSearchResponse.address
+          address: cafeSearchResponse.address,
+          latLng: NLatLng(cafeSearchResponse.latitude, cafeSearchResponse.longitude)
         );
       }).toList();
     } on ErrorWithMessage {
