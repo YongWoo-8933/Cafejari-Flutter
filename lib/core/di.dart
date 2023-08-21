@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cafejari_flutter/data/repository/cafe_log_repository.dart';
 import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
 import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
@@ -144,7 +146,7 @@ final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
 // view model --------------------------------------------------------------------------------------
 final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalState>((ref) {
   final TokenUseCase tokenUseCase = ref.watch(tokenUseCaseProvider);
-  return GlobalViewModel(tokenUseCase);
+  return GlobalViewModel(tokenUseCase, null, null);
 });
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {
@@ -190,12 +192,5 @@ final requestViewModelProvider = StateNotifierProvider<RequestViewModel, Request
 
 
 // ui ----------------------------------------------------------------------------------------------
-final bottomSheetHeightProvider = Provider<double>((ref) => 65.0);
-final bottomSheetCornerRadiusProvider = Provider<double>((ref) => 20.0);
-final bottomSheetPageControllerProvider = StateProvider((ref) => PageController());
-final bottomSheetDraggableProvider = StateProvider<bool>(
-  (ref) {
-    final double page = ref.watch(bottomSheetPageControllerProvider).page ?? 0;
-    return page == page.round();
-  }
-);
+final bottomNavBarHeightProvider = Provider<double>((ref) => 65.0);
+final bottomNavBarCornerRadiusProvider = Provider<double>((ref) => 20.0);

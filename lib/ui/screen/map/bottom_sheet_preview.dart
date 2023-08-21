@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
@@ -47,8 +48,8 @@ class BottomSheetPreview extends ConsumerWidget {
         width: deviceSize.width,
         alignment: Alignment.bottomCenter,
         child: AnimatedSize(
-          duration: const Duration(milliseconds: 200),
-          reverseDuration: const Duration(milliseconds: 200),
+          duration: AppDuration.animationDefault,
+          reverseDuration: AppDuration.animationDefault,
           curve: Curves.easeInOut,
           child: Container(
             width: deviceSize.width,

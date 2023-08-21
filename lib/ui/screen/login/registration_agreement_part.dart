@@ -1,6 +1,7 @@
 
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
@@ -281,14 +282,14 @@ class _RegistrationButton extends StatelessWidget {
             children: [
               AnimatedOpacity(
                 opacity: isLoading ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
+                duration: AppDuration.animationDefault,
                 child: Center(
                   child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
                 )
               ),
               AnimatedOpacity(
                 opacity: isLoading ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 300),
+                duration: AppDuration.animationDefault,
                 child: const Text(
                   "가입하기",
                   style: TextStyle(

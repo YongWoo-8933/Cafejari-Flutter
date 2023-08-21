@@ -29,6 +29,9 @@ mixin _$MapState {
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   TextEditingController get searchQueryController =>
       throw _privateConstructorUsedError;
+  List<Cafe> get searchPredictions => throw _privateConstructorUsedError;
+  bool get isSearchPageVisible => throw _privateConstructorUsedError;
+  bool get isSearchPageFadedIn => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewOpened => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewExpanded => throw _privateConstructorUsedError;
   bool get isBottomSheetFullContentVisible =>
@@ -56,6 +59,9 @@ abstract class $MapStateCopyWith<$Res> {
       NMarker? selectedMarker,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
+      List<Cafe> searchPredictions,
+      bool isSearchPageVisible,
+      bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
@@ -88,6 +94,9 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? searchQueryController = null,
+    Object? searchPredictions = null,
+    Object? isSearchPageVisible = null,
+    Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
@@ -134,6 +143,18 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      searchPredictions: null == searchPredictions
+          ? _value.searchPredictions
+          : searchPredictions // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
+      isSearchPageVisible: null == isSearchPageVisible
+          ? _value.isSearchPageVisible
+          : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchPageFadedIn: null == isSearchPageFadedIn
+          ? _value.isSearchPageFadedIn
+          : isSearchPageFadedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
       isBottomSheetPreviewOpened: null == isBottomSheetPreviewOpened
           ? _value.isBottomSheetPreviewOpened
           : isBottomSheetPreviewOpened // ignore: cast_nullable_to_non_nullable
@@ -188,6 +209,9 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       NMarker? selectedMarker,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
+      List<Cafe> searchPredictions,
+      bool isSearchPageVisible,
+      bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
@@ -220,6 +244,9 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? searchQueryController = null,
+    Object? searchPredictions = null,
+    Object? isSearchPageVisible = null,
+    Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
@@ -266,6 +293,18 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      searchPredictions: null == searchPredictions
+          ? _value._searchPredictions
+          : searchPredictions // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
+      isSearchPageVisible: null == isSearchPageVisible
+          ? _value.isSearchPageVisible
+          : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchPageFadedIn: null == isSearchPageFadedIn
+          ? _value.isSearchPageFadedIn
+          : isSearchPageFadedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
       isBottomSheetPreviewOpened: null == isBottomSheetPreviewOpened
           ? _value.isBottomSheetPreviewOpened
           : isBottomSheetPreviewOpened // ignore: cast_nullable_to_non_nullable
@@ -300,11 +339,15 @@ class _$_MapState implements _MapState {
       required this.selectedMarker,
       required this.mapController,
       required this.searchQueryController,
+      required final List<Cafe> searchPredictions,
+      required this.isSearchPageVisible,
+      required this.isSearchPageFadedIn,
       required this.isBottomSheetPreviewOpened,
       required this.isBottomSheetPreviewExpanded,
       required this.isBottomSheetFullContentVisible,
       required this.isRefreshButtonVisible})
-      : _cafes = cafes;
+      : _cafes = cafes,
+        _searchPredictions = searchPredictions;
 
   @override
   final PanelController bottomSheetController;
@@ -332,6 +375,19 @@ class _$_MapState implements _MapState {
   final NaverMapController? mapController;
   @override
   final TextEditingController searchQueryController;
+  final List<Cafe> _searchPredictions;
+  @override
+  List<Cafe> get searchPredictions {
+    if (_searchPredictions is EqualUnmodifiableListView)
+      return _searchPredictions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchPredictions);
+  }
+
+  @override
+  final bool isSearchPageVisible;
+  @override
+  final bool isSearchPageFadedIn;
   @override
   final bool isBottomSheetPreviewOpened;
   @override
@@ -343,7 +399,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentPage: $currentPage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentPage: $currentPage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -372,6 +428,12 @@ class _$_MapState implements _MapState {
                 other.mapController == mapController) &&
             (identical(other.searchQueryController, searchQueryController) ||
                 other.searchQueryController == searchQueryController) &&
+            const DeepCollectionEquality()
+                .equals(other._searchPredictions, _searchPredictions) &&
+            (identical(other.isSearchPageVisible, isSearchPageVisible) ||
+                other.isSearchPageVisible == isSearchPageVisible) &&
+            (identical(other.isSearchPageFadedIn, isSearchPageFadedIn) ||
+                other.isSearchPageFadedIn == isSearchPageFadedIn) &&
             (identical(other.isBottomSheetPreviewOpened,
                     isBottomSheetPreviewOpened) ||
                 other.isBottomSheetPreviewOpened ==
@@ -401,6 +463,9 @@ class _$_MapState implements _MapState {
       selectedMarker,
       mapController,
       searchQueryController,
+      const DeepCollectionEquality().hash(_searchPredictions),
+      isSearchPageVisible,
+      isSearchPageFadedIn,
       isBottomSheetPreviewOpened,
       isBottomSheetPreviewExpanded,
       isBottomSheetFullContentVisible,
@@ -425,6 +490,9 @@ abstract class _MapState implements MapState {
       required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
       required final TextEditingController searchQueryController,
+      required final List<Cafe> searchPredictions,
+      required final bool isSearchPageVisible,
+      required final bool isSearchPageFadedIn,
       required final bool isBottomSheetPreviewOpened,
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
@@ -450,6 +518,12 @@ abstract class _MapState implements MapState {
   NaverMapController? get mapController;
   @override
   TextEditingController get searchQueryController;
+  @override
+  List<Cafe> get searchPredictions;
+  @override
+  bool get isSearchPageVisible;
+  @override
+  bool get isSearchPageFadedIn;
   @override
   bool get isBottomSheetPreviewOpened;
   @override

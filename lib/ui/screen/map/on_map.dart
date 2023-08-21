@@ -1,10 +1,11 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,80 +21,36 @@ class OnMap extends ConsumerWidget {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
     return Stack(
+      alignment: Alignment.center,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const VerticalSpacer(50),
-            Container(
-              alignment: Alignment.center,
-              width: deviceWidth,
-              child: Container(
-                width: deviceWidth - 40,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  boxShadow: AppShadow.box
-                ),
-                child: TextFormField(
-                  controller: mapState.searchQueryController,
-                  keyboardType: TextInputType.text,
-                  cursorColor: AppColor.primary,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600
-                  ),
-                  textAlignVertical: TextAlignVertical.center,
-                  onChanged: (value) {},
-                  enableSuggestions: true,
-                  textInputAction: TextInputAction.search,
-                  onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-                  decoration: InputDecoration(
-                    hintText: "카페명 검색",
-                    hintStyle: const TextStyle(
-                      color: AppColor.grey_600,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14
-                    ),
-                    filled: true,
-                    fillColor: AppColor.white,
-                    prefixIcon: const Icon(CupertinoIcons.search, size: 24),
-                    prefixIconColor: AppColor.primary,
-                    suffixIcon: IconButton(
-                      onPressed: () {  },
-                      icon: Image.asset("asset/image/icon_filter.png", width: 24),
-                    ),
-                    contentPadding: AppPadding.padding_0,
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColor.white),
-                      borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColor.white),
-                      borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColor.white),
-                      borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            CafeSearchBar(width: deviceWidth - 40, height: 48),
             const VerticalSpacer(20),
-            AnimatedOpacity(
-              opacity: mapState.isRefreshButtonVisible ? 1.0 : 0,
-              duration: const Duration(milliseconds: 200),
-              child: SizedBox(
-                height: 36,
-                child: FloatingActionButton.extended(
-                  elevation: 3,
-                  icon: const Icon(size: 18, CupertinoIcons.refresh),
-                  onPressed: () => mapViewModel.refreshCafes(context),
-                  label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
-                  backgroundColor: AppColor.white,
+            AnimatedCrossFade(
+              crossFadeState: mapState.isRefreshButtonVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              firstChild: Padding(
+                padding: const EdgeInsets.only(bottom: 10, right: 10),
+                child: SizedBox(
+                  height: 36,
+                  child: FloatingActionButton.extended(
+                    elevation: 3,
+                    icon: const Icon(size: 18, CupertinoIcons.refresh),
+                    onPressed: () async => mapViewModel.refreshCafes(
+                      cameraPosition: await mapState.mapController?.getCameraPosition() ??
+                        NLocation.sinchon().cameraPosition
+                    ),
+                    label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
+                    backgroundColor: AppColor.white,
+                  ),
                 ),
               ),
+              secondChild: const HorizontalSpacer(0.001),
+              duration: AppDuration.animationDefault,
+              firstCurve: Curves.easeInOut,
+              secondCurve: Curves.easeInOut,
             )
           ],
         ),

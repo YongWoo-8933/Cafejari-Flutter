@@ -1,6 +1,8 @@
 
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,11 +21,9 @@ class MapViewModel extends StateNotifier<MapState> {
   MapViewModel({required CafeUseCase mapUseCase, required this.globalViewModel})
       : _mapUseCase = mapUseCase, super(MapState.empty().copyWith());
 
-  refreshCafes(BuildContext context) async {
+  refreshCafes({required NCameraPosition cameraPosition}) async {
     try {
-      final Cafes newCafes = await _mapUseCase.getMapCafes(
-          cameraPosition:
-              await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition);
+      final Cafes newCafes = await _mapUseCase.getMapCafes(cameraPosition: cameraPosition);
       Set<NMarker> resSet = {};
       for (var cafe in newCafes) {
         var marker = NMarker(
@@ -51,8 +51,6 @@ class MapViewModel extends StateNotifier<MapState> {
           state.mapController?.updateCamera(
             NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
           openBottomSheetPreview();
-          // showBottomSheet(context);
-          // state.bottomSheetController.animatePanelToSnapPoint(duration: Duration(milliseconds: 200));
         });
         resSet.add(marker);
       }
@@ -60,12 +58,21 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.addOverlayAll(resSet);
 
       state = state.copyWith(cafes: newCafes);
-    } on RefreshTokenExpired {
-      globalViewModel.logout();
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+    } on ErrorWithMessage catch(e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
+
+  searchCafe() async {
+    try {
+      state = state.copyWith(
+          searchPredictions: await _mapUseCase.getSearchCafes(query: state.searchQueryController.text));
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    }
+  }
+
+  emptySearchPredictions() => state = state.copyWith(searchPredictions: []);
 
   openBottomSheetPreview() {
     state = state.copyWith(isBottomSheetPreviewOpened: true, isBottomSheetPreviewExpanded: true);
@@ -73,7 +80,7 @@ class MapViewModel extends StateNotifier<MapState> {
 
   closeBottomSheetPreview() async {
     state = state.copyWith(isBottomSheetPreviewExpanded: false);
-    await Future.delayed(const Duration(milliseconds: 200), () {
+    await Future.delayed(AppDuration.animationDefault, () {
       state = state.copyWith(isBottomSheetPreviewOpened: false);
     });
   }
@@ -100,4 +107,16 @@ class MapViewModel extends StateNotifier<MapState> {
 
   setCurrentPage(int page) => state = state.copyWith(currentPage: page);
 
+  openSearchPage() {
+    state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
+  }
+
+  closeSearchPage() async {
+    state = state.copyWith(isSearchPageFadedIn: false);
+    state.searchQueryController.text = "";
+    emptySearchPredictions();
+    await Future.delayed(AppDuration.animationDefault, () {
+      state = state.copyWith(isSearchPageVisible: false);
+    });
+  }
 }
