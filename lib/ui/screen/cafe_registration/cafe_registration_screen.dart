@@ -4,8 +4,10 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_address.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_floor/registration_floor.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_free_input.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_map.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_opening_hour/registration_opening_hour.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_photo.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_wallsocket/registration_wallsocket.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
@@ -79,6 +81,26 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                 },
                 children: [
                   RegistrationOpeningHour(),
+                ],
+              ),
+              ExpansionTile(
+                title: Text("사진 추가"),
+                trailing: requestState.tileExpand ? Icon(CupertinoIcons.minus) : Icon(CupertinoIcons.plus),
+                onExpansionChanged: (bool expanded) {
+                  requestViewModel.setTileExpand(expanded);
+                },
+                children: [
+                  RegistrationPhoto(),
+                ],
+              ),
+              ExpansionTile(
+                title: Text("자유 입력"),
+                trailing: requestState.tileExpand ? Icon(CupertinoIcons.minus) : Icon(CupertinoIcons.plus),
+                onExpansionChanged: (bool expanded) {
+                  requestViewModel.setTileExpand(expanded);
+                },
+                children: [
+                  RegistrationFreeInput(),
                 ],
               ),
             ],

@@ -3,15 +3,12 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/x_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_opening_hour/registration_day_button.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_opening_hour/registration_opening_hour.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/registration_opening_hour/registration_opening_hour_datepicker.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
 as picker;
@@ -32,7 +29,6 @@ showOpeningHourDialog(BuildContext context, RequestState requestState, RequestVi
           height: 400.0,
           color: AppColor.white,
           child: Column(
-
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,19 +317,19 @@ class CustomPicker extends picker.CommonPickerModel {
   @override
   DateTime finalTime() {
     return currentTime.isUtc
-        ? DateTime.utc(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        this.currentLeftIndex(),
-        this.currentMiddleIndex(),
-        this.currentRightIndex())
-        : DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        this.currentLeftIndex(),
-        this.currentMiddleIndex(),
-        this.currentRightIndex());
+      ? DateTime.utc(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      this.currentLeftIndex(),
+      this.currentMiddleIndex(),
+      this.currentRightIndex())
+      : DateTime(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      this.currentLeftIndex(),
+      this.currentMiddleIndex(),
+      this.currentRightIndex());
   }
 }
