@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/brand_grid.dart';
@@ -15,12 +16,28 @@ import 'package:cafejari_flutter/ui/viewmodel/shop_view_model.dart';
 import 'package:go_router/go_router.dart';
 
 
-
-class ShopScreen extends ConsumerWidget {
+class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ShopScreenState createState() => ShopScreenState();
+}
+
+
+class ShopScreenState extends ConsumerState<ShopScreen>  {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final viewModel = ref.watch(shopViewModelProvider.notifier);
+      await viewModel.refreshBrand();
+      await viewModel.refreshItem();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ShopViewModel shopViewModel = ref.read(shopViewModelProvider.notifier);
     final ShopState shopState = ref.watch(shopViewModelProvider);
 
@@ -46,7 +63,7 @@ class ShopScreen extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("포인트 ", style: TextSize.textSize_grey_14,),
+                    Text("내 포인트  ", style: TextSize.textSize_grey_14,),
                     Row(
                       children: [
                         Text("45,000", style: TextSize.textSize_bold_20),
@@ -57,10 +74,10 @@ class ShopScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const VerticalSpacer(25),
+            const VerticalSpacer(10),
             Container(
               width: taBarSize,
-              height: 50,
+              height: 48,
               decoration: BoxDecoration(
                 color: AppColor.challengeBlock,
                 borderRadius: BorderRadius.circular(30),
@@ -85,11 +102,12 @@ class ShopScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const VerticalSpacer(15),
             Expanded(
               child: TabBarView(
                 children: [
                   DefaultTabController(
-                    length: 6, // 탭의 개수
+                    length: shopState.brandList.length, // 탭의 개수
                     child: Column(
                       children: [
                         Container(
@@ -103,26 +121,26 @@ class ShopScreen extends ConsumerWidget {
                             labelColor: AppColor.black,
                             unselectedLabelColor: AppColor.grey_300,
                             isScrollable: true, // 스크롤 가능하게 설정
-                            tabs: [
-                              Tab(text: "ALL"),
-                              Tab(text: "스타벅스"),
-                              Tab(text: "투썸플레이스"),
-                              Tab(text: "이디야"),
-                              Tab(text: "할리스"),
-                              Tab(text: "요프"),
-                            ],
+                            tabs: List<Widget>.generate(
+                              shopState.brandList.length,
+                                  (index) => Tab(child: Row(children: [
+                                    CustomCachedNetworkImage(imageUrl: shopState.brandList[index].imageUrl, width: 30, height: 30),
+                                    Text(shopState.brandList[index].name)
+                                  ])), // 이름에 따라 Tab 생성
+                            ),
                           ),
                         ),
                         Expanded(
                           child: TabBarView(
-                            children: [
-                              BrandGrid(),
-                              BrandGrid(),
-                              BrandGrid(),
-                              BrandGrid(),
-                              BrandGrid(),
-                              BrandGrid(),
-                            ],
+                            children: List<Widget>.generate(
+                              shopState.brandList.length,
+                                  (index) => BrandGrid(
+                                items: shopState.itemList
+                                    .where((item) => item.brandId == shopState.brandList[index].id)
+                                    .toList(),
+                                brandId: shopState.brandList[index].id,
+                              ),
+                            ),
                           ),
                         ),
                       ],

@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
+import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
@@ -58,6 +59,11 @@ final GoRouter appRouter = GoRouter(
             path: "point",
             name: ScreenRoute.point,
             builder: (_, __) => const PointScreen(),
+          ),
+          GoRoute(
+            path: "sample",
+            name: ScreenRoute.sample,
+            builder: (_, __) => const SamplePage1(),
           ),
         ]
     ),

@@ -11,7 +11,6 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
 
 
-
 final _occupancyRate = StateProvider<double>((ref) => 0);
 
 class OccupancyUpdateSlider extends ConsumerWidget {

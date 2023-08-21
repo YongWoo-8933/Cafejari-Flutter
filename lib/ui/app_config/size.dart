@@ -28,6 +28,14 @@ class TextSize {
       fontSize: 16,
       fontWeight: FontWeight.bold
   );
+  static const textSize_bold_16_w700 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w700
+  );
+  static const textSize_bold_16_w400 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400
+  );
   static const textSize_white_16 = TextStyle(
       fontSize: 16,
       color: AppColor.white
