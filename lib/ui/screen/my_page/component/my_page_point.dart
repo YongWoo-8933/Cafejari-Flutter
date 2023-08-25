@@ -16,7 +16,7 @@ class MyPagePoint extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MyPageState profileState = ref.watch(myPageViewModelProvider);
+    final MyPageState myPageState = ref.watch(myPageViewModelProvider);
     final deviceSize = MediaQuery.of(context).size;
 
     return Material(
@@ -42,7 +42,7 @@ class MyPagePoint extends ConsumerWidget {
                     Text("포인트", style: TextSize.textSize_grey_14,),
                     Row(
                       children: [
-                        Text("45,000", style: TextSize.textSize_bold_20),
+                        Text("${myPageState.user.point}", style: TextSize.textSize_bold_20),
                         Icon(CupertinoIcons.right_chevron, size: 16,),
                       ],
                     ),

@@ -30,8 +30,6 @@ class LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
     Future.delayed(Duration.zero, () async {
       final viewModel = ref.watch(leaderboardViewModelProvider.notifier);
       await viewModel.refreshRankers();
-      final MyPageState myPageState = ref.watch(myPageViewModelProvider);
-      await viewModel.setMyRanking(myPageState.user);
     });
   }
 

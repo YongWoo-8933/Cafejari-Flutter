@@ -2,22 +2,21 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
-import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.dart';
-import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_block.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_cati.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_point.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_ranking.dart';
-import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_shop.dart';
+import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
+import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/view_model/my_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
@@ -27,20 +26,26 @@ class MyPageScreen extends ConsumerStatefulWidget {
 }
 
 class MyPageScreenState extends ConsumerState<MyPageScreen> {
+  WebViewController webViewController = WebViewController();
+
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       final viewModel = ref.watch(myPageViewModelProvider.notifier);
+      final leaderBoardViewModel = ref.watch(leaderboardViewModelProvider.notifier);
       await viewModel.refreshUser();
+      final MyPageState myPageState = ref.watch(myPageViewModelProvider);
+      await leaderBoardViewModel.setMyRanking(myPageState.user);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final myPageState = ref.watch(myPageViewModelProvider);
-    final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
+    final MyPageState myPageState = ref.watch(myPageViewModelProvider);
+    final LeaderboardState leaderboardState = ref.watch(leaderboardViewModelProvider);
+    final MyPageViewModel myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -74,11 +79,11 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
               children: [
                 MyPageImage(),
                 SizedBox(height: 13),
-                Text("닉네닉네닉네임", style: TextSize.textSize_white_16),
+                Text("${myPageState.user.nickname}", style: TextSize.textSize_white_16),
                 SizedBox(height: 13),
                 MyPagePoint(),
                 MyPageCATI(),
-                MyPageRanking(),
+                MyPageRanking(leaderBoardState: leaderboardState),
                 Container(
                   padding: AppPadding.padding_horizon_30,
                   child: Column(
@@ -86,7 +91,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                     children: [
                       Text("안내", style: TextSize.textSize_bold_16),
                       SizedBox(height: 10),
-                      MyPageBlock(title: "FAQ"),
+                      MyPageBlock(title: "FAQ", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.faq);},),
                       MyPageBlock(title: "사용 가이드 북 보기"),
                       MyPageBlock(title: "공지 및 이벤트"),
                       MyPageBlock(title: "업데이트 소식"),
