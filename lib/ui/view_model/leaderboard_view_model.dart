@@ -2,7 +2,7 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LeaderboardViewModel extends StateNotifier<LeaderboardState> {

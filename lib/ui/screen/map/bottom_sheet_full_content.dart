@@ -8,7 +8,7 @@ import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart'
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_main_info.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_more_info.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +25,7 @@ class BottomSheetFullContent extends ConsumerWidget {
 
     return Container(
       color: AppColor.white,
+      height: deviceSize.height,
       child: ListView.builder(
         controller: scrollController,
         itemCount: 5,

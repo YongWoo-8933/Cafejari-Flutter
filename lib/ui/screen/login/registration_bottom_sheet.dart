@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 

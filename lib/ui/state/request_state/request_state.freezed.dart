@@ -18,11 +18,22 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RequestState {
   String get cafeName => throw _privateConstructorUsedError;
   String get cafeAddress => throw _privateConstructorUsedError;
-  List<String> get maxFloor => throw _privateConstructorUsedError;
-  List<String> get minFloor => throw _privateConstructorUsedError;
-  int get maxFloorIndex => throw _privateConstructorUsedError;
-  int get minFloorIndex => throw _privateConstructorUsedError;
-  bool get tileExpand => throw _privateConstructorUsedError;
+  NaverMapController? get mapController => throw _privateConstructorUsedError;
+  TextEditingController get searchQueryController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get freeQueryController =>
+      throw _privateConstructorUsedError;
+  int get selectedMaxFloor => throw _privateConstructorUsedError;
+  int get selectedMinFloor => throw _privateConstructorUsedError;
+  List<({int floor, double rate})> get wallSocketRates =>
+      throw _privateConstructorUsedError;
+  bool get isWallSocketEdited => throw _privateConstructorUsedError;
+  List<DayOfWeekOpeningInfo> get openingInfos =>
+      throw _privateConstructorUsedError;
+  bool get isOpeningHourEdited => throw _privateConstructorUsedError;
+  List<String> get selectedDaysOfWeek => throw _privateConstructorUsedError;
+  DayOfWeekOpeningInfo get selectedOpeningInfo =>
+      throw _privateConstructorUsedError;
   OpeningHour get openingHour => throw _privateConstructorUsedError;
   OpeningHour get clickedDay => throw _privateConstructorUsedError;
 
@@ -40,11 +51,17 @@ abstract class $RequestStateCopyWith<$Res> {
   $Res call(
       {String cafeName,
       String cafeAddress,
-      List<String> maxFloor,
-      List<String> minFloor,
-      int maxFloorIndex,
-      int minFloorIndex,
-      bool tileExpand,
+      NaverMapController? mapController,
+      TextEditingController searchQueryController,
+      TextEditingController freeQueryController,
+      int selectedMaxFloor,
+      int selectedMinFloor,
+      List<({int floor, double rate})> wallSocketRates,
+      bool isWallSocketEdited,
+      List<DayOfWeekOpeningInfo> openingInfos,
+      bool isOpeningHourEdited,
+      List<String> selectedDaysOfWeek,
+      DayOfWeekOpeningInfo selectedOpeningInfo,
       OpeningHour openingHour,
       OpeningHour clickedDay});
 
@@ -67,11 +84,17 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
   $Res call({
     Object? cafeName = null,
     Object? cafeAddress = null,
-    Object? maxFloor = null,
-    Object? minFloor = null,
-    Object? maxFloorIndex = null,
-    Object? minFloorIndex = null,
-    Object? tileExpand = null,
+    Object? mapController = freezed,
+    Object? searchQueryController = null,
+    Object? freeQueryController = null,
+    Object? selectedMaxFloor = null,
+    Object? selectedMinFloor = null,
+    Object? wallSocketRates = null,
+    Object? isWallSocketEdited = null,
+    Object? openingInfos = null,
+    Object? isOpeningHourEdited = null,
+    Object? selectedDaysOfWeek = null,
+    Object? selectedOpeningInfo = null,
     Object? openingHour = null,
     Object? clickedDay = null,
   }) {
@@ -84,26 +107,50 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
           ? _value.cafeAddress
           : cafeAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      maxFloor: null == maxFloor
-          ? _value.maxFloor
-          : maxFloor // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      minFloor: null == minFloor
-          ? _value.minFloor
-          : minFloor // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      maxFloorIndex: null == maxFloorIndex
-          ? _value.maxFloorIndex
-          : maxFloorIndex // ignore: cast_nullable_to_non_nullable
+      mapController: freezed == mapController
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as NaverMapController?,
+      searchQueryController: null == searchQueryController
+          ? _value.searchQueryController
+          : searchQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      freeQueryController: null == freeQueryController
+          ? _value.freeQueryController
+          : freeQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      selectedMaxFloor: null == selectedMaxFloor
+          ? _value.selectedMaxFloor
+          : selectedMaxFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      minFloorIndex: null == minFloorIndex
-          ? _value.minFloorIndex
-          : minFloorIndex // ignore: cast_nullable_to_non_nullable
+      selectedMinFloor: null == selectedMinFloor
+          ? _value.selectedMinFloor
+          : selectedMinFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      tileExpand: null == tileExpand
-          ? _value.tileExpand
-          : tileExpand // ignore: cast_nullable_to_non_nullable
+      wallSocketRates: null == wallSocketRates
+          ? _value.wallSocketRates
+          : wallSocketRates // ignore: cast_nullable_to_non_nullable
+              as List<({int floor, double rate})>,
+      isWallSocketEdited: null == isWallSocketEdited
+          ? _value.isWallSocketEdited
+          : isWallSocketEdited // ignore: cast_nullable_to_non_nullable
               as bool,
+      openingInfos: null == openingInfos
+          ? _value.openingInfos
+          : openingInfos // ignore: cast_nullable_to_non_nullable
+              as List<DayOfWeekOpeningInfo>,
+      isOpeningHourEdited: null == isOpeningHourEdited
+          ? _value.isOpeningHourEdited
+          : isOpeningHourEdited // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedDaysOfWeek: null == selectedDaysOfWeek
+          ? _value.selectedDaysOfWeek
+          : selectedDaysOfWeek // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedOpeningInfo: null == selectedOpeningInfo
+          ? _value.selectedOpeningInfo
+          : selectedOpeningInfo // ignore: cast_nullable_to_non_nullable
+              as DayOfWeekOpeningInfo,
       openingHour: null == openingHour
           ? _value.openingHour
           : openingHour // ignore: cast_nullable_to_non_nullable
@@ -143,11 +190,17 @@ abstract class _$$_RequestStateCopyWith<$Res>
   $Res call(
       {String cafeName,
       String cafeAddress,
-      List<String> maxFloor,
-      List<String> minFloor,
-      int maxFloorIndex,
-      int minFloorIndex,
-      bool tileExpand,
+      NaverMapController? mapController,
+      TextEditingController searchQueryController,
+      TextEditingController freeQueryController,
+      int selectedMaxFloor,
+      int selectedMinFloor,
+      List<({int floor, double rate})> wallSocketRates,
+      bool isWallSocketEdited,
+      List<DayOfWeekOpeningInfo> openingInfos,
+      bool isOpeningHourEdited,
+      List<String> selectedDaysOfWeek,
+      DayOfWeekOpeningInfo selectedOpeningInfo,
       OpeningHour openingHour,
       OpeningHour clickedDay});
 
@@ -170,11 +223,17 @@ class __$$_RequestStateCopyWithImpl<$Res>
   $Res call({
     Object? cafeName = null,
     Object? cafeAddress = null,
-    Object? maxFloor = null,
-    Object? minFloor = null,
-    Object? maxFloorIndex = null,
-    Object? minFloorIndex = null,
-    Object? tileExpand = null,
+    Object? mapController = freezed,
+    Object? searchQueryController = null,
+    Object? freeQueryController = null,
+    Object? selectedMaxFloor = null,
+    Object? selectedMinFloor = null,
+    Object? wallSocketRates = null,
+    Object? isWallSocketEdited = null,
+    Object? openingInfos = null,
+    Object? isOpeningHourEdited = null,
+    Object? selectedDaysOfWeek = null,
+    Object? selectedOpeningInfo = null,
     Object? openingHour = null,
     Object? clickedDay = null,
   }) {
@@ -187,26 +246,50 @@ class __$$_RequestStateCopyWithImpl<$Res>
           ? _value.cafeAddress
           : cafeAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      maxFloor: null == maxFloor
-          ? _value._maxFloor
-          : maxFloor // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      minFloor: null == minFloor
-          ? _value._minFloor
-          : minFloor // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      maxFloorIndex: null == maxFloorIndex
-          ? _value.maxFloorIndex
-          : maxFloorIndex // ignore: cast_nullable_to_non_nullable
+      mapController: freezed == mapController
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as NaverMapController?,
+      searchQueryController: null == searchQueryController
+          ? _value.searchQueryController
+          : searchQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      freeQueryController: null == freeQueryController
+          ? _value.freeQueryController
+          : freeQueryController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      selectedMaxFloor: null == selectedMaxFloor
+          ? _value.selectedMaxFloor
+          : selectedMaxFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      minFloorIndex: null == minFloorIndex
-          ? _value.minFloorIndex
-          : minFloorIndex // ignore: cast_nullable_to_non_nullable
+      selectedMinFloor: null == selectedMinFloor
+          ? _value.selectedMinFloor
+          : selectedMinFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      tileExpand: null == tileExpand
-          ? _value.tileExpand
-          : tileExpand // ignore: cast_nullable_to_non_nullable
+      wallSocketRates: null == wallSocketRates
+          ? _value._wallSocketRates
+          : wallSocketRates // ignore: cast_nullable_to_non_nullable
+              as List<({int floor, double rate})>,
+      isWallSocketEdited: null == isWallSocketEdited
+          ? _value.isWallSocketEdited
+          : isWallSocketEdited // ignore: cast_nullable_to_non_nullable
               as bool,
+      openingInfos: null == openingInfos
+          ? _value._openingInfos
+          : openingInfos // ignore: cast_nullable_to_non_nullable
+              as List<DayOfWeekOpeningInfo>,
+      isOpeningHourEdited: null == isOpeningHourEdited
+          ? _value.isOpeningHourEdited
+          : isOpeningHourEdited // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedDaysOfWeek: null == selectedDaysOfWeek
+          ? _value._selectedDaysOfWeek
+          : selectedDaysOfWeek // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedOpeningInfo: null == selectedOpeningInfo
+          ? _value.selectedOpeningInfo
+          : selectedOpeningInfo // ignore: cast_nullable_to_non_nullable
+              as DayOfWeekOpeningInfo,
       openingHour: null == openingHour
           ? _value.openingHour
           : openingHour // ignore: cast_nullable_to_non_nullable
@@ -225,42 +308,68 @@ class _$_RequestState implements _RequestState {
   _$_RequestState(
       {required this.cafeName,
       required this.cafeAddress,
-      required final List<String> maxFloor,
-      required final List<String> minFloor,
-      required this.maxFloorIndex,
-      required this.minFloorIndex,
-      required this.tileExpand,
+      required this.mapController,
+      required this.searchQueryController,
+      required this.freeQueryController,
+      required this.selectedMaxFloor,
+      required this.selectedMinFloor,
+      required final List<({int floor, double rate})> wallSocketRates,
+      required this.isWallSocketEdited,
+      required final List<DayOfWeekOpeningInfo> openingInfos,
+      required this.isOpeningHourEdited,
+      required final List<String> selectedDaysOfWeek,
+      required this.selectedOpeningInfo,
       required this.openingHour,
       required this.clickedDay})
-      : _maxFloor = maxFloor,
-        _minFloor = minFloor;
+      : _wallSocketRates = wallSocketRates,
+        _openingInfos = openingInfos,
+        _selectedDaysOfWeek = selectedDaysOfWeek;
 
   @override
   final String cafeName;
   @override
   final String cafeAddress;
-  final List<String> _maxFloor;
   @override
-  List<String> get maxFloor {
-    if (_maxFloor is EqualUnmodifiableListView) return _maxFloor;
+  final NaverMapController? mapController;
+  @override
+  final TextEditingController searchQueryController;
+  @override
+  final TextEditingController freeQueryController;
+  @override
+  final int selectedMaxFloor;
+  @override
+  final int selectedMinFloor;
+  final List<({int floor, double rate})> _wallSocketRates;
+  @override
+  List<({int floor, double rate})> get wallSocketRates {
+    if (_wallSocketRates is EqualUnmodifiableListView) return _wallSocketRates;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_maxFloor);
+    return EqualUnmodifiableListView(_wallSocketRates);
   }
 
-  final List<String> _minFloor;
   @override
-  List<String> get minFloor {
-    if (_minFloor is EqualUnmodifiableListView) return _minFloor;
+  final bool isWallSocketEdited;
+  final List<DayOfWeekOpeningInfo> _openingInfos;
+  @override
+  List<DayOfWeekOpeningInfo> get openingInfos {
+    if (_openingInfos is EqualUnmodifiableListView) return _openingInfos;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_minFloor);
+    return EqualUnmodifiableListView(_openingInfos);
   }
 
   @override
-  final int maxFloorIndex;
+  final bool isOpeningHourEdited;
+  final List<String> _selectedDaysOfWeek;
   @override
-  final int minFloorIndex;
+  List<String> get selectedDaysOfWeek {
+    if (_selectedDaysOfWeek is EqualUnmodifiableListView)
+      return _selectedDaysOfWeek;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedDaysOfWeek);
+  }
+
   @override
-  final bool tileExpand;
+  final DayOfWeekOpeningInfo selectedOpeningInfo;
   @override
   final OpeningHour openingHour;
   @override
@@ -268,7 +377,7 @@ class _$_RequestState implements _RequestState {
 
   @override
   String toString() {
-    return 'RequestState(cafeName: $cafeName, cafeAddress: $cafeAddress, maxFloor: $maxFloor, minFloor: $minFloor, maxFloorIndex: $maxFloorIndex, minFloorIndex: $minFloorIndex, tileExpand: $tileExpand, openingHour: $openingHour, clickedDay: $clickedDay)';
+    return 'RequestState(cafeName: $cafeName, cafeAddress: $cafeAddress, mapController: $mapController, searchQueryController: $searchQueryController, freeQueryController: $freeQueryController, selectedMaxFloor: $selectedMaxFloor, selectedMinFloor: $selectedMinFloor, wallSocketRates: $wallSocketRates, isWallSocketEdited: $isWallSocketEdited, openingInfos: $openingInfos, isOpeningHourEdited: $isOpeningHourEdited, selectedDaysOfWeek: $selectedDaysOfWeek, selectedOpeningInfo: $selectedOpeningInfo, openingHour: $openingHour, clickedDay: $clickedDay)';
   }
 
   @override
@@ -280,14 +389,28 @@ class _$_RequestState implements _RequestState {
                 other.cafeName == cafeName) &&
             (identical(other.cafeAddress, cafeAddress) ||
                 other.cafeAddress == cafeAddress) &&
-            const DeepCollectionEquality().equals(other._maxFloor, _maxFloor) &&
-            const DeepCollectionEquality().equals(other._minFloor, _minFloor) &&
-            (identical(other.maxFloorIndex, maxFloorIndex) ||
-                other.maxFloorIndex == maxFloorIndex) &&
-            (identical(other.minFloorIndex, minFloorIndex) ||
-                other.minFloorIndex == minFloorIndex) &&
-            (identical(other.tileExpand, tileExpand) ||
-                other.tileExpand == tileExpand) &&
+            (identical(other.mapController, mapController) ||
+                other.mapController == mapController) &&
+            (identical(other.searchQueryController, searchQueryController) ||
+                other.searchQueryController == searchQueryController) &&
+            (identical(other.freeQueryController, freeQueryController) ||
+                other.freeQueryController == freeQueryController) &&
+            (identical(other.selectedMaxFloor, selectedMaxFloor) ||
+                other.selectedMaxFloor == selectedMaxFloor) &&
+            (identical(other.selectedMinFloor, selectedMinFloor) ||
+                other.selectedMinFloor == selectedMinFloor) &&
+            const DeepCollectionEquality()
+                .equals(other._wallSocketRates, _wallSocketRates) &&
+            (identical(other.isWallSocketEdited, isWallSocketEdited) ||
+                other.isWallSocketEdited == isWallSocketEdited) &&
+            const DeepCollectionEquality()
+                .equals(other._openingInfos, _openingInfos) &&
+            (identical(other.isOpeningHourEdited, isOpeningHourEdited) ||
+                other.isOpeningHourEdited == isOpeningHourEdited) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedDaysOfWeek, _selectedDaysOfWeek) &&
+            (identical(other.selectedOpeningInfo, selectedOpeningInfo) ||
+                other.selectedOpeningInfo == selectedOpeningInfo) &&
             (identical(other.openingHour, openingHour) ||
                 other.openingHour == openingHour) &&
             (identical(other.clickedDay, clickedDay) ||
@@ -299,11 +422,17 @@ class _$_RequestState implements _RequestState {
       runtimeType,
       cafeName,
       cafeAddress,
-      const DeepCollectionEquality().hash(_maxFloor),
-      const DeepCollectionEquality().hash(_minFloor),
-      maxFloorIndex,
-      minFloorIndex,
-      tileExpand,
+      mapController,
+      searchQueryController,
+      freeQueryController,
+      selectedMaxFloor,
+      selectedMinFloor,
+      const DeepCollectionEquality().hash(_wallSocketRates),
+      isWallSocketEdited,
+      const DeepCollectionEquality().hash(_openingInfos),
+      isOpeningHourEdited,
+      const DeepCollectionEquality().hash(_selectedDaysOfWeek),
+      selectedOpeningInfo,
       openingHour,
       clickedDay);
 
@@ -318,11 +447,17 @@ abstract class _RequestState implements RequestState {
   factory _RequestState(
       {required final String cafeName,
       required final String cafeAddress,
-      required final List<String> maxFloor,
-      required final List<String> minFloor,
-      required final int maxFloorIndex,
-      required final int minFloorIndex,
-      required final bool tileExpand,
+      required final NaverMapController? mapController,
+      required final TextEditingController searchQueryController,
+      required final TextEditingController freeQueryController,
+      required final int selectedMaxFloor,
+      required final int selectedMinFloor,
+      required final List<({int floor, double rate})> wallSocketRates,
+      required final bool isWallSocketEdited,
+      required final List<DayOfWeekOpeningInfo> openingInfos,
+      required final bool isOpeningHourEdited,
+      required final List<String> selectedDaysOfWeek,
+      required final DayOfWeekOpeningInfo selectedOpeningInfo,
       required final OpeningHour openingHour,
       required final OpeningHour clickedDay}) = _$_RequestState;
 
@@ -331,15 +466,27 @@ abstract class _RequestState implements RequestState {
   @override
   String get cafeAddress;
   @override
-  List<String> get maxFloor;
+  NaverMapController? get mapController;
   @override
-  List<String> get minFloor;
+  TextEditingController get searchQueryController;
   @override
-  int get maxFloorIndex;
+  TextEditingController get freeQueryController;
   @override
-  int get minFloorIndex;
+  int get selectedMaxFloor;
   @override
-  bool get tileExpand;
+  int get selectedMinFloor;
+  @override
+  List<({int floor, double rate})> get wallSocketRates;
+  @override
+  bool get isWallSocketEdited;
+  @override
+  List<DayOfWeekOpeningInfo> get openingInfos;
+  @override
+  bool get isOpeningHourEdited;
+  @override
+  List<String> get selectedDaysOfWeek;
+  @override
+  DayOfWeekOpeningInfo get selectedOpeningInfo;
   @override
   OpeningHour get openingHour;
   @override

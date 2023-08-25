@@ -1,6 +1,5 @@
 
 import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -10,7 +9,7 @@ import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_ran
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_top3_block.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

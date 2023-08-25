@@ -11,7 +11,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 
 
 class MapScreen extends ConsumerStatefulWidget {

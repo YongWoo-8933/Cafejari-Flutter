@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +11,8 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
-import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class MapViewModel extends StateNotifier<MapState> {
   final CafeUseCase _mapUseCase;
@@ -29,16 +29,16 @@ class MapViewModel extends StateNotifier<MapState> {
         var marker = NMarker(
             id: cafe.id.toString(),
             position: cafe.latLng,
-            icon: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerImage,
-            size: const Size(33, 46));
+            icon: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().nMarker,
+            size: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize);
         marker.setZIndex(1);
         marker.setOnTapListener((tappedMarker) async {
           if (state.selectedMarker.isNotNull) {
-            state.selectedMarker?.setSize(const Size(33, 46));
+            state.selectedMarker?.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize);
             state.selectedMarker?.setZIndex(1);
           }
           tappedMarker.setCaptionOffset(1.0);
-          tappedMarker.setSize(const Size(42, 58));
+          tappedMarker.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize * 1.25);
           tappedMarker.setZIndex(3);
           tappedMarker.setCaptionAligns([NAlign.top]);
           tappedMarker.setCaptionOffset(4.0);

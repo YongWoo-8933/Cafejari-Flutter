@@ -8,8 +8,9 @@ import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dar
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
+import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
@@ -107,29 +108,9 @@ class BottomSheetMainInfo extends ConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        mapState.selectedCafe.name,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700
-                        )
-                      ),
-                      const VerticalSpacer(8),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "asset/image/icon_small_pin.png",
-                            height: 12,
-                          ),
-                          const HorizontalSpacer(4),
-                          Text(
-                            mapState.selectedCafe.address,
-                            style: const TextStyle(
-                              color: AppColor.grey_800,
-                              fontSize: 12
-                            )
-                          )
-                        ],
+                      CafeNameAddressBlock(
+                        name: mapState.selectedCafe.name,
+                        address: mapState.selectedCafe.address
                       ),
                       const VerticalSpacer(30),
                       Row(

@@ -3,7 +3,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class CafeSearchBar extends ConsumerWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
+              borderRadius: BorderRadius.circular(height / 2),
               boxShadow: AppShadow.box
           ),
           child: TextFormField(
@@ -68,19 +68,19 @@ class CafeSearchBar extends ConsumerWidget {
               contentPadding: AppPadding.padding_0,
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColor.white),
-                borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
+                borderRadius: BorderRadius.circular(height / 2), // 원하는 border radius 값으로 설정
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColor.white),
-                borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
+                borderRadius: BorderRadius.circular(height / 2), // 원하는 border radius 값으로 설정
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColor.white),
-                borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
+                borderRadius: BorderRadius.circular(height / 2), // 원하는 border radius 값으로 설정
               ),
               disabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColor.white),
-                borderRadius: BorderRadius.circular(24.0), // 원하는 border radius 값으로 설정
+                borderRadius: BorderRadius.circular(height / 2), // 원하는 border radius 값으로 설정
               ),
             ),
           ),

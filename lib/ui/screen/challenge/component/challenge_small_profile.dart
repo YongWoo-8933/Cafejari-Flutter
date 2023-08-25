@@ -20,7 +20,7 @@ class ChallengeSmallProfile extends ConsumerWidget {
 
     final List<CachedNetworkImage> images = imageUrls.map((e) {
       return CustomCachedNetworkImage(imageUrl: e, width: 24, height: 24);
-    }).toList().sublist(0, 3);
+    }).toList();
 
     List<Widget> positionedImages = List.generate(
       images.length,

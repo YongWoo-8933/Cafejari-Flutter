@@ -6,7 +6,7 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class OnMap extends ConsumerWidget {
                   child: FloatingActionButton.extended(
                     elevation: 3,
                     icon: const Icon(size: 18, CupertinoIcons.refresh),
-                    onPressed: () async => mapViewModel.refreshCafes(
+                    onPressed: () async => await mapViewModel.refreshCafes(
                       cameraPosition: await mapState.mapController?.getCameraPosition() ??
                         NLocation.sinchon().cameraPosition
                     ),

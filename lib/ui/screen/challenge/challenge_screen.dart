@@ -8,7 +8,7 @@ import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_VIP.dar
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_block.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:cafejari_flutter/ui/viewmodel/challenge_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
@@ -73,7 +73,8 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                       children: [
                         ChallengeBlock(
                           challenge: challenge,
-                          smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
+                          // smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
+                          smallProfileImageUrls: challengeState.profileImageUrls,
                           onPressed: () {
                             challengeViewModel.selectChallenge(challenge);
                             GoRouter.of(context).goNamed(ScreenRoute.challengeInfo);

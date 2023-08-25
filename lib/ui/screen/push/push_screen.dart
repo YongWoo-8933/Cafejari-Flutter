@@ -7,7 +7,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/push_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/push_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -32,8 +32,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
   @override
   Widget build(BuildContext context) {
     final PushState pushState = ref.watch(pushViewModelProvider);
-    final PushViewModel pushViewModel =
-    ref.watch(pushViewModelProvider.notifier);
+    final PushViewModel pushViewModel = ref.watch(pushViewModelProvider.notifier);
 
     return Scaffold(
       appBar: BackButtonAppBar(

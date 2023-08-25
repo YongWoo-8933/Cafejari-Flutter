@@ -136,15 +136,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
-    - asset/font/
+    - asset/
     - asset/image/
-    - asset/image/2.0x/
-    - asset/image/3.0x/
-    - asset/image/4.0x/
-    - asset/image/icon_speech_bubble.png
-    - asset/image/2.0x/icon_speech_bubble.png
-    - asset/image/3.0x/icon_speech_bubble.png
-    - asset/image/4.0x/icon_speech_bubble.png
+    - asset/font/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

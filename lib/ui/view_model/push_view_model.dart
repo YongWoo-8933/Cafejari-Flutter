@@ -2,9 +2,8 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/push/push.dart';
 import 'package:cafejari_flutter/domain/entity/push/util.dart';
 import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
-import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PushViewModel extends StateNotifier<PushState> {

@@ -5,7 +5,7 @@ import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_agreement_part.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_bottom_sheet.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_profile_part.dart';
-import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
