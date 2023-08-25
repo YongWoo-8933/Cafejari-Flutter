@@ -53,6 +53,7 @@ PartialUser parsePartialUserFromPartialUserResponse({
       updateCount: updateCount,
       dateJoined: DateTime.parse(partialUserResponse.date_joined),
       imageUrl: partialUserResponse.profile.profile_image.image,
+      nickname: partialUserResponse.profile.nickname,
       grade: Grade(
           id: partialUserResponse.profile.grade.id,
           step: partialUserResponse.profile.grade.step,

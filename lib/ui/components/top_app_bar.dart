@@ -1,6 +1,7 @@
 
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +25,7 @@ class BackButtonAppBar extends AppBar {
         ),
         Visibility(
             visible: backButtonText.isNotNull,
-            child: Text(backButtonText ?? "")
+            child: Text(backButtonText ?? "", style: TextSize.textSize_16,)
         )
       ]
     ),

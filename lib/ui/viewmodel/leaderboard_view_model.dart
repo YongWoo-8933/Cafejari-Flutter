@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/core/exception.dart';
+import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
@@ -25,4 +26,34 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
       // 에러 메시지 출력
     }
   }
+
+  setMyRanking(User user) async {
+    final List<int?> myRankings = [];
+    print("ID${user.userId}");
+    void findRanking(List<PartialUser> rankers) {
+      bool found = false;
+      rankers.asMap().forEach((index, ranker) {
+        print("IDd${ranker.userId}");
+        if (user.userId == ranker.userId) {
+          myRankings.add(index + 1);
+          found = true;
+        }
+      });
+      if (!found) {
+        myRankings.add(null);
+      }
+    }
+    findRanking(state.weekRankers);
+    findRanking(state.monthRankers);
+    findRanking(state.totalRankers);
+    state = state.copyWith(myRanking: myRankings);
+  }
+
+  setRankingType(int rankingType){
+    state = state.copyWith(rankingType: rankingType);
+  }
+
+
+
+
 }

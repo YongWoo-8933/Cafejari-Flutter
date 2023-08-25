@@ -570,6 +570,7 @@ mixin _$PartialUser {
   int get updateCount => throw _privateConstructorUsedError;
   DateTime get dateJoined => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   Grade get grade => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -589,6 +590,7 @@ abstract class $PartialUserCopyWith<$Res> {
       int updateCount,
       DateTime dateJoined,
       String imageUrl,
+      String nickname,
       Grade grade});
 
   $GradeCopyWith<$Res> get grade;
@@ -612,6 +614,7 @@ class _$PartialUserCopyWithImpl<$Res, $Val extends PartialUser>
     Object? updateCount = null,
     Object? dateJoined = null,
     Object? imageUrl = null,
+    Object? nickname = null,
     Object? grade = null,
   }) {
     return _then(_value.copyWith(
@@ -634,6 +637,10 @@ class _$PartialUserCopyWithImpl<$Res, $Val extends PartialUser>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
               as String,
       grade: null == grade
           ? _value.grade
@@ -665,6 +672,7 @@ abstract class _$$_PartialUserCopyWith<$Res>
       int updateCount,
       DateTime dateJoined,
       String imageUrl,
+      String nickname,
       Grade grade});
 
   @override
@@ -687,6 +695,7 @@ class __$$_PartialUserCopyWithImpl<$Res>
     Object? updateCount = null,
     Object? dateJoined = null,
     Object? imageUrl = null,
+    Object? nickname = null,
     Object? grade = null,
   }) {
     return _then(_$_PartialUser(
@@ -710,6 +719,10 @@ class __$$_PartialUserCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
       grade: null == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -727,6 +740,7 @@ class _$_PartialUser implements _PartialUser {
       required this.updateCount,
       required this.dateJoined,
       required this.imageUrl,
+      required this.nickname,
       required this.grade});
 
   @override
@@ -740,11 +754,13 @@ class _$_PartialUser implements _PartialUser {
   @override
   final String imageUrl;
   @override
+  final String nickname;
+  @override
   final Grade grade;
 
   @override
   String toString() {
-    return 'PartialUser(userId: $userId, profileId: $profileId, updateCount: $updateCount, dateJoined: $dateJoined, imageUrl: $imageUrl, grade: $grade)';
+    return 'PartialUser(userId: $userId, profileId: $profileId, updateCount: $updateCount, dateJoined: $dateJoined, imageUrl: $imageUrl, nickname: $nickname, grade: $grade)';
   }
 
   @override
@@ -761,12 +777,14 @@ class _$_PartialUser implements _PartialUser {
                 other.dateJoined == dateJoined) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
             (identical(other.grade, grade) || other.grade == grade));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, userId, profileId, updateCount, dateJoined, imageUrl, grade);
+  int get hashCode => Object.hash(runtimeType, userId, profileId, updateCount,
+      dateJoined, imageUrl, nickname, grade);
 
   @JsonKey(ignore: true)
   @override
@@ -782,6 +800,7 @@ abstract class _PartialUser implements PartialUser {
       required final int updateCount,
       required final DateTime dateJoined,
       required final String imageUrl,
+      required final String nickname,
       required final Grade grade}) = _$_PartialUser;
 
   @override
@@ -794,6 +813,8 @@ abstract class _PartialUser implements PartialUser {
   DateTime get dateJoined;
   @override
   String get imageUrl;
+  @override
+  String get nickname;
   @override
   Grade get grade;
   @override

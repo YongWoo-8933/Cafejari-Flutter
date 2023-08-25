@@ -19,11 +19,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
 
-class MyPageScreen extends ConsumerWidget {
+class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  MyPageScreenState createState() => MyPageScreenState();
+}
+
+class MyPageScreenState extends ConsumerState<MyPageScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final viewModel = ref.watch(myPageViewModelProvider.notifier);
+      await viewModel.refreshUser();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final myPageState = ref.watch(myPageViewModelProvider);
     final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
@@ -35,7 +50,7 @@ class MyPageScreen extends ConsumerWidget {
           IconButton(
             icon: Icon(CupertinoIcons.bell, color: AppColor.white),
             onPressed: () {
-              // 알림함으로 이동
+              GoRouter.of(context).goNamed(ScreenRoute.push);
             },
           ),
         ],

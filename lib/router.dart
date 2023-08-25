@@ -2,10 +2,12 @@
 import 'package:cafejari_flutter/cafejari_app.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_info_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.dart';
+import 'package:cafejari_flutter/ui/screen/leaderboard/leaderboard_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
+import 'package:cafejari_flutter/ui/screen/push/push_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/sample_page1.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
@@ -59,6 +61,16 @@ final GoRouter appRouter = GoRouter(
             path: "point",
             name: ScreenRoute.point,
             builder: (_, __) => const PointScreen(),
+          ),
+          GoRoute(
+            path: "push",
+            name: ScreenRoute.push,
+            builder: (_, __) => const PushScreen(),
+          ),
+          GoRoute(
+            path: "leader_board",
+            name: ScreenRoute.leader_board,
+            builder: (_, __) => const LeaderboardScreen(),
           ),
           GoRoute(
             path: "sample",

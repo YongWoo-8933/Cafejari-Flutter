@@ -2,8 +2,10 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyPageRanking extends StatelessWidget {
 
@@ -39,7 +41,7 @@ class MyPageRanking extends StatelessWidget {
               buttonWidth: 110,
               buttonHeight: 45,
               title: '명예의 전당',
-              onPressed: () {},
+              onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.leader_board);},
           )
         ],
       )

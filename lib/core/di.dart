@@ -17,11 +17,13 @@ import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
+import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/viewmodel/challenge_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/login_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/my_page_view_model.dart';
+import 'package:cafejari_flutter/ui/viewmodel/push_view_model.dart';
 import 'package:cafejari_flutter/ui/viewmodel/request_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -159,6 +161,12 @@ final myPageViewModelProvider = StateNotifierProvider<MyPageViewModel, MyPageSta
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
   return MyPageViewModel(userUseCase: userUseCase, globalViewModel: viewModel);
+});
+
+final pushViewModelProvider = StateNotifierProvider<PushViewModel, PushState>((ref) {
+  final viewModel = ref.watch(globalViewModelProvider.notifier);
+  final PushUseCase pushUseCase = ref.watch(pushUseCaseProvider);
+  return PushViewModel(pushUseCase: pushUseCase, globalViewModel: viewModel);
 });
 
 final leaderboardViewModelProvider = StateNotifierProvider<LeaderboardViewModel, LeaderboardState>((ref) {

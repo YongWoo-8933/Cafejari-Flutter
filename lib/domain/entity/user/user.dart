@@ -61,6 +61,7 @@ class PartialUser with _$PartialUser {
     required final int updateCount,
     required final DateTime dateJoined,
     required final String imageUrl,
+    required final String nickname,
     required final Grade grade}) = _PartialUser;
 
   factory PartialUser.empty() => PartialUser(
@@ -69,6 +70,7 @@ class PartialUser with _$PartialUser {
       updateCount: 0,
       dateJoined: DateTime(2022),
       imageUrl: "",
+      nickname: "",
       grade: Grade.empty());
 }
 

@@ -83,7 +83,7 @@ class LoginScreen extends ConsumerWidget {
                 onPressed: () async {
                   if(!ref.watch(_kakaoLoginLoadingProvider)) {
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => true);
-                    await UserApi.instance.logout();
+                    // await UserApi.instance.logout();
                     OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
                     final bool? isUserExist = await loginViewModel.kakaoLogin(accessToken: token.accessToken);
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
