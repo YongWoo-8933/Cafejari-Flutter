@@ -13,6 +13,7 @@ import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
@@ -31,6 +32,7 @@ class CafejariApp extends ConsumerWidget  {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool darkMode = ref.watch(darkModeProvider);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 
     return MaterialApp.router(
       theme: darkMode ? Theming.darkTheme : Theming.lightTheme,
@@ -47,6 +49,18 @@ class RootScreen extends ConsumerStatefulWidget {
 }
 
 class RootScreenState extends ConsumerState<RootScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      Duration.zero,
+      () async {
+        await ref.watch(globalViewModelProvider.notifier).init();
+        FlutterNativeSplash.remove();
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

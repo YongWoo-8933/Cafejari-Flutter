@@ -1,6 +1,9 @@
 
 import 'dart:async';
+import 'package:cafejari_flutter/core/exception.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,12 +14,30 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 
 class GlobalViewModel extends StateNotifier<GlobalState> {
   final TokenUseCase _tokenUseCase;
+  final UserUseCase _userUseCase;
   Timer? _showSnackBarTimer1;
   Timer? _showSnackBarTimer2;
-  // final LoginUseCase tokenUseCase;
 
 
-  GlobalViewModel(this._tokenUseCase, this._showSnackBarTimer1, this._showSnackBarTimer2) : super(GlobalState.empty());
+  GlobalViewModel(
+    this._tokenUseCase,
+    this._userUseCase,
+    this._showSnackBarTimer1,
+    this._showSnackBarTimer2
+  ) : super(GlobalState.empty());
+
+  init() async {
+    try {
+      final String accessToken = await _tokenUseCase.getAccessToken();
+      final User user = await _userUseCase.getUser(accessToken: accessToken);
+      saveLoginResult(accessToken: accessToken, refreshToken: null, user: user);
+      showSnackBar(content: "로그인 성공", type: SnackBarType.complete);
+    } on RefreshTokenExpired {
+      null;
+    } on ErrorWithMessage catch (e) {
+      showSnackBar(content: e.message, type: SnackBarType.error);
+    }
+  }
 
   void logout() {
     // 로그아웃 로직
@@ -44,10 +65,12 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   void saveLoginResult({
     required String accessToken,
-    required String refreshToken,
+    required String? refreshToken,
     required User user
   }) {
     state = state.copyWith(accessToken: accessToken, user: user);
-    _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken);
+    if (refreshToken.isNotNull) {
+      _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken!);
+    }
   }
 }

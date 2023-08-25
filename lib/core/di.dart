@@ -147,7 +147,8 @@ final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
 // view model --------------------------------------------------------------------------------------
 final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalState>((ref) {
   final TokenUseCase tokenUseCase = ref.watch(tokenUseCaseProvider);
-  return GlobalViewModel(tokenUseCase, null, null);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return GlobalViewModel(tokenUseCase, userUseCase, null, null);
 });
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {

@@ -106,7 +106,7 @@ class CafeRegistrationScreen extends ConsumerWidget {
                         },
                         child: const CafeRegistrationFreePart(width: greyAreaWidth)
                     ),
-                    const VerticalSpacer(120),
+                    const VerticalSpacer(80),
                     ActionButtonPrimary(
                       buttonWidth: greyAreaWidth,
                       buttonHeight: 48,

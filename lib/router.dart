@@ -19,65 +19,65 @@ final GoRouter appRouter = GoRouter(
   initialLocation: "/",
   routes: [
     GoRoute(
-        path: "/",
-        name: ScreenRoute.root,
-        builder: (_, __) => RootScreen(),
-        routes: [
-          GoRoute(
-              path: "login",
-              name: ScreenRoute.login,
-              builder: (_, __) => const LoginScreen(),
-              routes: [
-                GoRoute(
-                    path: "registration",
-                    name: ScreenRoute.registration,
-                    builder: (_, __) => const RegistrationScreen()
-                )
-              ]
-          ),
-          GoRoute(
-            path: "my_cafe",
-            name: ScreenRoute.myCafe,
-            builder: (_, __) => const MyCafeScreen(),
-          ),
-          GoRoute(
-            path: "challenge_info",
-            name: ScreenRoute.challengeInfo,
-            builder: (_, __) => const ChallengeInfoScreen(),
+      path: "/",
+      name: ScreenRoute.root,
+      builder: (_, __) => RootScreen(),
+      routes: [
+        GoRoute(
+            path: "login",
+            name: ScreenRoute.login,
+            builder: (_, __) => const LoginScreen(),
             routes: [
               GoRoute(
-                  path: "challenge_progress",
-                  name: ScreenRoute.challengeProgress,
-                  builder: (_, __) => const ChallengeProgressScreen()
+                  path: "registration",
+                  name: ScreenRoute.registration,
+                  builder: (_, __) => const RegistrationScreen()
               )
             ]
-          ),
-          GoRoute(
-            path: "shop",
-            name: ScreenRoute.shop,
-            builder: (_, __) => const ShopScreen(),
-          ),
-          GoRoute(
-            path: "point",
-            name: ScreenRoute.point,
-            builder: (_, __) => const PointScreen(),
-          ),
-          GoRoute(
-            path: "push",
-            name: ScreenRoute.push,
-            builder: (_, __) => const PushScreen(),
-          ),
-          GoRoute(
-            path: "leader_board",
-            name: ScreenRoute.leader_board,
-            builder: (_, __) => const LeaderboardScreen(),
-          ),
-          GoRoute(
-            path: "cafe_registration",
-            name: ScreenRoute.cafeRegistration,
-            builder: (_, __) => const CafeRegistrationScreen(),
-          ),
-        ]
+        ),
+        GoRoute(
+          path: "my_cafe",
+          name: ScreenRoute.myCafe,
+          builder: (_, __) => const MyCafeScreen(),
+        ),
+        GoRoute(
+          path: "challenge_info",
+          name: ScreenRoute.challengeInfo,
+          builder: (_, __) => const ChallengeInfoScreen(),
+          routes: [
+            GoRoute(
+                path: "challenge_progress",
+                name: ScreenRoute.challengeProgress,
+                builder: (_, __) => const ChallengeProgressScreen()
+            )
+          ]
+        ),
+        GoRoute(
+          path: "shop",
+          name: ScreenRoute.shop,
+          builder: (_, __) => const ShopScreen(),
+        ),
+        GoRoute(
+          path: "point",
+          name: ScreenRoute.point,
+          builder: (_, __) => const PointScreen(),
+        ),
+        GoRoute(
+          path: "push",
+          name: ScreenRoute.push,
+          builder: (_, __) => const PushScreen(),
+        ),
+        GoRoute(
+          path: "leader_board",
+          name: ScreenRoute.leader_board,
+          builder: (_, __) => const LeaderboardScreen(),
+        ),
+        GoRoute(
+          path: "cafe_registration",
+          name: ScreenRoute.cafeRegistration,
+          builder: (_, __) => const CafeRegistrationScreen(),
+        ),
+      ]
     ),
     GoRoute(
         path: "/splash",

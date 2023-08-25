@@ -109,7 +109,8 @@ dependencies:
   # 로딩 애니메이션
   loading_animation_widget: ^1.2.0+4
 
-  flutter_datetime_picker_plus: ^2.0.1
+  # 스플래시 화면
+  flutter_native_splash: ^2.3.2
 
 dev_dependencies:
   flutter_test:
