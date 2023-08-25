@@ -21,32 +21,16 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
 
 
-
 final _isWallSocketPartExpandedProvider = StateProvider<bool>((ref) => false);
 final _isOpeningHourPartExpanded = StateProvider<bool>((ref) => false);
 final _isFreePartExpanded = StateProvider<bool>((ref) => false);
 
 
-class CafeRegistrationScreen extends ConsumerStatefulWidget {
+class CafeRegistrationScreen extends ConsumerWidget {
   const CafeRegistrationScreen({super.key});
 
   @override
-  CafeRegistrationScreenState createState() => CafeRegistrationScreenState();
-}
-
-
-class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      final viewModel = ref.watch(requestViewModelProvider.notifier);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final RequestState requestState = ref.watch(requestViewModelProvider);
     final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
     final double deviceWidth = MediaQuery.of(context).size.width;
@@ -91,6 +75,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                     const VerticalSpacer(40),
                     _divider(),
                     _expansionTile(
+                      context: context,
                       title: "(선택)  콘센트 보급율 입력",
                       description: "ex) 총 10테이블에 콘센트 5개 => 50%",
                       isExpanded: ref.watch(_isWallSocketPartExpandedProvider),
@@ -101,6 +86,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                     ),
                     _divider(),
                     _expansionTile(
+                        context: context,
                         title: "(선택)  영업시간 정보 입력",
                         description: "",
                         isExpanded: ref.watch(_isOpeningHourPartExpanded),
@@ -111,6 +97,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                     ),
                     _divider(),
                     _expansionTile(
+                        context: context,
                         title: "(선택)  기타 정보 입력",
                         description: "ex) 1층에는 테이블이 없어요\nex) 공부하기 좋은 카페에요",
                         isExpanded: ref.watch(_isFreePartExpanded),
@@ -146,6 +133,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
   }
 
   Widget _expansionTile({
+    required BuildContext context,
     required String title,
     required String description,
     required bool isExpanded,
