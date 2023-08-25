@@ -10,7 +10,7 @@ import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_occupancy_update.dar
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_preview.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +21,7 @@ import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'ui/state/map_state/map_state.dart';
-import 'ui/viewmodel/global_view_model.dart';
+import 'ui/view_model/global_view_model.dart';
 
 final darkModeProvider = StateProvider<bool>((ref) => false);
 
@@ -112,7 +112,6 @@ class RootScreenState extends ConsumerState<RootScreen> {
                 minHeight: 0,
                 maxHeight: 480,
                 backdropEnabled: true,
-                boxShadow: null,
                 color: AppColor.transparent,
                 body: SlidingUpPanel(
                   controller: mapState.bottomSheetController,

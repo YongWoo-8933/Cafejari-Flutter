@@ -3,7 +3,7 @@ import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class ShopViewModel extends StateNotifier<ShopState> {
   final ShopUseCase _shopUseCase;

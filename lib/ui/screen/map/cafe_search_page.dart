@@ -4,16 +4,19 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
-import 'package:cafejari_flutter/ui/viewmodel/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchPage extends ConsumerWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -88,29 +91,10 @@ class SearchPage extends ConsumerWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          searchCafe.name,
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700
-                                          )
-                                        ),
-                                        const VerticalSpacer(8),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              "asset/image/icon_small_pin.png",
-                                              height: 12,
-                                            ),
-                                            const HorizontalSpacer(4),
-                                            Text(
-                                              searchCafe.address,
-                                              style: const TextStyle(
-                                                  color: AppColor.grey_800,
-                                                  fontSize: 12
-                                              )
-                                            )
-                                          ],
+                                        CafeNameAddressBlock(
+                                          name: searchCafe.name,
+                                          address: searchCafe.address,
+                                          nameTextSize: 16,
                                         )
                                       ],
                                     )
@@ -148,7 +132,7 @@ class SearchPage extends ConsumerWidget {
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.cafeRegistration),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.secondary,
                         elevation: 0,
@@ -159,9 +143,9 @@ class SearchPage extends ConsumerWidget {
                     child: const Text(
                       " 카페추가 +",
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: AppColor.white
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColor.white
                       ),
                     ),
                   ),

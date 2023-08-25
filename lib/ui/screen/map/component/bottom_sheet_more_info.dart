@@ -43,7 +43,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("월요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.mon)
+                        Text(mapState.selectedCafe.openingHour?.mon ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -51,7 +51,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("화요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.tue)
+                        Text(mapState.selectedCafe.openingHour?.tue ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -59,7 +59,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("수요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.wed)
+                        Text(mapState.selectedCafe.openingHour?.wed ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -67,7 +67,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("목요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.thu)
+                        Text(mapState.selectedCafe.openingHour?.thu ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -75,7 +75,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("금요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.fri)
+                        Text(mapState.selectedCafe.openingHour?.fri ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -83,7 +83,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("토요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.sat)
+                        Text(mapState.selectedCafe.openingHour?.sat ?? "")
                       ],
                     ),
                     const VerticalSpacer(lineSpacing),
@@ -91,7 +91,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       children: [
                         const Text("일요일", style: TextSize.textSize_grey_14),
                         const HorizontalSpacer(4),
-                        Text(mapState.selectedCafe.openingHour!.sun)
+                        Text(mapState.selectedCafe.openingHour?.sun ?? "")
                       ],
                     ),
                   ],

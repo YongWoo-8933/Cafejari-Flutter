@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
-import 'package:cafejari_flutter/ui/viewmodel/global_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginViewModel extends StateNotifier<LoginState> {

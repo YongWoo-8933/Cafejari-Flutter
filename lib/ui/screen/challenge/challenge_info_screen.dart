@@ -6,7 +6,7 @@ import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_informa
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:cafejari_flutter/ui/viewmodel/challenge_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

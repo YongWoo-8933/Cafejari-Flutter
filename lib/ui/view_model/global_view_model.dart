@@ -30,7 +30,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     _showSnackBarTimer2?.cancel();
     _showSnackBarTimer1 = Timer(AppDuration.animationDefault, () {
       state = state.copyWith(isSnackBarExpanded: true);
-      _showSnackBarTimer2 = Timer(AppDuration.animationDefault, () {
+      _showSnackBarTimer2 = Timer(const Duration(milliseconds: 2500), () {
         state = state.copyWith(isSnackBarOpened: false, isSnackBarExpanded: false);
       });
     });

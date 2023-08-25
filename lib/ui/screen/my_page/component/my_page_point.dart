@@ -23,7 +23,7 @@ class MyPagePoint extends ConsumerWidget {
       elevation: 0.5,
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        width: deviceSize.width-60,
+        width: deviceSize.width - 60,
         decoration: BoxDecoration(
           color: AppColor.white,
           borderRadius: BorderRadius.circular(20),
@@ -33,7 +33,7 @@ class MyPagePoint extends ConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                GoRouter.of(context).goNamed(ScreenRoute.sample);
+                GoRouter.of(context).goNamed(ScreenRoute.cafeRegistration);
               },
               child: Container(
                 margin: AppPadding.padding_20,
@@ -58,7 +58,7 @@ class MyPagePoint extends ConsumerWidget {
                 title: "포인트SHOP",
                 isClicked: true,
                 icon: CupertinoIcons.shopping_cart,
-                onPressed: () { GoRouter.of(context).goNamed(ScreenRoute.login);},
+                onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.shop),
               ),
             ),
           ],
