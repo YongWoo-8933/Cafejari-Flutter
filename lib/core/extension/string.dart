@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/core/util.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/util.dart';
 import 'package:cafejari_flutter/domain/entity/push/util.dart';
+import 'package:html/parser.dart';
 
 /// 해당 string이 "_none"인지 확인해줌
 extension IsNone on String {
@@ -36,6 +37,17 @@ extension GetPushType on String {
       return PushType.marketing();
     } else {
       return PushType.etc();
+    }
+  }
+}
+
+/// html 태그와 함께 구성된 string 값에서 순수 text만을 추출
+extension ExtractPlainText on String {
+  String toPlainText() {
+    try{
+      return parse(parse(this).body!.text).documentElement!.text;
+    } catch(e) {
+      return this;
     }
   }
 }

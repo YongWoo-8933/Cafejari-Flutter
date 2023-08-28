@@ -56,7 +56,7 @@ ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
       occupancy_push_enabled: json['occupancy_push_enabled'] as bool,
       log_push_enabled: json['log_push_enabled'] as bool,
       favorite_cafe: (json['favorite_cafe'] as List<dynamic>)
-          .map((e) => e as int)
+          .map((e) => CafeResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

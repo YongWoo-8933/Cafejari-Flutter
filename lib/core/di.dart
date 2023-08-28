@@ -153,8 +153,9 @@ final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalSta
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
-  final CafeUseCase mapUseCase = ref.watch(cafeUseCaseProvider);
-  return MapViewModel(mapUseCase: mapUseCase, globalViewModel: viewModel);
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return MapViewModel(cafeUseCase: cafeUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
 });
 
 final myPageViewModelProvider = StateNotifierProvider<MyPageViewModel, MyPageState>((ref) {
@@ -195,7 +196,8 @@ final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, Cha
 });
 
 final requestViewModelProvider = StateNotifierProvider<RequestViewModel, RequestState>((ref) {
-  return RequestViewModel();
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  return RequestViewModel(cafeUseCase: cafeUseCase);
 });
 
 

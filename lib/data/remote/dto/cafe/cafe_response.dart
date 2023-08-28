@@ -223,3 +223,31 @@ class CafeRepResponse {
 
   factory CafeRepResponse.fromJson(Map<String, dynamic> json) => _$CafeRepResponseFromJson(json);
 }
+
+@JsonSerializable()
+class NaverSearchCafeResponse {
+  final List<NaverSearchCafeItemResponse> items;
+
+  NaverSearchCafeResponse({required this.items});
+
+  factory NaverSearchCafeResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeResponseFromJson(json);
+}
+
+@JsonSerializable()
+class NaverSearchCafeItemResponse {
+  final String title;
+  final String address;
+  final String roadAddress;
+  final String mapx;
+  final String mapy;
+
+  NaverSearchCafeItemResponse({
+    required this.title,
+    required this.address,
+    required this.roadAddress,
+    required this.mapx,
+    required this.mapy,
+  });
+
+  factory NaverSearchCafeItemResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeItemResponseFromJson(json);
+}

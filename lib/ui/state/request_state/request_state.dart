@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/util/day_of_week_opening_info.dart';
+import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -9,11 +10,11 @@ part 'request_state.freezed.dart';
 @freezed
 class RequestState with _$RequestState {
   factory RequestState(
-      {required final String cafeName,
-        required final String cafeAddress,
+      {required NaverSearchCafe selectedSearchCafe,
         required final NaverMapController? mapController,
         required final TextEditingController searchQueryController,
         required final TextEditingController freeQueryController,
+        required final NaverSearchCafes searchCafePredictions,
         required final int selectedMaxFloor,
         required final int selectedMinFloor,
         required final List<({int floor, double rate})> wallSocketRates,
@@ -27,11 +28,17 @@ class RequestState with _$RequestState {
       }) = _RequestState;
 
   factory RequestState.empty() => RequestState(
-    cafeName: "스타벅스 신촌점",
-    cafeAddress: "서대문구 무슨로 220-32931",
+    selectedSearchCafe: NaverSearchCafe(
+      name: "추가할 카페를 찾아보세요",
+      roadAddress: "",
+      dongAddress: "",
+      latitude: NLocation.sinchon().cameraPosition.target.latitude,
+      longitude: NLocation.sinchon().cameraPosition.target.longitude
+    ),
     mapController: null,
     searchQueryController: TextEditingController(),
     freeQueryController: TextEditingController(),
+    searchCafePredictions: [],
     selectedMaxFloor: 1,
     selectedMinFloor: 1,
     wallSocketRates: [(floor: 1, rate: 0.0)],

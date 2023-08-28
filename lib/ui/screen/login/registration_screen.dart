@@ -1,7 +1,7 @@
 
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_agreement_part.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_bottom_sheet.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_profile_part.dart';

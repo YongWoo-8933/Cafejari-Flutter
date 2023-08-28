@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -25,7 +26,7 @@ class User with _$User {
     required final String? dateOfBirth,
     required final int? gender,
     required final Grade grade,
-    required final List<int> favoriteCafes}) = _User;
+    required final List<Cafe> favoriteCafes}) = _User;
 
   factory User.empty() => User(
       userId: 0,

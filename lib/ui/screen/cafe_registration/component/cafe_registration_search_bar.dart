@@ -8,10 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationCafeSearchBar extends ConsumerWidget {
+class CafeRegistrationSearchBar extends ConsumerWidget {
   final double width, height;
 
-  const RegistrationCafeSearchBar({Key? key, required this.width, required this.height}) : super(key: key);
+  const CafeRegistrationSearchBar({Key? key, required this.width, required this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +27,6 @@ class RegistrationCafeSearchBar extends ConsumerWidget {
       ),
       child: TextFormField(
         enabled: true,
-        autofocus: true,
         controller: requestState.searchQueryController,
         keyboardType: TextInputType.text,
         cursorColor: AppColor.primary,
@@ -36,7 +35,11 @@ class RegistrationCafeSearchBar extends ConsumerWidget {
           fontWeight: FontWeight.w600
         ),
         textAlignVertical: TextAlignVertical.center,
-        onChanged: (value) {},
+        onChanged: (value) {
+          if (value.length > 1) {
+            requestViewModel.searchCafe();
+          }
+        },
         enableSuggestions: true,
         textInputAction: TextInputAction.search,
         onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
@@ -54,7 +57,7 @@ class RegistrationCafeSearchBar extends ConsumerWidget {
           suffixIcon: GestureDetector(
             onTap: () {
               requestState.searchQueryController.text = "";
-              // mapViewModel.emptySearchPredictions();
+              requestViewModel.clearSearchCafePredictions();
             },
             child: const Icon(CupertinoIcons.xmark_circle_fill, color: AppColor.grey_300, size: 24),
           ),

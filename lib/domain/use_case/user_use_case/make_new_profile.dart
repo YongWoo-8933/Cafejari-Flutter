@@ -13,6 +13,7 @@ class MakeNewProfile {
     required String nickname,
     required int userId,
     required int profileImageId,
+    required bool marketingPushEnabled
   }) async {
     try {
       return parseUserFromUserResponse(
@@ -21,7 +22,9 @@ class MakeNewProfile {
           fcmToken: fcmToken,
           nickname: nickname,
           userId: userId,
-          profileImageId: profileImageId)
+          profileImageId: profileImageId,
+          marketingPushEnabled: marketingPushEnabled
+        )
       );
     } on ErrorWithMessage {
       rethrow;

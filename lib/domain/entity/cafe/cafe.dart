@@ -107,3 +107,25 @@ class OpeningHour with _$OpeningHour {
       sat: "",
       sun: "");
 }
+
+typedef NaverSearchCafes = List<NaverSearchCafe>;
+
+/// 네이버 카페 검색 결과 모델
+@freezed
+class NaverSearchCafe with _$NaverSearchCafe {
+  factory NaverSearchCafe(
+      {required final String name,
+        required final String roadAddress,
+        required final String dongAddress,
+        required final double latitude,
+        required final double longitude,
+      }) = _NaverSearchCafe;
+
+  factory NaverSearchCafe.empty() => NaverSearchCafe(
+    name: "",
+    roadAddress: "",
+    dongAddress: "",
+    latitude: 37.0,
+    longitude: 127.0
+  );
+}

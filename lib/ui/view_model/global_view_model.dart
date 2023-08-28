@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class GlobalViewModel extends StateNotifier<GlobalState> {
@@ -17,7 +19,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   final UserUseCase _userUseCase;
   Timer? _showSnackBarTimer1;
   Timer? _showSnackBarTimer2;
-
 
   GlobalViewModel(
     this._tokenUseCase,
@@ -30,8 +31,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     try {
       final String accessToken = await _tokenUseCase.getAccessToken();
       final User user = await _userUseCase.getUser(accessToken: accessToken);
-      saveLoginResult(accessToken: accessToken, refreshToken: null, user: user);
-      showSnackBar(content: "로그인 성공", type: SnackBarType.complete);
+      saveLoginResult(accessToken: accessToken, user: user);
     } on RefreshTokenExpired {
       null;
     } on ErrorWithMessage catch (e) {
@@ -39,11 +39,40 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
+  locationTrackingStart() async {
+    final permission = await Geolocator.requestPermission();
+    if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      showSnackBar(content: "위치 권한을 허용해주세요. 3초 후 설정 화면으로 이동합니다", type: SnackBarType.error);
+      Future.delayed(const Duration(seconds: 3), () { openAppSettings(); });
+    } else if (permission == LocationPermission.unableToDetermine) {
+      locationTrackingStart();
+    } else {
+      const LocationSettings locationSettings = LocationSettings(accuracy: LocationAccuracy.high);
+      Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+        (Position? position) => state = state.copyWith(currentDeviceLocation: position)
+      );
+    }
+  }
+
+  Future<Position?> getFirstLocation() async {
+    final permission = await Geolocator.requestPermission();
+    if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      showSnackBar(content: "위치 권한을 허용해주세요. 3초 후 설정 화면으로 이동합니다", type: SnackBarType.error);
+      Future.delayed(const Duration(seconds: 3), () { openAppSettings(); });
+      return null;
+    } else if (permission == LocationPermission.unableToDetermine) {
+      getFirstLocation();
+      return null;
+    } else {
+      return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    }
+  }
+
   void logout() {
     // 로그아웃 로직
   }
 
-  void showSnackBar({required String content, required SnackBarType type}) async {
+  void showSnackBar({required String content, required SnackBarType type}) {
     state = state.copyWith(
       snackBarText: content, snackBarType: type, isSnackBarOpened: true
     );
@@ -65,8 +94,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   void saveLoginResult({
     required String accessToken,
-    required String? refreshToken,
-    required User user
+    required User user,
+    String? refreshToken
   }) {
     state = state.copyWith(accessToken: accessToken, user: user);
     if (refreshToken.isNotNull) {

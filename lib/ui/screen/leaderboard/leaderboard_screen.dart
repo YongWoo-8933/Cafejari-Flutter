@@ -3,7 +3,7 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_my_ranking.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_ranking_block.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_top3_block.dart';
@@ -30,8 +30,6 @@ class LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
     Future.delayed(Duration.zero, () async {
       final viewModel = ref.watch(leaderboardViewModelProvider.notifier);
       await viewModel.refreshRankers();
-      final MyPageState myPageState = ref.watch(myPageViewModelProvider);
-      await viewModel.setMyRanking(myPageState.user);
     });
   }
 

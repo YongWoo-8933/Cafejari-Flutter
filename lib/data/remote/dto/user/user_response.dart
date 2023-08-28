@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_response.g.dart';
@@ -44,7 +45,7 @@ class ProfileResponse {
   final bool marketing_push_enabled, occupancy_push_enabled, log_push_enabled;
   final GradeResponse grade;
   final ProfileImageResponse profile_image;
-  final List<int> favorite_cafe;
+  final List<CafeResponse> favorite_cafe;
 
   ProfileResponse({
     required this.id,

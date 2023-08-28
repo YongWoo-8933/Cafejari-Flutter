@@ -6,15 +6,18 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
-import 'package:cafejari_flutter/ui/components/buttons/share_button.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+
+final _isShareLoading = StateProvider<bool>((ref) => false);
 
 class BottomSheetMainInfo extends ConsumerWidget {
   const BottomSheetMainInfo({Key? key}) : super(key: key);
@@ -22,6 +25,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
     const double photoFrameHeight = 240;
@@ -122,9 +126,17 @@ class BottomSheetMainInfo extends ConsumerWidget {
                             onPressed: () => mapState.bottomSheetOccupancyController.open(),
                           ),
                           const HorizontalSpacer(10),
-                          const ShareButton(buttonSize: 48),
+                          ShareButton(
+                            buttonSize: 48,
+                            onPressed: () {},
+                            isLoading: ref.watch(_isShareLoading)
+                          ),
                           const HorizontalSpacer(10),
-                          const BookmarkButton(isBookmarked: false, buttonSize: 48)
+                          BookmarkButton(
+                            isBookmarked: globalState.user.favoriteCafes.contains(mapState.selectedCafe),
+                            buttonSize: 48,
+                            onPressed: () => mapViewModel.updateFavoriteCafeList(mapState.selectedCafe.id),
+                          )
                         ],
                       ),
                       const VerticalSpacer(30),
@@ -137,7 +149,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                         height: 224,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: mapState.selectedCafe.cafeFloors.length, // 아이템과 디바이더 개수의 총합
+                          itemCount: mapState.selectedCafe.cafeFloors.length,
                           itemBuilder: (context, index) {
                             final CafeFloor cafeFloor = mapState.selectedCafe.cafeFloors[index];
                             final bool isLast = mapState.selectedCafe.cafeFloors.length - 1 == index;

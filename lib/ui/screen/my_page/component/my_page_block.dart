@@ -20,6 +20,7 @@ class MyPageBlock extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColor.white,
         padding: EdgeInsets.zero, // Padding을 여기서 설정합니다.
+        elevation: 0
       ),
       child: Container(
         decoration: BoxDecoration(

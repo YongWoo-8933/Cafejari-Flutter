@@ -3,7 +3,7 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/brand_grid.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/shop_my_gifticon.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';

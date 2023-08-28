@@ -1,5 +1,6 @@
 
 import 'package:cafejari_flutter/cafejari_app.dart';
+import 'package:cafejari_flutter/ui/screen/app_permission_screen/app_permission_screen.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_info_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.dart';
@@ -10,7 +11,6 @@ import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
 import 'package:cafejari_flutter/ui/screen/push/push_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
-import 'package:cafejari_flutter/ui/screen/splash/splash_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +23,11 @@ final GoRouter appRouter = GoRouter(
       name: ScreenRoute.root,
       builder: (_, __) => RootScreen(),
       routes: [
+        GoRoute(
+            path: "app_permission",
+            name: ScreenRoute.appPermission,
+            builder: (_, __) => const AppPermissionScreen()
+        ),
         GoRoute(
             path: "login",
             name: ScreenRoute.login,
@@ -69,7 +74,7 @@ final GoRouter appRouter = GoRouter(
         ),
         GoRoute(
           path: "leader_board",
-          name: ScreenRoute.leader_board,
+          name: ScreenRoute.leaderboard,
           builder: (_, __) => const LeaderboardScreen(),
         ),
         GoRoute(
@@ -78,11 +83,6 @@ final GoRouter appRouter = GoRouter(
           builder: (_, __) => const CafeRegistrationScreen(),
         ),
       ]
-    ),
-    GoRoute(
-        path: "/splash",
-        name: ScreenRoute.splash,
-        builder: (_, __) => const SplashScreen()
     ),
   ],
   observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)]);

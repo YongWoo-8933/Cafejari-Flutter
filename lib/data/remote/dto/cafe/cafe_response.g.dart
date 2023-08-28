@@ -266,3 +266,38 @@ Map<String, dynamic> _$CafeRepResponseToJson(CafeRepResponse instance) =>
       'is_visible': instance.is_visible,
       'is_closed': instance.is_closed,
     };
+
+NaverSearchCafeResponse _$NaverSearchCafeResponseFromJson(
+        Map<String, dynamic> json) =>
+    NaverSearchCafeResponse(
+      items: (json['items'] as List<dynamic>)
+          .map((e) =>
+              NaverSearchCafeItemResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$NaverSearchCafeResponseToJson(
+        NaverSearchCafeResponse instance) =>
+    <String, dynamic>{
+      'items': instance.items,
+    };
+
+NaverSearchCafeItemResponse _$NaverSearchCafeItemResponseFromJson(
+        Map<String, dynamic> json) =>
+    NaverSearchCafeItemResponse(
+      title: json['title'] as String,
+      address: json['address'] as String,
+      roadAddress: json['roadAddress'] as String,
+      mapx: json['mapx'] as String,
+      mapy: json['mapy'] as String,
+    );
+
+Map<String, dynamic> _$NaverSearchCafeItemResponseToJson(
+        NaverSearchCafeItemResponse instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'address': instance.address,
+      'roadAddress': instance.roadAddress,
+      'mapx': instance.mapx,
+      'mapy': instance.mapy,
+    };

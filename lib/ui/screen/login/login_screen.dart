@@ -1,9 +1,9 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
-import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,12 +15,28 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 final _kakaoLoginLoadingProvider = StateProvider<bool>((ref) => false);
 final _appleLoginLoadingProvider = StateProvider<bool>((ref) => false);
 
-class LoginScreen extends ConsumerWidget {
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final LoginState loginState = ref.watch(loginViewModelProvider);
+  LoginScreenState createState() => LoginScreenState();
+}
+
+
+class LoginScreenState extends ConsumerState<LoginScreen> {
+  LoginScreenState();
+
+  @override
+  void dispose() {
+    super.dispose();
+    ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
+    ref.watch(_appleLoginLoadingProvider.notifier).update((state) => false);
+    ref.watch(loginViewModelProvider.notifier).clearViewModel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final LoginViewModel loginViewModel = ref.watch(loginViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
 
@@ -83,17 +99,17 @@ class LoginScreen extends ConsumerWidget {
                 onPressed: () async {
                   if(!ref.watch(_kakaoLoginLoadingProvider)) {
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => true);
-                    // await UserApi.instance.logout();
                     OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
                     final bool? isUserExist = await loginViewModel.kakaoLogin(accessToken: token.accessToken);
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
                     switch(isUserExist) {
                       case true:
                         if (context.mounted) GoRouter.of(context).pop();
+                        loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
                       case false:
                         if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
                       default:
-                        print("로그인 실패");
+                        loginViewModel.globalViewModel.showSnackBar(content: "로그인 실패, 잠시 후 다시 시도해주세요", type: SnackBarType.error);
                     }
                   }
                 },

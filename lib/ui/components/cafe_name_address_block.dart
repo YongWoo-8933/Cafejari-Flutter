@@ -1,7 +1,9 @@
 
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class CafeNameAddressBlock extends StatelessWidget {
   final String name, address;
@@ -15,19 +17,25 @@ class CafeNameAddressBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        HtmlWidget(
           name,
-          style: TextStyle(
+          onErrorBuilder: (context, element, error) => Text('$element error: $error'),
+          onLoadingBuilder: (context, element, loadingProgress) => const CircularProgressIndicator(),
+          renderMode: RenderMode.column,
+          textStyle: TextStyle(
             fontSize: nameTextSize,
             fontWeight: FontWeight.w700
-          )
+          ),
         ),
         const VerticalSpacer(8),
         Row(
           children: [
-            Image.asset(
-              "asset/image/icon_small_pin.png",
-              height: 12,
+            Visibility(
+              visible: address.isNotEmpty,
+              child: Image.asset(
+                "asset/image/icon_small_pin.png",
+                height: 12,
+              ),
             ),
             const HorizontalSpacer(4),
             Text(

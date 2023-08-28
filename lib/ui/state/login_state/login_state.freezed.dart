@@ -23,6 +23,7 @@ mixin _$LoginState {
   TextEditingController get nicknameController =>
       throw _privateConstructorUsedError;
   String get nicknameErrorMessage => throw _privateConstructorUsedError;
+  bool get isMarketingAgreed => throw _privateConstructorUsedError;
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
   String get kakaoAccessToken => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $LoginStateCopyWith<$Res> {
       ({String imageUrl, int profileImageId}) selectedProfileImage,
       TextEditingController nicknameController,
       String nicknameErrorMessage,
+      bool isMarketingAgreed,
       PanelController bottomSheetController,
       String kakaoAccessToken,
       String appleAccessToken});
@@ -66,6 +68,7 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? selectedProfileImage = null,
     Object? nicknameController = null,
     Object? nicknameErrorMessage = null,
+    Object? isMarketingAgreed = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
     Object? appleAccessToken = null,
@@ -87,6 +90,10 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.nicknameErrorMessage
           : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      isMarketingAgreed: null == isMarketingAgreed
+          ? _value.isMarketingAgreed
+          : isMarketingAgreed // ignore: cast_nullable_to_non_nullable
+              as bool,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -116,6 +123,7 @@ abstract class _$$_LoginStateCopyWith<$Res>
       ({String imageUrl, int profileImageId}) selectedProfileImage,
       TextEditingController nicknameController,
       String nicknameErrorMessage,
+      bool isMarketingAgreed,
       PanelController bottomSheetController,
       String kakaoAccessToken,
       String appleAccessToken});
@@ -136,6 +144,7 @@ class __$$_LoginStateCopyWithImpl<$Res>
     Object? selectedProfileImage = null,
     Object? nicknameController = null,
     Object? nicknameErrorMessage = null,
+    Object? isMarketingAgreed = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
     Object? appleAccessToken = null,
@@ -157,6 +166,10 @@ class __$$_LoginStateCopyWithImpl<$Res>
           ? _value.nicknameErrorMessage
           : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      isMarketingAgreed: null == isMarketingAgreed
+          ? _value.isMarketingAgreed
+          : isMarketingAgreed // ignore: cast_nullable_to_non_nullable
+              as bool,
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -182,6 +195,7 @@ class _$_LoginState implements _LoginState {
       required this.selectedProfileImage,
       required this.nicknameController,
       required this.nicknameErrorMessage,
+      required this.isMarketingAgreed,
       required this.bottomSheetController,
       required this.kakaoAccessToken,
       required this.appleAccessToken})
@@ -202,6 +216,8 @@ class _$_LoginState implements _LoginState {
   @override
   final String nicknameErrorMessage;
   @override
+  final bool isMarketingAgreed;
+  @override
   final PanelController bottomSheetController;
   @override
   final String kakaoAccessToken;
@@ -210,7 +226,7 @@ class _$_LoginState implements _LoginState {
 
   @override
   String toString() {
-    return 'LoginState(profileImages: $profileImages, selectedProfileImage: $selectedProfileImage, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken, appleAccessToken: $appleAccessToken)';
+    return 'LoginState(profileImages: $profileImages, selectedProfileImage: $selectedProfileImage, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage, isMarketingAgreed: $isMarketingAgreed, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken, appleAccessToken: $appleAccessToken)';
   }
 
   @override
@@ -226,6 +242,8 @@ class _$_LoginState implements _LoginState {
                 other.nicknameController == nicknameController) &&
             (identical(other.nicknameErrorMessage, nicknameErrorMessage) ||
                 other.nicknameErrorMessage == nicknameErrorMessage) &&
+            (identical(other.isMarketingAgreed, isMarketingAgreed) ||
+                other.isMarketingAgreed == isMarketingAgreed) &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
             (identical(other.kakaoAccessToken, kakaoAccessToken) ||
@@ -241,6 +259,7 @@ class _$_LoginState implements _LoginState {
       selectedProfileImage,
       nicknameController,
       nicknameErrorMessage,
+      isMarketingAgreed,
       bottomSheetController,
       kakaoAccessToken,
       appleAccessToken);
@@ -262,6 +281,7 @@ abstract class _LoginState implements LoginState {
       }) selectedProfileImage,
       required final TextEditingController nicknameController,
       required final String nicknameErrorMessage,
+      required final bool isMarketingAgreed,
       required final PanelController bottomSheetController,
       required final String kakaoAccessToken,
       required final String appleAccessToken}) = _$_LoginState;
@@ -274,6 +294,8 @@ abstract class _LoginState implements LoginState {
   TextEditingController get nicknameController;
   @override
   String get nicknameErrorMessage;
+  @override
+  bool get isMarketingAgreed;
   @override
   PanelController get bottomSheetController;
   @override

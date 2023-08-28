@@ -1,20 +1,24 @@
 
 import 'package:cafejari_flutter/core/di.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/util/privacy_policy.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/util/service_agreement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final _isServiceAgreedProvider = StateProvider<bool>((ref) => false);
 final _isPrivacyAgreedProvider = StateProvider<bool>((ref) => false);
-final _isMarketingAgreedProvider = StateProvider<bool>((ref) => false);
 final _isServiceExpandedProvider = StateProvider<bool>((ref) => true);
 final _isPrivacyExpandedProvider = StateProvider<bool>((ref) => true);
-final _isMarketingExpandedProvider = StateProvider<bool>((ref) => false);
 final _isRegistrationLoading = StateProvider<bool>((ref) => false);
 
 class AgreementPart extends ConsumerWidget {
@@ -37,7 +41,7 @@ class AgreementPart extends ConsumerWidget {
                 onClick: () {
                   ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
                   ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
-                  ref.watch(_isMarketingAgreedProvider.notifier).update((state) => true);
+                  loginViewModel.setMarketingAgreement(true);
                 }
             ),
             const VerticalSpacer(20),
@@ -45,7 +49,7 @@ class AgreementPart extends ConsumerWidget {
                 isChecked: ref.watch(_isServiceAgreedProvider),
                 isExpanded: ref.watch(_isServiceExpandedProvider),
                 title: "(필수) 서비스 이용약관 동의",
-                content: "1. 개인정보 수집목적 및 이용목적\n\n가. 서비스 제공에 관한 블라블라는 블라블라인 것이므로 블라브라블라블라 띵동따라똥따라띵기딩강꽁깡",
+                content: serviceAgreementText,
                 onClick: () => ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state),
                 onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
             ),
@@ -54,18 +58,18 @@ class AgreementPart extends ConsumerWidget {
                 isChecked: ref.watch(_isPrivacyAgreedProvider),
                 isExpanded: ref.watch(_isPrivacyExpandedProvider),
                 title: "(필수) 개인정보 수집 및 이용 동의",
-                content: "1. 개인정보 수집목적 및 이용목적\n\n가. 서비스 제공에 관한 블라블라는 블라블라인 것이므로 블라브라블라블라 띵동따라똥따라띵기딩강꽁깡",
+                content: privacyPolicyText,
                 onClick: () => ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => !state),
                 onArrowClick: () => ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => !state)
             ),
             const VerticalSpacer(20),
             _AgreementBox(
-                isChecked: ref.watch(_isMarketingAgreedProvider),
-                isExpanded: ref.watch(_isMarketingExpandedProvider),
+                isChecked: loginState.isMarketingAgreed,
+                isExpanded: false,
                 title: "(선택) 마케팅 알림 수신 동의",
-                content: "1. 개인정보 수집목적 및 이용목적\n\n가. 서비스 제공에 관한 블라블라는 블라블라인 것이므로 블라브라블라블라 띵동따라똥따라띵기딩강꽁깡",
-                onClick: () => ref.watch(_isMarketingAgreedProvider.notifier).update((state) => !state),
-                onArrowClick: () => ref.watch(_isMarketingExpandedProvider.notifier).update((state) => !state)
+                content: "",
+                onClick: () => loginViewModel.setMarketingAgreement(!loginState.isMarketingAgreed),
+                onArrowClick: null
             ),
             const VerticalSpacer(40),
             _RegistrationButton(
@@ -73,13 +77,21 @@ class AgreementPart extends ConsumerWidget {
                   loginState.nicknameErrorMessage.isEmpty,
               isLoading: ref.watch(_isRegistrationLoading),
               onClick: () async {
+                bool result = false;
                 if (loginState.kakaoAccessToken.isNotEmpty) {
                   ref.watch(_isRegistrationLoading.notifier).update((state) => true);
-                  await loginViewModel.registerAsKakaoUser();
+                  result = await loginViewModel.registerAsKakaoUser();
                 } else if (loginState.appleAccessToken.isNotEmpty) {
-                  // loginViewModel.registerAsKakaoUser();
+                  // result = await loginViewModel.registerAsKakaoUser();
                 }
                 ref.watch(_isRegistrationLoading.notifier).update((state) => false);
+                switch(result) {
+                  case true:
+                    loginViewModel.globalViewModel.showSnackBar(content: "가입 완료", type: SnackBarType.complete);
+                    if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+                  case false:
+                    if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);
+                }
               }
             ),
             const VerticalSpacer(100),
@@ -153,7 +165,7 @@ class _AgreementBox extends StatelessWidget {
   final String title;
   final String content;
   final VoidCallback onClick;
-  final VoidCallback onArrowClick;
+  final VoidCallback? onArrowClick;
 
   const _AgreementBox({
     super.key,
@@ -198,27 +210,19 @@ class _AgreementBox extends StatelessWidget {
                       fontWeight: FontWeight.w700
                     ),
                   ),
-                    const HorizontalSpacer(8),
-                    Text(
-                      title,
-                      style: TextStyle(
-                          color: isChecked ? AppColor.black : AppColor.grey_300,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700
+                  const Expanded(child: HorizontalSpacer(0)),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(
+                        isExpanded ? CupertinoIcons.chevron_up : CupertinoIcons.chevron_down,
+                        size: 20,
+                        color: onArrowClick.isNull ? AppColor.transparent : AppColor.primary,
                       ),
+                      onPressed: onArrowClick,
                     ),
-                    const Expanded(child: HorizontalSpacer(0)),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        icon: Icon(
-                          isExpanded ? CupertinoIcons.chevron_up : CupertinoIcons.chevron_down,
-                          size: 20,
-                        ),
-                        onPressed: onArrowClick,
-                      ),
-                    )
-                  ]
+                  )
+                ]
               ),
             ),
           ),

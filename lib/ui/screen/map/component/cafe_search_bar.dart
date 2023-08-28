@@ -91,7 +91,10 @@ class CafeSearchBar extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () => mapViewModel.openSearchPage(),
+                onTap: () {
+                  mapViewModel.openSearchPage();
+                  mapViewModel.closeBottomSheetPreview();
+                },
                 child: Container(
                   width: width - 48,
                   height: height,

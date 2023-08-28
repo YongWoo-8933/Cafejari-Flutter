@@ -2,7 +2,7 @@
     package= "kr.co.cafejari.cafejari_flutter">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
@@ -44,6 +44,14 @@
                 <!-- 카카오스토리 -->
                 <data android:host="kakaostory"
                     android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="cafejari.page.link"
+                    android:scheme="https"/>
             </intent-filter>
         </activity>
 

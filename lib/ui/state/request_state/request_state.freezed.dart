@@ -16,12 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RequestState {
-  String get cafeName => throw _privateConstructorUsedError;
-  String get cafeAddress => throw _privateConstructorUsedError;
+  NaverSearchCafe get selectedSearchCafe => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   TextEditingController get searchQueryController =>
       throw _privateConstructorUsedError;
   TextEditingController get freeQueryController =>
+      throw _privateConstructorUsedError;
+  List<NaverSearchCafe> get searchCafePredictions =>
       throw _privateConstructorUsedError;
   int get selectedMaxFloor => throw _privateConstructorUsedError;
   int get selectedMinFloor => throw _privateConstructorUsedError;
@@ -49,11 +50,11 @@ abstract class $RequestStateCopyWith<$Res> {
       _$RequestStateCopyWithImpl<$Res, RequestState>;
   @useResult
   $Res call(
-      {String cafeName,
-      String cafeAddress,
+      {NaverSearchCafe selectedSearchCafe,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
       TextEditingController freeQueryController,
+      List<NaverSearchCafe> searchCafePredictions,
       int selectedMaxFloor,
       int selectedMinFloor,
       List<({int floor, double rate})> wallSocketRates,
@@ -65,6 +66,7 @@ abstract class $RequestStateCopyWith<$Res> {
       OpeningHour openingHour,
       OpeningHour clickedDay});
 
+  $NaverSearchCafeCopyWith<$Res> get selectedSearchCafe;
   $OpeningHourCopyWith<$Res> get openingHour;
   $OpeningHourCopyWith<$Res> get clickedDay;
 }
@@ -82,11 +84,11 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cafeName = null,
-    Object? cafeAddress = null,
+    Object? selectedSearchCafe = null,
     Object? mapController = freezed,
     Object? searchQueryController = null,
     Object? freeQueryController = null,
+    Object? searchCafePredictions = null,
     Object? selectedMaxFloor = null,
     Object? selectedMinFloor = null,
     Object? wallSocketRates = null,
@@ -99,14 +101,10 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
     Object? clickedDay = null,
   }) {
     return _then(_value.copyWith(
-      cafeName: null == cafeName
-          ? _value.cafeName
-          : cafeName // ignore: cast_nullable_to_non_nullable
-              as String,
-      cafeAddress: null == cafeAddress
-          ? _value.cafeAddress
-          : cafeAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+      selectedSearchCafe: null == selectedSearchCafe
+          ? _value.selectedSearchCafe
+          : selectedSearchCafe // ignore: cast_nullable_to_non_nullable
+              as NaverSearchCafe,
       mapController: freezed == mapController
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -119,6 +117,10 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
           ? _value.freeQueryController
           : freeQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      searchCafePredictions: null == searchCafePredictions
+          ? _value.searchCafePredictions
+          : searchCafePredictions // ignore: cast_nullable_to_non_nullable
+              as List<NaverSearchCafe>,
       selectedMaxFloor: null == selectedMaxFloor
           ? _value.selectedMaxFloor
           : selectedMaxFloor // ignore: cast_nullable_to_non_nullable
@@ -164,6 +166,14 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
 
   @override
   @pragma('vm:prefer-inline')
+  $NaverSearchCafeCopyWith<$Res> get selectedSearchCafe {
+    return $NaverSearchCafeCopyWith<$Res>(_value.selectedSearchCafe, (value) {
+      return _then(_value.copyWith(selectedSearchCafe: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $OpeningHourCopyWith<$Res> get openingHour {
     return $OpeningHourCopyWith<$Res>(_value.openingHour, (value) {
       return _then(_value.copyWith(openingHour: value) as $Val);
@@ -188,11 +198,11 @@ abstract class _$$_RequestStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String cafeName,
-      String cafeAddress,
+      {NaverSearchCafe selectedSearchCafe,
       NaverMapController? mapController,
       TextEditingController searchQueryController,
       TextEditingController freeQueryController,
+      List<NaverSearchCafe> searchCafePredictions,
       int selectedMaxFloor,
       int selectedMinFloor,
       List<({int floor, double rate})> wallSocketRates,
@@ -204,6 +214,8 @@ abstract class _$$_RequestStateCopyWith<$Res>
       OpeningHour openingHour,
       OpeningHour clickedDay});
 
+  @override
+  $NaverSearchCafeCopyWith<$Res> get selectedSearchCafe;
   @override
   $OpeningHourCopyWith<$Res> get openingHour;
   @override
@@ -221,11 +233,11 @@ class __$$_RequestStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cafeName = null,
-    Object? cafeAddress = null,
+    Object? selectedSearchCafe = null,
     Object? mapController = freezed,
     Object? searchQueryController = null,
     Object? freeQueryController = null,
+    Object? searchCafePredictions = null,
     Object? selectedMaxFloor = null,
     Object? selectedMinFloor = null,
     Object? wallSocketRates = null,
@@ -238,14 +250,10 @@ class __$$_RequestStateCopyWithImpl<$Res>
     Object? clickedDay = null,
   }) {
     return _then(_$_RequestState(
-      cafeName: null == cafeName
-          ? _value.cafeName
-          : cafeName // ignore: cast_nullable_to_non_nullable
-              as String,
-      cafeAddress: null == cafeAddress
-          ? _value.cafeAddress
-          : cafeAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+      selectedSearchCafe: null == selectedSearchCafe
+          ? _value.selectedSearchCafe
+          : selectedSearchCafe // ignore: cast_nullable_to_non_nullable
+              as NaverSearchCafe,
       mapController: freezed == mapController
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -258,6 +266,10 @@ class __$$_RequestStateCopyWithImpl<$Res>
           ? _value.freeQueryController
           : freeQueryController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      searchCafePredictions: null == searchCafePredictions
+          ? _value._searchCafePredictions
+          : searchCafePredictions // ignore: cast_nullable_to_non_nullable
+              as List<NaverSearchCafe>,
       selectedMaxFloor: null == selectedMaxFloor
           ? _value.selectedMaxFloor
           : selectedMaxFloor // ignore: cast_nullable_to_non_nullable
@@ -306,11 +318,11 @@ class __$$_RequestStateCopyWithImpl<$Res>
 
 class _$_RequestState implements _RequestState {
   _$_RequestState(
-      {required this.cafeName,
-      required this.cafeAddress,
+      {required this.selectedSearchCafe,
       required this.mapController,
       required this.searchQueryController,
       required this.freeQueryController,
+      required final List<NaverSearchCafe> searchCafePredictions,
       required this.selectedMaxFloor,
       required this.selectedMinFloor,
       required final List<({int floor, double rate})> wallSocketRates,
@@ -321,20 +333,28 @@ class _$_RequestState implements _RequestState {
       required this.selectedOpeningInfo,
       required this.openingHour,
       required this.clickedDay})
-      : _wallSocketRates = wallSocketRates,
+      : _searchCafePredictions = searchCafePredictions,
+        _wallSocketRates = wallSocketRates,
         _openingInfos = openingInfos,
         _selectedDaysOfWeek = selectedDaysOfWeek;
 
   @override
-  final String cafeName;
-  @override
-  final String cafeAddress;
+  final NaverSearchCafe selectedSearchCafe;
   @override
   final NaverMapController? mapController;
   @override
   final TextEditingController searchQueryController;
   @override
   final TextEditingController freeQueryController;
+  final List<NaverSearchCafe> _searchCafePredictions;
+  @override
+  List<NaverSearchCafe> get searchCafePredictions {
+    if (_searchCafePredictions is EqualUnmodifiableListView)
+      return _searchCafePredictions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchCafePredictions);
+  }
+
   @override
   final int selectedMaxFloor;
   @override
@@ -377,7 +397,7 @@ class _$_RequestState implements _RequestState {
 
   @override
   String toString() {
-    return 'RequestState(cafeName: $cafeName, cafeAddress: $cafeAddress, mapController: $mapController, searchQueryController: $searchQueryController, freeQueryController: $freeQueryController, selectedMaxFloor: $selectedMaxFloor, selectedMinFloor: $selectedMinFloor, wallSocketRates: $wallSocketRates, isWallSocketEdited: $isWallSocketEdited, openingInfos: $openingInfos, isOpeningHourEdited: $isOpeningHourEdited, selectedDaysOfWeek: $selectedDaysOfWeek, selectedOpeningInfo: $selectedOpeningInfo, openingHour: $openingHour, clickedDay: $clickedDay)';
+    return 'RequestState(selectedSearchCafe: $selectedSearchCafe, mapController: $mapController, searchQueryController: $searchQueryController, freeQueryController: $freeQueryController, searchCafePredictions: $searchCafePredictions, selectedMaxFloor: $selectedMaxFloor, selectedMinFloor: $selectedMinFloor, wallSocketRates: $wallSocketRates, isWallSocketEdited: $isWallSocketEdited, openingInfos: $openingInfos, isOpeningHourEdited: $isOpeningHourEdited, selectedDaysOfWeek: $selectedDaysOfWeek, selectedOpeningInfo: $selectedOpeningInfo, openingHour: $openingHour, clickedDay: $clickedDay)';
   }
 
   @override
@@ -385,16 +405,16 @@ class _$_RequestState implements _RequestState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RequestState &&
-            (identical(other.cafeName, cafeName) ||
-                other.cafeName == cafeName) &&
-            (identical(other.cafeAddress, cafeAddress) ||
-                other.cafeAddress == cafeAddress) &&
+            (identical(other.selectedSearchCafe, selectedSearchCafe) ||
+                other.selectedSearchCafe == selectedSearchCafe) &&
             (identical(other.mapController, mapController) ||
                 other.mapController == mapController) &&
             (identical(other.searchQueryController, searchQueryController) ||
                 other.searchQueryController == searchQueryController) &&
             (identical(other.freeQueryController, freeQueryController) ||
                 other.freeQueryController == freeQueryController) &&
+            const DeepCollectionEquality()
+                .equals(other._searchCafePredictions, _searchCafePredictions) &&
             (identical(other.selectedMaxFloor, selectedMaxFloor) ||
                 other.selectedMaxFloor == selectedMaxFloor) &&
             (identical(other.selectedMinFloor, selectedMinFloor) ||
@@ -420,11 +440,11 @@ class _$_RequestState implements _RequestState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      cafeName,
-      cafeAddress,
+      selectedSearchCafe,
       mapController,
       searchQueryController,
       freeQueryController,
+      const DeepCollectionEquality().hash(_searchCafePredictions),
       selectedMaxFloor,
       selectedMinFloor,
       const DeepCollectionEquality().hash(_wallSocketRates),
@@ -445,11 +465,11 @@ class _$_RequestState implements _RequestState {
 
 abstract class _RequestState implements RequestState {
   factory _RequestState(
-      {required final String cafeName,
-      required final String cafeAddress,
+      {required final NaverSearchCafe selectedSearchCafe,
       required final NaverMapController? mapController,
       required final TextEditingController searchQueryController,
       required final TextEditingController freeQueryController,
+      required final List<NaverSearchCafe> searchCafePredictions,
       required final int selectedMaxFloor,
       required final int selectedMinFloor,
       required final List<({int floor, double rate})> wallSocketRates,
@@ -462,15 +482,15 @@ abstract class _RequestState implements RequestState {
       required final OpeningHour clickedDay}) = _$_RequestState;
 
   @override
-  String get cafeName;
-  @override
-  String get cafeAddress;
+  NaverSearchCafe get selectedSearchCafe;
   @override
   NaverMapController? get mapController;
   @override
   TextEditingController get searchQueryController;
   @override
   TextEditingController get freeQueryController;
+  @override
+  List<NaverSearchCafe> get searchCafePredictions;
   @override
   int get selectedMaxFloor;
   @override

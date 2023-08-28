@@ -21,6 +21,22 @@ abstract class UserUseCase {
     required String nickname,
     required int userId,
     required int profileImageId,
+    required bool marketingPushEnabled
+  });
+  Future<User> updateProfile({
+    required String accessToken,
+    required int profileId,
+    String? nickname,
+    String? ageRange,
+    String? dateOfBirth,
+    String? phoneNumber,
+    String? fcmToken,
+    int? gender,
+    int? profileImageId,
+    bool? marketingPushEnabled,
+    bool? occupancyPushEnabled,
+    bool? logPushEnabled,
+    List<int>? favoriteCafeIdList,
   });
 }
 
@@ -127,7 +143,8 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     required String fcmToken,
     required String nickname,
     required int userId,
-    required int profileImageId
+    required int profileImageId,
+    required bool marketingPushEnabled
   }) async {
     final f = MakeNewProfile();
     try {
@@ -137,7 +154,8 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
         fcmToken: fcmToken,
         nickname: nickname,
         userId: userId,
-        profileImageId: profileImageId
+        profileImageId: profileImageId,
+        marketingPushEnabled: marketingPushEnabled
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
@@ -148,8 +166,71 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
           fcmToken: fcmToken,
           nickname: nickname,
           userId: userId,
-          profileImageId: profileImageId
+          profileImageId: profileImageId,
+          marketingPushEnabled: marketingPushEnabled
         );
+      } on AccessTokenExpired{
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired{
+      rethrow;
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<User> updateProfile({
+    required String accessToken,
+    required int profileId,
+    String? nickname,
+    String? ageRange,
+    String? dateOfBirth,
+    String? phoneNumber,
+    String? fcmToken,
+    int? gender,
+    int? profileImageId,
+    bool? marketingPushEnabled,
+    bool? occupancyPushEnabled,
+    bool? logPushEnabled,
+    List<int>? favoriteCafeIdList
+  }) async {
+    try {
+      final UserResponse userRes = await userRepository.updateProfile(
+        accessToken: accessToken,
+        profileId: profileId,
+        nickname: nickname,
+        ageRange: ageRange,
+        dateOfBirth: dateOfBirth,
+        phoneNumber: phoneNumber,
+        fcmToken: fcmToken,
+        gender: gender,
+        profileImageId: profileImageId,
+        marketingPushEnabled: marketingPushEnabled,
+        occupancyPushEnabled: occupancyPushEnabled,
+        logPushEnabled: logPushEnabled,
+        favoriteCafeIdList: favoriteCafeIdList
+      );
+      return parseUserFromUserResponse(userRes);
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      try {
+        final UserResponse userRes = await userRepository.updateProfile(
+          accessToken: newToken,
+          profileId: profileId,
+          nickname: nickname,
+          ageRange: ageRange,
+          dateOfBirth: dateOfBirth,
+          phoneNumber: phoneNumber,
+          fcmToken: fcmToken,
+          gender: gender,
+          profileImageId: profileImageId,
+          marketingPushEnabled: marketingPushEnabled,
+          occupancyPushEnabled: occupancyPushEnabled,
+          logPushEnabled: logPushEnabled,
+          favoriteCafeIdList: favoriteCafeIdList
+        );
+        return parseUserFromUserResponse(userRes);
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
