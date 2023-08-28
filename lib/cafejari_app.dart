@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
@@ -10,30 +11,31 @@ import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_occupancy_update.dar
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_preview.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'ui/state/map_state/map_state.dart';
-import 'ui/view_model/global_view_model.dart';
 
-final darkModeProvider = StateProvider<bool>((ref) => false);
-
-class CafejariApp extends ConsumerWidget  {
+class CafejariApp extends ConsumerWidget {
   const CafejariApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool darkMode = ref.watch(darkModeProvider);
 
     return MaterialApp.router(
-      theme: darkMode ? Theming.darkTheme : Theming.lightTheme,
+      theme: Theming.lightTheme,
       routerConfig: appRouter,
     );
   }
@@ -46,18 +48,67 @@ class RootScreen extends ConsumerStatefulWidget {
   RootScreenState createState() => RootScreenState();
 }
 
-class RootScreenState extends ConsumerState<RootScreen> {
+class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    Future.delayed(Duration.zero, () async {
+      final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+      await globalViewModel.init();
+      FlutterNativeSplash.remove();
+
+      final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+      final Uri? deepLink = data?.link;
+      if (deepLink.isNotNull) {
+        // 링크를 통해 실행된 경우
+        final List<String> separatedString = [];
+        separatedString.addAll(deepLink!.path.split('/'));
+        if (separatedString[1] == "map") {
+          final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+          if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+          globalViewModel.updateCurrentPageTo(PageType.map.index);
+          globalViewModel.showSnackBar(content: "카페 id: ${separatedString[2]}", type: SnackBarType.complete);
+        }
+      }
+      // 링크 작업 등록
+      FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
+        final Uri deepLink = pendingDynamicLinkData.link;
+        final List<String> separatedString = [];
+        separatedString.addAll(deepLink.path.split('/'));
+        if (separatedString[1] == "map") {
+          final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+          if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+          globalViewModel.updateCurrentPageTo(PageType.map.index);
+          globalViewModel.showSnackBar(content: "카페 id는\n${separatedString[2]}", type: SnackBarType.complete);
+        }
+      },
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
-    final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
     final double deviceHeight = MediaQuery.of(context).size.height;
     const double bottomSheetPreviewHeight = 268;
     const double bottomSheetPreviewCornerRadius = 20;
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
     return RefreshConfiguration(
       headerBuilder: () => const WaterDropMaterialHeader(backgroundColor: AppColor.primary),
@@ -69,7 +120,7 @@ class RootScreenState extends ConsumerState<RootScreen> {
       child: WillPopScope(
         onWillPop: () async {
           if (globalState.currentPage.index != 0) {
-            globalViewModel.updateCurrentPageTo(0);
+            mapViewModel.globalViewModel.updateCurrentPageTo(0);
             return false;
           } else if(mapState.isSearchPageVisible) {
             mapViewModel.closeSearchPage();

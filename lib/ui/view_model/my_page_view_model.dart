@@ -25,5 +25,13 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
     }
   }
 
+  test() async {
+    await _userUseCase.updateProfile(
+      accessToken: globalViewModel.state.accessToken,
+      profileId: globalViewModel.state.user.profileId,
+      marketingPushEnabled: true
+    );
+  }
+
   get add => state = state.copyWith(counter: state.counter + 1);
 }

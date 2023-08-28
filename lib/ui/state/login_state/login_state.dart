@@ -15,6 +15,7 @@ class LoginState with _$LoginState {
         required final ({int profileImageId, String imageUrl}) selectedProfileImage,
         required final TextEditingController nicknameController,
         required final String nicknameErrorMessage,
+        required final bool isMarketingAgreed,
         required final PanelController bottomSheetController,
         required final String kakaoAccessToken,
         required final String appleAccessToken}) = _LoginState;
@@ -24,6 +25,7 @@ class LoginState with _$LoginState {
     selectedProfileImage: (profileImageId: 0, imageUrl: ""),
     nicknameController: TextEditingController(text: ""),
     nicknameErrorMessage: "",
+    isMarketingAgreed: false,
     bottomSheetController: PanelController(),
     kakaoAccessToken: "",
     appleAccessToken: ""

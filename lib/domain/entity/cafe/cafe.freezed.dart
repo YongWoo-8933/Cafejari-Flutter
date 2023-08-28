@@ -1172,3 +1172,209 @@ abstract class _OpeningHour implements OpeningHour {
   _$$_OpeningHourCopyWith<_$_OpeningHour> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$NaverSearchCafe {
+  String get name => throw _privateConstructorUsedError;
+  String get roadAddress => throw _privateConstructorUsedError;
+  String get dongAddress => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $NaverSearchCafeCopyWith<NaverSearchCafe> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NaverSearchCafeCopyWith<$Res> {
+  factory $NaverSearchCafeCopyWith(
+          NaverSearchCafe value, $Res Function(NaverSearchCafe) then) =
+      _$NaverSearchCafeCopyWithImpl<$Res, NaverSearchCafe>;
+  @useResult
+  $Res call(
+      {String name,
+      String roadAddress,
+      String dongAddress,
+      double latitude,
+      double longitude});
+}
+
+/// @nodoc
+class _$NaverSearchCafeCopyWithImpl<$Res, $Val extends NaverSearchCafe>
+    implements $NaverSearchCafeCopyWith<$Res> {
+  _$NaverSearchCafeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? roadAddress = null,
+    Object? dongAddress = null,
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      roadAddress: null == roadAddress
+          ? _value.roadAddress
+          : roadAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      dongAddress: null == dongAddress
+          ? _value.dongAddress
+          : dongAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_NaverSearchCafeCopyWith<$Res>
+    implements $NaverSearchCafeCopyWith<$Res> {
+  factory _$$_NaverSearchCafeCopyWith(
+          _$_NaverSearchCafe value, $Res Function(_$_NaverSearchCafe) then) =
+      __$$_NaverSearchCafeCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String name,
+      String roadAddress,
+      String dongAddress,
+      double latitude,
+      double longitude});
+}
+
+/// @nodoc
+class __$$_NaverSearchCafeCopyWithImpl<$Res>
+    extends _$NaverSearchCafeCopyWithImpl<$Res, _$_NaverSearchCafe>
+    implements _$$_NaverSearchCafeCopyWith<$Res> {
+  __$$_NaverSearchCafeCopyWithImpl(
+      _$_NaverSearchCafe _value, $Res Function(_$_NaverSearchCafe) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? roadAddress = null,
+    Object? dongAddress = null,
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_$_NaverSearchCafe(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      roadAddress: null == roadAddress
+          ? _value.roadAddress
+          : roadAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      dongAddress: null == dongAddress
+          ? _value.dongAddress
+          : dongAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_NaverSearchCafe implements _NaverSearchCafe {
+  _$_NaverSearchCafe(
+      {required this.name,
+      required this.roadAddress,
+      required this.dongAddress,
+      required this.latitude,
+      required this.longitude});
+
+  @override
+  final String name;
+  @override
+  final String roadAddress;
+  @override
+  final String dongAddress;
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+
+  @override
+  String toString() {
+    return 'NaverSearchCafe(name: $name, roadAddress: $roadAddress, dongAddress: $dongAddress, latitude: $latitude, longitude: $longitude)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_NaverSearchCafe &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.roadAddress, roadAddress) ||
+                other.roadAddress == roadAddress) &&
+            (identical(other.dongAddress, dongAddress) ||
+                other.dongAddress == dongAddress) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, name, roadAddress, dongAddress, latitude, longitude);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_NaverSearchCafeCopyWith<_$_NaverSearchCafe> get copyWith =>
+      __$$_NaverSearchCafeCopyWithImpl<_$_NaverSearchCafe>(this, _$identity);
+}
+
+abstract class _NaverSearchCafe implements NaverSearchCafe {
+  factory _NaverSearchCafe(
+      {required final String name,
+      required final String roadAddress,
+      required final String dongAddress,
+      required final double latitude,
+      required final double longitude}) = _$_NaverSearchCafe;
+
+  @override
+  String get name;
+  @override
+  String get roadAddress;
+  @override
+  String get dongAddress;
+  @override
+  double get latitude;
+  @override
+  double get longitude;
+  @override
+  @JsonKey(ignore: true)
+  _$$_NaverSearchCafeCopyWith<_$_NaverSearchCafe> get copyWith =>
+      throw _privateConstructorUsedError;
+}

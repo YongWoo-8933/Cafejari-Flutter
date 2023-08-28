@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class LoginViewModel extends StateNotifier<LoginState> {
   final UserUseCase _userUseCase;
   final GlobalViewModel globalViewModel;
+
+  clearViewModel() => state = LoginState.empty();
 
   LoginViewModel({required UserUseCase userUseCase, required this.globalViewModel})
       : _userUseCase = userUseCase,
@@ -23,9 +26,10 @@ class LoginViewModel extends StateNotifier<LoginState> {
         final loginFinishRes =
             await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
         globalViewModel.saveLoginResult(
-            accessToken: loginFinishRes.accessToken,
-            refreshToken: loginFinishRes.refreshToken,
-            user: loginFinishRes.user);
+          accessToken: loginFinishRes.accessToken,
+          refreshToken: loginFinishRes.refreshToken,
+          user: loginFinishRes.user
+        );
         return true;
       } else {
         // 가입 유저
@@ -42,29 +46,25 @@ class LoginViewModel extends StateNotifier<LoginState> {
     try {
       final ({String accessToken, String refreshToken, User user}) loginRes =
           await _userUseCase.kakaoLoginFinish(accessToken: state.kakaoAccessToken);
+      final User makeNewProfileRes = await _userUseCase.makeNewProfile(
+        accessToken: loginRes.accessToken,
+        fcmToken: "",
+        nickname: state.nicknameController.text,
+        userId: globalViewModel.state.user.userId,
+        profileImageId: state.selectedProfileImage.profileImageId,
+        marketingPushEnabled: state.isMarketingAgreed
+      );
       globalViewModel.saveLoginResult(
         accessToken: loginRes.accessToken,
         refreshToken: loginRes.refreshToken,
-        user: loginRes.user);
-      print(globalViewModel.state.accessToken);
-      print(globalViewModel.state.user);
-      globalViewModel.saveLoginResult(
-        accessToken: globalViewModel.state.accessToken,
-        refreshToken: loginRes.refreshToken,
-        user: await _userUseCase.makeNewProfile(
-          accessToken: globalViewModel.state.accessToken,
-          fcmToken: "",
-          nickname: state.nicknameController.text,
-          userId: globalViewModel.state.user.userId,
-          profileImageId: state.selectedProfileImage.profileImageId
-        )
+        user: makeNewProfileRes
       );
       return true;
     } on RefreshTokenExpired {
       // 로그아웃 로직
       return false;
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
       return false;
     }
   }
@@ -109,4 +109,6 @@ class LoginViewModel extends StateNotifier<LoginState> {
   }
 
   setNicknameErrorMessage(String message) => state = state.copyWith(nicknameErrorMessage: message);
+
+  setMarketingAgreement(bool isAgreed) => state = state.copyWith(isMarketingAgreed: isAgreed);
 }

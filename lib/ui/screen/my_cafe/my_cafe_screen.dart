@@ -1,13 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/top_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/cafe_ref_part.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/my_cafe_part.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/my_cati_part.dart';
-import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
 import 'package:cafejari_flutter/ui/view_model/my_cafe_view_model.dart';
 import 'package:flutter/cupertino.dart';

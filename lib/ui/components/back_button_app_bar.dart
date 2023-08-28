@@ -25,7 +25,7 @@ class BackButtonAppBar extends AppBar {
         ),
         Visibility(
             visible: backButtonText.isNotNull,
-            child: Text(backButtonText ?? "", style: TextSize.textSize_16,)
+            child: Text(backButtonText ?? "", style: TextSize.textSize_16)
         )
       ]
     ),

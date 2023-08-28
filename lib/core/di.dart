@@ -149,13 +149,15 @@ final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
 // view model --------------------------------------------------------------------------------------
 final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalState>((ref) {
   final TokenUseCase tokenUseCase = ref.watch(tokenUseCaseProvider);
-  return GlobalViewModel(tokenUseCase, null, null);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return GlobalViewModel(tokenUseCase, userUseCase, null, null);
 });
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
-  final CafeUseCase mapUseCase = ref.watch(cafeUseCaseProvider);
-  return MapViewModel(mapUseCase: mapUseCase, globalViewModel: viewModel);
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return MapViewModel(cafeUseCase: cafeUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
 });
 
 final myCafeViewModelProvider = StateNotifierProvider<MyCafeViewModel, MyCafeState>((ref) {
@@ -203,7 +205,8 @@ final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, Cha
 });
 
 final requestViewModelProvider = StateNotifierProvider<RequestViewModel, RequestState>((ref) {
-  return RequestViewModel();
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  return RequestViewModel(cafeUseCase: cafeUseCase);
 });
 
 

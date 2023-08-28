@@ -38,10 +38,7 @@ class OnMap extends ConsumerWidget {
                   child: FloatingActionButton.extended(
                     elevation: 3,
                     icon: const Icon(size: 18, CupertinoIcons.refresh),
-                    onPressed: () async => await mapViewModel.refreshCafes(
-                      cameraPosition: await mapState.mapController?.getCameraPosition() ??
-                        NLocation.sinchon().cameraPosition
-                    ),
+                    onPressed: () async => await mapViewModel.refreshCafes(),
                     label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
                     backgroundColor: AppColor.white,
                   ),

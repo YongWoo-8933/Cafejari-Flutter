@@ -1,8 +1,11 @@
 
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
+import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -15,15 +18,20 @@ import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class MapViewModel extends StateNotifier<MapState> {
-  final CafeUseCase _mapUseCase;
+  final CafeUseCase _cafeUseCase;
+  final UserUseCase _userUseCase;
   final GlobalViewModel globalViewModel;
 
-  MapViewModel({required CafeUseCase mapUseCase, required this.globalViewModel})
-      : _mapUseCase = mapUseCase, super(MapState.empty().copyWith());
+  MapViewModel({
+    required CafeUseCase cafeUseCase,
+    required UserUseCase userUseCase,
+    required this.globalViewModel
+  }): _cafeUseCase = cafeUseCase, _userUseCase = userUseCase, super(MapState.empty().copyWith());
 
-  refreshCafes({required NCameraPosition cameraPosition}) async {
+  refreshCafes({NCameraPosition? cameraPosition}) async {
+    final NCameraPosition nonNullCameraPosition = cameraPosition ?? await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition;
     try {
-      final Cafes newCafes = await _mapUseCase.getMapCafes(cameraPosition: cameraPosition);
+      final Cafes newCafes = await _cafeUseCase.getMapCafes(cameraPosition: nonNullCameraPosition);
       Set<NMarker> resSet = {};
       for (var cafe in newCafes) {
         var marker = NMarker(
@@ -66,7 +74,7 @@ class MapViewModel extends StateNotifier<MapState> {
   searchCafe() async {
     try {
       state = state.copyWith(
-          searchPredictions: await _mapUseCase.getSearchCafes(query: state.searchQueryController.text));
+          searchPredictions: await _cafeUseCase.getSearchCafes(query: state.searchQueryController.text));
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
@@ -118,5 +126,30 @@ class MapViewModel extends StateNotifier<MapState> {
     await Future.delayed(AppDuration.animationDefault, () {
       state = state.copyWith(isSearchPageVisible: false);
     });
+  }
+
+  updateFavoriteCafeList(int cafeId) async {
+    try {
+      List<int> newCafeIdList = List.from(globalViewModel.state.user.favoriteCafes.map((e) => e.id).toList());
+      if(newCafeIdList.contains(cafeId)) {
+        // 내 카페 해제
+        newCafeIdList.remove(cafeId);
+        globalViewModel.showSnackBar(content: "내 카페에서 \n제외됨", type: SnackBarType.complete);
+      } else {
+        // 내 카페 등록
+        newCafeIdList.add(cafeId);
+        globalViewModel.showSnackBar(content: "내 카페에 \n추가됨", type: SnackBarType.complete);
+      }
+      final User updatedUser = await _userUseCase.updateProfile(
+        accessToken: globalViewModel.state.accessToken,
+        profileId: globalViewModel.state.user.profileId,
+        favoriteCafeIdList: newCafeIdList
+      );
+      globalViewModel.saveLoginResult(accessToken: globalViewModel.state.accessToken, user: updatedUser);
+    } on RefreshTokenExpired {
+      null;
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    }
   }
 }

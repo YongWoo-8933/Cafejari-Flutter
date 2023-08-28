@@ -24,6 +24,7 @@ mixin _$GlobalState {
   bool get isSnackBarExpanded => throw _privateConstructorUsedError;
   String get snackBarText => throw _privateConstructorUsedError;
   SnackBarType get snackBarType => throw _privateConstructorUsedError;
+  Position? get currentDeviceLocation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -44,7 +45,8 @@ abstract class $GlobalStateCopyWith<$Res> {
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
       String snackBarText,
-      SnackBarType snackBarType});
+      SnackBarType snackBarType,
+      Position? currentDeviceLocation});
 
   $UserCopyWith<$Res> get user;
 }
@@ -70,6 +72,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? isSnackBarExpanded = null,
     Object? snackBarText = null,
     Object? snackBarType = null,
+    Object? currentDeviceLocation = freezed,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -104,6 +107,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.snackBarType
           : snackBarType // ignore: cast_nullable_to_non_nullable
               as SnackBarType,
+      currentDeviceLocation: freezed == currentDeviceLocation
+          ? _value.currentDeviceLocation
+          : currentDeviceLocation // ignore: cast_nullable_to_non_nullable
+              as Position?,
     ) as $Val);
   }
 
@@ -132,7 +139,8 @@ abstract class _$$_GlobalStateCopyWith<$Res>
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
       String snackBarText,
-      SnackBarType snackBarType});
+      SnackBarType snackBarType,
+      Position? currentDeviceLocation});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -157,6 +165,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? isSnackBarExpanded = null,
     Object? snackBarText = null,
     Object? snackBarType = null,
+    Object? currentDeviceLocation = freezed,
   }) {
     return _then(_$_GlobalState(
       accessToken: null == accessToken
@@ -191,6 +200,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.snackBarType
           : snackBarType // ignore: cast_nullable_to_non_nullable
               as SnackBarType,
+      currentDeviceLocation: freezed == currentDeviceLocation
+          ? _value.currentDeviceLocation
+          : currentDeviceLocation // ignore: cast_nullable_to_non_nullable
+              as Position?,
     ));
   }
 }
@@ -206,7 +219,8 @@ class _$_GlobalState implements _GlobalState {
       required this.isSnackBarOpened,
       required this.isSnackBarExpanded,
       required this.snackBarText,
-      required this.snackBarType});
+      required this.snackBarType,
+      required this.currentDeviceLocation});
 
   @override
   final String accessToken;
@@ -224,10 +238,12 @@ class _$_GlobalState implements _GlobalState {
   final String snackBarText;
   @override
   final SnackBarType snackBarType;
+  @override
+  final Position? currentDeviceLocation;
 
   @override
   String toString() {
-    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType)';
+    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation)';
   }
 
   @override
@@ -249,7 +265,9 @@ class _$_GlobalState implements _GlobalState {
             (identical(other.snackBarText, snackBarText) ||
                 other.snackBarText == snackBarText) &&
             (identical(other.snackBarType, snackBarType) ||
-                other.snackBarType == snackBarType));
+                other.snackBarType == snackBarType) &&
+            (identical(other.currentDeviceLocation, currentDeviceLocation) ||
+                other.currentDeviceLocation == currentDeviceLocation));
   }
 
   @override
@@ -262,7 +280,8 @@ class _$_GlobalState implements _GlobalState {
       isSnackBarOpened,
       isSnackBarExpanded,
       snackBarText,
-      snackBarType);
+      snackBarType,
+      currentDeviceLocation);
 
   @JsonKey(ignore: true)
   @override
@@ -280,7 +299,8 @@ abstract class _GlobalState implements GlobalState {
       required final bool isSnackBarOpened,
       required final bool isSnackBarExpanded,
       required final String snackBarText,
-      required final SnackBarType snackBarType}) = _$_GlobalState;
+      required final SnackBarType snackBarType,
+      required final Position? currentDeviceLocation}) = _$_GlobalState;
 
   @override
   String get accessToken;
@@ -298,6 +318,8 @@ abstract class _GlobalState implements GlobalState {
   String get snackBarText;
   @override
   SnackBarType get snackBarType;
+  @override
+  Position? get currentDeviceLocation;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>

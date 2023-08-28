@@ -35,7 +35,7 @@ mixin _$User {
   String? get dateOfBirth => throw _privateConstructorUsedError;
   int? get gender => throw _privateConstructorUsedError;
   Grade get grade => throw _privateConstructorUsedError;
-  List<int> get favoriteCafes => throw _privateConstructorUsedError;
+  List<Cafe> get favoriteCafes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
@@ -66,7 +66,7 @@ abstract class $UserCopyWith<$Res> {
       String? dateOfBirth,
       int? gender,
       Grade grade,
-      List<int> favoriteCafes});
+      List<Cafe> favoriteCafes});
 
   $GradeCopyWith<$Res> get grade;
 }
@@ -185,7 +185,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       favoriteCafes: null == favoriteCafes
           ? _value.favoriteCafes
           : favoriteCafes // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as List<Cafe>,
     ) as $Val);
   }
 
@@ -224,7 +224,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? dateOfBirth,
       int? gender,
       Grade grade,
-      List<int> favoriteCafes});
+      List<Cafe> favoriteCafes});
 
   @override
   $GradeCopyWith<$Res> get grade;
@@ -340,7 +340,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       favoriteCafes: null == favoriteCafes
           ? _value._favoriteCafes
           : favoriteCafes // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as List<Cafe>,
     ));
   }
 }
@@ -368,7 +368,7 @@ class _$_User implements _User {
       required this.dateOfBirth,
       required this.gender,
       required this.grade,
-      required final List<int> favoriteCafes})
+      required final List<Cafe> favoriteCafes})
       : _favoriteCafes = favoriteCafes;
 
   @override
@@ -409,9 +409,9 @@ class _$_User implements _User {
   final int? gender;
   @override
   final Grade grade;
-  final List<int> _favoriteCafes;
+  final List<Cafe> _favoriteCafes;
   @override
-  List<int> get favoriteCafes {
+  List<Cafe> get favoriteCafes {
     if (_favoriteCafes is EqualUnmodifiableListView) return _favoriteCafes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_favoriteCafes);
@@ -516,7 +516,7 @@ abstract class _User implements User {
       required final String? dateOfBirth,
       required final int? gender,
       required final Grade grade,
-      required final List<int> favoriteCafes}) = _$_User;
+      required final List<Cafe> favoriteCafes}) = _$_User;
 
   @override
   int get userId;
@@ -557,7 +557,7 @@ abstract class _User implements User {
   @override
   Grade get grade;
   @override
-  List<int> get favoriteCafes;
+  List<Cafe> get favoriteCafes;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

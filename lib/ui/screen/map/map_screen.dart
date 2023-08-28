@@ -4,7 +4,8 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
 import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/util/permission_request.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 
 class MapScreen extends ConsumerStatefulWidget {
@@ -22,27 +24,50 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 
-class MapScreenState extends ConsumerState<MapScreen> {
+class MapScreenState extends ConsumerState<MapScreen> with WidgetsBindingObserver {
+  late AppLifecycleState _lastLifecycleState;
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    setState(() {
+      _lastLifecycleState = state;
+    });
+    if(_lastLifecycleState.name == "resumed") {
+      final currentPage = ref.watch(globalViewModelProvider).currentPage;
+      ref.watch(globalViewModelProvider.notifier).updateCurrentPageTo(PageType.map.index);
+      ref.watch(globalViewModelProvider.notifier).updateCurrentPageTo(currentPage.index);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     Future.delayed(Duration.zero, () async {
-      locationPermission();
-      ref.watch(mapViewModelProvider).pageController.addListener(() {
-        final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-        final page = ref.watch(mapViewModelProvider).pageController.page ?? 0;
-        if (page.isNotNull && page == page.toInt()) {
-          mapViewModel.setCurrentPage(page.toInt());
-        }
-      });
+      await ref.watch(globalViewModelProvider.notifier).locationTrackingStart();
+    });
+    Future.delayed(const Duration(seconds: 5), () async {
+      final mapViewModel = ref.watch(mapViewModelProvider.notifier);
+      final mapState = ref.watch(mapViewModelProvider);
+      Position? location = await mapViewModel.globalViewModel.getFirstLocation();
+      mapState.mapController?.setLocationTrackingMode(NLocationTrackingMode.face);
+      final NCameraPosition cameraPosition = location.isNotNull ?
+        NCameraPosition(target: NLatLng(location!.latitude, location.longitude), zoom: Zoom.medium) :
+        NLocation.sinchon().cameraPosition;
+      mapState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+      mapViewModel.refreshCafes(cameraPosition: cameraPosition);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final MapState mapState = ref.watch(mapViewModelProvider);
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final double bottomNavBarHeight = ref.read(bottomNavBarHeightProvider);
     final double bottomNavBarCornerRadius = ref.read(bottomNavBarCornerRadiusProvider);
 
@@ -52,9 +77,7 @@ class MapScreenState extends ConsumerState<MapScreen> {
         children: [
           _NaverMap(),
           OnMap(),
-          SearchPage(
-
-          )
+          SearchPage()
         ],
       ),
     );
@@ -83,7 +106,7 @@ class _NaverMap extends ConsumerWidget {
       ),
       forceGesture: true,
       onMapReady: (controller) => mapViewModel.initMapController(controller),
-      onMapTapped: (_, latLng) => mapState.bottomSheetController.close(),
+      onMapTapped: (_, latLng) => mapViewModel.closeBottomSheetPreview(),
       onCameraIdle: () {
         if(!mapState.isRefreshButtonVisible) {
           mapViewModel.setRefreshButtonVisible(true);

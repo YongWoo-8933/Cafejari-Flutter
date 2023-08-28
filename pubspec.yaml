@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.13.0
   firebase_analytics: ^10.4.1
   firebase_messaging: ^14.6.1
+  firebase_dynamic_links: ^5.3.5
 
   # 푸시알림
   flutter_local_notifications: ^14.1.0
@@ -109,7 +110,12 @@ dependencies:
   # 로딩 애니메이션
   loading_animation_widget: ^1.2.0+4
 
-  flutter_datetime_picker_plus: ^2.0.1
+  # 스플래시 화면
+  flutter_native_splash: ^2.3.2
+
+  # html 표현 변환
+  flutter_widget_from_html: ^0.10.3
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:

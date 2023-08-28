@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_cati.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_point.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_ranking.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
@@ -46,6 +47,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     final MyPageState myPageState = ref.watch(myPageViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final LeaderboardState leaderboardState = ref.watch(leaderboardViewModelProvider);
     final MyPageViewModel myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
@@ -81,7 +83,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
               children: [
                 MyPageImage(),
                 SizedBox(height: 13),
-                Text("${myPageState.user.nickname}", style: TextSize.textSize_white_16),
+                Text("${globalState.user.nickname}", style: TextSize.textSize_white_16),
                 SizedBox(height: 13),
                 MyPagePoint(),
                 MyPageCATI(),

@@ -18,6 +18,7 @@ abstract interface class CafeUseCase {
   Future<OccupancyRateUpdates> getMyOccupancyUpdates({required String accessToken});
   Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({required String accessToken});
   Future<CafeAdditionRequests> getMyCafeAdditionRequests({required String accessToken});
+  Future<NaverSearchCafes> getNaverSearchCafes({required String query});
 }
 
 /// CafeUseCase 구현 부분
@@ -101,9 +102,9 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       try {
         return await f(
-            cafeRepository: cafeRepository,
-            accessToken: newToken,
-            type: GetMyOccupancyUpdateType.recent
+          cafeRepository: cafeRepository,
+          accessToken: newToken,
+          type: GetMyOccupancyUpdateType.recent
         );
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
@@ -135,6 +136,24 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       }
     } on RefreshTokenExpired {
       rethrow;
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<NaverSearchCafes> getNaverSearchCafes({required String query}) async {
+    try {
+      NaverSearchCafeResponse searchCafeResponse = await cafeRepository.fetchNaverSearchResult(query: query);
+      return searchCafeResponse.items.map((e) {
+        return NaverSearchCafe(
+          name: e.title,
+          roadAddress: e.roadAddress,
+          dongAddress: e.address,
+          latitude: double.parse(e.mapy.substring(0, 2)) + double.parse("0.${e.mapy.substring(2)}"),
+          longitude: double.parse(e.mapx.substring(0, 3)) + double.parse("0.${e.mapx.substring(3)}")
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

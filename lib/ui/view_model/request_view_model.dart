@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
@@ -13,8 +14,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class RequestViewModel extends StateNotifier<RequestState> {
+  final CafeUseCase _cafeUseCase;
 
-  RequestViewModel() : super(RequestState.empty());
+  RequestViewModel({required CafeUseCase cafeUseCase}) : _cafeUseCase = cafeUseCase, super(RequestState.empty());
+
+  clearViewModel() => state = RequestState.empty();
 
   initMapController(NaverMapController controller) => state = state.copyWith(mapController: controller);
 
@@ -86,4 +90,14 @@ class RequestViewModel extends StateNotifier<RequestState> {
   setIsWallSocketEdited(bool isEdited) => state = state.copyWith(isWallSocketEdited: isEdited);
 
   setIsOpeningHourEdited(bool isEdited) => state = state.copyWith(isOpeningHourEdited: isEdited);
+
+  searchCafe() async {
+    state = state.copyWith(
+      searchCafePredictions: await _cafeUseCase.getNaverSearchCafes(query: state.searchQueryController.text)
+    );
+  }
+
+  clearSearchCafePredictions() => state = state.copyWith(searchCafePredictions: []);
+
+  selectSearchCafe(NaverSearchCafe searchCafe) => state = state.copyWith(selectedSearchCafe: searchCafe);
 }

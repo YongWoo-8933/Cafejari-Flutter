@@ -1,9 +1,8 @@
 
 
 class ScreenRoute {
-
+  static const String appPermission = "app_permission_screen";
   static const String root = "root_screen";
-  static const String splash = "splash_screen";
   static const String login = "login_screen";
   static const String registration = "registration_screen";
   static const String map = "map_screen";
@@ -14,7 +13,7 @@ class ScreenRoute {
   static const String point = "point_screen";
   static const String shop = "shop_screen";
   static const String push = "push_screen";
-  static const String leader_board = "leader_board_screen";
+  static const String leaderboard = "leaderboard_screen";
   static const String cafeRegistration = "cafe_registration_screen";
   static const String faq = "faq_screen";
   static const String event = "event_screen";
@@ -22,7 +21,6 @@ class ScreenRoute {
   static const String privacy_policy = "privacy_policy_screen";
   static const String terms_of_service = "terms_of_service_screen";
   static const String update = "update_screen";
-
 }
 
 enum PageType { map, myCafe, challenge, myPage }

@@ -24,7 +24,7 @@ class APIService {
         String? accessToken,
         Map<String, dynamic>? body,
         Map<String, dynamic>? query}) async {
-    Map<String, String> headers = {"Content-Type": "application/x-www-form-urlencoded"};
+    Map<String, String> headers = {"Content-Type": "application/json"};
     if (accessToken.isNotNull) headers["Authorization"] = "Bearer $accessToken";
     final stringQuery = query?.map((key, value) => MapEntry(key, value.toString()));
 
@@ -36,12 +36,12 @@ class APIService {
       HttpMethod.post => await post(
         Uri.https(_baseUrl, "/$appLabel/$endpoint"),
         headers: headers,
-        body: body?.map((key, value) => MapEntry(key, value.toString()))
+        body: json.encode(body)
       ),
       HttpMethod.put => await put(
         Uri.https(_baseUrl, "/$appLabel/$endpoint"),
         headers: headers,
-        body: body?.map((key, value) => MapEntry(key, value.toString()))
+        body: json.encode(body)
       ),
       HttpMethod.delete => await delete(
         Uri.https(_baseUrl, "/$appLabel/$endpoint"),
@@ -53,8 +53,6 @@ class APIService {
       // 200번대 (성공)
       return jsonDecode(utf8.decode(response.bodyBytes));
     } else if (response.statusCode < 500) {
-      print(response);
-      print(response.body);
       // 400, 300번대 에러
       switch (response.statusCode) {
         case 400:
