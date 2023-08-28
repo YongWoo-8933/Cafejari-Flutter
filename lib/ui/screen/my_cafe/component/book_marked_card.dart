@@ -1,19 +1,17 @@
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BookMarkedCard extends StatelessWidget {
-  final String cafeName;
-  final String cafeAddress;
+  final Cafe cafe;
   final VoidCallback? onPressed;
-  final String? cafeImage;
 
   BookMarkedCard({
-    required this.cafeName,
-    required this.cafeAddress,
+    required this.cafe,
     this.onPressed,
-    this.cafeImage
   });
 
   @override
@@ -23,21 +21,22 @@ class BookMarkedCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 70,
-            height: 70,
-            decoration: const BoxDecoration(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('asset/image/cafe_icon_2.png')
-                // NetworkImage(cafeImage ?? " ")
-              ),
+              // 원 모양의 배경 색상 또는 이미지를 설정할 수도 있습니다.
+              color: Colors.blue, // 예시 색상, 필요에 따라 변경해주세요.
+            ),
+            child: ClipOval(
+              child: CustomCachedNetworkImage(imageUrl: cafe.imageUrls[0]),
+              // cafe.imageUrls.isNotEmpty ? CustomCachedNetworkImage(imageUrl: cafe.imageUrls[0]) : Image.asset('asset/image/testimage.png'),
             ),
           ),
           SizedBox(height: 10),
-          Text(cafeName, style: TextSize.textSize_bold_14),
-          Text(cafeAddress, style: TextSize.textSize_grey_12),
-          SizedBox(height: 10),
+          Text(cafe.name, style: TextSize.textSize_bold_14),
+          SizedBox(height: 5),
+          Text(cafe.address, style: TextSize.textSize_grey_12),
           ElevatedButton(
             onPressed: () {
               onPressed;

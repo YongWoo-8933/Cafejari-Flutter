@@ -26,7 +26,7 @@ class MyPageImage extends ConsumerWidget {
         ),
           child:  ProfileImageEditable(
               size: 160,
-              imageUrl: "https://cafejariimage.co.kr/user/profile/기본_프로필사진_7309711.png",
+              imageUrl: myPageState.user.imageUrl,
               onEditButtonClick: () => loginState.bottomSheetController.open()
           ),
         ),

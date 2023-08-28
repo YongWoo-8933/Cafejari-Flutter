@@ -28,7 +28,6 @@ class PushViewModel extends StateNotifier<PushState> {
 
   setTypePush(PushType pushType) {
     final Pushes pushes = [];
-    state = state.copyWith(typePushes: pushes);
     for(int i =0; i<state.pushes.length; i++){
       if(state.pushes[i].type.tag == pushType.tag){
         pushes.add(state.pushes[i]);

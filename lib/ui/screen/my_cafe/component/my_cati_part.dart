@@ -40,8 +40,8 @@ class MyCATIPart extends ConsumerWidget {
               )
             ],
           ),
-          SizedBox(height: 10),
-          CATIBlocks(is1stBlockClicked: true, is2ndBlockClicked: true, is3rdBlockClicked: true, is4thBlockClicked: true),
+          SizedBox(height: 30),
+          CATIBlocks(is1stBlockClicked: true, is2ndBlockClicked: false, is3rdBlockClicked: true, is4thBlockClicked: true),
         ],
       ),
     );

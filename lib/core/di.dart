@@ -16,12 +16,14 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
+import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/my_cafe_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/my_page_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/push_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
@@ -154,6 +156,13 @@ final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref)
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final CafeUseCase mapUseCase = ref.watch(cafeUseCaseProvider);
   return MapViewModel(mapUseCase: mapUseCase, globalViewModel: viewModel);
+});
+
+final myCafeViewModelProvider = StateNotifierProvider<MyCafeViewModel, MyCafeState>((ref) {
+  final viewModel = ref.watch(globalViewModelProvider.notifier);
+  final mapViewModel = ref.watch(mapViewModelProvider.notifier);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return MyCafeViewModel(userUseCase: userUseCase, globalViewModel: viewModel, mapViewModel: mapViewModel);
 });
 
 final myPageViewModelProvider = StateNotifierProvider<MyPageViewModel, MyPageState>((ref) {
