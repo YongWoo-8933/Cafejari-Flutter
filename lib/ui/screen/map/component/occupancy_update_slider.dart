@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
+import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
-
-
-final _occupancyRate = StateProvider<double>((ref) => 0);
 
 class OccupancyUpdateSlider extends ConsumerWidget {
   final double width;
@@ -22,6 +20,7 @@ class OccupancyUpdateSlider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     const double thumbWidth = 20;
 
@@ -75,7 +74,7 @@ class OccupancyUpdateSlider extends ConsumerWidget {
             child: SfSlider(
               min: 0.0,
               max: 100.0,
-              value: ref.watch(_occupancyRate),
+              value: mapState.occupancySliderValue,
               stepSize: 1.0,
               showTicks: false,
               tooltipTextFormatterCallback: (_, str) => "혼잡도 $str%",
@@ -83,10 +82,8 @@ class OccupancyUpdateSlider extends ConsumerWidget {
               enableTooltip: true,
               activeColor: AppColor.transparent,
               inactiveColor: AppColor.transparent,
-              thumbIcon: Image.asset((ref.watch(_occupancyRate)/100).toOccupancyLevel().thumbImagePath),
-              onChanged: (dynamic value) {
-                ref.watch(_occupancyRate.notifier).update((state) => state = value);
-              }
+              thumbIcon: Image.asset((mapState.occupancySliderValue/100).toOccupancyLevel().thumbImagePath),
+              onChanged: (dynamic value) => mapViewModel.updateOccupancySliderValue(value)
             ),
           ),
         )

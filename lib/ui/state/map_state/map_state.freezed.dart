@@ -21,7 +21,7 @@ mixin _$MapState {
   PanelController get bottomSheetOccupancyController =>
       throw _privateConstructorUsedError;
   PageController get pageController => throw _privateConstructorUsedError;
-  int get currentPage => throw _privateConstructorUsedError;
+  int get currentCafeImagePage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
   CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
@@ -30,6 +30,7 @@ mixin _$MapState {
   TextEditingController get searchQueryController =>
       throw _privateConstructorUsedError;
   List<Cafe> get searchPredictions => throw _privateConstructorUsedError;
+  double get occupancySliderValue => throw _privateConstructorUsedError;
   bool get isSearchPageVisible => throw _privateConstructorUsedError;
   bool get isSearchPageFadedIn => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewOpened => throw _privateConstructorUsedError;
@@ -52,7 +53,7 @@ abstract class $MapStateCopyWith<$Res> {
       {PanelController bottomSheetController,
       PanelController bottomSheetOccupancyController,
       PageController pageController,
-      int currentPage,
+      int currentCafeImagePage,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
@@ -60,6 +61,7 @@ abstract class $MapStateCopyWith<$Res> {
       NaverMapController? mapController,
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
+      double occupancySliderValue,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
@@ -87,7 +89,7 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? bottomSheetController = null,
     Object? bottomSheetOccupancyController = null,
     Object? pageController = null,
-    Object? currentPage = null,
+    Object? currentCafeImagePage = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
@@ -95,6 +97,7 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? mapController = freezed,
     Object? searchQueryController = null,
     Object? searchPredictions = null,
+    Object? occupancySliderValue = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
@@ -115,9 +118,9 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
               as PageController,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
+      currentCafeImagePage: null == currentCafeImagePage
+          ? _value.currentCafeImagePage
+          : currentCafeImagePage // ignore: cast_nullable_to_non_nullable
               as int,
       cafes: null == cafes
           ? _value.cafes
@@ -147,6 +150,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.searchPredictions
           : searchPredictions // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      occupancySliderValue: null == occupancySliderValue
+          ? _value.occupancySliderValue
+          : occupancySliderValue // ignore: cast_nullable_to_non_nullable
+              as double,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -202,7 +209,7 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       {PanelController bottomSheetController,
       PanelController bottomSheetOccupancyController,
       PageController pageController,
-      int currentPage,
+      int currentCafeImagePage,
       List<Cafe> cafes,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
@@ -210,6 +217,7 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       NaverMapController? mapController,
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
+      double occupancySliderValue,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
@@ -237,7 +245,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? bottomSheetController = null,
     Object? bottomSheetOccupancyController = null,
     Object? pageController = null,
-    Object? currentPage = null,
+    Object? currentCafeImagePage = null,
     Object? cafes = null,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
@@ -245,6 +253,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? mapController = freezed,
     Object? searchQueryController = null,
     Object? searchPredictions = null,
+    Object? occupancySliderValue = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
@@ -265,9 +274,9 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
               as PageController,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
+      currentCafeImagePage: null == currentCafeImagePage
+          ? _value.currentCafeImagePage
+          : currentCafeImagePage // ignore: cast_nullable_to_non_nullable
               as int,
       cafes: null == cafes
           ? _value._cafes
@@ -297,6 +306,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value._searchPredictions
           : searchPredictions // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      occupancySliderValue: null == occupancySliderValue
+          ? _value.occupancySliderValue
+          : occupancySliderValue // ignore: cast_nullable_to_non_nullable
+              as double,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -332,7 +345,7 @@ class _$_MapState implements _MapState {
       {required this.bottomSheetController,
       required this.bottomSheetOccupancyController,
       required this.pageController,
-      required this.currentPage,
+      required this.currentCafeImagePage,
       required final List<Cafe> cafes,
       required this.selectedCafe,
       required this.selectedCafeFloor,
@@ -340,6 +353,7 @@ class _$_MapState implements _MapState {
       required this.mapController,
       required this.searchQueryController,
       required final List<Cafe> searchPredictions,
+      required this.occupancySliderValue,
       required this.isSearchPageVisible,
       required this.isSearchPageFadedIn,
       required this.isBottomSheetPreviewOpened,
@@ -356,7 +370,7 @@ class _$_MapState implements _MapState {
   @override
   final PageController pageController;
   @override
-  final int currentPage;
+  final int currentCafeImagePage;
   final List<Cafe> _cafes;
   @override
   List<Cafe> get cafes {
@@ -385,6 +399,8 @@ class _$_MapState implements _MapState {
   }
 
   @override
+  final double occupancySliderValue;
+  @override
   final bool isSearchPageVisible;
   @override
   final bool isSearchPageFadedIn;
@@ -399,7 +415,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentPage: $currentPage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -415,8 +431,8 @@ class _$_MapState implements _MapState {
                     bottomSheetOccupancyController) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
+            (identical(other.currentCafeImagePage, currentCafeImagePage) ||
+                other.currentCafeImagePage == currentCafeImagePage) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
             (identical(other.selectedCafe, selectedCafe) ||
                 other.selectedCafe == selectedCafe) &&
@@ -430,6 +446,8 @@ class _$_MapState implements _MapState {
                 other.searchQueryController == searchQueryController) &&
             const DeepCollectionEquality()
                 .equals(other._searchPredictions, _searchPredictions) &&
+            (identical(other.occupancySliderValue, occupancySliderValue) ||
+                other.occupancySliderValue == occupancySliderValue) &&
             (identical(other.isSearchPageVisible, isSearchPageVisible) ||
                 other.isSearchPageVisible == isSearchPageVisible) &&
             (identical(other.isSearchPageFadedIn, isSearchPageFadedIn) ||
@@ -456,7 +474,7 @@ class _$_MapState implements _MapState {
       bottomSheetController,
       bottomSheetOccupancyController,
       pageController,
-      currentPage,
+      currentCafeImagePage,
       const DeepCollectionEquality().hash(_cafes),
       selectedCafe,
       selectedCafeFloor,
@@ -464,6 +482,7 @@ class _$_MapState implements _MapState {
       mapController,
       searchQueryController,
       const DeepCollectionEquality().hash(_searchPredictions),
+      occupancySliderValue,
       isSearchPageVisible,
       isSearchPageFadedIn,
       isBottomSheetPreviewOpened,
@@ -483,7 +502,7 @@ abstract class _MapState implements MapState {
       {required final PanelController bottomSheetController,
       required final PanelController bottomSheetOccupancyController,
       required final PageController pageController,
-      required final int currentPage,
+      required final int currentCafeImagePage,
       required final List<Cafe> cafes,
       required final Cafe selectedCafe,
       required final CafeFloor selectedCafeFloor,
@@ -491,6 +510,7 @@ abstract class _MapState implements MapState {
       required final NaverMapController? mapController,
       required final TextEditingController searchQueryController,
       required final List<Cafe> searchPredictions,
+      required final double occupancySliderValue,
       required final bool isSearchPageVisible,
       required final bool isSearchPageFadedIn,
       required final bool isBottomSheetPreviewOpened,
@@ -505,7 +525,7 @@ abstract class _MapState implements MapState {
   @override
   PageController get pageController;
   @override
-  int get currentPage;
+  int get currentCafeImagePage;
   @override
   List<Cafe> get cafes;
   @override
@@ -520,6 +540,8 @@ abstract class _MapState implements MapState {
   TextEditingController get searchQueryController;
   @override
   List<Cafe> get searchPredictions;
+  @override
+  double get occupancySliderValue;
   @override
   bool get isSearchPageVisible;
   @override

@@ -6,6 +6,8 @@ import 'package:cafejari_flutter/domain/entity/request/request.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_map_cafes.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_cafe_addition_requests.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_occupancy_updates.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case/update_occupancy_rate.dart';
+import 'package:cafejari_flutter/domain/use_case/util.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
@@ -14,11 +16,14 @@ import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 /// 카페관련 관련 data CRUD를 처리하는 use case
 abstract interface class CafeUseCase {
   Future<Cafes> getMapCafes({required NCameraPosition cameraPosition});
+  Future<Cafe> getCafe({required int cafeId});
   Future<Cafes> getSearchCafes({required String query});
   Future<OccupancyRateUpdates> getMyOccupancyUpdates({required String accessToken});
   Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({required String accessToken});
   Future<CafeAdditionRequests> getMyCafeAdditionRequests({required String accessToken});
   Future<NaverSearchCafes> getNaverSearchCafes({required String query});
+  Future<OccupancyRateUpdate> updateOccupancy({
+    required double occupancyRate, required int cafeFloorId, String? accessToken});
 }
 
 /// CafeUseCase 구현 부분
@@ -40,6 +45,15 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
           cafeRepository: cafeRepository,
           cameraPosition: cameraPosition
       );
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Cafe> getCafe({required int cafeId}) async {
+    try {
+      return parseCafeFromCafeResponse(await cafeRepository.retrieveCafe(cafeId: cafeId));
     } on ErrorWithMessage {
       rethrow;
     }
@@ -154,6 +168,37 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
           longitude: double.parse(e.mapx.substring(0, 3)) + double.parse("0.${e.mapx.substring(3)}")
         );
       }).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<OccupancyRateUpdate> updateOccupancy({
+    required double occupancyRate,
+    required int cafeFloorId,
+    String? accessToken
+  }) async {
+    final f = UpdateOccupancyRate();
+    try {
+      return await f(
+        cafeRepository: cafeRepository,
+        occupancyRate: occupancyRate,
+        cafeFloorId: cafeFloorId,
+        accessToken: accessToken
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      try {
+        return await f(
+          cafeRepository: cafeRepository,
+          occupancyRate: occupancyRate,
+          cafeFloorId: cafeFloorId,
+          accessToken: newToken
+        );
+      } on AccessTokenExpired {
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
     } on ErrorWithMessage {
       rethrow;
     }

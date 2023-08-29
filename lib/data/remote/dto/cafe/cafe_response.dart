@@ -1,6 +1,7 @@
 
 import 'dart:ffi';
 
+import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 
@@ -14,6 +15,7 @@ class CafeResponse {
   final double latitude, longitude;
   final bool is_visible, is_closed;
   final OpeningHourResponse opening_hour;
+  final BrandResponse? brand;
   final List<CafeFloorCafeRepResponse> cafe_floor;
   final List<CafeVIPResponse> cafe_vip;
   final List<CafeImageResponse> cafe_image;
@@ -27,6 +29,7 @@ class CafeResponse {
       required this.is_visible,
       required this.is_closed,
       required this.opening_hour,
+      required this.brand,
       required this.cafe_floor,
       required this.cafe_vip,
       required this.cafe_image});
@@ -171,15 +174,13 @@ class OccupancyRateUpdateResponse {
   final int id, point;
   final CafeFloorOccupancyRepResponse cafe_floor;
   final String occupancy_rate, update;
-  final PartialUserResponse user;
 
   OccupancyRateUpdateResponse(
       {required this.id,
         required this.cafe_floor,
         required this.point,
         required this.occupancy_rate,
-        required this.update,
-        required this.user});
+        required this.update});
 
   factory OccupancyRateUpdateResponse.fromJson(Map<String, dynamic> json) =>
       _$OccupancyRateUpdateResponseFromJson(json);

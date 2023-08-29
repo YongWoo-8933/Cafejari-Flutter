@@ -39,11 +39,6 @@ class MapScreenState extends ConsumerState<MapScreen> with WidgetsBindingObserve
     setState(() {
       _lastLifecycleState = state;
     });
-    if(_lastLifecycleState.name == "resumed") {
-      final currentPage = ref.watch(globalViewModelProvider).currentPage;
-      ref.watch(globalViewModelProvider.notifier).updateCurrentPageTo(PageType.map.index);
-      ref.watch(globalViewModelProvider.notifier).updateCurrentPageTo(currentPage.index);
-    }
   }
 
   @override

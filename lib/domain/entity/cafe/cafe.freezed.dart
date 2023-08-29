@@ -22,6 +22,8 @@ mixin _$Cafe {
   bool get isClosed => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
+  String? get brandName => throw _privateConstructorUsedError;
+  String? get brandImageUrl => throw _privateConstructorUsedError;
   NLatLng get latLng => throw _privateConstructorUsedError;
   List<CafeFloor> get cafeFloors => throw _privateConstructorUsedError;
   OpeningHour? get openingHour => throw _privateConstructorUsedError;
@@ -44,6 +46,8 @@ abstract class $CafeCopyWith<$Res> {
       bool isClosed,
       String name,
       String address,
+      String? brandName,
+      String? brandImageUrl,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
@@ -72,6 +76,8 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
+    Object? brandName = freezed,
+    Object? brandImageUrl = freezed,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -103,6 +109,14 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
+      brandName: freezed == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      brandImageUrl: freezed == brandImageUrl
+          ? _value.brandImageUrl
+          : brandImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -152,6 +166,8 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
       bool isClosed,
       String name,
       String address,
+      String? brandName,
+      String? brandImageUrl,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
@@ -177,6 +193,8 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
+    Object? brandName = freezed,
+    Object? brandImageUrl = freezed,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -208,6 +226,14 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
+      brandName: freezed == brandName
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      brandImageUrl: freezed == brandImageUrl
+          ? _value.brandImageUrl
+          : brandImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -242,6 +268,8 @@ class _$_Cafe implements _Cafe {
       required this.isClosed,
       required this.name,
       required this.address,
+      required this.brandName,
+      required this.brandImageUrl,
       required this.latLng,
       required final List<CafeFloor> cafeFloors,
       required this.openingHour,
@@ -263,6 +291,10 @@ class _$_Cafe implements _Cafe {
   final String name;
   @override
   final String address;
+  @override
+  final String? brandName;
+  @override
+  final String? brandImageUrl;
   @override
   final NLatLng latLng;
   final List<CafeFloor> _cafeFloors;
@@ -293,7 +325,7 @@ class _$_Cafe implements _Cafe {
 
   @override
   String toString() {
-    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, isClosed: $isClosed, name: $name, address: $address, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
+    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
   }
 
   @override
@@ -312,6 +344,10 @@ class _$_Cafe implements _Cafe {
                 other.isClosed == isClosed) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.brandName, brandName) ||
+                other.brandName == brandName) &&
+            (identical(other.brandImageUrl, brandImageUrl) ||
+                other.brandImageUrl == brandImageUrl) &&
             (identical(other.latLng, latLng) || other.latLng == latLng) &&
             const DeepCollectionEquality()
                 .equals(other._cafeFloors, _cafeFloors) &&
@@ -331,6 +367,8 @@ class _$_Cafe implements _Cafe {
       isClosed,
       name,
       address,
+      brandName,
+      brandImageUrl,
       latLng,
       const DeepCollectionEquality().hash(_cafeFloors),
       openingHour,
@@ -352,6 +390,8 @@ abstract class _Cafe implements Cafe {
       required final bool isClosed,
       required final String name,
       required final String address,
+      required final String? brandName,
+      required final String? brandImageUrl,
       required final NLatLng latLng,
       required final List<CafeFloor> cafeFloors,
       required final OpeningHour? openingHour,
@@ -370,6 +410,10 @@ abstract class _Cafe implements Cafe {
   String get name;
   @override
   String get address;
+  @override
+  String? get brandName;
+  @override
+  String? get brandImageUrl;
   @override
   NLatLng get latLng;
   @override

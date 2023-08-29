@@ -39,7 +39,7 @@ class CafeSearchBar extends ConsumerWidget {
             ),
             textAlignVertical: TextAlignVertical.center,
             onChanged: (value) {
-              value.isEmpty ? mapViewModel.emptySearchPredictions() : null;
+              value.isEmpty ? mapViewModel.clearSearchPredictions() : null;
               value.length > 1 ? mapViewModel.searchCafe() : null;
             },
             enableSuggestions: true,
@@ -59,7 +59,7 @@ class CafeSearchBar extends ConsumerWidget {
               suffixIcon: IconButton(
                 onPressed: () {
                   mapState.searchQueryController.text = "";
-                  mapViewModel.emptySearchPredictions();
+                  mapViewModel.clearSearchPredictions();
                 },
                 icon: mapState.isSearchPageVisible ?
                 const Icon(CupertinoIcons.xmark_circle_fill, color: AppColor.grey_300, size: 24) :

@@ -16,6 +16,9 @@ CafeResponse _$CafeResponseFromJson(Map<String, dynamic> json) => CafeResponse(
       is_closed: json['is_closed'] as bool,
       opening_hour: OpeningHourResponse.fromJson(
           json['opening_hour'] as Map<String, dynamic>),
+      brand: json['brand'] == null
+          ? null
+          : BrandResponse.fromJson(json['brand'] as Map<String, dynamic>),
       cafe_floor: (json['cafe_floor'] as List<dynamic>)
           .map((e) =>
               CafeFloorCafeRepResponse.fromJson(e as Map<String, dynamic>))
@@ -38,6 +41,7 @@ Map<String, dynamic> _$CafeResponseToJson(CafeResponse instance) =>
       'is_visible': instance.is_visible,
       'is_closed': instance.is_closed,
       'opening_hour': instance.opening_hour,
+      'brand': instance.brand,
       'cafe_floor': instance.cafe_floor,
       'cafe_vip': instance.cafe_vip,
       'cafe_image': instance.cafe_image,
@@ -209,7 +213,6 @@ OccupancyRateUpdateResponse _$OccupancyRateUpdateResponseFromJson(
       point: json['point'] as int,
       occupancy_rate: json['occupancy_rate'] as String,
       update: json['update'] as String,
-      user: PartialUserResponse.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OccupancyRateUpdateResponseToJson(
@@ -220,7 +223,6 @@ Map<String, dynamic> _$OccupancyRateUpdateResponseToJson(
       'cafe_floor': instance.cafe_floor,
       'occupancy_rate': instance.occupancy_rate,
       'update': instance.update,
-      'user': instance.user,
     };
 
 CafeFloorOccupancyRepResponse _$CafeFloorOccupancyRepResponseFromJson(

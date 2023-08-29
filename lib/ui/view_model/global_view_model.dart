@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/domain/use_case/token_use_case.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
@@ -97,9 +98,23 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     required User user,
     String? refreshToken
   }) {
-    state = state.copyWith(accessToken: accessToken, user: user);
+    state = state.copyWith(accessToken: accessToken, user: user, isLoggedIn: true);
     if (refreshToken.isNotNull) {
       _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken!);
+    }
+  }
+
+  Future<bool> isNearBy({required NLatLng from, required int meter}) async {
+    const double latitudeOf1Meter = 0.000009094341;
+    const double longitudeOf1Meter = 0.000011268875366;
+    final myLocation = state.currentDeviceLocation ?? await getFirstLocation();
+    if (myLocation.isNotNull) {
+      return myLocation!.latitude < from.latitude + latitudeOf1Meter * meter &&
+        myLocation.latitude > from.latitude - latitudeOf1Meter * meter &&
+        myLocation.longitude > from.longitude - longitudeOf1Meter * meter &&
+        myLocation.longitude < from.longitude + longitudeOf1Meter * meter;
+    } else {
+      return false;
     }
   }
 }

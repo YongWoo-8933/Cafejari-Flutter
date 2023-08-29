@@ -12,18 +12,23 @@ abstract interface class CafeRepository {
       {required double latitude,
       required double longitude,
       required int zoomLevel});
-
+  Future<CafeResponse> retrieveCafe({required int cafeId});
   Future<List<CafeSearchResponse>> fetchSearchCafe(
       {required String query});
-
   Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate(
       {required String accessToken});
-
   Future<List<OccupancyRateUpdateResponse>> fetchMyRecentOccupancyUpdate(
       {required String accessToken});
-
   Future<NaverSearchCafeResponse> fetchNaverSearchResult(
       {required String query});
+
+  Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser(
+      {required String accessToken,
+      required double occupancyRate,
+      required int cafeFloorId});
+  Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest(
+      {required double occupancyRate,
+      required int cafeFloorId});
 }
 
 /// cafe repository의 구현부
@@ -32,6 +37,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   CafeRepositoryImpl(this.apiService);
 
+  // get ///////////////////////////////////////////////////////////////////////////////////////////
   @override
   Future<List<CafeResponse>> fetchMapCafe(
       {required double latitude,
@@ -45,6 +51,20 @@ class CafeRepositoryImpl implements CafeRepository {
         query: {"latitude": latitude, "longitude": longitude, "zoom_level": zoomLevel},
       );
       return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CafeResponse> retrieveCafe({required int cafeId}) async {
+    try {
+      final dynamic response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "$cafeId/",
+      );
+      return CafeResponse.fromJson(response);
     } on ErrorWithMessage {
       rethrow;
     }
@@ -118,6 +138,44 @@ class CafeRepositoryImpl implements CafeRepository {
       } else {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
       }
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  // post //////////////////////////////////////////////////////////////////////////////////////////
+  @override
+  Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser({
+    required String accessToken, required double occupancyRate, required int cafeFloorId
+  }) async {
+    try {
+      final dynamic response = await apiService.request(
+        method: HttpMethod.post,
+        appLabel: "cafe",
+        endpoint: "occupancy_update_log/user_registration/",
+        accessToken: accessToken,
+        body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
+      );
+      return OccupancyRateUpdateResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest({
+    required double occupancyRate, required int cafeFloorId
+  }) async {
+    try {
+      final dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "cafe",
+          endpoint: "occupancy_update_log/guest_registration/",
+          body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
+      );
+      return OccupancyRateUpdateResponse.fromJson(response);
     } on ErrorWithMessage {
       rethrow;
     }

@@ -18,7 +18,7 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     OccupancyRateUpdates recentUpdates = [];
     for (OccupancyRateUpdateRepResponse updateResponse in cafeFloorResponse.recent_updated_log) {
       recentUpdates.add(
-          parseOccupancyRateUpdateFromOccupancyRateUpdateRepResponse(updateResponse: updateResponse));
+        parseOccupancyRateUpdateFromOccupancyRateUpdateRepResponse(updateResponse: updateResponse));
     }
     double? wallSocketRate;
     double? occupancyRatePrediction;
@@ -52,7 +52,7 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
         recentUpdatedOccupancyRate = update.occupancyRate;
       } else {
         // 현재 floor의 업데이트 시간이 더 최근일 때만 갱신
-        if(update.update.compareTo(recentUpdate!.update) < 0) {
+        if(update.update.compareTo(recentUpdate!.update) > 0) {
           recentUpdate = update;
           recentUpdatedFloor = cafeFloor.floor;
           recentUpdatedOccupancyRate = update.occupancyRate;
@@ -94,6 +94,8 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     isClosed: cafeResponse.is_closed,
     name: cafeResponse.name,
     address: cafeResponse.address,
+    brandName: cafeResponse.brand?.name,
+    brandImageUrl: cafeResponse.brand?.image,
     latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
     cafeFloors: cafeFloors,
     openingHour: OpeningHour(
@@ -202,7 +204,8 @@ OccupancyRateUpdate parseOccupancyRateUpdateFromOccupancyRateUpdateResponse({
           occupancyRatePrediction: null,
           cafe: parseCafeFromCafeRepResponse(cafeRepResponse: updateResponse.cafe_floor.cafe),
           recentUpdates: []),
-      user: null);
+      user: null
+  );
 }
 
 /// CafeRepResponse로부터 Cafe 객체를 뽑아내는 함수
@@ -214,6 +217,8 @@ Cafe parseCafeFromCafeRepResponse({required CafeRepResponse cafeRepResponse}) {
       isClosed: cafeRepResponse.is_closed,
       name: cafeRepResponse.name,
       address: cafeRepResponse.address,
+      brandName: null,
+      brandImageUrl: null,
       latLng: NLatLng(cafeRepResponse.latitude, cafeRepResponse.longitude),
       cafeFloors: [],
       openingHour: null,

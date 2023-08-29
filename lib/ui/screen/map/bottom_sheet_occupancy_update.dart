@@ -2,13 +2,18 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_slider.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+import 'package:go_router/go_router.dart';
 
 class BottomSheetOccupancyUpdate extends ConsumerWidget {
   const BottomSheetOccupancyUpdate({Key? key}) : super(key: key);
@@ -17,6 +22,7 @@ class BottomSheetOccupancyUpdate extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final Size deviceSize = MediaQuery.of(context).size;
     const double sheetPadding = 30;
 
@@ -52,10 +58,35 @@ class BottomSheetOccupancyUpdate extends ConsumerWidget {
           const VerticalSpacer(80),
           Center(
             child: ActionButtonPrimary(
-              buttonWidth: 210,
+              buttonWidth: 280,
               buttonHeight: 48,
               title: "등록하기",
-              onPressed: () {}
+              onPressed: () async {
+                if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 1000)) {
+                  if(globalState.isLoggedIn) {
+                    mapViewModel.updateOccupancyRateAsUser(context: context);
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (context) => SquareAlertDialog(
+                        text: "로그인하고 혼잡도를 등록하면 포인트를 받을 수 있어요. 로그인 페이지로 이동할까요?",
+                        negativeButtonText: "그냥 진행",
+                        positiveButtonText: "예",
+                        onDismiss: () => Navigator.of(context).pop(),
+                        onNegativeButtonPressed: () {
+                          mapViewModel.updateOccupancyRateAsGuest(context: context);
+                        },
+                        onPositiveButtonPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                      )
+                    );
+                  }
+                } else {
+                  mapViewModel.globalViewModel.showSnackBar(
+                    content: "카페와의 거리가 너무 멉니다. 위치를 재조정 해주세요",
+                    type: SnackBarType.error
+                  );
+                }
+              }
             ) ,
           )
         ],

@@ -44,6 +44,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                 visible: mapState.selectedCafe.imageUrls.isNotEmpty,
                 child: PageView(
                   controller: mapState.pageController,
+                  onPageChanged: (value) => mapViewModel.setCurrentCafeImagePage(value),
                   children: [
                     ...mapState.selectedCafe.imageUrls.map((e) {
                       return CustomCachedNetworkImage(
@@ -71,7 +72,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                   children: [
                     ...mapState.selectedCafe.imageUrls.map((e) {
                       final index = mapState.selectedCafe.imageUrls.indexWhere((element) => e == element);
-                      final isSelected = index == mapState.currentPage;
+                      final isSelected = index == mapState.currentCafeImagePage;
                       if(index < 9) {
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -133,7 +134,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                           ),
                           const HorizontalSpacer(10),
                           BookmarkButton(
-                            isBookmarked: globalState.user.favoriteCafes.contains(mapState.selectedCafe),
+                            isBookmarked: globalState.user.favoriteCafes.where((element) => element.id == mapState.selectedCafe.id).isNotEmpty,
                             buttonSize: 48,
                             onPressed: () => mapViewModel.updateFavoriteCafeList(mapState.selectedCafe.id),
                           )
