@@ -16,6 +16,11 @@ class ScreenRoute {
   static const String leaderboard = "leaderboard_screen";
   static const String cafeRegistration = "cafe_registration_screen";
   static const String faq = "faq_screen";
+  static const String event = "event_screen";
+  static const String guide = "guide_screen";
+  static const String privacy_policy = "privacy_policy_screen";
+  static const String terms_of_service = "terms_of_service_screen";
+  static const String update = "update_screen";
 }
 
 enum PageType { map, myCafe, challenge, myPage }

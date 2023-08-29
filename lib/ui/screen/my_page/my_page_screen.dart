@@ -2,6 +2,7 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_block.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_cati.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_image.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
@@ -93,10 +95,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                     children: [
                       Text("안내", style: TextSize.textSize_bold_16),
                       SizedBox(height: 10),
-                      MyPageBlock(title: "FAQ", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.faq);},),
-                      MyPageBlock(title: "사용 가이드 북 보기", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.login);},),
-                      MyPageBlock(title: "공지 및 이벤트", onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.appPermission),),
-                      MyPageBlock(title: "업데이트 소식"),
+                      MyPageBlock(title: "FAQ", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.faq);}),
+                      MyPageBlock(title: "사용 가이드 북 보기", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.guide);}),
+                      MyPageBlock(title: "공지 및 이벤트", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.event);}),
+                      MyPageBlock(title: "업데이트 소식", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.update);}),
                     ],
                   ),
                 ),
@@ -111,11 +113,14 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                            children: [
-                              Image.asset('asset/image/instagram.png'),
-                              Text(" 카페자리 인스타", style: TextSize.textSize_14)
-                            ],
+                          GestureDetector(
+                            onTap: ()=>{launchUrlString("https://www.instagram.com/cafejari_official/")},
+                            child: Row(
+                              children: [
+                                Image.asset('asset/image/instagram.png'),
+                                Text(" 카페자리 인스타", style: TextSize.textSize_14)
+                              ],
+                            ),
                           ),
                           Row(
                             children: [
@@ -136,8 +141,8 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                     children: [
                       Text("약관", style: TextSize.textSize_bold_16),
                       SizedBox(height: 10),
-                      MyPageBlock(title: "이용약관"),
-                      MyPageBlock(title: "개인정보처리방침"),
+                      MyPageBlock(title: "이용약관", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.update);}),
+                      MyPageBlock(title: "개인정보처리방침", onPressed: () {GoRouter.of(context).goNamed(ScreenRoute.update);}),
                     ],
                   ),
                 ),
@@ -153,6 +158,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                     ],
                   ),
                 ),
+                VerticalSpacer(80)
               ],
             ),
           ],
