@@ -1,71 +1,80 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BookMarkedCard extends StatelessWidget {
   final Cafe cafe;
-  final VoidCallback? onPressed;
+  final double width;
+  final double height;
+  final VoidCallback? onPress;
 
-  BookMarkedCard({
+  const BookMarkedCard({
+    super.key,
     required this.cafe,
-    this.onPressed,
+    required this.width,
+    required this.height,
+    this.onPress,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      width: width,
+      height: height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              // 원 모양의 배경 색상 또는 이미지를 설정할 수도 있습니다.
-              color: Colors.blue, // 예시 색상, 필요에 따라 변경해주세요.
-            ),
+            width: 100,
+            height: 100,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ClipOval(
-              child: CustomCachedNetworkImage(imageUrl: cafe.imageUrls[0]),
-              // cafe.imageUrls.isNotEmpty ? CustomCachedNetworkImage(imageUrl: cafe.imageUrls[0]) : Image.asset('asset/image/testimage.png'),
+              child: CustomCachedNetworkImage(
+                imageUrl: cafe.imageUrls.isNotEmpty ? cafe.imageUrls.first :
+                  (cafe.brandImageUrl.isNotNull ? cafe.brandImageUrl! : "")
+              ),
             ),
           ),
-          SizedBox(height: 10),
-          Text(cafe.name, style: TextSize.textSize_bold_14),
-          SizedBox(height: 5),
-          Text(cafe.address, style: TextSize.textSize_grey_12),
-          ElevatedButton(
-            onPressed: () {
-              onPressed;
-            },
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-                side: BorderSide(color: AppColor.grey_300),
+          const VerticalSpacer(12),
+          Text(cafe.name, style: TextSize.textSize_bold_14, textAlign: TextAlign.center),
+          const SizedBox(height: 4),
+          Text(cafe.address, style: TextSize.textSize_grey_12, textAlign: TextAlign.center),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 36,
+            child: ElevatedButton(
+              onPressed: onPress,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  side: const BorderSide(color: AppColor.grey_300),
+                ),
+                backgroundColor: AppColor.white,
+                elevation: 0
               ),
-              backgroundColor: AppColor.white,
-              elevation: 0,
-              minimumSize: Size(0, 30),
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "삭제",
-                  style: TextSize.textSize_12,
-                ),
-                Icon(
-                  CupertinoIcons.clear,
-                  size: 12,
-                  color: AppColor.black,
-                ),
-              ],
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "삭제",
+                    style: TextSize.textSize_12,
+                  ),
+                  HorizontalSpacer(4),
+                  Icon(
+                    CupertinoIcons.clear,
+                    color: AppColor.black,
+                    size: 12,
+                  ),
+                ],
+              ),
             ),
           )
-
         ],
       ),
     );

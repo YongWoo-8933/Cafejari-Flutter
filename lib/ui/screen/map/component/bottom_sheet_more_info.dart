@@ -99,7 +99,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
               ],
             ),
           ),
-          const VerticalSpacer(15),
+          const VerticalSpacer(25),
           Visibility(
             visible: restroomDescriptionList.isNotEmpty,
             child: Row(
@@ -122,37 +122,37 @@ class BottomSheetMoreInfo extends ConsumerWidget {
             ),
           ),
           const VerticalSpacer(30),
-          Container(
-            alignment: Alignment.center,
-            child: SizedBox(
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primary,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("asset/image/icon_square_edit.png", width: 20, height: 20),
-                      const HorizontalSpacer(4),
-                      const Text(
-                        "매장정보 제보하고 포인트받기",
-                        style: TextSize.textSize_white_14,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const VerticalSpacer(20)
+          // Container(
+          //   alignment: Alignment.center,
+          //   child: SizedBox(
+          //     height: 40,
+          //     child: ElevatedButton(
+          //       onPressed: () {},
+          //       style: ElevatedButton.styleFrom(
+          //         backgroundColor: AppColor.primary,
+          //         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(20),
+          //         ),
+          //       ),
+          //       child: FittedBox(
+          //         fit: BoxFit.scaleDown,
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             Image.asset("asset/image/icon_square_edit.png", width: 20, height: 20),
+          //             const HorizontalSpacer(4),
+          //             const Text(
+          //               "매장정보 제보하고 포인트받기",
+          //               style: TextSize.textSize_white_14,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          const VerticalSpacer(40)
         ],
       ),
     );

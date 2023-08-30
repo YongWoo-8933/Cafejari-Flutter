@@ -86,11 +86,31 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
   List<PartialUser> vips = cafeResponse.cafe_vip.map((e) {
     return parsePartialUserFromPartialUserResponse(partialUserResponse: e.user, updateCount: 0);
   }).toList();
+  // 콘센트 최대 보급율, 최대 층 정리
+  int? maximumWallSocketFloor;
+  double? maximumWallSocketRate;
+  for(CafeFloor cafeFloor in cafeFloors) {
+    if(cafeFloor.wallSocketRate.isNotNull) {
+      if(maximumWallSocketRate.isNull) {
+        maximumWallSocketFloor = cafeFloor.floor;
+        maximumWallSocketRate = cafeFloor.wallSocketRate;
+      } else {
+        // 현재 floor의 콘센트 보급율이 더 클 경우만 업데이트
+        if(cafeFloor.wallSocketRate! > maximumWallSocketRate!) {
+          maximumWallSocketFloor = cafeFloor.floor;
+          maximumWallSocketRate = cafeFloor.wallSocketRate;
+        }
+      }
+    }
+  }
+
   // 최종 산출
   return Cafe(
     id: cafeResponse.id,
     recentUpdatedFloor: recentUpdatedFloor,
     recentUpdatedOccupancyRate: recentUpdatedOccupancyRate,
+    maximumWallSocketFloor: maximumWallSocketFloor,
+    maximumWallSocketRate: maximumWallSocketRate,
     isClosed: cafeResponse.is_closed,
     name: cafeResponse.name,
     address: cafeResponse.address,
@@ -214,6 +234,8 @@ Cafe parseCafeFromCafeRepResponse({required CafeRepResponse cafeRepResponse}) {
       id: cafeRepResponse.id,
       recentUpdatedFloor: null,
       recentUpdatedOccupancyRate: null,
+      maximumWallSocketRate: null,
+      maximumWallSocketFloor: null,
       isClosed: cafeRepResponse.is_closed,
       name: cafeRepResponse.name,
       address: cafeRepResponse.address,

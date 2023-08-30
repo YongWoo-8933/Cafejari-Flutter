@@ -164,6 +164,7 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
                 maxHeight: 480,
                 backdropEnabled: true,
                 color: AppColor.transparent,
+                isDraggable: mapState.isOccupancyBottomSheetDraggable,
                 body: SlidingUpPanel(
                   controller: mapState.bottomSheetController,
                   minHeight: mapState.isBottomSheetPreviewOpened ?

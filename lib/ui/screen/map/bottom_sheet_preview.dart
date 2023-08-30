@@ -84,6 +84,7 @@ class BottomSheetPreview extends ConsumerWidget {
                         padding: const EdgeInsets.only(left: edgePadding, right: boundaryPadding, top: edgePadding),
                         width: deviceSize.width / 2,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +107,6 @@ class BottomSheetPreview extends ConsumerWidget {
                               padding: const EdgeInsets.only(right: edgePadding),
                               child: Text(
                                 mapState.selectedCafe.name,
-                                textAlign: TextAlign.start,
                                 maxLines: 2,
                                 style: const TextStyle(
                                   fontSize: 18,

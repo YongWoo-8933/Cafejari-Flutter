@@ -19,6 +19,8 @@ mixin _$Cafe {
   int get id => throw _privateConstructorUsedError;
   int? get recentUpdatedFloor => throw _privateConstructorUsedError;
   double? get recentUpdatedOccupancyRate => throw _privateConstructorUsedError;
+  double? get maximumWallSocketRate => throw _privateConstructorUsedError;
+  int? get maximumWallSocketFloor => throw _privateConstructorUsedError;
   bool get isClosed => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -43,6 +45,8 @@ abstract class $CafeCopyWith<$Res> {
       {int id,
       int? recentUpdatedFloor,
       double? recentUpdatedOccupancyRate,
+      double? maximumWallSocketRate,
+      int? maximumWallSocketFloor,
       bool isClosed,
       String name,
       String address,
@@ -73,6 +77,8 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
     Object? id = null,
     Object? recentUpdatedFloor = freezed,
     Object? recentUpdatedOccupancyRate = freezed,
+    Object? maximumWallSocketRate = freezed,
+    Object? maximumWallSocketFloor = freezed,
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
@@ -97,6 +103,14 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           ? _value.recentUpdatedOccupancyRate
           : recentUpdatedOccupancyRate // ignore: cast_nullable_to_non_nullable
               as double?,
+      maximumWallSocketRate: freezed == maximumWallSocketRate
+          ? _value.maximumWallSocketRate
+          : maximumWallSocketRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      maximumWallSocketFloor: freezed == maximumWallSocketFloor
+          ? _value.maximumWallSocketFloor
+          : maximumWallSocketFloor // ignore: cast_nullable_to_non_nullable
+              as int?,
       isClosed: null == isClosed
           ? _value.isClosed
           : isClosed // ignore: cast_nullable_to_non_nullable
@@ -163,6 +177,8 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
       {int id,
       int? recentUpdatedFloor,
       double? recentUpdatedOccupancyRate,
+      double? maximumWallSocketRate,
+      int? maximumWallSocketFloor,
       bool isClosed,
       String name,
       String address,
@@ -190,6 +206,8 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? id = null,
     Object? recentUpdatedFloor = freezed,
     Object? recentUpdatedOccupancyRate = freezed,
+    Object? maximumWallSocketRate = freezed,
+    Object? maximumWallSocketFloor = freezed,
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
@@ -214,6 +232,14 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
           ? _value.recentUpdatedOccupancyRate
           : recentUpdatedOccupancyRate // ignore: cast_nullable_to_non_nullable
               as double?,
+      maximumWallSocketRate: freezed == maximumWallSocketRate
+          ? _value.maximumWallSocketRate
+          : maximumWallSocketRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      maximumWallSocketFloor: freezed == maximumWallSocketFloor
+          ? _value.maximumWallSocketFloor
+          : maximumWallSocketFloor // ignore: cast_nullable_to_non_nullable
+              as int?,
       isClosed: null == isClosed
           ? _value.isClosed
           : isClosed // ignore: cast_nullable_to_non_nullable
@@ -265,6 +291,8 @@ class _$_Cafe implements _Cafe {
       {required this.id,
       required this.recentUpdatedFloor,
       required this.recentUpdatedOccupancyRate,
+      required this.maximumWallSocketRate,
+      required this.maximumWallSocketFloor,
       required this.isClosed,
       required this.name,
       required this.address,
@@ -285,6 +313,10 @@ class _$_Cafe implements _Cafe {
   final int? recentUpdatedFloor;
   @override
   final double? recentUpdatedOccupancyRate;
+  @override
+  final double? maximumWallSocketRate;
+  @override
+  final int? maximumWallSocketFloor;
   @override
   final bool isClosed;
   @override
@@ -325,7 +357,7 @@ class _$_Cafe implements _Cafe {
 
   @override
   String toString() {
-    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
+    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
   }
 
   @override
@@ -340,6 +372,10 @@ class _$_Cafe implements _Cafe {
                     recentUpdatedOccupancyRate) ||
                 other.recentUpdatedOccupancyRate ==
                     recentUpdatedOccupancyRate) &&
+            (identical(other.maximumWallSocketRate, maximumWallSocketRate) ||
+                other.maximumWallSocketRate == maximumWallSocketRate) &&
+            (identical(other.maximumWallSocketFloor, maximumWallSocketFloor) ||
+                other.maximumWallSocketFloor == maximumWallSocketFloor) &&
             (identical(other.isClosed, isClosed) ||
                 other.isClosed == isClosed) &&
             (identical(other.name, name) || other.name == name) &&
@@ -364,6 +400,8 @@ class _$_Cafe implements _Cafe {
       id,
       recentUpdatedFloor,
       recentUpdatedOccupancyRate,
+      maximumWallSocketRate,
+      maximumWallSocketFloor,
       isClosed,
       name,
       address,
@@ -387,6 +425,8 @@ abstract class _Cafe implements Cafe {
       {required final int id,
       required final int? recentUpdatedFloor,
       required final double? recentUpdatedOccupancyRate,
+      required final double? maximumWallSocketRate,
+      required final int? maximumWallSocketFloor,
       required final bool isClosed,
       required final String name,
       required final String address,
@@ -404,6 +444,10 @@ abstract class _Cafe implements Cafe {
   int? get recentUpdatedFloor;
   @override
   double? get recentUpdatedOccupancyRate;
+  @override
+  double? get maximumWallSocketRate;
+  @override
+  int? get maximumWallSocketFloor;
   @override
   bool get isClosed;
   @override

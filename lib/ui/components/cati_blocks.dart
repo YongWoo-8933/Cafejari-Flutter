@@ -3,13 +3,14 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/material.dart';
 
 class CATIBlocks extends StatelessWidget {
-  final bool is1stBlockClicked;
+  final bool hasOpenness;
   final bool is2ndBlockClicked;
   final bool is3rdBlockClicked;
   final bool is4thBlockClicked;
 
-  const CATIBlocks({super.key,
-    required this.is1stBlockClicked,
+  const CATIBlocks({
+    super.key,
+    required this.hasOpenness,
     required this.is2ndBlockClicked,
     required this.is3rdBlockClicked,
     required this.is4thBlockClicked,
@@ -20,7 +21,7 @@ class CATIBlocks extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildCategoryColumn("개방", "아늑", is1stBlockClicked),
+        _buildCategoryColumn("개방", "아늑", hasOpenness),
         const HorizontalSpacer(10),
         _buildCategoryColumn("디저트","커피", is2ndBlockClicked),
         const HorizontalSpacer(10),

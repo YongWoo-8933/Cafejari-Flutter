@@ -23,9 +23,7 @@ class BottomSheetCATI extends ConsumerWidget {
 
     return  Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-      decoration: const BoxDecoration(
-        color: AppColor.background
-      ),
+      color: AppColor.background,
       child: Column(
         children: [
           Row(
@@ -40,7 +38,7 @@ class BottomSheetCATI extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CATIBlocks(
-                is1stBlockClicked: true,
+                hasOpenness: true,
                 is2ndBlockClicked: true,
                 is3rdBlockClicked: true,
                 is4thBlockClicked: true

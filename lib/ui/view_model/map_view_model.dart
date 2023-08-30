@@ -130,6 +130,8 @@ class MapViewModel extends StateNotifier<MapState> {
 
   setBottomSheetFullContentVisible(bool visible) => state = state.copyWith(isBottomSheetFullContentVisible: visible);
 
+  setOccupancyBottomSheetDraggable(bool draggable) => state = state.copyWith(isOccupancyBottomSheetDraggable: draggable);
+
   updateOccupancySliderValue(value) => state = state.copyWith(occupancySliderValue: value);
 
   openSearchPage() {

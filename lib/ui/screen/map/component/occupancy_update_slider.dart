@@ -83,7 +83,9 @@ class OccupancyUpdateSlider extends ConsumerWidget {
               activeColor: AppColor.transparent,
               inactiveColor: AppColor.transparent,
               thumbIcon: Image.asset((mapState.occupancySliderValue/100).toOccupancyLevel().thumbImagePath),
-              onChanged: (dynamic value) => mapViewModel.updateOccupancySliderValue(value)
+              onChangeStart: (_) => mapViewModel.setOccupancyBottomSheetDraggable(false),
+              onChanged: (dynamic value) => mapViewModel.updateOccupancySliderValue(value),
+              onChangeEnd: (_) => mapViewModel.setOccupancyBottomSheetDraggable(true),
             ),
           ),
         )

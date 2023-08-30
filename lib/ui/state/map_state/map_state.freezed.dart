@@ -37,6 +37,8 @@ mixin _$MapState {
   bool get isBottomSheetPreviewExpanded => throw _privateConstructorUsedError;
   bool get isBottomSheetFullContentVisible =>
       throw _privateConstructorUsedError;
+  bool get isOccupancyBottomSheetDraggable =>
+      throw _privateConstructorUsedError;
   bool get isRefreshButtonVisible => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -67,6 +69,7 @@ abstract class $MapStateCopyWith<$Res> {
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
+      bool isOccupancyBottomSheetDraggable,
       bool isRefreshButtonVisible});
 
   $CafeCopyWith<$Res> get selectedCafe;
@@ -103,6 +106,7 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
+    Object? isOccupancyBottomSheetDraggable = null,
     Object? isRefreshButtonVisible = null,
   }) {
     return _then(_value.copyWith(
@@ -174,6 +178,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.isBottomSheetFullContentVisible
           : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      isOccupancyBottomSheetDraggable: null == isOccupancyBottomSheetDraggable
+          ? _value.isOccupancyBottomSheetDraggable
+          : isOccupancyBottomSheetDraggable // ignore: cast_nullable_to_non_nullable
+              as bool,
       isRefreshButtonVisible: null == isRefreshButtonVisible
           ? _value.isRefreshButtonVisible
           : isRefreshButtonVisible // ignore: cast_nullable_to_non_nullable
@@ -223,6 +231,7 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
+      bool isOccupancyBottomSheetDraggable,
       bool isRefreshButtonVisible});
 
   @override
@@ -259,6 +268,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
+    Object? isOccupancyBottomSheetDraggable = null,
     Object? isRefreshButtonVisible = null,
   }) {
     return _then(_$_MapState(
@@ -330,6 +340,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.isBottomSheetFullContentVisible
           : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      isOccupancyBottomSheetDraggable: null == isOccupancyBottomSheetDraggable
+          ? _value.isOccupancyBottomSheetDraggable
+          : isOccupancyBottomSheetDraggable // ignore: cast_nullable_to_non_nullable
+              as bool,
       isRefreshButtonVisible: null == isRefreshButtonVisible
           ? _value.isRefreshButtonVisible
           : isRefreshButtonVisible // ignore: cast_nullable_to_non_nullable
@@ -359,6 +373,7 @@ class _$_MapState implements _MapState {
       required this.isBottomSheetPreviewOpened,
       required this.isBottomSheetPreviewExpanded,
       required this.isBottomSheetFullContentVisible,
+      required this.isOccupancyBottomSheetDraggable,
       required this.isRefreshButtonVisible})
       : _cafes = cafes,
         _searchPredictions = searchPredictions;
@@ -411,11 +426,13 @@ class _$_MapState implements _MapState {
   @override
   final bool isBottomSheetFullContentVisible;
   @override
+  final bool isOccupancyBottomSheetDraggable;
+  @override
   final bool isRefreshButtonVisible;
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isOccupancyBottomSheetDraggable: $isOccupancyBottomSheetDraggable, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -452,43 +469,47 @@ class _$_MapState implements _MapState {
                 other.isSearchPageVisible == isSearchPageVisible) &&
             (identical(other.isSearchPageFadedIn, isSearchPageFadedIn) ||
                 other.isSearchPageFadedIn == isSearchPageFadedIn) &&
-            (identical(other.isBottomSheetPreviewOpened,
-                    isBottomSheetPreviewOpened) ||
+            (identical(other.isBottomSheetPreviewOpened, isBottomSheetPreviewOpened) ||
                 other.isBottomSheetPreviewOpened ==
                     isBottomSheetPreviewOpened) &&
-            (identical(other.isBottomSheetPreviewExpanded,
-                    isBottomSheetPreviewExpanded) ||
+            (identical(other.isBottomSheetPreviewExpanded, isBottomSheetPreviewExpanded) ||
                 other.isBottomSheetPreviewExpanded ==
                     isBottomSheetPreviewExpanded) &&
             (identical(other.isBottomSheetFullContentVisible,
                     isBottomSheetFullContentVisible) ||
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
+            (identical(other.isOccupancyBottomSheetDraggable,
+                    isOccupancyBottomSheetDraggable) ||
+                other.isOccupancyBottomSheetDraggable ==
+                    isOccupancyBottomSheetDraggable) &&
             (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) ||
                 other.isRefreshButtonVisible == isRefreshButtonVisible));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      bottomSheetController,
-      bottomSheetOccupancyController,
-      pageController,
-      currentCafeImagePage,
-      const DeepCollectionEquality().hash(_cafes),
-      selectedCafe,
-      selectedCafeFloor,
-      selectedMarker,
-      mapController,
-      searchQueryController,
-      const DeepCollectionEquality().hash(_searchPredictions),
-      occupancySliderValue,
-      isSearchPageVisible,
-      isSearchPageFadedIn,
-      isBottomSheetPreviewOpened,
-      isBottomSheetPreviewExpanded,
-      isBottomSheetFullContentVisible,
-      isRefreshButtonVisible);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        bottomSheetController,
+        bottomSheetOccupancyController,
+        pageController,
+        currentCafeImagePage,
+        const DeepCollectionEquality().hash(_cafes),
+        selectedCafe,
+        selectedCafeFloor,
+        selectedMarker,
+        mapController,
+        searchQueryController,
+        const DeepCollectionEquality().hash(_searchPredictions),
+        occupancySliderValue,
+        isSearchPageVisible,
+        isSearchPageFadedIn,
+        isBottomSheetPreviewOpened,
+        isBottomSheetPreviewExpanded,
+        isBottomSheetFullContentVisible,
+        isOccupancyBottomSheetDraggable,
+        isRefreshButtonVisible
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -516,6 +537,7 @@ abstract class _MapState implements MapState {
       required final bool isBottomSheetPreviewOpened,
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
+      required final bool isOccupancyBottomSheetDraggable,
       required final bool isRefreshButtonVisible}) = _$_MapState;
 
   @override
@@ -552,6 +574,8 @@ abstract class _MapState implements MapState {
   bool get isBottomSheetPreviewExpanded;
   @override
   bool get isBottomSheetFullContentVisible;
+  @override
+  bool get isOccupancyBottomSheetDraggable;
   @override
   bool get isRefreshButtonVisible;
   @override
