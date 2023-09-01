@@ -1,12 +1,10 @@
-
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_agreement_part.dart';
-import 'package:cafejari_flutter/ui/screen/login/registration_bottom_sheet.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_profile_part.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +32,7 @@ class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginViewModelProvider);
+    final LoginViewModel loginViewModel = ref.watch(loginViewModelProvider.notifier);
 
     return WillPopScope(
       onWillPop: () async {
@@ -66,7 +65,16 @@ class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 AgreementPart(),
               ],
             ),
-            panelBuilder: (ScrollController sc) => const RegistrationBottomSheet()
+            panelBuilder: (ScrollController sc) {
+              return ProfileImageSelectGrid(
+                defaultProfileImages: loginState.profileImages,
+                currentProfileImageUrl: loginState.selectedProfileImage.imageUrl,
+                onSelect: (profileImageIndex) {
+                  loginViewModel.selectProfileImages(profileImageIndex);
+                  loginState.bottomSheetController.close();
+                }
+              );
+            }
           )
         ),
       ),

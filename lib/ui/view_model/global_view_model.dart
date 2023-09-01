@@ -108,13 +108,14 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     const double latitudeOf1Meter = 0.000009094341;
     const double longitudeOf1Meter = 0.000011268875366;
     final myLocation = state.currentDeviceLocation ?? await getFirstLocation();
-    if (myLocation.isNotNull) {
-      return myLocation!.latitude < from.latitude + latitudeOf1Meter * meter &&
-        myLocation.latitude > from.latitude - latitudeOf1Meter * meter &&
-        myLocation.longitude > from.longitude - longitudeOf1Meter * meter &&
-        myLocation.longitude < from.longitude + longitudeOf1Meter * meter;
-    } else {
-      return false;
-    }
+    return true;
+    // if (myLocation.isNotNull) {
+    //   return myLocation!.latitude < from.latitude + latitudeOf1Meter * meter &&
+    //     myLocation.latitude > from.latitude - latitudeOf1Meter * meter &&
+    //     myLocation.longitude > from.longitude - longitudeOf1Meter * meter &&
+    //     myLocation.longitude < from.longitude + longitudeOf1Meter * meter;
+    // } else {
+    //   return false;
+    // }
   }
 }

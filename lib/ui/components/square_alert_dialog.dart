@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 
 class SquareAlertDialog extends AlertDialog {
   final String text, negativeButtonText, positiveButtonText;
-  final VoidCallback onDismiss, onNegativeButtonPressed, onPositiveButtonPressed;
+  final VoidCallback onDismiss, onNegativeButtonPress, onPositiveButtonPress;
 
   SquareAlertDialog({super.key,
     required this.text,
     required this.negativeButtonText,
     required this.positiveButtonText,
     required this.onDismiss,
-    required this.onNegativeButtonPressed,
-    required this.onPositiveButtonPressed,
+    required this.onNegativeButtonPress,
+    required this.onPositiveButtonPress,
   }): super(
     backgroundColor: AppColor.white,
     elevation: 3,
@@ -53,7 +53,7 @@ class SquareAlertDialog extends AlertDialog {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    onNegativeButtonPressed();
+                    onNegativeButtonPress();
                     onDismiss();
                   },
                   style: ElevatedButton.styleFrom(
@@ -79,7 +79,7 @@ class SquareAlertDialog extends AlertDialog {
                 buttonHeight: 48,
                 title: positiveButtonText,
                 onPressed: () {
-                  onPositiveButtonPressed();
+                  onPositiveButtonPress();
                   onDismiss();
                 }
               )

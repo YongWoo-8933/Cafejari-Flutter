@@ -38,29 +38,45 @@ class AgreementPart extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _AllAgreeButton(
-                onClick: () {
-                  ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
-                  ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
-                  loginViewModel.setMarketingAgreement(true);
+              onClick: () {
+                ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
+                ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
+                if(ref.watch(_isServiceAgreedProvider)) {
+                  ref.watch(_isServiceExpandedProvider.notifier).update((state) => false);
                 }
+                if(ref.watch(_isPrivacyAgreedProvider)) {
+                  ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => false);
+                }
+                loginViewModel.setMarketingAgreement(true);
+              }
             ),
             const VerticalSpacer(20),
             _AgreementBox(
-                isChecked: ref.watch(_isServiceAgreedProvider),
-                isExpanded: ref.watch(_isServiceExpandedProvider),
-                title: "(필수) 서비스 이용약관 동의",
-                content: serviceAgreementText,
-                onClick: () => ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state),
-                onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
-            ),
-            const VerticalSpacer(20),
-            _AgreementBox(
-                isChecked: ref.watch(_isPrivacyAgreedProvider),
-                isExpanded: ref.watch(_isPrivacyExpandedProvider),
-                title: "(필수) 개인정보 수집 및 이용 동의",
-                content: privacyPolicyText,
-                onClick: () => ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => !state),
-                onArrowClick: () => ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => !state)
+              isChecked: ref.watch(_isServiceAgreedProvider),
+              isExpanded: ref.watch(_isServiceExpandedProvider),
+              title: "(필수) 서비스 이용약관 동의",
+              content: serviceAgreementText,
+              onClick: () {
+                ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state);
+                if(ref.watch(_isServiceAgreedProvider)) {
+                  ref.watch(_isServiceExpandedProvider.notifier).update((state) => false);
+                }
+              },
+              onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
+              ),
+              const VerticalSpacer(20),
+              _AgreementBox(
+              isChecked: ref.watch(_isPrivacyAgreedProvider),
+              isExpanded: ref.watch(_isPrivacyExpandedProvider),
+              title: "(필수) 개인정보 수집 및 이용 동의",
+              content: privacyPolicyText,
+              onClick: () {
+                ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => !state);
+                if(ref.watch(_isPrivacyAgreedProvider)) {
+                  ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => false);
+                }
+              },
+              onArrowClick: () => ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => !state)
             ),
             const VerticalSpacer(20),
             _AgreementBox(

@@ -4,10 +4,12 @@ import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/cafe_log.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
+import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
@@ -304,4 +306,16 @@ Challenge parseChallengeFromChallengeResponse({required ChallengeResponse challe
           progressRate: double.parse(e.progress_rate),
           description: e.description);
       }).toList());
+}
+
+/// BrandconResponse로부터 Brandcon 객체를 뽑아내는 함수
+Brandcon parseBrandconFromBrandconResponse({required BrandconResponse brandconResponse}) {
+  return Brandcon(
+    brandconId: brandconResponse.id,
+    itemId: brandconResponse.item,
+    imageUrl: brandconResponse.image,
+    description: brandconResponse.description,
+    expirationDate: DateTime.parse(brandconResponse.expiration_period),
+    isUsed: brandconResponse.is_used
+  );
 }

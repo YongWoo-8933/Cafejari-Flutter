@@ -73,10 +73,10 @@ class BottomSheetOccupancyUpdate extends ConsumerWidget {
                         negativeButtonText: "그냥 진행",
                         positiveButtonText: "예",
                         onDismiss: () => Navigator.of(context).pop(),
-                        onNegativeButtonPressed: () {
+                        onNegativeButtonPress: () {
                           mapViewModel.updateOccupancyRateAsGuest(context: context);
                         },
-                        onPositiveButtonPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                        onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
                       )
                     );
                   }

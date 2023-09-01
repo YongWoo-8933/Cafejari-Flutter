@@ -39,8 +39,8 @@ class BottomSheetCATI extends ConsumerWidget {
             children: [
               const CATIBlocks(
                 hasOpenness: true,
-                is2ndBlockClicked: true,
-                is3rdBlockClicked: true,
+                isCoffeeFocused: true,
+                isWorkFriendly: true,
                 is4thBlockClicked: true
               ),
               const VerticalSpacer(20),

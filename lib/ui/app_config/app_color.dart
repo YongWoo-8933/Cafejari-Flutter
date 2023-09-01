@@ -54,6 +54,7 @@ class AppColor {
   static const Color challengeBlock = Color(0xFFF5F5F5);
   static const Color error = Color(0xFFFF6B68);
   static const Color unselectedTabBarColor = Color(0xFF656565);
+  static const Color myPageDividerGrey = Color(0xFFE0E0E7);
 
 }
 ///Color? primary,

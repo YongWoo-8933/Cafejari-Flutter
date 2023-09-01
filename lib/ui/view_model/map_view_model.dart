@@ -1,5 +1,4 @@
 
-import 'package:animations/animations.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -10,9 +9,7 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

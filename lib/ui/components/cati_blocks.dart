@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class CATIBlocks extends StatelessWidget {
   final bool hasOpenness;
-  final bool is2ndBlockClicked;
-  final bool is3rdBlockClicked;
+  final bool isCoffeeFocused;
+  final bool isWorkFriendly;
   final bool is4thBlockClicked;
 
   const CATIBlocks({
     super.key,
     required this.hasOpenness,
-    required this.is2ndBlockClicked,
-    required this.is3rdBlockClicked,
+    required this.isCoffeeFocused,
+    required this.isWorkFriendly,
     required this.is4thBlockClicked,
   });
 
@@ -21,68 +21,69 @@ class CATIBlocks extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildCategoryColumn("개방", "아늑", hasOpenness),
+        _buildCategoryColumn(topText: "개방", bottomText: "아늑", isTopFilled: hasOpenness),
         const HorizontalSpacer(10),
-        _buildCategoryColumn("디저트","커피", is2ndBlockClicked),
+        _buildCategoryColumn(topText: "커피", bottomText: "디저트", isTopFilled: isCoffeeFocused),
         const HorizontalSpacer(10),
-        _buildCategoryColumn("업무","힐링", is3rdBlockClicked),
+        _buildCategoryColumn(topText: "공부/업무", bottomText: "힐링/감성", isTopFilled: isWorkFriendly),
         const HorizontalSpacer(10),
-        _buildCategoryColumn("여긴","뭘까", is4thBlockClicked),
+        _buildCategoryColumn(topText: "네번째", bottomText: "뭔가", isTopFilled: is4thBlockClicked),
       ],
     );
   }
 
-  Widget _buildCategoryColumn(String text1,String text2, bool clicked) {
-    const double blockHeight = 72;
-    const double blockWidth = 64;
-    const double cornerRadius = 10;
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () => {},
-          child: Container(
-            alignment: Alignment.center,
-            width: blockWidth,
-            height: blockHeight / 2,
-            decoration: BoxDecoration(
-              color: clicked ? AppColor.secondary : AppColor.unselectedButtonColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(cornerRadius),
-                topRight: Radius.circular(cornerRadius),
+  Widget _buildCategoryColumn({
+    required String topText,
+    required String bottomText,
+    required bool isTopFilled
+  }) {
+    const double blockHeight = 84;
+    const double blockWidth = 72;
+    const double cornerRadius = 15;
+
+    return Container(
+      alignment: Alignment.center,
+      width: blockWidth,
+      height: blockHeight,
+      decoration: BoxDecoration(
+        color: isTopFilled ? AppColor.secondary : AppColor.unselectedButtonColor,
+        borderRadius: BorderRadius.circular(cornerRadius),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(cornerRadius),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: blockWidth,
+              height: blockHeight / 2,
+              color: isTopFilled ? AppColor.secondary : AppColor.unselectedButtonColor,
+              child: Text(
+                topText,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: isTopFilled ? AppColor.white : AppColor.black,
+                ),
               ),
             ),
-            child: Text(
-              text1,
-              style: TextStyle(
-                fontSize: 12,
-                color: clicked ? AppColor.unselectedButtonColor : AppColor.black,
+            Container(
+              alignment: Alignment.center,
+              width: blockWidth,
+              height: blockHeight / 2,
+              color: isTopFilled ? AppColor.unselectedButtonColor : AppColor.secondary,
+              child: Text(
+                bottomText,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: isTopFilled ? AppColor.black : AppColor.white,
+                ),
               ),
             ),
-          ),
+          ],
         ),
-        GestureDetector(
-          onTap: () => {},
-          child: Container(
-            alignment: Alignment.center,
-            width: blockWidth,
-            height: blockHeight / 2,
-            decoration: BoxDecoration(
-              color: !clicked ? AppColor.secondary : AppColor.unselectedButtonColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(cornerRadius),
-                bottomRight: Radius.circular(cornerRadius),
-              ),
-            ),
-            child: Text(
-              text2,
-              style: TextStyle(
-                fontSize: 12,
-                color: !clicked ? AppColor.unselectedButtonColor : AppColor.black,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

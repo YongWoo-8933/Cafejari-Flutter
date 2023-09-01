@@ -1,5 +1,6 @@
 
 import 'package:cafejari_flutter/core/exception.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 
@@ -10,6 +11,14 @@ abstract interface class ShopRepository {
   Future<List<ItemResponse>> fetchItem();
   Future<List<BrandconResponse>> fetchMyBrandcon({required String accessToken});
   Future<List<UserCouponResponse>> fetchMyCoupon({required String accessToken});
+
+  Future updateBrandcon({
+    required String accessToken,
+    required int brandconId,
+    bool? isUsed
+  });
+
+  Future<void> deleteBrandcon({required String accessToken, required int brandconId});
 }
 
 /// shop repository의 구현부
@@ -82,6 +91,46 @@ class ShopRepositoryImpl implements ShopRepository {
           endpoint: "user_coupon/",
           accessToken: accessToken);
       return response.map((dynamic e) => UserCouponResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<BrandconResponse> updateBrandcon({
+    required String accessToken,
+    required int brandconId,
+    bool? isUsed
+  }) async {
+    Map<String, dynamic> requestBody = {};
+    if (isUsed.isNotNull) requestBody["is_used"] = isUsed!;
+    try {
+      final dynamic response = await service.request(
+        method: HttpMethod.put,
+        appLabel: "shop",
+        endpoint: "gifticon/$brandconId/",
+        accessToken: accessToken,
+        body: requestBody
+      );
+      return BrandconResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<void> deleteBrandcon({required String accessToken, required int brandconId}) async {
+    try {
+      await service.request(
+        method: HttpMethod.delete,
+        appLabel: "shop",
+        endpoint: "gifticon/$brandconId/",
+        accessToken: accessToken
+      );
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

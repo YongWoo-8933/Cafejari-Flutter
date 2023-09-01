@@ -4,6 +4,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
+import 'package:cafejari_flutter/ui/components/cati_dialog.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/cafe_recommendation_card.dart';
@@ -103,15 +104,15 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                         buttonWidth: 56,
                         buttonHeight: 36,
                         title: "수정",
-                        onPressed: () => {},
+                        onPressed: () => showCATIDialog(context: context, type: CATIDialogType.my),
                       )
                     ],
                   ),
                   const VerticalSpacer(30),
                   const CATIBlocks(
                     hasOpenness: true,
-                    is2ndBlockClicked: false,
-                    is3rdBlockClicked: true,
+                    isCoffeeFocused: false,
+                    isWorkFriendly: true,
                     is4thBlockClicked: true
                   ),
                   const VerticalSpacer(20)

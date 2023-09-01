@@ -15,10 +15,16 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
 
   refreshRankers() async {
     try {
+      final totalRankers = await _leaderboardUseCase.getTotalRankers();
+      final monthRankers = await _leaderboardUseCase.getMonthRankers();
+      final weekRankers = await _leaderboardUseCase.getWeekRankers();
       state = state.copyWith(
-          totalRankers: await _leaderboardUseCase.getTotalRankers(),
-          monthRankers: await _leaderboardUseCase.getMonthRankers(),
-          weekRankers: await _leaderboardUseCase.getWeekRankers()
+        totalRankers: totalRankers,
+        monthRankers: monthRankers,
+        weekRankers: weekRankers,
+        myTotalRanking: _findMyRankingFromRankers(totalRankers),
+        myMonthRanking: _findMyRankingFromRankers(monthRankers),
+        myWeekRanking: _findMyRankingFromRankers(weekRankers),
       );
     } on RefreshTokenExpired {
       globalViewModel.logout();
@@ -27,33 +33,12 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
     }
   }
 
-  setMyRanking(User user) async {
-    final List<int?> myRankings = [];
-    print("ID${user.userId}");
-    void findRanking(List<PartialUser> rankers) {
-      bool found = false;
-      rankers.asMap().forEach((index, ranker) {
-        print("IDd${ranker.userId}");
-        if (user.userId == ranker.userId) {
-          myRankings.add(index + 1);
-          found = true;
-        }
-      });
-      if (!found) {
-        myRankings.add(null);
-      }
-    }
-    findRanking(state.weekRankers);
-    findRanking(state.monthRankers);
-    findRanking(state.totalRankers);
-    state = state.copyWith(myRanking: myRankings);
+  int? _findMyRankingFromRankers(PartialUsers rankers) {
+    final int index = rankers.indexWhere((element) => element.userId == globalViewModel.state.user.userId);
+    return index >= 0 ? index + 1 : null;
   }
 
-  setRankingType(int rankingType){
+  setRankingType(int rankingType) {
     state = state.copyWith(rankingType: rankingType);
   }
-
-
-
-
 }

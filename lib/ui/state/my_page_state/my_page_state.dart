@@ -6,9 +6,10 @@ part 'my_page_state.freezed.dart';
 
 @freezed
 class MyPageState with _$MyPageState {
-  factory MyPageState(
-      {required final int counter,
-      required final User user}) = _MyPageState;
 
-  factory MyPageState.empty() => MyPageState(counter: 0, user: User.empty());
+  factory MyPageState({
+    required final List<({int profileImageId, String imageUrl})> defaultProfileImages
+  }) = _MyPageState;
+
+  factory MyPageState.empty() => MyPageState(defaultProfileImages: []);
 }

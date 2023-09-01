@@ -34,9 +34,17 @@ class CafejariApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    return MaterialApp.router(
-      theme: Theming.lightTheme,
-      routerConfig: appRouter,
+    return RefreshConfiguration(
+        headerBuilder: () => const WaterDropMaterialHeader(backgroundColor: AppColor.primary),
+        headerTriggerDistance: 80.0,
+        springDescription: const SpringDescription(stiffness: 170, damping: 16, mass: 1.9),
+        maxOverScrollExtent: 100,
+        maxUnderScrollExtent: 0,
+        enableScrollWhenRefreshCompleted: true,
+      child: MaterialApp.router(
+        theme: Theming.lightTheme,
+        routerConfig: appRouter,
+      ),
     );
   }
 }
@@ -110,123 +118,115 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
     const double bottomSheetPreviewHeight = 268;
     const double bottomSheetPreviewCornerRadius = 20;
 
-    return RefreshConfiguration(
-      headerBuilder: () => const WaterDropMaterialHeader(backgroundColor: AppColor.primary),
-      headerTriggerDistance: 80.0,
-      springDescription: const SpringDescription(stiffness: 170, damping: 16, mass: 1.9),
-      maxOverScrollExtent: 100,
-      maxUnderScrollExtent: 0,
-      enableScrollWhenRefreshCompleted: true,
-      child: WillPopScope(
-        onWillPop: () async {
-          if (globalState.currentPage.index != 0) {
-            mapViewModel.globalViewModel.updateCurrentPageTo(0);
-            return false;
-          } else if(mapState.isSearchPageVisible) {
-            mapViewModel.closeSearchPage();
-            return false;
-          } else if(mapState.bottomSheetOccupancyController.isPanelOpen) {
-            mapState.bottomSheetOccupancyController.close();
-            return false;
-          } else if(mapState.bottomSheetController.isPanelOpen) {
-            mapState.bottomSheetController.close();
-            return false;
-          } else if(mapState.isBottomSheetPreviewOpened) {
-            await mapViewModel.closeBottomSheetPreview();
-            return false;
-          } else {
-            return await showDialog<bool>(
-              context: context,
-              builder: (context) => SquareAlertDialog(
-                text: "앱을 종료하시겠습니까?",
-                negativeButtonText: "예",
-                positiveButtonText: "아니오",
-                onDismiss: () => Navigator.of(context).pop(),
-                onNegativeButtonPressed: () => SystemNavigator.pop(),
-                onPositiveButtonPressed: () {},
-              )
-            ) ?? false;
-          }
-        },
-        child: DefaultTextStyle(
-          style: const TextStyle(
-            letterSpacing: 0,
-            color: AppColor.black,
-            fontSize: 14,
-            fontWeight: FontWeight.w400
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SlidingUpPanel(
-                controller: mapState.bottomSheetOccupancyController,
-                minHeight: 0,
-                maxHeight: 480,
-                backdropEnabled: true,
-                color: AppColor.transparent,
-                isDraggable: mapState.isOccupancyBottomSheetDraggable,
-                body: SlidingUpPanel(
-                  controller: mapState.bottomSheetController,
-                  minHeight: mapState.isBottomSheetPreviewOpened ?
-                    bottomSheetPreviewHeight - bottomSheetPreviewCornerRadius : 0,
-                  maxHeight: deviceHeight,
-                  backdropEnabled: false,
-                  boxShadow: null,
-                  color: AppColor.transparent,
-                  onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
-                  onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
-                  body: Scaffold(
-                    body: IndexedStack(
-                      index: globalState.currentPage.index,
-                      children: const [
-                        MapScreen(),
-                        MyCafeScreen(),
-                        ChallengeScreen(),
-                        MyPageScreen()
-                      ],
-                    ),
-                    resizeToAvoidBottomInset: false,
-                    bottomNavigationBar: const BottomNavBar(),
-                    backgroundColor: AppColor.transparent,
-                    extendBody: true,
-                  ),
-                  // 카페 bottom sheet
-                  panelBuilder: (scrollController) {
-                    return Container(
-                      color: AppColor.transparent,
-                      child: AnimatedCrossFade(
-                        firstChild: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
-                            Container(
-                              color: AppColor.white,
-                              height: deviceHeight - bottomSheetPreviewHeight,
-                            ),
-                          ],
-                        ),
-                        secondChild: BottomSheetFullContent(scrollController: scrollController),
-                        crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                        duration: AppDuration.animationDefault
-                      )
-                    );
-                  }
-                ),
-                // 카페 혼잡도 업데이트 패널
-                panelBuilder: (_) {
-                  return const BottomSheetOccupancyUpdate();
-                },
-              ),
-              CustomSnackBar(
-                isVisible: globalState.isSnackBarOpened,
-                isExpanded: globalState.isSnackBarExpanded,
-                content: globalState.snackBarText,
-                type: globalState.snackBarType,
-              )
-            ],
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (globalState.currentPage.index != 0) {
+          mapViewModel.globalViewModel.updateCurrentPageTo(0);
+          return false;
+        } else if(mapState.isSearchPageVisible) {
+          mapViewModel.closeSearchPage();
+          return false;
+        } else if(mapState.bottomSheetOccupancyController.isPanelOpen) {
+          mapState.bottomSheetOccupancyController.close();
+          return false;
+        } else if(mapState.bottomSheetController.isPanelOpen) {
+          mapState.bottomSheetController.close();
+          return false;
+        } else if(mapState.isBottomSheetPreviewOpened) {
+          await mapViewModel.closeBottomSheetPreview();
+          return false;
+        } else {
+          return await showDialog<bool>(
+            context: context,
+            builder: (context) => SquareAlertDialog(
+              text: "앱을 종료하시겠습니까?",
+              negativeButtonText: "예",
+              positiveButtonText: "아니오",
+              onDismiss: () => Navigator.of(context).pop(),
+              onNegativeButtonPress: () => SystemNavigator.pop(),
+              onPositiveButtonPress: () {},
+            )
+          ) ?? false;
+        }
+      },
+      child: DefaultTextStyle(
+        style: const TextStyle(
+          letterSpacing: 0,
+          color: AppColor.black,
+          fontSize: 14,
+          fontWeight: FontWeight.w400
         ),
-      )
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SlidingUpPanel(
+              controller: mapState.bottomSheetOccupancyController,
+              minHeight: 0,
+              maxHeight: 480,
+              backdropEnabled: true,
+              color: AppColor.transparent,
+              isDraggable: mapState.isOccupancyBottomSheetDraggable,
+              body: SlidingUpPanel(
+                controller: mapState.bottomSheetController,
+                minHeight: mapState.isBottomSheetPreviewOpened ?
+                  bottomSheetPreviewHeight - bottomSheetPreviewCornerRadius : 0,
+                maxHeight: deviceHeight,
+                backdropEnabled: false,
+                boxShadow: null,
+                color: AppColor.transparent,
+                onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
+                onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
+                body: Scaffold(
+                  body: IndexedStack(
+                    index: globalState.currentPage.index,
+                    children: const [
+                      MapScreen(),
+                      MyCafeScreen(),
+                      ChallengeScreen(),
+                      MyPageScreen()
+                    ],
+                  ),
+                  resizeToAvoidBottomInset: false,
+                  bottomNavigationBar: const BottomNavBar(),
+                  backgroundColor: AppColor.transparent,
+                  extendBody: true,
+                ),
+                // 카페 bottom sheet
+                panelBuilder: (scrollController) {
+                  return Container(
+                    color: AppColor.transparent,
+                    child: AnimatedCrossFade(
+                      firstChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
+                          Container(
+                            color: AppColor.white,
+                            height: deviceHeight - bottomSheetPreviewHeight,
+                          ),
+                        ],
+                      ),
+                      secondChild: BottomSheetFullContent(scrollController: scrollController),
+                      crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                      duration: AppDuration.animationDefault
+                    )
+                  );
+                }
+              ),
+              // 카페 혼잡도 업데이트 패널
+              panelBuilder: (_) {
+                return const BottomSheetOccupancyUpdate();
+              },
+            ),
+            CustomSnackBar(
+              isVisible: globalState.isSnackBarOpened,
+              isExpanded: globalState.isSnackBarExpanded,
+              content: globalState.snackBarText,
+              type: globalState.snackBarType,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
