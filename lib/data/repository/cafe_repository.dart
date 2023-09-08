@@ -21,6 +21,7 @@ abstract interface class CafeRepository {
       {required String accessToken});
   Future<NaverSearchCafeResponse> fetchNaverSearchResult(
       {required String query});
+  Future<List<LocationResponse>> fetchLocation();
 
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser(
       {required String accessToken,
@@ -176,6 +177,20 @@ class CafeRepositoryImpl implements CafeRepository {
           body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
       );
       return OccupancyRateUpdateResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<LocationResponse>> fetchLocation() async {
+    try {
+      final List<dynamic> response = await apiService.request(
+          method: HttpMethod.get,
+          appLabel: "cafe",
+          endpoint: "location/"
+      );
+      return response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     }

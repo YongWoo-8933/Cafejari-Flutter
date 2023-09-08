@@ -2,8 +2,10 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChallengeViewModel extends StateNotifier<ChallengeState> {
@@ -27,18 +29,8 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
       }).toList();
       challenges.removeWhere((element) => availableChallenges.contains(element));
       state = state.copyWith(availableChallenges: availableChallenges, unavailableChallenges: challenges);
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
-    }
-  }
-
-  refreshChallengers() async {
-    try {
-      final Challengers challengers = await _challengeUseCase.getMyChallengers(
-          accessToken: globalViewModel.state.accessToken);
-      state = state.copyWith(myChallengers: challengers);
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
 
@@ -47,22 +39,22 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
       final profileImageTuples = await _userUseCase.getDefaultProfileImages();
       profileImageTuples.shuffle();
       state = state.copyWith(profileImageUrls: profileImageTuples.map((e) => e.imageUrl).toList());
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
 
   selectChallenge(Challenge challenge) => state = state.copyWith(selectedChallenge: challenge);
 
   setChallenger() {
-    state = state.copyWith(selectedChallenger: state.myChallengers.firstWhere(
+    state = state.copyWith(selectedChallenger: globalViewModel.state.myChallengers.firstWhere(
       (element) => element.challenge.id == state.selectedChallenge.id,
       orElse: () => Challenger.empty()
     ));
   }
 
   setDebugChallenger() {
-    state = state.copyWith(selectedChallenger: state.myChallengers.firstWhere(
+    state = state.copyWith(selectedChallenger: globalViewModel.state.myChallengers.firstWhere(
       (element) => element.challenge.id == state.selectedChallenge.id,
       orElse: () => Challenger(
           id: 2,
@@ -94,7 +86,7 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
     );
   }
 
-  participate(Challenge challenge) async {
+  participate({required Challenge challenge, required BuildContext context}) async {
     try {
       final Challenge newChallenge = await _challengeUseCase.participateChallenge(
           accessToken: globalViewModel.state.accessToken, challengeId: challenge.id);
@@ -102,10 +94,10 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
       currentAvailableChallenges.removeWhere((element) => element.id == challenge.id);
       currentAvailableChallenges.add(newChallenge);
       state = state.copyWith(availableChallenges: currentAvailableChallenges);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      globalViewModel.logout();
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 }

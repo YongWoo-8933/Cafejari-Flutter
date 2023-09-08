@@ -25,10 +25,6 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      final viewModel = ref.watch(challengeViewModelProvider.notifier);
-      await viewModel.refreshChallengers();
-    });
   }
 
   @override
@@ -54,8 +50,8 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
         child: ActionButtonPrimary(
           buttonWidth: deviceSize.width - 60,
           buttonHeight: 48,
-          title: isParticipated ? "진행상황" : "참여하기",
-          onPressed: () {
+          title: globalState.isLoggedIn ? (isParticipated ? "진행상황" : "참여하기") : "로그인 후 참여가능",
+          onPressed: globalState.isLoggedIn ? () {
             if (isParticipated) {
               GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
               challengeViewModel.setChallenger();
@@ -63,7 +59,7 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
               GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
               challengeViewModel.setDebugChallenger();
             }
-          },
+          } : null,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

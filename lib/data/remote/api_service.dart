@@ -51,7 +51,7 @@ class APIService {
 
     if (response.statusCode < 300) {
       // 200번대 (성공)
-      if (response.statusCode != 204) return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.body.isNotEmpty) return jsonDecode(utf8.decode(response.bodyBytes));
     } else if (response.statusCode < 500) {
       // 400, 300번대 에러
       switch (response.statusCode) {

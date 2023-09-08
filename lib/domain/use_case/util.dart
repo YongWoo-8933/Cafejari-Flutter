@@ -120,14 +120,15 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     brandImageUrl: cafeResponse.brand?.image,
     latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
     cafeFloors: cafeFloors,
-    openingHour: OpeningHour(
-        mon: cafeResponse.opening_hour.mon,
-        tue: cafeResponse.opening_hour.tue,
-        wed: cafeResponse.opening_hour.wed,
-        thu: cafeResponse.opening_hour.thu,
-        fri: cafeResponse.opening_hour.fri,
-        sat: cafeResponse.opening_hour.sat,
-        sun: cafeResponse.opening_hour.sun),
+    openingHour: cafeResponse.opening_hour.isNotNull ? OpeningHour(
+      mon: cafeResponse.opening_hour!.mon,
+      tue: cafeResponse.opening_hour!.tue,
+      wed: cafeResponse.opening_hour!.wed,
+      thu: cafeResponse.opening_hour!.thu,
+      fri: cafeResponse.opening_hour!.fri,
+      sat: cafeResponse.opening_hour!.sat,
+      sun: cafeResponse.opening_hour!.sun
+    ) : null,
     imageUrls: imageUrls,
     vips: vips
   );

@@ -23,10 +23,16 @@ mixin _$MapState {
   PageController get pageController => throw _privateConstructorUsedError;
   int get currentCafeImagePage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
+  List<Location> get locations => throw _privateConstructorUsedError;
+  String? get randomCafeImageUrl => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
   CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
   NMarker? get selectedMarker => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
+  NCameraPosition? get initTempCameraPosition =>
+      throw _privateConstructorUsedError;
+  NCameraPosition? get shareTempCameraPosition =>
+      throw _privateConstructorUsedError;
   TextEditingController get searchQueryController =>
       throw _privateConstructorUsedError;
   List<Cafe> get searchPredictions => throw _privateConstructorUsedError;
@@ -57,10 +63,14 @@ abstract class $MapStateCopyWith<$Res> {
       PageController pageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
+      List<Location> locations,
+      String? randomCafeImageUrl,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
+      NCameraPosition? initTempCameraPosition,
+      NCameraPosition? shareTempCameraPosition,
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
       double occupancySliderValue,
@@ -94,10 +104,14 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? pageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
+    Object? locations = null,
+    Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
+    Object? initTempCameraPosition = freezed,
+    Object? shareTempCameraPosition = freezed,
     Object? searchQueryController = null,
     Object? searchPredictions = null,
     Object? occupancySliderValue = null,
@@ -130,6 +144,14 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      locations: null == locations
+          ? _value.locations
+          : locations // ignore: cast_nullable_to_non_nullable
+              as List<Location>,
+      randomCafeImageUrl: freezed == randomCafeImageUrl
+          ? _value.randomCafeImageUrl
+          : randomCafeImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       selectedCafe: null == selectedCafe
           ? _value.selectedCafe
           : selectedCafe // ignore: cast_nullable_to_non_nullable
@@ -146,6 +168,14 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
               as NaverMapController?,
+      initTempCameraPosition: freezed == initTempCameraPosition
+          ? _value.initTempCameraPosition
+          : initTempCameraPosition // ignore: cast_nullable_to_non_nullable
+              as NCameraPosition?,
+      shareTempCameraPosition: freezed == shareTempCameraPosition
+          ? _value.shareTempCameraPosition
+          : shareTempCameraPosition // ignore: cast_nullable_to_non_nullable
+              as NCameraPosition?,
       searchQueryController: null == searchQueryController
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
@@ -219,10 +249,14 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       PageController pageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
+      List<Location> locations,
+      String? randomCafeImageUrl,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
       NMarker? selectedMarker,
       NaverMapController? mapController,
+      NCameraPosition? initTempCameraPosition,
+      NCameraPosition? shareTempCameraPosition,
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
       double occupancySliderValue,
@@ -256,10 +290,14 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? pageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
+    Object? locations = null,
+    Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
+    Object? initTempCameraPosition = freezed,
+    Object? shareTempCameraPosition = freezed,
     Object? searchQueryController = null,
     Object? searchPredictions = null,
     Object? occupancySliderValue = null,
@@ -292,6 +330,14 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value._cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      locations: null == locations
+          ? _value._locations
+          : locations // ignore: cast_nullable_to_non_nullable
+              as List<Location>,
+      randomCafeImageUrl: freezed == randomCafeImageUrl
+          ? _value.randomCafeImageUrl
+          : randomCafeImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       selectedCafe: null == selectedCafe
           ? _value.selectedCafe
           : selectedCafe // ignore: cast_nullable_to_non_nullable
@@ -308,6 +354,14 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
               as NaverMapController?,
+      initTempCameraPosition: freezed == initTempCameraPosition
+          ? _value.initTempCameraPosition
+          : initTempCameraPosition // ignore: cast_nullable_to_non_nullable
+              as NCameraPosition?,
+      shareTempCameraPosition: freezed == shareTempCameraPosition
+          ? _value.shareTempCameraPosition
+          : shareTempCameraPosition // ignore: cast_nullable_to_non_nullable
+              as NCameraPosition?,
       searchQueryController: null == searchQueryController
           ? _value.searchQueryController
           : searchQueryController // ignore: cast_nullable_to_non_nullable
@@ -361,10 +415,14 @@ class _$_MapState implements _MapState {
       required this.pageController,
       required this.currentCafeImagePage,
       required final List<Cafe> cafes,
+      required final List<Location> locations,
+      required this.randomCafeImageUrl,
       required this.selectedCafe,
       required this.selectedCafeFloor,
       required this.selectedMarker,
       required this.mapController,
+      required this.initTempCameraPosition,
+      required this.shareTempCameraPosition,
       required this.searchQueryController,
       required final List<Cafe> searchPredictions,
       required this.occupancySliderValue,
@@ -376,6 +434,7 @@ class _$_MapState implements _MapState {
       required this.isOccupancyBottomSheetDraggable,
       required this.isRefreshButtonVisible})
       : _cafes = cafes,
+        _locations = locations,
         _searchPredictions = searchPredictions;
 
   @override
@@ -394,6 +453,16 @@ class _$_MapState implements _MapState {
     return EqualUnmodifiableListView(_cafes);
   }
 
+  final List<Location> _locations;
+  @override
+  List<Location> get locations {
+    if (_locations is EqualUnmodifiableListView) return _locations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_locations);
+  }
+
+  @override
+  final String? randomCafeImageUrl;
   @override
   final Cafe selectedCafe;
   @override
@@ -402,6 +471,10 @@ class _$_MapState implements _MapState {
   final NMarker? selectedMarker;
   @override
   final NaverMapController? mapController;
+  @override
+  final NCameraPosition? initTempCameraPosition;
+  @override
+  final NCameraPosition? shareTempCameraPosition;
   @override
   final TextEditingController searchQueryController;
   final List<Cafe> _searchPredictions;
@@ -432,7 +505,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isOccupancyBottomSheetDraggable: $isOccupancyBottomSheetDraggable, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isOccupancyBottomSheetDraggable: $isOccupancyBottomSheetDraggable, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -442,8 +515,7 @@ class _$_MapState implements _MapState {
             other is _$_MapState &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
-            (identical(other.bottomSheetOccupancyController,
-                    bottomSheetOccupancyController) ||
+            (identical(other.bottomSheetOccupancyController, bottomSheetOccupancyController) ||
                 other.bottomSheetOccupancyController ==
                     bottomSheetOccupancyController) &&
             (identical(other.pageController, pageController) ||
@@ -451,6 +523,10 @@ class _$_MapState implements _MapState {
             (identical(other.currentCafeImagePage, currentCafeImagePage) ||
                 other.currentCafeImagePage == currentCafeImagePage) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
+            const DeepCollectionEquality()
+                .equals(other._locations, _locations) &&
+            (identical(other.randomCafeImageUrl, randomCafeImageUrl) ||
+                other.randomCafeImageUrl == randomCafeImageUrl) &&
             (identical(other.selectedCafe, selectedCafe) ||
                 other.selectedCafe == selectedCafe) &&
             (identical(other.selectedCafeFloor, selectedCafeFloor) ||
@@ -459,6 +535,10 @@ class _$_MapState implements _MapState {
                 other.selectedMarker == selectedMarker) &&
             (identical(other.mapController, mapController) ||
                 other.mapController == mapController) &&
+            (identical(other.initTempCameraPosition, initTempCameraPosition) ||
+                other.initTempCameraPosition == initTempCameraPosition) &&
+            (identical(other.shareTempCameraPosition, shareTempCameraPosition) ||
+                other.shareTempCameraPosition == shareTempCameraPosition) &&
             (identical(other.searchQueryController, searchQueryController) ||
                 other.searchQueryController == searchQueryController) &&
             const DeepCollectionEquality()
@@ -475,8 +555,7 @@ class _$_MapState implements _MapState {
             (identical(other.isBottomSheetPreviewExpanded, isBottomSheetPreviewExpanded) ||
                 other.isBottomSheetPreviewExpanded ==
                     isBottomSheetPreviewExpanded) &&
-            (identical(other.isBottomSheetFullContentVisible,
-                    isBottomSheetFullContentVisible) ||
+            (identical(other.isBottomSheetFullContentVisible, isBottomSheetFullContentVisible) ||
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
             (identical(other.isOccupancyBottomSheetDraggable,
@@ -495,10 +574,14 @@ class _$_MapState implements _MapState {
         pageController,
         currentCafeImagePage,
         const DeepCollectionEquality().hash(_cafes),
+        const DeepCollectionEquality().hash(_locations),
+        randomCafeImageUrl,
         selectedCafe,
         selectedCafeFloor,
         selectedMarker,
         mapController,
+        initTempCameraPosition,
+        shareTempCameraPosition,
         searchQueryController,
         const DeepCollectionEquality().hash(_searchPredictions),
         occupancySliderValue,
@@ -525,10 +608,14 @@ abstract class _MapState implements MapState {
       required final PageController pageController,
       required final int currentCafeImagePage,
       required final List<Cafe> cafes,
+      required final List<Location> locations,
+      required final String? randomCafeImageUrl,
       required final Cafe selectedCafe,
       required final CafeFloor selectedCafeFloor,
       required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
+      required final NCameraPosition? initTempCameraPosition,
+      required final NCameraPosition? shareTempCameraPosition,
       required final TextEditingController searchQueryController,
       required final List<Cafe> searchPredictions,
       required final double occupancySliderValue,
@@ -551,6 +638,10 @@ abstract class _MapState implements MapState {
   @override
   List<Cafe> get cafes;
   @override
+  List<Location> get locations;
+  @override
+  String? get randomCafeImageUrl;
+  @override
   Cafe get selectedCafe;
   @override
   CafeFloor get selectedCafeFloor;
@@ -558,6 +649,10 @@ abstract class _MapState implements MapState {
   NMarker? get selectedMarker;
   @override
   NaverMapController? get mapController;
+  @override
+  NCameraPosition? get initTempCameraPosition;
+  @override
+  NCameraPosition? get shareTempCameraPosition;
   @override
   TextEditingController get searchQueryController;
   @override

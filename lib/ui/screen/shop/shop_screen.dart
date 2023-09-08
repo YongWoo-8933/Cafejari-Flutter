@@ -66,10 +66,10 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("내 포인트", style: TextSize.textSize_grey_14),
-                    const HorizontalSpacer(4),
+                    const HorizontalSpacer(8),
                     Text("${globalState.user.point}", style: TextSize.textSize_bold_20),
-                    const HorizontalSpacer(4),
-                    const Icon(CupertinoIcons.right_chevron, size: 16)
+                    // const HorizontalSpacer(4),
+                    // const Icon(CupertinoIcons.right_chevron, size: 16)
                   ],
                 ),
               ),
@@ -180,13 +180,24 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                         await shopViewModel.refreshData();
                         refreshController.refreshCompleted();
                       },
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(30),
-                        itemCount: shopState.myBrandcons.length,
-                        itemBuilder: (context, index) => ShopMyBrandCon(
-                          brandcon: shopState.myBrandcons[index],
-                          sidePadding: 30,
-                        ),
+                      child: Stack(
+                        children: [
+                          Visibility(
+                            visible: shopState.myBrandcons.isNotEmpty,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(30),
+                              itemCount: shopState.myBrandcons.length,
+                              itemBuilder: (context, index) => ShopMyBrandCon(
+                                brandcon: shopState.myBrandcons[index],
+                                sidePadding: 30,
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: shopState.myBrandcons.isEmpty,
+                            child: Container(alignment: Alignment.center, height: 300, child: Text("구매한 상품이 없어요")),
+                          ),
+                        ],
                       ),
                     )
                   ],

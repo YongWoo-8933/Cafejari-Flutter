@@ -37,19 +37,15 @@ class BottomSheetCATI extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CATIBlocks(
-                hasOpenness: true,
-                isCoffeeFocused: true,
-                isWorkFriendly: true,
-                is4thBlockClicked: true
+              GestureDetector(
+                onTap: () {},
+                child: const CATIBlocks(
+                  hasOpenness: true,
+                  isCoffeeFocused: true,
+                  isWorkFriendly: true,
+                  is4thBlockClicked: true
+                ),
               ),
-              const VerticalSpacer(20),
-              ActionButtonPrimary(
-                buttonWidth: 120,
-                buttonHeight: 40,
-                title: "CATI 평가하기",
-                onPressed: () => { },
-              )
             ],
           )
         ],

@@ -9,6 +9,7 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -198,6 +199,8 @@ class CATISlider extends StatelessWidget {
                   boxShadow: AppShadow.box
                 ),
               ),
+              onChangeStart: (_) => HapticFeedback.vibrate(),
+              onChangeEnd: (_) => HapticFeedback.vibrate(),
               onChanged: (dynamic value) => onChange(value.toInt())
             )
           ),

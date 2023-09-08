@@ -8,6 +8,8 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case/make_new_profile.
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class UserUseCase {
+  Future<bool> getIsInstalledFirstTime();
+  setIsInstalledFirstTime(bool isInstalled);
   Future<({bool isUserExist, String accessToken})> kakaoLogin({required String accessToken});
   Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken});
   Future<User> getUser({required String accessToken});
@@ -38,6 +40,7 @@ abstract class UserUseCase {
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
   });
+  Future<void> logout({required String accessToken});
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
@@ -45,6 +48,12 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   final UserRepository userRepository;
 
   UserUseCaseImpl({required this.tokenRepository, required this.userRepository});
+
+  @override
+  Future<bool> getIsInstalledFirstTime() async => await userRepository.getIsInstalledFirstTime();
+
+  @override
+  setIsInstalledFirstTime(bool isInstalled) async => await userRepository.putIsInstalledFirstTime(isInstalled);
 
   @override
   Future<({String accessToken, bool isUserExist})> kakaoLogin({required String accessToken}) async {
@@ -79,9 +88,9 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
-    }on RefreshTokenExpired{
+    } on RefreshTokenExpired{
       rethrow;
-    }on ErrorWithMessage{
+    } on ErrorWithMessage{
       rethrow;
     }
   }
@@ -235,6 +244,28 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
     } on RefreshTokenExpired{
+      rethrow;
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> logout({required String accessToken}) async {
+    final String refreshToken = await tokenRepository.getRefreshToken();
+    try {
+      await userRepository.logout(accessToken: accessToken, refreshToken: refreshToken);
+      await tokenRepository.putRefreshToken(newToken: "");
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      try {
+        await userRepository.logout(accessToken: newToken, refreshToken: refreshToken);
+        await tokenRepository.putRefreshToken(newToken: "");
+      } on AccessTokenExpired{
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired{
+      await tokenRepository.putRefreshToken(newToken: "");
       rethrow;
     } on ErrorWithMessage{
       rethrow;

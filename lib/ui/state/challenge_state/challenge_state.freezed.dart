@@ -20,8 +20,8 @@ mixin _$ChallengeState {
   List<Challenge> get unavailableChallenges =>
       throw _privateConstructorUsedError;
   Challenge get selectedChallenge => throw _privateConstructorUsedError;
-  List<String> get profileImageUrls => throw _privateConstructorUsedError;
-  List<Challenger> get myChallengers => throw _privateConstructorUsedError;
+  List<String> get profileImageUrls =>
+      throw _privateConstructorUsedError; // required final Challengers myChallengers,
   Challenger get selectedChallenger => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,7 +40,6 @@ abstract class $ChallengeStateCopyWith<$Res> {
       List<Challenge> unavailableChallenges,
       Challenge selectedChallenge,
       List<String> profileImageUrls,
-      List<Challenger> myChallengers,
       Challenger selectedChallenger});
 
   $ChallengeCopyWith<$Res> get selectedChallenge;
@@ -64,7 +63,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
     Object? profileImageUrls = null,
-    Object? myChallengers = null,
     Object? selectedChallenger = null,
   }) {
     return _then(_value.copyWith(
@@ -84,10 +82,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
           ? _value.profileImageUrls
           : profileImageUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      myChallengers: null == myChallengers
-          ? _value.myChallengers
-          : myChallengers // ignore: cast_nullable_to_non_nullable
-              as List<Challenger>,
       selectedChallenger: null == selectedChallenger
           ? _value.selectedChallenger
           : selectedChallenger // ignore: cast_nullable_to_non_nullable
@@ -125,7 +119,6 @@ abstract class _$$_ChallengeStateCopyWith<$Res>
       List<Challenge> unavailableChallenges,
       Challenge selectedChallenge,
       List<String> profileImageUrls,
-      List<Challenger> myChallengers,
       Challenger selectedChallenger});
 
   @override
@@ -149,7 +142,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
     Object? profileImageUrls = null,
-    Object? myChallengers = null,
     Object? selectedChallenger = null,
   }) {
     return _then(_$_ChallengeState(
@@ -169,10 +161,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
           ? _value._profileImageUrls
           : profileImageUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      myChallengers: null == myChallengers
-          ? _value._myChallengers
-          : myChallengers // ignore: cast_nullable_to_non_nullable
-              as List<Challenger>,
       selectedChallenger: null == selectedChallenger
           ? _value.selectedChallenger
           : selectedChallenger // ignore: cast_nullable_to_non_nullable
@@ -189,12 +177,10 @@ class _$_ChallengeState implements _ChallengeState {
       required final List<Challenge> unavailableChallenges,
       required this.selectedChallenge,
       required final List<String> profileImageUrls,
-      required final List<Challenger> myChallengers,
       required this.selectedChallenger})
       : _availableChallenges = availableChallenges,
         _unavailableChallenges = unavailableChallenges,
-        _profileImageUrls = profileImageUrls,
-        _myChallengers = myChallengers;
+        _profileImageUrls = profileImageUrls;
 
   final List<Challenge> _availableChallenges;
   @override
@@ -225,20 +211,13 @@ class _$_ChallengeState implements _ChallengeState {
     return EqualUnmodifiableListView(_profileImageUrls);
   }
 
-  final List<Challenger> _myChallengers;
-  @override
-  List<Challenger> get myChallengers {
-    if (_myChallengers is EqualUnmodifiableListView) return _myChallengers;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_myChallengers);
-  }
-
+// required final Challengers myChallengers,
   @override
   final Challenger selectedChallenger;
 
   @override
   String toString() {
-    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge, profileImageUrls: $profileImageUrls, myChallengers: $myChallengers, selectedChallenger: $selectedChallenger)';
+    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge, profileImageUrls: $profileImageUrls, selectedChallenger: $selectedChallenger)';
   }
 
   @override
@@ -254,8 +233,6 @@ class _$_ChallengeState implements _ChallengeState {
                 other.selectedChallenge == selectedChallenge) &&
             const DeepCollectionEquality()
                 .equals(other._profileImageUrls, _profileImageUrls) &&
-            const DeepCollectionEquality()
-                .equals(other._myChallengers, _myChallengers) &&
             (identical(other.selectedChallenger, selectedChallenger) ||
                 other.selectedChallenger == selectedChallenger));
   }
@@ -267,7 +244,6 @@ class _$_ChallengeState implements _ChallengeState {
       const DeepCollectionEquality().hash(_unavailableChallenges),
       selectedChallenge,
       const DeepCollectionEquality().hash(_profileImageUrls),
-      const DeepCollectionEquality().hash(_myChallengers),
       selectedChallenger);
 
   @JsonKey(ignore: true)
@@ -283,7 +259,6 @@ abstract class _ChallengeState implements ChallengeState {
       required final List<Challenge> unavailableChallenges,
       required final Challenge selectedChallenge,
       required final List<String> profileImageUrls,
-      required final List<Challenger> myChallengers,
       required final Challenger selectedChallenger}) = _$_ChallengeState;
 
   @override
@@ -294,9 +269,7 @@ abstract class _ChallengeState implements ChallengeState {
   Challenge get selectedChallenge;
   @override
   List<String> get profileImageUrls;
-  @override
-  List<Challenger> get myChallengers;
-  @override
+  @override // required final Challengers myChallengers,
   Challenger get selectedChallenger;
   @override
   @JsonKey(ignore: true)

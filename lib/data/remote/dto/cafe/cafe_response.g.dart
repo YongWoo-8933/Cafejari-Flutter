@@ -14,8 +14,10 @@ CafeResponse _$CafeResponseFromJson(Map<String, dynamic> json) => CafeResponse(
       longitude: (json['longitude'] as num).toDouble(),
       is_visible: json['is_visible'] as bool,
       is_closed: json['is_closed'] as bool,
-      opening_hour: OpeningHourResponse.fromJson(
-          json['opening_hour'] as Map<String, dynamic>),
+      opening_hour: json['opening_hour'] == null
+          ? null
+          : OpeningHourResponse.fromJson(
+              json['opening_hour'] as Map<String, dynamic>),
       brand: json['brand'] == null
           ? null
           : BrandResponse.fromJson(json['brand'] as Map<String, dynamic>),
@@ -302,4 +304,20 @@ Map<String, dynamic> _$NaverSearchCafeItemResponseToJson(
       'roadAddress': instance.roadAddress,
       'mapx': instance.mapx,
       'mapy': instance.mapy,
+    };
+
+LocationResponse _$LocationResponseFromJson(Map<String, dynamic> json) =>
+    LocationResponse(
+      name: json['name'] as String,
+      image: json['image'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$LocationResponseToJson(LocationResponse instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'image': instance.image,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

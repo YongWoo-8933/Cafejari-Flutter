@@ -7,7 +7,8 @@ import 'package:cafejari_flutter/data/remote/api_service.dart';
 /// access token, refresh token 관리 저장소
 abstract interface class TokenRepository {
   Future<TokenResponse> fetchAccessToken();
-  putRefreshToken({required String newToken});
+  Future<void> putRefreshToken({required String newToken});
+  Future<String> getRefreshToken();
 }
 
 /// user repository의 구현부
@@ -37,8 +38,14 @@ class TokenRepositoryImpl implements TokenRepository {
   }
 
   @override
-  putRefreshToken({required String newToken}) async {
+  Future<void> putRefreshToken({required String newToken}) async {
     final Box<dynamic> box = await Hive.openBox(boxLabel);
     await box.put(refreshTokenKey, newToken);
+  }
+
+  @override
+  Future<String> getRefreshToken() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(refreshTokenKey);
   }
 }

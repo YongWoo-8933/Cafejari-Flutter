@@ -14,7 +14,7 @@ class CafeResponse {
   final String name, address;
   final double latitude, longitude;
   final bool is_visible, is_closed;
-  final OpeningHourResponse opening_hour;
+  final OpeningHourResponse? opening_hour;
   final BrandResponse? brand;
   final List<CafeFloorCafeRepResponse> cafe_floor;
   final List<CafeVIPResponse> cafe_vip;
@@ -251,4 +251,21 @@ class NaverSearchCafeItemResponse {
   });
 
   factory NaverSearchCafeItemResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeItemResponseFromJson(json);
+}
+
+@JsonSerializable()
+class LocationResponse {
+  final String name;
+  final String image;
+  final double latitude;
+  final double longitude;
+
+  LocationResponse({
+    required this.name,
+    required this.image,
+    required this.latitude,
+    required this.longitude,
+  });
+
+  factory LocationResponse.fromJson(Map<String, dynamic> json) => _$LocationResponseFromJson(json);
 }

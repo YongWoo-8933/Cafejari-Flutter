@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -83,9 +84,15 @@ class OccupancyUpdateSlider extends ConsumerWidget {
               activeColor: AppColor.transparent,
               inactiveColor: AppColor.transparent,
               thumbIcon: Image.asset((mapState.occupancySliderValue/100).toOccupancyLevel().thumbImagePath),
-              onChangeStart: (_) => mapViewModel.setOccupancyBottomSheetDraggable(false),
+              onChangeStart: (_) {
+                mapViewModel.setOccupancyBottomSheetDraggable(false);
+                HapticFeedback.vibrate();
+              },
               onChanged: (dynamic value) => mapViewModel.updateOccupancySliderValue(value),
-              onChangeEnd: (_) => mapViewModel.setOccupancyBottomSheetDraggable(true),
+              onChangeEnd: (_) {
+                mapViewModel.setOccupancyBottomSheetDraggable(true);
+                HapticFeedback.vibrate();
+              },
             ),
           ),
         )

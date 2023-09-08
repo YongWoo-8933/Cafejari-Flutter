@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LeaderBoardMyRanking extends ConsumerWidget {
+class LeaderBoardMyRanking extends StatelessWidget {
   final String title;
   final int? myRanking;
 
@@ -20,28 +20,25 @@ class LeaderBoardMyRanking extends ConsumerWidget {
     Key? key,}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final LeaderboardState leaderboardState = ref.watch(leaderboardViewModelProvider);
+  Widget build(BuildContext context) {
 
-    return Container(
-      padding: AppPadding.padding_20,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Divider(color: AppColor.grey_300, height: 1),
-          VerticalSpacer(30),
-          Column(
-            children: [
-              Text(title, style: TextSize.textSize_12),
-              VerticalSpacer(10),
-              Text(myRanking.isNotNull ? "${myRanking}위" : "순위 없음", style: TextSize.textSize_bold_16_w700)
-            ],
-          ),
-          VerticalSpacer(25),
-          Divider(color: AppColor.grey_300, height: 1),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Divider(color: AppColor.grey_300, height: 1, indent: 20),
+        const VerticalSpacer(30),
+        Column(
+          children: [
+            Text(title, style: TextSize.textSize_12),
+            const VerticalSpacer(10),
+            Text(myRanking.isNotNull ? "$myRanking위" : "순위 없음", style: TextSize.textSize_bold_16_w700)
+          ],
+        ),
+        const VerticalSpacer(30),
+        const Divider(color: AppColor.grey_300, height: 1, indent: 20),
+      ],
     );
   }
 }

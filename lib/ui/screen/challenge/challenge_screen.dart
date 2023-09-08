@@ -55,6 +55,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
         controller: _refreshController,
         onRefresh: () async {
           await challengeViewModel.refreshChallenges();
+          await challengeViewModel.globalViewModel.init();
           _refreshController.refreshCompleted();
         },
         child: Column(
@@ -62,7 +63,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
             Visibility(
               visible: challengeState.availableChallenges.isNotEmpty,
               child: SizedBox(
-                height: 444,
+                height: 460,
                 child: ListView.builder(
                   padding: AppPadding.padding_25,
                   scrollDirection: Axis.horizontal,
@@ -94,16 +95,16 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                 child: Text("진행중인 챌린지가 없습니다"),
               ),
             ),
-            Container(
-              padding: AppPadding.padding_25,
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
-                  ChallengeVIP()
-                ],
-              ),
-            )
+            // Container(
+            //   padding: AppPadding.padding_25,
+            //   child: const Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
+            //       ChallengeVIP()
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),

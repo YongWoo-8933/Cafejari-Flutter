@@ -7,6 +7,7 @@ import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -77,6 +78,8 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
                               color: AppColor.white
                             ),
                           ),
+                          onChangeStart: (_) => HapticFeedback.vibrate(),
+                          onChangeEnd: (_) => HapticFeedback.vibrate(),
                           onChanged: (dynamic value) {
                             requestViewModel.updateWallSocketRate(index: index, rate: value / 100);
                           }

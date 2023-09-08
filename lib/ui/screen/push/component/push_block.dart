@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 class PushBlock extends StatelessWidget {
   final Push push;
 
-  PushBlock({
+  const PushBlock({
+    super.key,
     required this.push
   });
 
@@ -18,7 +19,7 @@ class PushBlock extends StatelessWidget {
     final blockWidth = MediaQuery.of(context).size.width-40;
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       // width: blockWidth,
       child: Row(
         children: [
@@ -29,7 +30,7 @@ class PushBlock extends StatelessWidget {
           ),
           Container(
             width: blockWidth-75,
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -38,21 +39,21 @@ class PushBlock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start ,
                   children: [
                     Text(_convertToFormattedDate(push.pushedAt),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: AppColor.unselectedTabBarColor
                         )),
-                    HorizontalSpacer(5),
+                    const HorizontalSpacer(5),
                     Text(_formatTimeDifference(push.pushedAt),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: AppColor.unselectedTabBarColor
                         ))
                   ],
                 ),
-                VerticalSpacer(11),
+                const VerticalSpacer(11),
                 Text(push.body, style: TextSize.textSize_14)
               ],
             ),
@@ -82,9 +83,9 @@ String _formatTimeDifference(DateTime targetDate) {
     return "${difference.inDays}일 전";
   } else if (difference.inDays < 365) {
     int months = now.month - targetDate.month + (now.year - targetDate.year) * 12;
-    return "${months}달 전";
+    return "$months달 전";
   } else {
     int years = now.year - targetDate.year;
-    return "${years}년 전";
+    return "$years년 전";
   }
 }

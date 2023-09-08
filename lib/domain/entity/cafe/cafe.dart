@@ -137,3 +137,23 @@ class NaverSearchCafe with _$NaverSearchCafe {
     longitude: 127.0
   );
 }
+
+typedef Locations = List<Location>;
+
+/// 지역 정보 결과 모델
+@freezed
+class Location with _$Location {
+  factory Location(
+      {required final String name,
+        required final String imageUrl,
+        required final double latitude,
+        required final double longitude,
+      }) = _Location;
+
+  factory Location.empty() => Location(
+    name: "",
+    imageUrl: "",
+    latitude: 37.0,
+    longitude: 127.0
+  );
+}

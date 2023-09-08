@@ -1,4 +1,3 @@
-import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
@@ -10,15 +9,12 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_slider.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
 final _dragDyProvider = StateProvider<double>((ref) => 0.0);
-final _isShareLoading = StateProvider<bool>((ref) => false);
 
 class BottomSheetPreview extends ConsumerWidget {
   final double height;
@@ -86,20 +82,16 @@ class BottomSheetPreview extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   "# 대표태그",
                                   style: TextStyle(
                                     color: AppColor.grey_700,
                                     fontSize: 12
                                   )),
-                                BookmarkButton(
-                                  isBookmarked: globalState.user.favoriteCafes.where((e) => e.id == mapState.selectedCafe.id).isNotEmpty,
-                                  buttonSize: componentHeight,
-                                  onPressed: () => mapViewModel.updateFavoriteCafeList(mapState.selectedCafe.id)
-                                )
+                                BookmarkButton(buttonSize: componentHeight)
                               ],
                             ),
                             const VerticalSpacer(8),
@@ -141,82 +133,7 @@ class BottomSheetPreview extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    ShareButton(
-                                      buttonSize: componentHeight,
-                                      isLoading: ref.watch(_isShareLoading),
-                                      onPressed: () async {
-                                        ref.watch(_isShareLoading.notifier).update((state) => true);
-                                        final urlPrefix = "https://cafejari.page.link";
-                                        final DynamicLinkParameters parameters = DynamicLinkParameters(
-                                          link: Uri.parse("$urlPrefix/map/${mapState.selectedCafe.id}"),
-                                          uriPrefix: urlPrefix,
-                                          androidParameters: AndroidParameters(
-                                            packageName: "kr.co.cafejari.cafejari_flutter"
-                                          )
-                                        );
-                                        final Uri dynamicLink = await FirebaseDynamicLinks.instance.buildLink(parameters);
-                                        print("" + dynamicLink.toString());
-                                        if (await ShareClient.instance.isKakaoTalkSharingAvailable()) {
-                                          try {
-                                            Uri uri = await ShareClient.instance.shareDefault(
-                                              template: LocationTemplate(
-                                                address: mapState.selectedCafe.address,
-                                                content: Content(
-                                                  title: mapState.selectedCafe.name,
-                                                  description: '현재 혼잡도: ${
-                                                    mapState.selectedCafe.recentUpdatedOccupancyRate.isNull ? "정보 없음" :
-                                                      mapState.selectedCafe.recentUpdatedOccupancyRate!.toOccupancyLevel().stringValue
-                                                  }',
-                                                  imageUrl: Uri.parse(
-                                                    mapState.selectedCafe.imageUrls.isEmpty ?
-                                                      "https://cafejariimage.co.kr/cafe/cafe_image/스타벅스_신촌오거리점_KakaoTalk_20230804_120411907.jpg" :
-                                                      mapState.selectedCafe.imageUrls[0]
-                                                  ),
-                                                  link: Link(mobileWebUrl: dynamicLink),
-                                                ),
-                                                buttons: [
-                                                  Button(title: "앱에서 보기", link: Link(mobileWebUrl: dynamicLink))
-                                                ],
-                                                social: Social(likeCount: 286, commentCount: 45, sharedCount: 845),
-                                              )
-                                            );
-                                            await ShareClient.instance.launchKakaoTalk(uri);
-                                            print('카카오톡 공유 완료');
-                                          } catch (error) {
-                                            print('카카오톡 공유 실패 $error');
-                                          }
-                                        } else {
-                                          try {
-                                            Uri shareUrl = await WebSharerClient.instance
-                                                .makeDefaultUrl(template: LocationTemplate(
-                                              address: mapState.selectedCafe.address,
-                                              content: Content(
-                                                title: mapState.selectedCafe.name,
-                                                description: '현재 혼잡도: ${
-                                                  mapState.selectedCafe.recentUpdatedOccupancyRate.isNull ? "정보 없음" :
-                                                  mapState.selectedCafe.recentUpdatedOccupancyRate!.toOccupancyLevel().stringValue
-                                                }',
-                                                imageUrl: Uri.parse(
-                                                  mapState.selectedCafe.imageUrls.isEmpty ?
-                                                  "https://cafejariimage.co.kr/cafe/cafe_image/스타벅스_신촌오거리점_KakaoTalk_20230804_120411907.jpg" :
-                                                  mapState.selectedCafe.imageUrls[0]
-                                                ),
-                                                link: Link(
-                                                  webUrl: Uri.parse('https://developers.kakao.com'),
-                                                  mobileWebUrl: dynamicLink,
-                                                ),
-                                              ),
-                                              social: Social(likeCount: 286, commentCount: 45, sharedCount: 845),
-                                            )
-                                            );
-                                            await launchBrowserTab(shareUrl, popupOpen: true);
-                                          } catch (error) {
-                                            print('카카오톡 공유 실패 $error');
-                                          }
-                                        }
-                                        ref.watch(_isShareLoading.notifier).update((state) => false);
-                                      },
-                                    ),
+                                    const ShareButton(buttonSize: componentHeight),
                                   ],
                                 ),
                               )
@@ -343,7 +260,7 @@ class _FloorTabRow extends ConsumerWidget {
                   labelStyle: TextSize.textSize_bold_14,
                   isScrollable: true,
                   onTap: (tappedCafeFloorIndex) {
-                    mapViewModel.selectedCafeFloor(mapState.selectedCafe.cafeFloors[tappedCafeFloorIndex]);
+                    mapViewModel.selectCafeFloor(mapState.selectedCafe.cafeFloors[tappedCafeFloorIndex]);
                   },
                   tabs: mapState.selectedCafe.cafeFloors.map((e) => Tab(text: "${e.floor}층")).toList()
               ),

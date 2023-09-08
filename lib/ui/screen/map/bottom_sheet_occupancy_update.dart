@@ -64,21 +64,23 @@ class BottomSheetOccupancyUpdate extends ConsumerWidget {
               onPressed: () async {
                 if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 1000)) {
                   if(globalState.isLoggedIn) {
-                    mapViewModel.updateOccupancyRateAsUser(context: context);
+                    if(context.mounted) mapViewModel.updateOccupancyRateAsUser(context: context);
                   } else {
-                    await showDialog(
-                      context: context,
-                      builder: (context) => SquareAlertDialog(
-                        text: "로그인하고 혼잡도를 등록하면 포인트를 받을 수 있어요. 로그인 페이지로 이동할까요?",
-                        negativeButtonText: "그냥 진행",
-                        positiveButtonText: "예",
-                        onDismiss: () => Navigator.of(context).pop(),
-                        onNegativeButtonPress: () {
-                          mapViewModel.updateOccupancyRateAsGuest(context: context);
-                        },
-                        onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
-                      )
-                    );
+                    if(context.mounted) {
+                      await showDialog(
+                        context: context,
+                        builder: (context) => SquareAlertDialog(
+                          text: "로그인하고 혼잡도를 등록하면 포인트를 받을 수 있어요. 로그인 페이지로 이동할까요?",
+                          negativeButtonText: "그냥 진행",
+                          positiveButtonText: "예",
+                          onDismiss: () => Navigator.of(context).pop(),
+                          onNegativeButtonPress: () {
+                            mapViewModel.updateOccupancyRateAsGuest(context: context);
+                          },
+                          onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                        )
+                      );
+                    }
                   }
                 } else {
                   mapViewModel.globalViewModel.showSnackBar(
@@ -109,7 +111,7 @@ class _FloorRow extends ConsumerWidget {
           return Row(
             children: [
               GestureDetector(
-                onTap: () => mapViewModel.selectedCafeFloor(cafeFloor),
+                onTap: () => mapViewModel.selectCafeFloor(cafeFloor),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),

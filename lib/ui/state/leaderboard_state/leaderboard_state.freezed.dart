@@ -19,11 +19,6 @@ mixin _$LeaderboardState {
   List<PartialUser> get monthRankers => throw _privateConstructorUsedError;
   List<PartialUser> get weekRankers => throw _privateConstructorUsedError;
   List<PartialUser> get totalRankers => throw _privateConstructorUsedError;
-  int? get myMonthRanking => throw _privateConstructorUsedError;
-  int? get myWeekRanking => throw _privateConstructorUsedError;
-  int? get myTotalRanking => throw _privateConstructorUsedError;
-  int get rankingType => throw _privateConstructorUsedError;
-  List<int?> get myRanking => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LeaderboardStateCopyWith<LeaderboardState> get copyWith =>
@@ -39,12 +34,7 @@ abstract class $LeaderboardStateCopyWith<$Res> {
   $Res call(
       {List<PartialUser> monthRankers,
       List<PartialUser> weekRankers,
-      List<PartialUser> totalRankers,
-      int? myMonthRanking,
-      int? myWeekRanking,
-      int? myTotalRanking,
-      int rankingType,
-      List<int?> myRanking});
+      List<PartialUser> totalRankers});
 }
 
 /// @nodoc
@@ -63,11 +53,6 @@ class _$LeaderboardStateCopyWithImpl<$Res, $Val extends LeaderboardState>
     Object? monthRankers = null,
     Object? weekRankers = null,
     Object? totalRankers = null,
-    Object? myMonthRanking = freezed,
-    Object? myWeekRanking = freezed,
-    Object? myTotalRanking = freezed,
-    Object? rankingType = null,
-    Object? myRanking = null,
   }) {
     return _then(_value.copyWith(
       monthRankers: null == monthRankers
@@ -82,26 +67,6 @@ class _$LeaderboardStateCopyWithImpl<$Res, $Val extends LeaderboardState>
           ? _value.totalRankers
           : totalRankers // ignore: cast_nullable_to_non_nullable
               as List<PartialUser>,
-      myMonthRanking: freezed == myMonthRanking
-          ? _value.myMonthRanking
-          : myMonthRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      myWeekRanking: freezed == myWeekRanking
-          ? _value.myWeekRanking
-          : myWeekRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      myTotalRanking: freezed == myTotalRanking
-          ? _value.myTotalRanking
-          : myTotalRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      rankingType: null == rankingType
-          ? _value.rankingType
-          : rankingType // ignore: cast_nullable_to_non_nullable
-              as int,
-      myRanking: null == myRanking
-          ? _value.myRanking
-          : myRanking // ignore: cast_nullable_to_non_nullable
-              as List<int?>,
     ) as $Val);
   }
 }
@@ -117,12 +82,7 @@ abstract class _$$_LeaderboardStateCopyWith<$Res>
   $Res call(
       {List<PartialUser> monthRankers,
       List<PartialUser> weekRankers,
-      List<PartialUser> totalRankers,
-      int? myMonthRanking,
-      int? myWeekRanking,
-      int? myTotalRanking,
-      int rankingType,
-      List<int?> myRanking});
+      List<PartialUser> totalRankers});
 }
 
 /// @nodoc
@@ -139,11 +99,6 @@ class __$$_LeaderboardStateCopyWithImpl<$Res>
     Object? monthRankers = null,
     Object? weekRankers = null,
     Object? totalRankers = null,
-    Object? myMonthRanking = freezed,
-    Object? myWeekRanking = freezed,
-    Object? myTotalRanking = freezed,
-    Object? rankingType = null,
-    Object? myRanking = null,
   }) {
     return _then(_$_LeaderboardState(
       monthRankers: null == monthRankers
@@ -158,26 +113,6 @@ class __$$_LeaderboardStateCopyWithImpl<$Res>
           ? _value._totalRankers
           : totalRankers // ignore: cast_nullable_to_non_nullable
               as List<PartialUser>,
-      myMonthRanking: freezed == myMonthRanking
-          ? _value.myMonthRanking
-          : myMonthRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      myWeekRanking: freezed == myWeekRanking
-          ? _value.myWeekRanking
-          : myWeekRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      myTotalRanking: freezed == myTotalRanking
-          ? _value.myTotalRanking
-          : myTotalRanking // ignore: cast_nullable_to_non_nullable
-              as int?,
-      rankingType: null == rankingType
-          ? _value.rankingType
-          : rankingType // ignore: cast_nullable_to_non_nullable
-              as int,
-      myRanking: null == myRanking
-          ? _value._myRanking
-          : myRanking // ignore: cast_nullable_to_non_nullable
-              as List<int?>,
     ));
   }
 }
@@ -188,16 +123,10 @@ class _$_LeaderboardState implements _LeaderboardState {
   _$_LeaderboardState(
       {required final List<PartialUser> monthRankers,
       required final List<PartialUser> weekRankers,
-      required final List<PartialUser> totalRankers,
-      required this.myMonthRanking,
-      required this.myWeekRanking,
-      required this.myTotalRanking,
-      required this.rankingType,
-      required final List<int?> myRanking})
+      required final List<PartialUser> totalRankers})
       : _monthRankers = monthRankers,
         _weekRankers = weekRankers,
-        _totalRankers = totalRankers,
-        _myRanking = myRanking;
+        _totalRankers = totalRankers;
 
   final List<PartialUser> _monthRankers;
   @override
@@ -224,24 +153,8 @@ class _$_LeaderboardState implements _LeaderboardState {
   }
 
   @override
-  final int? myMonthRanking;
-  @override
-  final int? myWeekRanking;
-  @override
-  final int? myTotalRanking;
-  @override
-  final int rankingType;
-  final List<int?> _myRanking;
-  @override
-  List<int?> get myRanking {
-    if (_myRanking is EqualUnmodifiableListView) return _myRanking;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_myRanking);
-  }
-
-  @override
   String toString() {
-    return 'LeaderboardState(monthRankers: $monthRankers, weekRankers: $weekRankers, totalRankers: $totalRankers, myMonthRanking: $myMonthRanking, myWeekRanking: $myWeekRanking, myTotalRanking: $myTotalRanking, rankingType: $rankingType, myRanking: $myRanking)';
+    return 'LeaderboardState(monthRankers: $monthRankers, weekRankers: $weekRankers, totalRankers: $totalRankers)';
   }
 
   @override
@@ -254,17 +167,7 @@ class _$_LeaderboardState implements _LeaderboardState {
             const DeepCollectionEquality()
                 .equals(other._weekRankers, _weekRankers) &&
             const DeepCollectionEquality()
-                .equals(other._totalRankers, _totalRankers) &&
-            (identical(other.myMonthRanking, myMonthRanking) ||
-                other.myMonthRanking == myMonthRanking) &&
-            (identical(other.myWeekRanking, myWeekRanking) ||
-                other.myWeekRanking == myWeekRanking) &&
-            (identical(other.myTotalRanking, myTotalRanking) ||
-                other.myTotalRanking == myTotalRanking) &&
-            (identical(other.rankingType, rankingType) ||
-                other.rankingType == rankingType) &&
-            const DeepCollectionEquality()
-                .equals(other._myRanking, _myRanking));
+                .equals(other._totalRankers, _totalRankers));
   }
 
   @override
@@ -272,12 +175,7 @@ class _$_LeaderboardState implements _LeaderboardState {
       runtimeType,
       const DeepCollectionEquality().hash(_monthRankers),
       const DeepCollectionEquality().hash(_weekRankers),
-      const DeepCollectionEquality().hash(_totalRankers),
-      myMonthRanking,
-      myWeekRanking,
-      myTotalRanking,
-      rankingType,
-      const DeepCollectionEquality().hash(_myRanking));
+      const DeepCollectionEquality().hash(_totalRankers));
 
   @JsonKey(ignore: true)
   @override
@@ -290,12 +188,7 @@ abstract class _LeaderboardState implements LeaderboardState {
   factory _LeaderboardState(
       {required final List<PartialUser> monthRankers,
       required final List<PartialUser> weekRankers,
-      required final List<PartialUser> totalRankers,
-      required final int? myMonthRanking,
-      required final int? myWeekRanking,
-      required final int? myTotalRanking,
-      required final int rankingType,
-      required final List<int?> myRanking}) = _$_LeaderboardState;
+      required final List<PartialUser> totalRankers}) = _$_LeaderboardState;
 
   @override
   List<PartialUser> get monthRankers;
@@ -303,16 +196,6 @@ abstract class _LeaderboardState implements LeaderboardState {
   List<PartialUser> get weekRankers;
   @override
   List<PartialUser> get totalRankers;
-  @override
-  int? get myMonthRanking;
-  @override
-  int? get myWeekRanking;
-  @override
-  int? get myTotalRanking;
-  @override
-  int get rankingType;
-  @override
-  List<int?> get myRanking;
   @override
   @JsonKey(ignore: true)
   _$$_LeaderboardStateCopyWith<_$_LeaderboardState> get copyWith =>

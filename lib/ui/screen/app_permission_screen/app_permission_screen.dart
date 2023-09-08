@@ -23,9 +23,10 @@ class AppPermissionScreen extends ConsumerWidget {
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: BackButtonAppBar(
-        backGroundColor: AppColor.white,
-        onBack: () {},
+      appBar: AppBar(
+        leading: const HorizontalSpacer(1),
+        backgroundColor: AppColor.white,
+        elevation: 0
       ),
       body: Container(
         color: AppColor.white,
@@ -76,9 +77,10 @@ class AppPermissionScreen extends ConsumerWidget {
                   Permission.notification,
                   Permission.storage
                 ].request();
-                Future.delayed(Duration.zero, () {
+                Future.delayed(const Duration(milliseconds: 400), () {
                   GoRouter.of(context).goNamed(ScreenRoute.root);
                   globalViewModel.showSnackBar(content: "권한 설정됨", type: SnackBarType.complete);
+                  globalViewModel.setIsPermissionChecked(true);
                 });
               },
             )

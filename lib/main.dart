@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/core/flutter_local_notification.dart';
 import 'package:cafejari_flutter/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,11 +28,19 @@ void main() async {
   // Firebase init
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterLocalNotification.init();
-  FirebaseMessaging.instance
-      .setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    FlutterLocalNotification.showNotification(
-        title: message.notification?.title, body: message.notification?.body);
+    if (message.notification.isNotNull) {
+      FlutterLocalNotification.showNotification(
+          title: message.notification!.title,
+          body: message.notification!.body
+      );
+    }
   });
 
   // Naver map init
@@ -42,4 +51,21 @@ void main() async {
 
   // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  FlutterLocalNotification.init();
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true
+  );
+  if (message.notification.isNotNull) {
+    FlutterLocalNotification.showNotification(
+      title: message.notification!.title,
+      body: message.notification!.body
+    );
+  }
 }

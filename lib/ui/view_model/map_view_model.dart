@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -31,7 +33,7 @@ class MapViewModel extends StateNotifier<MapState> {
     required this.globalViewModel
   }): _cafeUseCase = cafeUseCase, _userUseCase = userUseCase, super(MapState.empty().copyWith());
 
-  refreshCafes({NCameraPosition? cameraPosition}) async {
+  Future<Cafes> refreshCafes({NCameraPosition? cameraPosition}) async {
     final NCameraPosition nonNullCameraPosition = cameraPosition ?? await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition;
     try {
       final Cafes newCafes = await _cafeUseCase.getMapCafes(cameraPosition: nonNullCameraPosition);
@@ -70,20 +72,34 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
-      // selected cafe / cafeFloor 설정
-      final Cafe selectedNewCafe = newCafes.firstWhere(
-        (element) => element.id == state.selectedCafe.id,
-        orElse: () => Cafe.empty()
-      );
-      final CafeFloor selectedNewCafeFloor = selectedNewCafe.cafeFloors.firstWhere(
-        (element) => element.id == state.selectedCafeFloor.id,
-        orElse: () => CafeFloor.empty()
-      );
-
       // 변경 사항 저장
-      state = state.copyWith(cafes: newCafes, selectedCafe: selectedNewCafe, selectedCafeFloor: selectedNewCafeFloor);
+      state = state.copyWith(cafes: newCafes);
+      return newCafes;
     } on ErrorWithMessage catch(e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      return [];
+    }
+  }
+
+  refreshLocations() async {
+    try {
+      state = state.copyWith(locations: await _cafeUseCase.getLocations());
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    }
+  }
+
+  getRandomCafeImageUrl() async {
+    try {
+      final Cafe cafe = await _cafeUseCase.getCafe(cafeId: 3);
+      if(cafe.imageUrls.isEmpty) {
+        state = state.copyWith(randomCafeImageUrl: null);
+      } else {
+        final int randomIndex = Random().nextInt(cafe.imageUrls.length);
+        state = state.copyWith(randomCafeImageUrl: cafe.imageUrls[randomIndex]);
+      }
+    } on ErrorWithMessage {
+      null;
     }
   }
 
@@ -113,11 +129,19 @@ class MapViewModel extends StateNotifier<MapState> {
     state = state.copyWith(mapController: mapController);
   }
 
-  selectedCafe(Cafe changedSelectedCafe){
+  setInitTempCameraPosition(NCameraPosition? cameraPosition) {
+    state = state.copyWith(initTempCameraPosition: cameraPosition);
+  }
+
+  setShareTempCameraPosition(NCameraPosition? cameraPosition) {
+    state = state.copyWith(shareTempCameraPosition: cameraPosition);
+  }
+
+  selectCafe(Cafe changedSelectedCafe){
     state = state.copyWith(selectedCafe: changedSelectedCafe);
   }
 
-  selectedCafeFloor(CafeFloor changedSelectedCafeFloor){
+  selectCafeFloor(CafeFloor changedSelectedCafeFloor){
     state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
   }
 
@@ -144,28 +168,32 @@ class MapViewModel extends StateNotifier<MapState> {
     });
   }
 
-  updateFavoriteCafeList(int cafeId) async {
+  updateFavoriteCafeList({required Cafe cafe, required BuildContext context}) async {
     try {
-      List<int> newCafeIdList = List.from(globalViewModel.state.user.favoriteCafes.map((e) => e.id).toList());
-      if(newCafeIdList.contains(cafeId)) {
+      List<Cafe> newCafeList = List.from(globalViewModel.state.user.favoriteCafes);
+      if(newCafeList.where((e) => e.id == cafe.id).isNotEmpty) {
         // 내 카페 해제
-        newCafeIdList.remove(cafeId);
-        globalViewModel.showSnackBar(content: "내 카페에서 \n제외됨", type: SnackBarType.complete);
+        newCafeList.removeWhere((e) => e.id == cafe.id);
       } else {
         // 내 카페 등록
-        newCafeIdList.add(cafeId);
-        globalViewModel.showSnackBar(content: "내 카페에 \n추가됨", type: SnackBarType.complete);
+        newCafeList.add(cafe);
       }
+      globalViewModel.setUser(globalViewModel.state.user.copyWith(favoriteCafes: newCafeList));
       final User updatedUser = await _userUseCase.updateProfile(
         accessToken: globalViewModel.state.accessToken,
         profileId: globalViewModel.state.user.profileId,
-        favoriteCafeIdList: newCafeIdList
+        favoriteCafeIdList: newCafeList.map((e) => e.id).toList()
       );
-      globalViewModel.saveLoginResult(accessToken: globalViewModel.state.accessToken, user: updatedUser);
-    } on RefreshTokenExpired {
-      null;
+      globalViewModel.setUser(updatedUser);
+      if (updatedUser.favoriteCafes.where((e) => e.id == cafe.id).isNotEmpty) {
+        globalViewModel.showSnackBar(content: "내 카페에\n추가됨", type: SnackBarType.complete);
+      } else {
+        globalViewModel.showSnackBar(content: "내 카페에서\n제외됨", type: SnackBarType.complete);
+      }
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -178,16 +206,16 @@ class MapViewModel extends StateNotifier<MapState> {
       );
       final Cafe updatedCafe = await _cafeUseCase.getCafe(cafeId: updateResponse.cafeFloor.cafe.id);
       _replaceCafe(updatedCafe);
-      globalViewModel.saveLoginResult(
+      globalViewModel.init(
         accessToken: globalViewModel.state.accessToken,
         user: globalViewModel.state.user.copyWith(point: globalViewModel.state.user.point + updateResponse.point)
       );
       state.bottomSheetOccupancyController.close();
       Future.delayed(Duration.zero, () => _showPointAnimation(context: context, point: updateResponse.point));
-    } on RefreshTokenExpired {
-      null;
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -203,6 +231,22 @@ class MapViewModel extends StateNotifier<MapState> {
       globalViewModel.showSnackBar(content: "등록 완료", type: SnackBarType.complete);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    }
+  }
+
+  initWithMapLinkCafeId(int cafeId) async {
+    try {
+      final Cafe cafe = await _cafeUseCase.getCafe(cafeId: cafeId);
+      selectCafe(cafe);
+      selectCafeFloor(cafe.cafeFloors.first);
+      final NCameraPosition cameraPosition = NCameraPosition(target: cafe.latLng, zoom: Zoom.large);
+      setShareTempCameraPosition(cameraPosition);
+      if(state.mapController.isNotNull) {
+        await refreshCafes(cameraPosition: cameraPosition);
+        state.mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+      }
+    } on ErrorWithMessage {
+      null;
     }
   }
 
@@ -259,7 +303,7 @@ class MapViewModel extends StateNotifier<MapState> {
 
   _showPointAnimation({required BuildContext context, required int point}) {
     showDialog(context: context, builder: (context) {
-      Future.delayed(Duration(seconds: 4), () => Navigator.of(context).pop());
+      Future.delayed(const Duration(seconds: 4), () => Navigator.of(context).pop());
       return Dialog(
         insetPadding: AppPadding.padding_0,
         backgroundColor: AppColor.transparent,
@@ -274,23 +318,23 @@ class MapViewModel extends StateNotifier<MapState> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              VerticalSpacer(40),
-              Text(
+              const VerticalSpacer(40),
+              const Text(
                 "등록 완료",
                 style: TextSize.textSize_bold_20,
               ),
-              VerticalSpacer(8),
+              const VerticalSpacer(8),
               Image.asset("asset/image/point_animation.gif", width: 150, height: 150),
-              VerticalSpacer(4),
+              const VerticalSpacer(4),
               Text(
                 "획득한 포인트 : ${point}P",
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColor.secondary,
                   fontSize: 16,
                   fontWeight: FontWeight.w500
                 ),
               ),
-              VerticalSpacer(40),
+              const VerticalSpacer(40),
             ],
           ),
         ),

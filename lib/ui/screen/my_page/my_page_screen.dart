@@ -1,26 +1,25 @@
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_editable.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_row.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/point_card.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
-import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/my_page_view_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
@@ -30,13 +29,11 @@ class MyPageScreen extends ConsumerStatefulWidget {
 }
 
 class MyPageScreenState extends ConsumerState<MyPageScreen> {
-  WebViewController webViewController = WebViewController();
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () async {
-      await ref.watch(leaderboardViewModelProvider.notifier).refreshRankers();
+    Future.delayed(const Duration(seconds: 1), () async {
       await ref.watch(myPageViewModelProvider.notifier).getDefaultProfileImages();
     });
   }
@@ -47,7 +44,6 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
     final MyPageState myPageState = ref.watch(myPageViewModelProvider);
     final MyPageViewModel myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
-    final LeaderboardState leaderboardState = ref.watch(leaderboardViewModelProvider);
 
     final Size deviceSize = MediaQuery.of(context).size;
     final double bottomNavBarHeight = ref.watch(bottomNavBarHeightProvider);
@@ -80,34 +76,54 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                 Column(
                   children: [
                     const VerticalSpacer(60),
-                    ProfileImageEditable(
-                      size: 140,
-                      imageUrl: globalState.user.imageUrl,
-                      onEditButtonClick: () => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            backgroundColor: AppColor.transparent,
-                            child: Container(
-                              width: 250,
-                              height: 600,
-                              decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(20)
+                    Visibility(
+                      visible: globalState.isLoggedIn,
+                      child: ProfileImageEditable(
+                        size: 140,
+                        imageUrl: globalState.user.imageUrl,
+                        onEditButtonClick: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              backgroundColor: AppColor.transparent,
+                              child: Container(
+                                width: 250,
+                                height: 600,
+                                decoration: BoxDecoration(
+                                  color: AppColor.white,
+                                  borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: ProfileImageSelectGrid(
+                                  defaultProfileImages: myPageState.defaultProfileImages,
+                                  currentProfileImageUrl: globalState.user.imageUrl,
+                                  onSelect: (index) {
+                                    myPageViewModel.updateProfileImage(
+                                      profileImageId: myPageState.defaultProfileImages[index].profileImageId,
+                                      context: context
+                                    );
+                                    Navigator.of(context).pop();
+                                  }
+                                ),
                               ),
-                              child: ProfileImageSelectGrid(
-                                defaultProfileImages: myPageState.defaultProfileImages,
-                                currentProfileImageUrl: globalState.user.imageUrl,
-                                onSelect: (index) {
-                                  myPageViewModel.updateProfileImage(
-                                    profileImageId: myPageState.defaultProfileImages[index].profileImageId
-                                  );
-                                  Navigator.of(context).pop();
-                                }
-                              ),
-                            ),
-                          );
-                        }
+                            );
+                          }
+                        )
+                      ),
+                    ),
+                    Visibility(
+                      visible: !globalState.isLoggedIn,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 140,
+                        child: const Text(
+                          "로그인하고 포인트를\n받아보세요!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: AppColor.white
+                          ),
+                        ),
                       )
                     ),
                     const VerticalSpacer(20),
@@ -120,22 +136,25 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                       )
                     ),
                     const VerticalSpacer(25),
-                    _PointCard(width: deviceSize.width - sidePadding * 2)
+                    PointCard(width: deviceSize.width - sidePadding * 2)
                   ],
                 ),
                 // 알림 부분
-                Padding(
-                  padding: const EdgeInsets.only(top: 40, right: sidePadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text("알림함", style: TextStyle(color: AppColor.white)),
-                      IconButton(
-                        iconSize: 20,
-                        icon: const Icon(CupertinoIcons.bell, color: AppColor.white),
-                        onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.push),
-                      )
-                    ],
+                Visibility(
+                  visible: globalState.isLoggedIn,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40, right: sidePadding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text("알림함", style: TextStyle(color: AppColor.white)),
+                        IconButton(
+                          iconSize: 20,
+                          icon: const Icon(CupertinoIcons.bell, color: AppColor.white),
+                          onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.push),
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -150,9 +169,9 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                   const Text('내 카페지기 순위'),
                   const HorizontalSpacer(12),
                   Text(
-                    leaderboardState.myWeekRanking.isNotNull ? "${leaderboardState.myWeekRanking}위 (주간)" :
-                      leaderboardState.myMonthRanking.isNotNull ? "${leaderboardState.myMonthRanking}위 (월간)" :
-                        leaderboardState.myTotalRanking.isNotNull ? "${leaderboardState.myTotalRanking}위 (종합)" :
+                    globalState.myRanking.week.isNotNull ? "${globalState.myRanking.week!}위 (주간)" :
+                      globalState.myRanking.month.isNotNull ? "${globalState.myRanking.month!}위 (월간)" :
+                        globalState.myRanking.total.isNotNull ? "${globalState.myRanking.total!}위 (종합)" :
                           "순위없음",
                     style: TextSize.textSize_bold_16
                   ),
@@ -175,25 +194,37 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                 children: [
                   const Text("안내", style: TextSize.textSize_bold_16),
                   const VerticalSpacer(20),
-                  _MyPageRow(
+                  MyPageRow(
                     text: "FAQ",
                     width: deviceSize.width - sidePadding * 2,
-                    onPress: () => GoRouter.of(context).goNamed(ScreenRoute.registration)
+                    onPress: () => globalViewModel.navigateToWebView(
+                      route: WebViewRoute.faq(),
+                      context: context
+                    )
                   ),
-                  _MyPageRow(
+                  MyPageRow(
                     text: "사용 가이드 북 보기",
                     width: deviceSize.width - sidePadding * 2,
-                    onPress: () {GoRouter.of(context).goNamed(ScreenRoute.guide);}
+                    onPress: () => globalViewModel.navigateToWebView(
+                        route: WebViewRoute.guide(),
+                        context: context
+                    )
                   ),
-                  _MyPageRow(
+                  MyPageRow(
                     text: "공지 및 이벤트",
                     width: deviceSize.width - sidePadding * 2,
-                    onPress: () {GoRouter.of(context).goNamed(ScreenRoute.event);}
+                    onPress: () => globalViewModel.navigateToWebView(
+                        route: WebViewRoute.event(),
+                        context: context
+                    )
                   ),
-                  _MyPageRow(
+                  MyPageRow(
                     text: "업데이트 소식",
                     width: deviceSize.width - sidePadding * 2,
-                    onPress: () {GoRouter.of(context).goNamed(ScreenRoute.update);}
+                    onPress: () => globalViewModel.navigateToWebView(
+                        route: WebViewRoute.update(),
+                        context: context
+                    )
                   ),
                   const VerticalSpacer(40),
 
@@ -204,7 +235,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                        onTap: () => launchUrlString("https://www.instagram.com/cafejari_official/"),
+                        onTap: () => globalViewModel.navigateToWebView(
+                          route: WebViewRoute.insta(),
+                          context: context
+                        ),
                         child: Row(
                           children: [
                             Image.asset('asset/image/instagram.png', width: 24),
@@ -214,7 +248,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => launchUrlString("https://www.instagram.com/cafejari_official/"),
+                        onTap: () => globalViewModel.navigateToWebView(
+                          route: WebViewRoute.blog(),
+                          context: context
+                        ),
                         child: Row(
                           children: [
                             Image.asset('asset/image/naver_blog.png', width: 36),
@@ -230,29 +267,64 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
 
                   const Text("약관", style: TextSize.textSize_bold_16),
                   const VerticalSpacer(20),
-                  _MyPageRow(text: "FAQ", width: deviceSize.width - sidePadding * 2, onPress: () => GoRouter.of(context).goNamed(ScreenRoute.update)),
-                  _MyPageRow(text: "사용 가이드 북 보기", width: deviceSize.width - sidePadding * 2, onPress: () => GoRouter.of(context).goNamed(ScreenRoute.update)),
+                  MyPageRow(
+                    text: "서비스 이용약관",
+                    width: deviceSize.width - sidePadding * 2,
+                    onPress: () => globalViewModel.navigateToWebView(
+                      route: WebViewRoute.tos(),
+                      context: context
+                    )
+                  ),
+                  MyPageRow(
+                    text: "개인정보 처리방침",
+                    width: deviceSize.width - sidePadding * 2,
+                    onPress: () => globalViewModel.navigateToWebView(
+                      route: WebViewRoute.privacyPolicy(),
+                      context: context
+                    )
+                  ),
                   const VerticalSpacer(40),
 
 
                   const Text("고객센터", style: TextSize.textSize_bold_16),
                   const VerticalSpacer(20),
-                  _MyPageRow(text: "1:1 문의", width: deviceSize.width - sidePadding * 2, onPress: () => GoRouter.of(context).goNamed(ScreenRoute.update)),
+                  MyPageRow(
+                    text: "1:1 문의",
+                    width: deviceSize.width - sidePadding * 2,
+                    onPress: () => globalViewModel.navigateToWebView(
+                      route: WebViewRoute.inquiry(),
+                      context: context
+                    )
+                  ),
                   const VerticalSpacer(80),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () => print("가지마!!"),
-                        child: const Text("회원탈퇴", style: TextSize.textSize_grey_12),
-                      ),
-                      const HorizontalSpacer(30),
-                      GestureDetector(
-                        onTap: () => globalViewModel.logout(),
-                        child: const Text("로그아웃", style: TextSize.textSize_grey_12),
-                      )
-                    ],
+                  Visibility(
+                    visible: globalState.isLoggedIn,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                          child: const Text("회원탈퇴", style: TextSize.textSize_grey_12),
+                        ),
+                        const HorizontalSpacer(30),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(context: context, builder: (_) {
+                              return SquareAlertDialog(
+                                text: "정말 로그아웃 하시겠어요?",
+                                negativeButtonText: "예",
+                                positiveButtonText: "아니오",
+                                onDismiss: () => Navigator.of(context).pop(),
+                                onNegativeButtonPress: () => globalViewModel.logout(context: context),
+                                onPositiveButtonPress: () {}
+                              );
+                            });
+                          },
+                          child: const Text("로그아웃", style: TextSize.textSize_grey_12),
+                        ),
+                      ],
+                    ),
                   ),
                   const VerticalSpacer(20)
                 ],
@@ -260,97 +332,6 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _MyPageRow extends StatelessWidget {
-  final String text;
-  final double width;
-  final VoidCallback? onPress;
-
-  const _MyPageRow({
-    required this.text,
-    required this.width,
-    required this.onPress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPress,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: width,
-            padding: AppPadding.padding_15,
-            color: AppColor.white,
-            alignment: Alignment.centerLeft,
-            child: Text(text, style: TextSize.textSize_14),
-          ),
-          const Divider(height: 1, thickness: 1, color: AppColor.myPageDividerGrey)
-        ],
-      ),
-    );
-  }
-}
-
-class _PointCard extends ConsumerWidget {
-  final double width;
-  const _PointCard({Key? key, required this.width}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
-    const double height = 88;
-
-    return Container(
-      width: width,
-      decoration: BoxDecoration(
-          color: AppColor.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: AppShadow.box
-      ),
-      child: Row(
-        children: [
-          Container(
-              width: width / 2,
-              height: height,
-              color: AppColor.transparent,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("포인트", style: TextSize.textSize_grey_14),
-                  const VerticalSpacer(4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("${globalState.user.point}", style: TextSize.textSize_bold_20),
-                      const HorizontalSpacer(4),
-                      const Icon(CupertinoIcons.right_chevron, size: 16),
-                    ],
-                  ),
-                ],
-              )
-          ),
-          Container(
-            width: width / 2,
-            height: height,
-            color: AppColor.transparent,
-            alignment: Alignment.center,
-            child: ActionButtonSecondary(
-              buttonWidth: 128,
-              buttonHeight: 45,
-              title: "포인트SHOP",
-              isClicked: true,
-              icon: CupertinoIcons.shopping_cart,
-              onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.shop),
-            ),
-          )
-        ],
       ),
     );
   }

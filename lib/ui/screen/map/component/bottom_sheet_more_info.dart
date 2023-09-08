@@ -20,6 +20,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
       }
     }
     const double lineSpacing = 6;
+    const double letterSpacing = 8;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
@@ -42,7 +43,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("월요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.mon ?? "")
                       ],
                     ),
@@ -50,7 +51,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("화요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.tue ?? "")
                       ],
                     ),
@@ -58,7 +59,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("수요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.wed ?? "")
                       ],
                     ),
@@ -66,7 +67,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("목요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.thu ?? "")
                       ],
                     ),
@@ -74,7 +75,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("금요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.fri ?? "")
                       ],
                     ),
@@ -82,7 +83,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("토요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.sat ?? "")
                       ],
                     ),
@@ -90,7 +91,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                     Row(
                       children: [
                         const Text("일요일", style: TextSize.textSize_grey_14),
-                        const HorizontalSpacer(4),
+                        const HorizontalSpacer(letterSpacing),
                         Text(mapState.selectedCafe.openingHour?.sun ?? "")
                       ],
                     ),
@@ -108,7 +109,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                 Image.asset('asset/image/icon_tissue_grey.png'),
                 const HorizontalSpacer(10),
                 const Text("화장실 ", style: TextSize.textSize_grey_14),
-                const HorizontalSpacer(4),
+                const HorizontalSpacer(letterSpacing - 2),
                 Column(
                   children: [
                     ...restroomDescriptionList.map((e) {

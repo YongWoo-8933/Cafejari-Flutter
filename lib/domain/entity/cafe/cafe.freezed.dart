@@ -1466,3 +1466,178 @@ abstract class _NaverSearchCafe implements NaverSearchCafe {
   _$$_NaverSearchCafeCopyWith<_$_NaverSearchCafe> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$Location {
+  String get name => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $LocationCopyWith<Location> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LocationCopyWith<$Res> {
+  factory $LocationCopyWith(Location value, $Res Function(Location) then) =
+      _$LocationCopyWithImpl<$Res, Location>;
+  @useResult
+  $Res call({String name, String imageUrl, double latitude, double longitude});
+}
+
+/// @nodoc
+class _$LocationCopyWithImpl<$Res, $Val extends Location>
+    implements $LocationCopyWith<$Res> {
+  _$LocationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? imageUrl = null,
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_LocationCopyWith<$Res> implements $LocationCopyWith<$Res> {
+  factory _$$_LocationCopyWith(
+          _$_Location value, $Res Function(_$_Location) then) =
+      __$$_LocationCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String imageUrl, double latitude, double longitude});
+}
+
+/// @nodoc
+class __$$_LocationCopyWithImpl<$Res>
+    extends _$LocationCopyWithImpl<$Res, _$_Location>
+    implements _$$_LocationCopyWith<$Res> {
+  __$$_LocationCopyWithImpl(
+      _$_Location _value, $Res Function(_$_Location) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? imageUrl = null,
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_$_Location(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Location implements _Location {
+  _$_Location(
+      {required this.name,
+      required this.imageUrl,
+      required this.latitude,
+      required this.longitude});
+
+  @override
+  final String name;
+  @override
+  final String imageUrl;
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+
+  @override
+  String toString() {
+    return 'Location(name: $name, imageUrl: $imageUrl, latitude: $latitude, longitude: $longitude)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Location &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, name, imageUrl, latitude, longitude);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LocationCopyWith<_$_Location> get copyWith =>
+      __$$_LocationCopyWithImpl<_$_Location>(this, _$identity);
+}
+
+abstract class _Location implements Location {
+  factory _Location(
+      {required final String name,
+      required final String imageUrl,
+      required final double latitude,
+      required final double longitude}) = _$_Location;
+
+  @override
+  String get name;
+  @override
+  String get imageUrl;
+  @override
+  double get latitude;
+  @override
+  double get longitude;
+  @override
+  @JsonKey(ignore: true)
+  _$$_LocationCopyWith<_$_Location> get copyWith =>
+      throw _privateConstructorUsedError;
+}

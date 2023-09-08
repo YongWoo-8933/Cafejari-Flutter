@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class CATIBlocks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         _buildCategoryColumn(topText: "개방", bottomText: "아늑", isTopFilled: hasOpenness),
         const HorizontalSpacer(10),
@@ -46,8 +48,9 @@ class CATIBlocks extends StatelessWidget {
       width: blockWidth,
       height: blockHeight,
       decoration: BoxDecoration(
-        color: isTopFilled ? AppColor.secondary : AppColor.unselectedButtonColor,
+        color: isTopFilled ? AppColor.secondary : AppColor.white,
         borderRadius: BorderRadius.circular(cornerRadius),
+        boxShadow: AppShadow.box
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -57,7 +60,7 @@ class CATIBlocks extends StatelessWidget {
               alignment: Alignment.center,
               width: blockWidth,
               height: blockHeight / 2,
-              color: isTopFilled ? AppColor.secondary : AppColor.unselectedButtonColor,
+              color: isTopFilled ? AppColor.secondary : AppColor.white,
               child: Text(
                 topText,
                 style: TextStyle(
@@ -71,7 +74,7 @@ class CATIBlocks extends StatelessWidget {
               alignment: Alignment.center,
               width: blockWidth,
               height: blockHeight / 2,
-              color: isTopFilled ? AppColor.unselectedButtonColor : AppColor.secondary,
+              color: isTopFilled ? AppColor.white : AppColor.secondary,
               child: Text(
                 bottomText,
                 style: TextStyle(

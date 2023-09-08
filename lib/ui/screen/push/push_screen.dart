@@ -7,7 +7,6 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
-import 'package:cafejari_flutter/ui/view_model/push_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,16 +22,14 @@ class PushScreenState extends ConsumerState<PushScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      final viewModel = ref.watch(pushViewModelProvider.notifier);
-      await viewModel.refreshPushes();
+    Future.delayed(Duration.zero, () {
+      ref.watch(pushViewModelProvider.notifier).refreshPushes(context: context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final PushState pushState = ref.watch(pushViewModelProvider);
-    final PushViewModel pushViewModel = ref.watch(pushViewModelProvider.notifier);
 
     return Scaffold(
       appBar: BackButtonAppBar(
@@ -66,11 +63,13 @@ class PushScreenState extends ConsumerState<PushScreen> {
                 Tab(height: 40, child: _tab(68, PushType.marketing().tag)),
                 Tab(height: 40, child: _tab(56, PushType.etc().tag)),
               ],
-              onTap: (index) => pushViewModel.setTypePush(_getPushTypeFromTabIndex(index)),
             ),
             Expanded(
               child: TabBarView(
-                children: List.generate(6, (index) => _buildTabContent(pushState, index)),
+                children: [
+                  _buildTabContent(pushState.pushes),
+                  ...pushState.typePushes.map((e) => _buildTabContent(e)).toList()
+                ],
               ),
             ),
           ],
@@ -80,9 +79,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
   }
 
   // 탭 내용을 생성하는 함수
-  Widget _buildTabContent(PushState pushState, int tabIndex) {
-    final List<Push> pushes = tabIndex == 0 ? pushState.pushes : pushState.typePushes;
-
+  Widget _buildTabContent(Pushes pushes) {
     return Stack(
       children: [
         Visibility(
@@ -127,6 +124,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
         Visibility(
           visible: pushes.isEmpty,
           child: Container(
+            alignment: Alignment.center,
             color: AppColor.white,
             child: const Text("비었음")
           ),
@@ -146,22 +144,5 @@ class PushScreenState extends ConsumerState<PushScreen> {
       ),
       child: Text(tag, style: TextSize.textSize_14_w700),
     );
-  }
-
-  PushType _getPushTypeFromTabIndex(int index) {
-    switch (index) {
-      case 1:
-        return PushType.activity();
-      case 2:
-        return PushType.etc();
-      case 3:
-        return PushType.event();
-      case 4:
-        return PushType.marketing();
-      case 5:
-        return PushType.notification();
-      default:
-        return PushType.activity();
-    }
   }
 }

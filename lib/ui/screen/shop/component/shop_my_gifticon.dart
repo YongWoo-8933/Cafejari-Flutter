@@ -75,7 +75,7 @@ class ShopMyBrandCon extends ConsumerWidget {
                     buttonHeight: 48,
                     title: "사용완료",
                     onPressed: () async {
-                      await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: true);
+                      await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: true, context: context);
                       if (context.mounted) Navigator.of(context).pop();
                     }
                   ),
@@ -149,7 +149,7 @@ class ShopMyBrandCon extends ConsumerWidget {
                           onDismiss: () => Navigator.of(context).pop(),
                           onNegativeButtonPress: () {},
                           onPositiveButtonPress: () async {
-                            await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: false);
+                            await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: false, context: context);
                           }
                         );
                       }
@@ -163,7 +163,7 @@ class ShopMyBrandCon extends ConsumerWidget {
                           positiveButtonText: "네",
                           onDismiss: () => Navigator.of(context).pop(),
                           onNegativeButtonPress: () {},
-                          onPositiveButtonPress: () async => await shopViewModel.deleteBrandcon(brandcon)
+                          onPositiveButtonPress: () async => await shopViewModel.deleteBrandcon(brandcon: brandcon, context: context)
                         );
                       }
                     ),

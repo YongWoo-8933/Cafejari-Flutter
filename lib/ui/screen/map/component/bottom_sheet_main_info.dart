@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
@@ -12,12 +13,13 @@ import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-
-final _isShareLoading = StateProvider<bool>((ref) => false);
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class BottomSheetMainInfo extends ConsumerWidget {
   const BottomSheetMainInfo({Key? key}) : super(key: key);
@@ -42,28 +44,78 @@ class BottomSheetMainInfo extends ConsumerWidget {
             children: [
               Visibility(
                 visible: mapState.selectedCafe.imageUrls.isNotEmpty,
-                child: PageView(
-                  controller: mapState.pageController,
-                  onPageChanged: (value) => mapViewModel.setCurrentCafeImagePage(value),
-                  children: [
-                    ...mapState.selectedCafe.imageUrls.map((e) {
-                      return CustomCachedNetworkImage(
-                        imageUrl: e,
-                        width: deviceSize.width,
-                        height: photoFrameHeight
-                      );
-                    }).toList()
-                  ],
+                child: GestureDetector(
+                  onTap: () => showDialog(
+                    context: context,
+                    useSafeArea: false,
+                    builder: (_) => Dialog(
+                      insetPadding: AppPadding.padding_0,
+                      backgroundColor: AppColor.transparentBlack_600,
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          PhotoViewGallery.builder(
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            itemCount: mapState.selectedCafe.imageUrls.length,
+                            wantKeepAlive: true,
+                            builder: (BuildContext context, int index) {
+                              return PhotoViewGalleryPageOptions(
+                                imageProvider: CachedNetworkImageProvider(mapState.selectedCafe.imageUrls[index]),
+                                initialScale: PhotoViewComputedScale.contained,
+                                maxScale: 1.5,
+                                minScale: 0.4,
+                                tightMode: true
+                              );
+                            },
+                            loadingBuilder: (context, event) => const Center(
+                              child: CircularProgressIndicator(color: AppColor.white),
+                            )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10, top: 60),
+                            child: IconButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              icon: const Icon(
+                                CupertinoIcons.xmark,
+                                size: 32,
+                                color: AppColor.grey_300,
+                              )
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                  ),
+                  child: PageView(
+                    controller: mapState.pageController,
+                    onPageChanged: (value) => mapViewModel.setCurrentCafeImagePage(value),
+                    children: [
+                      ...mapState.selectedCafe.imageUrls.map((e) {
+                        return CustomCachedNetworkImage(
+                          imageUrl: e,
+                          width: deviceSize.width,
+                          height: photoFrameHeight
+                        );
+                      }).toList()
+                    ],
+                  ),
                 ),
               ),
               Visibility(
                 visible: mapState.selectedCafe.imageUrls.isEmpty,
-                child: Image.asset(
-                  "asset/image/cafe_picture_4.png",
-                  width: deviceSize.width,
-                  height: photoFrameHeight,
-                  fit: BoxFit.cover,
-                ),
+                child: mapState.randomCafeImageUrl.isNotNull ?
+                  CustomCachedNetworkImage(
+                    imageUrl: mapState.randomCafeImageUrl!,
+                    width: deviceSize.width,
+                    height: photoFrameHeight,
+                    fit: BoxFit.cover
+                  ) :
+                  Image.asset(
+                    "asset/image/cafe_picture_0.jpg",
+                    width: deviceSize.width,
+                    height: photoFrameHeight,
+                    fit: BoxFit.cover,
+                  ),
               ),
               Padding(
                 padding: const EdgeInsets.all(cornerRadius * 2),
@@ -127,17 +179,9 @@ class BottomSheetMainInfo extends ConsumerWidget {
                             onPressed: () => mapState.bottomSheetOccupancyController.open(),
                           ),
                           const HorizontalSpacer(10),
-                          ShareButton(
-                            buttonSize: 48,
-                            onPressed: () {},
-                            isLoading: ref.watch(_isShareLoading)
-                          ),
+                          const ShareButton(),
                           const HorizontalSpacer(10),
-                          BookmarkButton(
-                            isBookmarked: globalState.user.favoriteCafes.where((element) => element.id == mapState.selectedCafe.id).isNotEmpty,
-                            buttonSize: 48,
-                            onPressed: () => mapViewModel.updateFavoriteCafeList(mapState.selectedCafe.id),
-                          )
+                          const BookmarkButton(buttonSize: 48)
                         ],
                       ),
                       const VerticalSpacer(30),

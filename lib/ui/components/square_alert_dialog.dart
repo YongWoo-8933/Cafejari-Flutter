@@ -25,31 +25,28 @@ class SquareAlertDialog extends AlertDialog {
     insetPadding: AppPadding.padding_0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     content: Container(
-      width: 330,
-      height: 170,
-      padding: AppPadding.padding_20,
+      width: 300,
+      padding: const EdgeInsets.only(top: 25, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
         color: AppColor.white,
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 330,
-            height: 60,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              text,
-              style: TextSize.textSize_16,
-              maxLines: 3,
-            ),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 16,
+              height: 1.2
+            )
           ),
-          const VerticalSpacer(22),
+          const VerticalSpacer(30),
           Row(
             children: [
               SizedBox(
-                width: 140,
+                width: 125,
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
@@ -75,7 +72,7 @@ class SquareAlertDialog extends AlertDialog {
               ),
               const HorizontalSpacer(10),
               ActionButtonPrimary(
-                buttonWidth: 140,
+                buttonWidth: 125,
                 buttonHeight: 48,
                 title: positiveButtonText,
                 onPressed: () {

@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,8 @@ class CafeSearchBar extends ConsumerWidget {
                 },
                 icon: mapState.isSearchPageVisible ?
                 const Icon(CupertinoIcons.xmark_circle_fill, color: AppColor.grey_300, size: 24) :
-                Image.asset("asset/image/icon_filter.png", width: 24),
+                // Image.asset("asset/image/icon_filter.png", width: 24),
+                const HorizontalSpacer(24),
               ),
               contentPadding: AppPadding.padding_0,
               border: OutlineInputBorder(
@@ -102,7 +104,7 @@ class CafeSearchBar extends ConsumerWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () => print("필터부분 클릭"),
+                onTap: () => {},
                 child: Container(
                   width: 48,
                   height: height,

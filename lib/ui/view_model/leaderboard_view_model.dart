@@ -1,8 +1,10 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
+import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
@@ -13,7 +15,7 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
       : _leaderboardUseCase = leaderboardUseCase,
         super(LeaderboardState.empty());
 
-  refreshRankers() async {
+  refreshRankers({required BuildContext context}) async {
     try {
       final totalRankers = await _leaderboardUseCase.getTotalRankers();
       final monthRankers = await _leaderboardUseCase.getMonthRankers();
@@ -21,24 +23,16 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
       state = state.copyWith(
         totalRankers: totalRankers,
         monthRankers: monthRankers,
-        weekRankers: weekRankers,
-        myTotalRanking: _findMyRankingFromRankers(totalRankers),
-        myMonthRanking: _findMyRankingFromRankers(monthRankers),
-        myWeekRanking: _findMyRankingFromRankers(weekRankers),
+        weekRankers: weekRankers
       );
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      globalViewModel.logout();
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 
-  int? _findMyRankingFromRankers(PartialUsers rankers) {
-    final int index = rankers.indexWhere((element) => element.userId == globalViewModel.state.user.userId);
-    return index >= 0 ? index + 1 : null;
-  }
-
-  setRankingType(int rankingType) {
-    state = state.copyWith(rankingType: rankingType);
-  }
+  // setRankingType(int rankingType) {
+  //   state = state.copyWith(rankingType: rankingType);
+  // }
 }

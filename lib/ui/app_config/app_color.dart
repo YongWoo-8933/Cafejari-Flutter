@@ -42,7 +42,8 @@ class AppColor {
   static const Color unselectedTextColor = Color(0xFFB7B7B7);
   static const Color primary = Color(0xFF000000);
   static const Color secondary = Color(0xFF785B52);
-  static const Color alert = Color(0xFFFE9E45);
+  // static const Color secondary = Color(0xFF8B4513);
+  static const Color alert = Color(0xFF964b00);
   static const Color background = Color(0xFFF8F8F8);
   static const Color onSecondaryContainer = Color(0xFFF4EDEB);
   static const Color textColorOnContainer = Color(0xFFA1A7AE);

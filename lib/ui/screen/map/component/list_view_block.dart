@@ -31,22 +31,22 @@ class ListViewBlock extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("#대표태그", style: TextSize.textSize_grey_12),
-                  SizedBox(height: 10),
-                  Text("카페 이름", style: TextSize.textSize_bold_16),
-                  SizedBox(height: 20),
+                  const Text("#대표태그", style: TextSize.textSize_grey_12),
+                  const SizedBox(height: 10),
+                  const Text("카페 이름", style: TextSize.textSize_bold_16),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Image.asset("/asset/image/icon_people4_black.png"),
-                      Text(" 혼잡도 ", style: TextSize.textSize_grey_12),
-                      Text("75%", style: TextSize.textSize_bold_12),
+                      const Text(" 혼잡도 ", style: TextSize.textSize_grey_12),
+                      const Text("75%", style: TextSize.textSize_bold_12),
                     ],
                   ),
                   Row(
                     children: [
                       Image.asset("/asset/image/icon_plug.png"),
-                      Text(" 콘센트 ", style: TextSize.textSize_grey_12),
-                      Text("테이블 대비 75%", style: TextSize.textSize_bold_12),
+                      const Text(" 콘센트 ", style: TextSize.textSize_grey_12),
+                      const Text("테이블 대비 75%", style: TextSize.textSize_bold_12),
                     ],
                   ),
                 ],
@@ -55,10 +55,10 @@ class ListViewBlock extends ConsumerWidget {
           ],
         ),
       ),
-      Positioned(
+      const Positioned(
           bottom: 0,
           right: 0,
-          child:BookmarkButton(isBookmarked: false, buttonSize: 15)
+          child:BookmarkButton(buttonSize: 15)
       )
     ]);
   }

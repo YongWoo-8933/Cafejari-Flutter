@@ -5,6 +5,8 @@ import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +32,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-    ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
-    ref.watch(_appleLoginLoadingProvider.notifier).update((state) => false);
-    ref.watch(loginViewModelProvider.notifier).clearViewModel();
+    Future.delayed(Duration.zero, () {
+      ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
+      ref.watch(_appleLoginLoadingProvider.notifier).update((state) => false);
+      ref.watch(loginViewModelProvider.notifier).clearViewModel();
+    });
   }
 
   @override

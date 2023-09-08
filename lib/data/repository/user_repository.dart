@@ -1,11 +1,14 @@
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// user application api와 통신하는 저장소
 abstract class UserRepository {
+  // LOCAL
+  Future<bool> getIsInstalledFirstTime();
+  putIsInstalledFirstTime(bool isInstalled);
   // GET
   Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
   Future<LoginResponse> kakaoLoginFinish({required String accessToken});
@@ -39,13 +42,29 @@ abstract class UserRepository {
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
   });
+  Future<void> logout({required String accessToken, required String refreshToken});
 }
 
 /// user repository의 구현부
 class UserRepositoryImpl implements UserRepository {
   APIService apiService;
+  final String boxLabel = "local";
+  final String isInstalledFirstTimeKey = "isInstalledFirstTime";
 
   UserRepositoryImpl(this.apiService);
+
+  // LOCAL
+  @override
+  Future<bool> getIsInstalledFirstTime() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(isInstalledFirstTimeKey) ?? true;
+  }
+
+  @override
+  putIsInstalledFirstTime(bool isInstalled) async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    await box.put(isInstalledFirstTimeKey, isInstalled);
+  }
 
   // GET
   @override
@@ -220,6 +239,23 @@ class UserRepositoryImpl implements UserRepository {
         body: requestBody
       );
       return UserResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<void> logout({required String accessToken, required String refreshToken}) async {
+    try {
+      await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "logout/",
+          accessToken: accessToken,
+          body: {"refresh": refreshToken}
+      );
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

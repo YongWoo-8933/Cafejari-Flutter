@@ -22,6 +22,7 @@ abstract interface class CafeUseCase {
   Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({required String accessToken});
   Future<CafeAdditionRequests> getMyCafeAdditionRequests({required String accessToken});
   Future<NaverSearchCafes> getNaverSearchCafes({required String query});
+  Future<Locations> getLocations();
   Future<OccupancyRateUpdate> updateOccupancy({
     required double occupancyRate, required int cafeFloorId, String? accessToken});
 }
@@ -168,6 +169,25 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
           longitude: double.parse(e.mapx.substring(0, 3)) + double.parse("0.${e.mapx.substring(3)}")
         );
       }).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Locations> getLocations() async {
+    try {
+      List<LocationResponse> searchCafeResponse = await cafeRepository.fetchLocation();
+      final Locations locations = searchCafeResponse.map((e) {
+        return Location(
+          name: e.name,
+          imageUrl: e.image,
+          latitude: e.latitude,
+          longitude: e.longitude
+        );
+      }).toList();
+      locations.sort((a, b) => a.name.compareTo(b.name));
+      return locations;
     } on ErrorWithMessage {
       rethrow;
     }

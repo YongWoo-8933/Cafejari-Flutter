@@ -29,7 +29,7 @@ class BackButtonAppBar extends AppBar {
         )
       ]
     ),
-    leadingWidth: 160,
+    leadingWidth: 240,
     elevation: 0,
     scrolledUnderElevation: 1.0,
     backgroundColor: backGroundColor,
