@@ -139,7 +139,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                     borderType: BorderType.RRect,
                                     dashPattern: const [8.0, 6.0],
                                     radius: const Radius.circular(40),
-                                    padding: AppPadding.padding_horizon_15,
+                                    padding: AppPadding.padding_horizon_20,
                                     child: !ref.watch(_isEditMode) ? const Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -179,23 +179,27 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                     ),
                     Visibility(
                       visible: !globalState.isLoggedIn,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "로그인하고 자주 가는 카페를 \n등록해보세요!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          const VerticalSpacer(15),
-                          ActionButtonPrimary(
-                            title: '로그인 하러가기',
-                            buttonWidth: 120,
-                            buttonHeight: 36,
-                            onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
-                          ),
-                          const VerticalSpacer(20)
-                        ],
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const VerticalSpacer(20),
+                            const Text(
+                              "로그인하고 자주 가는 카페를 \n등록해보세요!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            const VerticalSpacer(15),
+                            ActionButtonPrimary(
+                              title: '로그인 하러가기',
+                              buttonWidth: 120,
+                              buttonHeight: 36,
+                              onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                            ),
+                            const VerticalSpacer(20)
+                          ],
+                        ),
                       ),
                     ),
                   ],

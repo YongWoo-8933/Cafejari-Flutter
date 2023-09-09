@@ -425,7 +425,6 @@ mixin _$Brandcon {
   int get brandconId => throw _privateConstructorUsedError;
   int get itemId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
   DateTime get expirationDate => throw _privateConstructorUsedError;
   bool get isUsed => throw _privateConstructorUsedError;
 
@@ -443,7 +442,6 @@ abstract class $BrandconCopyWith<$Res> {
       {int brandconId,
       int itemId,
       String imageUrl,
-      String description,
       DateTime expirationDate,
       bool isUsed});
 }
@@ -464,7 +462,6 @@ class _$BrandconCopyWithImpl<$Res, $Val extends Brandcon>
     Object? brandconId = null,
     Object? itemId = null,
     Object? imageUrl = null,
-    Object? description = null,
     Object? expirationDate = null,
     Object? isUsed = null,
   }) {
@@ -480,10 +477,6 @@ class _$BrandconCopyWithImpl<$Res, $Val extends Brandcon>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
               as String,
       expirationDate: null == expirationDate
           ? _value.expirationDate
@@ -508,7 +501,6 @@ abstract class _$$_BrandconCopyWith<$Res> implements $BrandconCopyWith<$Res> {
       {int brandconId,
       int itemId,
       String imageUrl,
-      String description,
       DateTime expirationDate,
       bool isUsed});
 }
@@ -527,7 +519,6 @@ class __$$_BrandconCopyWithImpl<$Res>
     Object? brandconId = null,
     Object? itemId = null,
     Object? imageUrl = null,
-    Object? description = null,
     Object? expirationDate = null,
     Object? isUsed = null,
   }) {
@@ -543,10 +534,6 @@ class __$$_BrandconCopyWithImpl<$Res>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
               as String,
       expirationDate: null == expirationDate
           ? _value.expirationDate
@@ -567,7 +554,6 @@ class _$_Brandcon implements _Brandcon {
       {required this.brandconId,
       required this.itemId,
       required this.imageUrl,
-      required this.description,
       required this.expirationDate,
       required this.isUsed});
 
@@ -578,15 +564,13 @@ class _$_Brandcon implements _Brandcon {
   @override
   final String imageUrl;
   @override
-  final String description;
-  @override
   final DateTime expirationDate;
   @override
   final bool isUsed;
 
   @override
   String toString() {
-    return 'Brandcon(brandconId: $brandconId, itemId: $itemId, imageUrl: $imageUrl, description: $description, expirationDate: $expirationDate, isUsed: $isUsed)';
+    return 'Brandcon(brandconId: $brandconId, itemId: $itemId, imageUrl: $imageUrl, expirationDate: $expirationDate, isUsed: $isUsed)';
   }
 
   @override
@@ -599,16 +583,14 @@ class _$_Brandcon implements _Brandcon {
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
             (identical(other.expirationDate, expirationDate) ||
                 other.expirationDate == expirationDate) &&
             (identical(other.isUsed, isUsed) || other.isUsed == isUsed));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, brandconId, itemId, imageUrl,
-      description, expirationDate, isUsed);
+  int get hashCode => Object.hash(
+      runtimeType, brandconId, itemId, imageUrl, expirationDate, isUsed);
 
   @JsonKey(ignore: true)
   @override
@@ -622,7 +604,6 @@ abstract class _Brandcon implements Brandcon {
       {required final int brandconId,
       required final int itemId,
       required final String imageUrl,
-      required final String description,
       required final DateTime expirationDate,
       required final bool isUsed}) = _$_Brandcon;
 
@@ -632,8 +613,6 @@ abstract class _Brandcon implements Brandcon {
   int get itemId;
   @override
   String get imageUrl;
-  @override
-  String get description;
   @override
   DateTime get expirationDate;
   @override

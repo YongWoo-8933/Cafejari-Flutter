@@ -174,16 +174,16 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                       ),
                     ),
                     // 브랜드콘 파트
-                    SmartRefresher(
-                      controller: refreshController,
-                      onRefresh: () async {
-                        await shopViewModel.refreshData();
-                        refreshController.refreshCompleted();
-                      },
-                      child: Stack(
-                        children: [
-                          Visibility(
-                            visible: shopState.myBrandcons.isNotEmpty,
+                    Stack(
+                      children: [
+                        Visibility(
+                          visible: shopState.myBrandcons.isNotEmpty,
+                          child: SmartRefresher(
+                            controller: refreshController,
+                            onRefresh: () async {
+                              await shopViewModel.refreshData();
+                              refreshController.refreshCompleted();
+                            },
                             child: ListView.builder(
                               padding: const EdgeInsets.all(30),
                               itemCount: shopState.myBrandcons.length,
@@ -191,15 +191,15 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                                 brandcon: shopState.myBrandcons[index],
                                 sidePadding: 30,
                               ),
-                            ),
+                            )
                           ),
-                          Visibility(
-                            visible: shopState.myBrandcons.isEmpty,
-                            child: Container(alignment: Alignment.center, height: 300, child: Text("구매한 상품이 없어요")),
-                          ),
-                        ],
-                      ),
-                    )
+                        ),
+                        Visibility(
+                          visible: shopState.myBrandcons.isEmpty,
+                          child: Container(alignment: Alignment.center, height: 300, child: Text("구매한 상품이 없어요")),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

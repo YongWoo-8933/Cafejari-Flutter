@@ -15,6 +15,7 @@ abstract interface class ShopUseCase {
   Future<Items> getItems();
   Future<Brandcons> getMyBrandcons({required String accessToken});
   Future<UserCoupons> getMyUserCoupons({required String accessToken});
+  Future<Brandcon> buyBrandcon({required String accessToken, required int itemId});
   Future<Brandcon> updateBrandconIsUsed({
     required String accessToken,
     required int brandconId,
@@ -120,6 +121,28 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
         return await f(
             shopRepository: shopRepository,
             accessToken: newToken
+        );
+      } on AccessTokenExpired {
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired {
+      rethrow;
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Brandcon> buyBrandcon({required String accessToken, required int itemId}) async {
+    try {
+      return parseBrandconFromBrandconResponse(
+        brandconResponse: await shopRepository.postBrandcon(accessToken: accessToken, itemId: itemId)
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      try {
+        return parseBrandconFromBrandconResponse(
+          brandconResponse: await shopRepository.postBrandcon(accessToken: newToken, itemId: itemId)
         );
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");

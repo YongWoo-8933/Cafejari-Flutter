@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+final _isBuyLoading = StateProvider<bool>((ref) => false);
+
 class ItemGrid extends ConsumerWidget {
   final double padding;
   final Brand brand;
@@ -62,7 +64,7 @@ class ItemGrid extends ConsumerWidget {
                 GestureDetector(
                   onTap: () => showDialog(
                     context: context,
-                    builder: (context) {
+                    builder: (_) {
                       return Dialog(
                         insetPadding: AppPadding.padding_0,
                         backgroundColor: AppColor.transparent,
@@ -122,9 +124,11 @@ class ItemGrid extends ConsumerWidget {
                               SizedBox(
                                 width: dialogWidth,
                                 height: 160,
-                                child: SingleChildScrollView(
-                                  child: Text(item.description)
-                                ),
+                                child: ref.watch(_isBuyLoading) ?
+                                  const CircularProgressIndicator() :
+                                  SingleChildScrollView(
+                                    child: Text(item.description)
+                                  ),
                               ),
                               const VerticalSpacer(20),
                               ActionButtonPrimary(
@@ -132,6 +136,9 @@ class ItemGrid extends ConsumerWidget {
                                 buttonHeight: 48,
                                 title: globalState.user.point < item.price ? "포인트 부족" : "구매하기",
                                 onPressed: globalState.user.point < item.price ? null : () async {
+                                  ref.watch(_isBuyLoading.notifier).update((state) => true);
+                                  await shopViewModel.buyBrandcon(item: item, context: context);
+                                  ref.watch(_isBuyLoading.notifier).update((state) => false);
                                   if (context.mounted) Navigator.of(context).pop();
                                 }
                               ),

@@ -1,7 +1,6 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/x_button.dart';
@@ -201,7 +200,10 @@ class CATISlider extends StatelessWidget {
               ),
               onChangeStart: (_) => HapticFeedback.vibrate(),
               onChangeEnd: (_) => HapticFeedback.vibrate(),
-              onChanged: (dynamic value) => onChange(value.toInt())
+              onChanged: (dynamic value) {
+                HapticFeedback.vibrate();
+                onChange(value.toInt());
+              }
             )
           ),
         ],

@@ -28,7 +28,6 @@ BrandconResponse _$BrandconResponseFromJson(Map<String, dynamic> json) =>
       item: json['item'] as int,
       image: json['image'] as String,
       expiration_period: json['expiration_period'] as String,
-      description: json['description'] as String,
       is_used: json['is_used'] as bool,
     );
 
@@ -38,7 +37,6 @@ Map<String, dynamic> _$BrandconResponseToJson(BrandconResponse instance) =>
       'item': instance.item,
       'image': instance.image,
       'expiration_period': instance.expiration_period,
-      'description': instance.description,
       'is_used': instance.is_used,
     };
 

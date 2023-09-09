@@ -49,7 +49,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
       final String newAccessToken = accessToken ?? await _tokenUseCase.getAccessToken();
       User newUser = user ?? await _userUseCase.getUser(accessToken: newAccessToken);
       final String? fcmToken = await FirebaseMessaging.instance.getToken();
-      print(fcmToken);
       if (fcmToken != newUser.fcmToken) {
         newUser = await _userUseCase.updateProfile(
           accessToken: newAccessToken,

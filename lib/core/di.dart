@@ -190,7 +190,8 @@ final leaderboardViewModelProvider = StateNotifierProvider<LeaderboardViewModel,
 final shopViewModelProvider = StateNotifierProvider<ShopViewModel, ShopState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final ShopUseCase shopUseCase = ref.watch(shopUseCaseProvider);
-  return ShopViewModel(shopUseCase: shopUseCase, globalViewModel: viewModel);
+  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
+  return ShopViewModel(shopUseCase: shopUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
 });
 
 final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>((ref) {

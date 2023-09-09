@@ -5,8 +5,6 @@ import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
-import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +101,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 onPressed: () async {
                   if(!ref.watch(_kakaoLoginLoadingProvider)) {
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => true);
-                    OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
+                    OAuthToken token = await isKakaoTalkInstalled() ?
+                      await UserApi.instance.loginWithKakaoTalk() :
+                      await UserApi.instance.loginWithKakaoAccount();
                     final bool? isUserExist = await loginViewModel.kakaoLogin(accessToken: token.accessToken);
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
                     switch(isUserExist) {

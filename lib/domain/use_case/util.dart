@@ -315,7 +315,6 @@ Brandcon parseBrandconFromBrandconResponse({required BrandconResponse brandconRe
     brandconId: brandconResponse.id,
     itemId: brandconResponse.item,
     imageUrl: brandconResponse.image,
-    description: brandconResponse.description,
     expirationDate: DateTime.parse(brandconResponse.expiration_period),
     isUsed: brandconResponse.is_used
   );

@@ -6,18 +6,24 @@ import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 
 /// shop 관련 저장소
 abstract interface class ShopRepository {
+  // GET
   Future<List<BrandResponse>> fetchBrand();
   Future<List<CouponResponse>> fetchCoupon();
   Future<List<ItemResponse>> fetchItem();
   Future<List<BrandconResponse>> fetchMyBrandcon({required String accessToken});
   Future<List<UserCouponResponse>> fetchMyCoupon({required String accessToken});
 
+  // POST
+  Future<BrandconResponse> postBrandcon({required String accessToken, required int itemId});
+
+  // PUT
   Future updateBrandcon({
     required String accessToken,
     required int brandconId,
     bool? isUsed
   });
 
+  // DELETE
   Future<void> deleteBrandcon({required String accessToken, required int brandconId});
 }
 
@@ -91,6 +97,24 @@ class ShopRepositoryImpl implements ShopRepository {
           endpoint: "user_coupon/",
           accessToken: accessToken);
       return response.map((dynamic e) => UserCouponResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<BrandconResponse> postBrandcon({required String accessToken, required int itemId}) async {
+    try {
+      final dynamic response = await service.request(
+        method: HttpMethod.post,
+        appLabel: "shop",
+        endpoint: "gifticon/",
+        accessToken: accessToken,
+        body: {"item_id": itemId}
+      );
+      return BrandconResponse.fromJson(response);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

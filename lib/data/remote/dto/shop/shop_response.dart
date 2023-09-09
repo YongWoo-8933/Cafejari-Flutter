@@ -23,7 +23,7 @@ class BrandResponse {
 @JsonSerializable()
 class BrandconResponse {
   final int id, item;
-  final String image, expiration_period, description;
+  final String image, expiration_period;
   final bool is_used;
 
   BrandconResponse(
@@ -31,7 +31,6 @@ class BrandconResponse {
         required this.item,
         required this.image,
         required this.expiration_period,
-        required this.description,
         required this.is_used});
 
   factory BrandconResponse.fromJson(Map<String, dynamic> json) =>

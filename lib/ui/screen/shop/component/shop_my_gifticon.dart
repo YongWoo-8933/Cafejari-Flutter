@@ -27,7 +27,6 @@ class ShopMyBrandCon extends ConsumerWidget {
     final ShopState shopState = ref.watch(shopViewModelProvider);
     final ShopViewModel shopViewModel = ref.watch(shopViewModelProvider.notifier);
     final double deviceWidth = MediaQuery.of(context).size.width;
-    const double dialogWidth = 240;
     const double itemHeight = 120;
     const double spacing = 20;
     final Item item = shopState.itemList.firstWhere((e) => e.itemId == brandcon.itemId, orElse: () => Item.empty());
@@ -38,40 +37,38 @@ class ShopMyBrandCon extends ConsumerWidget {
         context: context,
         builder: (context) {
           return Dialog(
-            insetPadding: AppPadding.padding_0,
+            insetPadding: AppPadding.padding_horizon_20,
             backgroundColor: AppColor.transparent,
             child: Container(
-              width: dialogWidth,
-              height: 367,
               decoration: BoxDecoration(
                 color: AppColor.white,
                 borderRadius: BorderRadius.circular(20)
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const VerticalSpacer(15),
-                  Container(
-                    width: dialogWidth,
-                    height: 24,
+                  Align(
                     alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: const Icon(
-                        CupertinoIcons.xmark,
-                        size: 24,
-                        color: AppColor.primary
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10, right: 10),
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(
+                          CupertinoIcons.xmark,
+                          size: 28,
+                          color: AppColor.primary
+                        ),
                       ),
                     ),
                   ),
                   CachedNetworkImage(
-                      imageUrl: brandcon.imageUrl,
-                      width: dialogWidth,
-                      height: dialogWidth,
+                    imageUrl: brandcon.imageUrl,
                     fit: BoxFit.contain
                   ),
                   const VerticalSpacer(20),
                   ActionButtonPrimary(
-                    buttonWidth: dialogWidth,
+                    buttonWidth: 240,
                     buttonHeight: 48,
                     title: "사용완료",
                     onPressed: () async {

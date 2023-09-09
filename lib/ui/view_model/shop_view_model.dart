@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
+import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,12 +10,14 @@ import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class ShopViewModel extends StateNotifier<ShopState> {
   final ShopUseCase _shopUseCase;
+  final UserUseCase _userUseCase;
   final GlobalViewModel globalViewModel;
 
   ShopViewModel({
     required ShopUseCase shopUseCase,
+    required UserUseCase userUseCase,
     required this.globalViewModel
-  }) : _shopUseCase = shopUseCase, super(ShopState.empty());
+  }) : _shopUseCase = shopUseCase, _userUseCase = userUseCase, super(ShopState.empty());
 
   refreshData() async {
     state = state.copyWith(isLoading: true);
@@ -31,6 +34,27 @@ class ShopViewModel extends StateNotifier<ShopState> {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } finally {
       state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<void> buyBrandcon({
+    required Item item,
+    required BuildContext context
+  }) async {
+    try {
+      final Brandcon newBrandcon = await _shopUseCase.buyBrandcon(
+        accessToken: globalViewModel.state.accessToken,
+        itemId: item.itemId
+      );
+      Brandcons newMyBrandcons = List.from(state.myBrandcons);
+      newMyBrandcons.add(newBrandcon);
+      state = state.copyWith(myBrandcons: newMyBrandcons);
+      await globalViewModel.init(accessToken: globalViewModel.state.accessToken);
+      globalViewModel.showSnackBar(content: "구매 완료", type: SnackBarType.complete);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 
