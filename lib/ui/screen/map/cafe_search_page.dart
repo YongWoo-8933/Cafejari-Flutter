@@ -46,23 +46,21 @@ class SearchPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const VerticalSpacer(50),
+                  const VerticalSpacer(60),
                   Row(
                     children: [
                       IconButton(
                         onPressed: () => mapViewModel.closeSearchPage(),
-                          icon: const Icon(
-                            CupertinoIcons.left_chevron,
-                            color: AppColor.black,
-                          ),
+                        icon: const Icon(
+                          CupertinoIcons.left_chevron,
+                          color: AppColor.black,
+                        ),
                       ),
                       CafeSearchBar(width: deviceWidth - 68, height: 48)
                     ],
                   ),
                   const VerticalSpacer(20),
-                  SizedBox(
-                    height: deviceHeight - bottomNavBarHeight + bottomNavBarCornerRadius - 118,
-                    width: deviceWidth,
+                  Expanded(
                     child: Stack(
                       alignment: Alignment.center,
                       children: [

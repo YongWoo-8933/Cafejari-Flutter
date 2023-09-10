@@ -15,7 +15,6 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -197,20 +196,23 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
             color: AppColor.transparent,
             onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
             onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
-            body: Scaffold(
-              body: IndexedStack(
-                index: globalState.currentPage.index,
-                children: const [
-                  MapScreen(),
-                  MyCafeScreen(),
-                  ChallengeScreen(),
-                  MyPageScreen()
-                ],
+            body: SafeArea(
+              top: false,
+              child: Scaffold(
+                body: IndexedStack(
+                  index: globalState.currentPage.index,
+                  children: const [
+                    MapScreen(),
+                    MyCafeScreen(),
+                    ChallengeScreen(),
+                    MyPageScreen()
+                  ],
+                ),
+                resizeToAvoidBottomInset: false,
+                bottomNavigationBar: const BottomNavBar(),
+                backgroundColor: AppColor.transparent,
+                extendBody: true,
               ),
-              resizeToAvoidBottomInset: false,
-              bottomNavigationBar: const BottomNavBar(),
-              backgroundColor: AppColor.transparent,
-              extendBody: true,
             ),
             // 카페 bottom sheet
             panelBuilder: (scrollController) {

@@ -78,8 +78,8 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
                               color: AppColor.white
                             ),
                           ),
-                          onChangeStart: (_) => HapticFeedback.vibrate(),
-                          onChangeEnd: (_) => HapticFeedback.vibrate(),
+                          onChangeStart: (_) => HapticFeedback.lightImpact(),
+                          onChangeEnd: (_) => HapticFeedback.lightImpact(),
                           onChanged: (dynamic value) {
                             requestViewModel.updateWallSocketRate(index: index, rate: value / 100);
                           }

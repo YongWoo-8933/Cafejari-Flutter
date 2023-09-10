@@ -198,10 +198,10 @@ class CATISlider extends StatelessWidget {
                   boxShadow: AppShadow.box
                 ),
               ),
-              onChangeStart: (_) => HapticFeedback.vibrate(),
-              onChangeEnd: (_) => HapticFeedback.vibrate(),
+              onChangeStart: (_) => HapticFeedback.lightImpact(),
+              onChangeEnd: (_) => HapticFeedback.lightImpact(),
               onChanged: (dynamic value) {
-                HapticFeedback.vibrate();
+                HapticFeedback.lightImpact();
                 onChange(value.toInt());
               }
             )

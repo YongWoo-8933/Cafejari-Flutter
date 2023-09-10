@@ -86,12 +86,12 @@ class OccupancyUpdateSlider extends ConsumerWidget {
               thumbIcon: Image.asset((mapState.occupancySliderValue/100).toOccupancyLevel().thumbImagePath),
               onChangeStart: (_) {
                 mapViewModel.setOccupancyBottomSheetDraggable(false);
-                HapticFeedback.vibrate();
+                HapticFeedback.lightImpact();
               },
               onChanged: (dynamic value) => mapViewModel.updateOccupancySliderValue(value),
               onChangeEnd: (_) {
                 mapViewModel.setOccupancyBottomSheetDraggable(true);
-                HapticFeedback.vibrate();
+                HapticFeedback.lightImpact();
               },
             ),
           ),

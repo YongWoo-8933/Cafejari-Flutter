@@ -18,6 +18,7 @@ import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,11 +73,11 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                       const Text("내 카페 PICK", style: TextSize.textSize_bold_16),
                       GestureDetector(
                         onTap: () {
-                          HapticFeedback.vibrate();
+                          HapticFeedback.lightImpact();
                           ref.watch(_isEditMode.notifier).update((state) => !ref.watch(_isEditMode));
                         },
                         child: ref.watch(_isEditMode) ?
-                          const HorizontalSpacer(1) :
+                          const Text("완료", style: TextStyle(color: AppColor.error)) :
                           const Icon(CupertinoIcons.delete_simple, size: 20)
                       )
                     ],
@@ -106,68 +107,56 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                   randomImageUrl: mapState.randomCafeImageUrl ?? "",
                                   isEditMode: ref.watch(_isEditMode),
                                   onDelete: () {
-                                    HapticFeedback.vibrate();
+                                    HapticFeedback.lightImpact();
                                     mapViewModel.updateFavoriteCafeList(cafe: cafe, context: context);
                                   }
                                 ),
                               );
                             } else {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if (ref.watch(_isEditMode)) {
-                                      HapticFeedback.vibrate();
-                                      ref.watch(_isEditMode.notifier).update((state) => false);
-                                    } else {
+                              return Visibility(
+                                visible: !ref.watch(_isEditMode),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
+                                  child: GestureDetector(
+                                    onTap: () async {
                                       globalViewModel.updateCurrentPageTo(0);
                                       final currentUserCameraPosition = NCameraPosition(
-                                          target: NLatLng(
-                                              globalState.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
-                                              globalState.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
-                                          ), zoom: Zoom.large
+                                        target: NLatLng(
+                                            globalState.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
+                                            globalState.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
+                                        ), zoom: Zoom.large
                                       );
                                       mapState.mapController?.updateCamera(
-                                          NCameraUpdate.fromCameraPosition(currentUserCameraPosition)
+                                        NCameraUpdate.fromCameraPosition(currentUserCameraPosition)
                                       );
                                       mapViewModel.refreshCafes(cameraPosition: currentUserCameraPosition);
-                                    }
-                                  },
-                                  child: DottedBorder(
-                                    strokeWidth: 1.8,
-                                    color: AppColor.grey_300,
-                                    borderType: BorderType.RRect,
-                                    dashPattern: const [8.0, 6.0],
-                                    radius: const Radius.circular(40),
-                                    padding: AppPadding.padding_horizon_20,
-                                    child: !ref.watch(_isEditMode) ? const Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.add,
-                                          color: AppColor.grey_400,
-                                          size: 22,
-                                        ),
-                                        VerticalSpacer(10),
-                                        Text(
-                                          "자주가는 카페를\n추가해보세요!",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: AppColor.grey_800
+                                    },
+                                    child: DottedBorder(
+                                      strokeWidth: 1.8,
+                                      color: AppColor.grey_300,
+                                      borderType: BorderType.RRect,
+                                      dashPattern: const [8.0, 6.0],
+                                      radius: const Radius.circular(40),
+                                      padding: AppPadding.padding_horizon_20,
+                                      child: const Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.add,
+                                            color: AppColor.grey_400,
+                                            size: 22,
                                           ),
-                                        )
-                                      ],
-                                    ) : const Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "편집이 끝났다면\n눌러주세요",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: AppColor.grey_800
-                                        ),
-                                      ),
+                                          VerticalSpacer(10),
+                                          Text(
+                                            "자주가는 카페를\n추가해보세요!",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColor.grey_800
+                                            ),
+                                          )
+                                        ],
+                                      )
                                     ),
                                   ),
                                 ),

@@ -30,7 +30,7 @@ class OnMap extends ConsumerWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const VerticalSpacer(50),
+            const VerticalSpacer(60),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

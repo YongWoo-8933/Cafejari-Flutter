@@ -54,7 +54,7 @@ class CafeRegistrationFloorPicker extends ConsumerWidget {
                 itemExtent: 36,
                 scrollController: FixedExtentScrollController(initialItem: 0),
                 onSelectedItemChanged: (index) {
-                  HapticFeedback.vibrate();
+                  HapticFeedback.lightImpact();
                   switch(type) {
                     case CafeRegistrationFloorPickerType.max:
                       requestViewModel.selectMaxFloor(pickerItems[index].floor);

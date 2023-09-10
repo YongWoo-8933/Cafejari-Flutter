@@ -152,7 +152,7 @@ class BottomSheetPreview extends ConsumerWidget {
                         child: Column(
                           children: [
                             _FloorTabRow(width: deviceSize.width - edgePadding - boundaryPadding, height: componentHeight),
-                            const VerticalSpacer(15),
+                            const VerticalSpacer(10),
                             Visibility(
                               visible: mapState.selectedCafeFloor.recentUpdates.isNotEmpty,
                               child: BottomSheetSlider(width: deviceSize.width / 2 - edgePadding - boundaryPadding)
@@ -194,9 +194,7 @@ class BottomSheetPreview extends ConsumerWidget {
                                           children: [
                                             Image.asset("asset/image/icon_plug.png", width: 24, height: 24),
                                             const HorizontalSpacer(2),
-                                            const Text("콘센트: ", style: TextSize.textSize_12),
-                                            const HorizontalSpacer(4),
-                                            const Text("테이블 대비", style: TextStyle(color: AppColor.grey_800, fontSize: 12)),
+                                            const Text("콘센트 보급율: ", style: TextSize.textSize_12),
                                             const HorizontalSpacer(4),
                                             Text("${((mapState.selectedCafeFloor.wallSocketRate ?? 0) * 100).toInt()}%", style: TextSize.textSize_bold_12)
                                           ],
