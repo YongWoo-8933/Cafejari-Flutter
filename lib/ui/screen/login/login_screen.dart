@@ -7,10 +7,13 @@ import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 final _kakaoLoginLoadingProvider = StateProvider<bool>((ref) => false);
 final _appleLoginLoadingProvider = StateProvider<bool>((ref) => false);
@@ -118,18 +121,32 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                   }
                 },
               ),
-              const VerticalSpacer(24),
-              LoginButton(
-                buttonWidth: deviceSize.width * 56 / 100,
-                buttonHeight: 48,
-                textColor: AppColor.white,
-                backgroundColor: AppColor.black,
-                text: "Apple 계정으로 시작",
-                imagePath: 'asset/image/apple_icon.png',
-                isLoading: ref.watch(_appleLoginLoadingProvider),
-                onPressed: () async {
-                  GoRouter.of(context).goNamed(ScreenRoute.registration);
-                },
+              Visibility(
+                visible: defaultTargetPlatform == TargetPlatform.iOS,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const VerticalSpacer(24),
+                    LoginButton(
+                      buttonWidth: deviceSize.width * 56 / 100,
+                      buttonHeight: 48,
+                      textColor: AppColor.white,
+                      backgroundColor: AppColor.black,
+                      text: "Apple 계정으로 시작",
+                      imagePath: 'asset/image/apple_icon.png',
+                      isLoading: ref.watch(_appleLoginLoadingProvider),
+                      onPressed: () async {
+                        final credential = await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
+                        print(credential);
+                      },
+                    ),
+                  ],
+                ),
               ),
               const VerticalSpacer(60),
               SizedBox(

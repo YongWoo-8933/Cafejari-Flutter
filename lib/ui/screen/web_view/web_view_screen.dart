@@ -3,7 +3,6 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
-import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -15,10 +14,10 @@ class InAppWebViewScreen extends ConsumerStatefulWidget {
   const InAppWebViewScreen({Key? key}):super(key:key);
 
   @override
-  _InAppWebViewScreenState createState() => _InAppWebViewScreenState();
+  InAppWebViewScreenState createState() => InAppWebViewScreenState();
 }
 
-class _InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
+class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
   final GlobalKey webViewKey = GlobalKey();
   late final PullToRefreshController pullToRefreshController;
   double progress = 0;

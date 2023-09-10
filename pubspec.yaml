@@ -116,6 +116,9 @@ dependencies:
   flutter_widget_from_html: ^0.10.3
   html: ^0.15.4
 
+  # 애플 로그인
+  sign_in_with_apple: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
