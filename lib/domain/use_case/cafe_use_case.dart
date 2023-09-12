@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
@@ -18,13 +19,26 @@ abstract interface class CafeUseCase {
   Future<Cafes> getMapCafes({required NCameraPosition cameraPosition});
   Future<Cafe> getCafe({required int cafeId});
   Future<Cafes> getSearchCafes({required String query});
-  Future<OccupancyRateUpdates> getMyOccupancyUpdates({required String accessToken});
-  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({required String accessToken});
-  Future<CafeAdditionRequests> getMyCafeAdditionRequests({required String accessToken});
+  Future<OccupancyRateUpdates> getMyOccupancyUpdates({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<CafeAdditionRequests> getMyCafeAdditionRequests({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
   Future<NaverSearchCafes> getNaverSearchCafes({required String query});
   Future<Locations> getLocations();
   Future<OccupancyRateUpdate> updateOccupancy({
-    required double occupancyRate, required int cafeFloorId, String? accessToken});
+    required double occupancyRate,
+    required int cafeFloorId,
+    String? accessToken,
+    Function(String)? onAccessTokenRefresh
+  });
 }
 
 /// CafeUseCase 구현 부분
@@ -78,7 +92,10 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   }
 
   @override
-  Future<OccupancyRateUpdates> getMyOccupancyUpdates({required String accessToken}) async {
+  Future<OccupancyRateUpdates> getMyOccupancyUpdates({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetMyOccupancyUpdates();
     try {
       return await f(
@@ -88,6 +105,7 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return f(
             cafeRepository: cafeRepository,
@@ -105,7 +123,10 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   }
 
   @override
-  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({required String accessToken}) async {
+  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetMyOccupancyUpdates();
     try {
       return await f(
@@ -115,6 +136,7 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return await f(
           cafeRepository: cafeRepository,
@@ -132,7 +154,10 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   }
 
   @override
-  Future<CafeAdditionRequests> getMyCafeAdditionRequests({required String accessToken}) async {
+  Future<CafeAdditionRequests> getMyCafeAdditionRequests({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetMyCafeAdditionRequests();
     try {
       return await f(
@@ -141,6 +166,7 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return await f(
             requestRepository: requestRepository,
@@ -197,7 +223,8 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   Future<OccupancyRateUpdate> updateOccupancy({
     required double occupancyRate,
     required int cafeFloorId,
-    String? accessToken
+    String? accessToken,
+    Function(String)? onAccessTokenRefresh
   }) async {
     final f = UpdateOccupancyRate();
     try {
@@ -209,6 +236,7 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      if(onAccessTokenRefresh.isNotNull) onAccessTokenRefresh!(newToken);
       try {
         return await f(
           cafeRepository: cafeRepository,

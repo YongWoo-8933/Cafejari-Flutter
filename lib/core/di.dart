@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cafejari_flutter/data/repository/cafe_log_repository.dart';
 import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
 import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
@@ -195,8 +193,7 @@ final leaderboardViewModelProvider = StateNotifierProvider<LeaderboardViewModel,
 final shopViewModelProvider = StateNotifierProvider<ShopViewModel, ShopState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final ShopUseCase shopUseCase = ref.watch(shopUseCaseProvider);
-  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
-  return ShopViewModel(shopUseCase: shopUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
+  return ShopViewModel(shopUseCase: shopUseCase, globalViewModel: viewModel);
 });
 
 final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>((ref) {

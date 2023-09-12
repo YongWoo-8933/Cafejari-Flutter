@@ -28,7 +28,7 @@ class LeaderboardViewModel extends StateNotifier<LeaderboardState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 

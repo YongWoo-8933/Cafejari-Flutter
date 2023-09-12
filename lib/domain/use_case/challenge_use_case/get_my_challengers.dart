@@ -17,8 +17,7 @@ class GetMyChallengers {
     required String accessToken,
   }) async {
     try {
-      List<ChallengerResponse> challengerResponseList =
-      await challengeRepository.fetchMyChallengers(accessToken: accessToken);
+      List<ChallengerResponse> challengerResponseList = await challengeRepository.fetchMyChallengers(accessToken: accessToken);
       List<ProfileImageResponse> profileImages = await userRepository.fetchProfileImage();
       return challengerResponseList.map((challengerResponse) {
         return Challenger(

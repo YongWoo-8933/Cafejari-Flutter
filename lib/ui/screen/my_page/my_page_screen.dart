@@ -102,7 +102,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                               imageUrl: globalState.user.imageUrl,
                               onEditButtonClick: () => showDialog(
                                 context: context,
-                                builder: (context) {
+                                builder: (_) {
                                   return Dialog(
                                     backgroundColor: AppColor.transparent,
                                     child: Container(
@@ -333,7 +333,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                               GestureDetector(
                                 onTap: () => showDialog(
                                     context: context,
-                                    builder: (_) => WithdrawalDialog()
+                                    builder: (_) => const WithdrawalDialog()
                                 ),
                                 child: const Text("회원탈퇴", style: TextSize.textSize_grey_12),
                               ),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
@@ -13,8 +11,15 @@ import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class ChallengeUseCase {
   Future<Challenges> getChallenges();
-  Future<Challengers> getMyChallengers({required String accessToken});
-  Future<Challenge> participateChallenge({required String accessToken, required int challengeId});
+  Future<Challengers> getMyChallengers({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<Challenge> participateChallenge({
+    required String accessToken,
+    required int challengeId,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
@@ -43,23 +48,27 @@ class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
   }
 
   @override
-  Future<Challengers> getMyChallengers({required String accessToken}) async {
+  Future<Challengers> getMyChallengers({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetMyChallengers();
     try {
-      return f(
+      return await f(
         challengeRepository: challengeRepository,
         userRepository: userRepository,
         accessToken: accessToken,
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
-        return f(
+        return await f(
           challengeRepository: challengeRepository,
           userRepository: userRepository,
           accessToken: newToken,
         );
-      } on AccessTokenExpired{
+      } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
     } on RefreshTokenExpired{
@@ -70,7 +79,11 @@ class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
   }
 
   @override
-  Future<Challenge> participateChallenge({required String accessToken, required int challengeId}) async {
+  Future<Challenge> participateChallenge({
+    required String accessToken,
+    required int challengeId,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     try {
       ChallengeResponse challengeResponse = await challengeRepository.participate(
           accessToken: accessToken, challengeId: challengeId);
@@ -81,6 +94,7 @@ class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         ChallengeResponse challengeResponse = await challengeRepository.participate(
             accessToken: newToken, challengeId: challengeId);

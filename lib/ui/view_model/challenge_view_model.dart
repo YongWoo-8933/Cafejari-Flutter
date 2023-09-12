@@ -49,7 +49,10 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
   participate({required Challenge challenge, required BuildContext context}) async {
     try {
       final Challenge newChallenge = await _challengeUseCase.participateChallenge(
-          accessToken: globalViewModel.state.accessToken, challengeId: challenge.id);
+        accessToken: globalViewModel.state.accessToken,
+        challengeId: challenge.id,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
       Challenges currentAvailableChallenges = List.from(state.availableChallenges);
       currentAvailableChallenges.removeWhere((element) => element.id == challenge.id);
       currentAvailableChallenges.add(newChallenge);
@@ -62,7 +65,7 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 }

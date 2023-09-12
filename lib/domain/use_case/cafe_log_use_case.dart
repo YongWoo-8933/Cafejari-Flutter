@@ -10,7 +10,10 @@ import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 abstract interface class CafeLogUseCase {
   Future<Pagination<CafeLog>> getRecentCafeLogs();
   Future<Pagination<CafeLog>> getHotCafeLogs();
-  Future<Pagination<CafeLog>> getMyCafeLogs({required String accessToken});
+  Future<Pagination<CafeLog>> getMyCafeLogs({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 /// CafeLogUseCase 구현 부분
@@ -47,7 +50,10 @@ class CafeLogUseCaseImpl extends BaseUseCase implements CafeLogUseCase {
   }
 
   @override
-  Future<Pagination<CafeLog>> getMyCafeLogs({required String accessToken}) async {
+  Future<Pagination<CafeLog>> getMyCafeLogs({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetCafeLogs();
     try {
       return await f(
@@ -57,11 +63,12 @@ class CafeLogUseCaseImpl extends BaseUseCase implements CafeLogUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return await f(
-            cafeLogRepository: cafeLogRepository,
-            type: GetCafeLogType.hot,
-            accessToken: newToken
+          cafeLogRepository: cafeLogRepository,
+          type: GetCafeLogType.hot,
+          accessToken: newToken
         );
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");

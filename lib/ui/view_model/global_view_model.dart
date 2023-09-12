@@ -47,13 +47,17 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   }) async {
     try {
       final String newAccessToken = accessToken ?? await _tokenUseCase.getAccessToken();
-      User newUser = user ?? await _userUseCase.getUser(accessToken: newAccessToken);
+      User newUser = user ?? await _userUseCase.getUser(
+        accessToken: newAccessToken,
+        onAccessTokenRefresh: setAccessToken
+      );
       final String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != newUser.fcmToken) {
         newUser = await _userUseCase.updateProfile(
           accessToken: newAccessToken,
           profileId: newUser.profileId,
-          fcmToken: fcmToken
+          fcmToken: fcmToken,
+          onAccessTokenRefresh: setAccessToken
         );
       }
       if (refreshToken.isNotNull) _tokenUseCase.saveRefreshToken(newRefreshToken: refreshToken!);
@@ -72,7 +76,10 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
           month: monthRankingIndex < 0 ? null : monthRankingIndex + 1,
           total: totalRankingIndex < 0 ? null : totalRankingIndex + 1
         ),
-        myChallengers: await _challengeUseCase.getMyChallengers(accessToken: newAccessToken)
+        myChallengers: await _challengeUseCase.getMyChallengers(
+          accessToken: newAccessToken,
+          onAccessTokenRefresh: setAccessToken
+        )
       );
     } on RefreshTokenExpired {
       null;
@@ -89,10 +96,15 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   setUser(User user) => state = state.copyWith(user: user);
 
+  setAccessToken(String accessToken) => state = state.copyWith(accessToken: accessToken);
+
   logout({required BuildContext context}) async {
     try {
-      await _userUseCase.logout(accessToken: state.accessToken);
-      _clearUserInfo();
+      await _userUseCase.logout(
+        accessToken: state.accessToken,
+        onAccessTokenRefresh: setAccessToken
+      );
+      clearUserInfo();
       showSnackBar(content: "로그아웃됨", type: SnackBarType.complete);
     } on ErrorWithMessage catch(e) {
       showSnackBar(content: e.message, type: SnackBarType.error);
@@ -102,7 +114,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   }
 
   expireRefreshToken({required BuildContext context}) async {
-    _clearUserInfo();
+    await clearUserInfo();
     showSnackBar(content: "로그인 유효기간이 만료되어 로그아웃 됐습니다. 다시 로그인 해주세요", type: SnackBarType.error);
     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);
   }
@@ -187,7 +199,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     ));
   }
 
-  _clearUserInfo() {
+  clearUserInfo() async {
+    await _tokenUseCase.deleteRefreshToken();
     state = state.copyWith(
       user: User.empty(),
       accessToken: "",

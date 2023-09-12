@@ -68,7 +68,7 @@ class WithdrawalDialog extends ConsumerWidget {
               buttonWidth: deviceSize.width - 20 * 2 - 30 * 2,
               buttonHeight: 48,
               title: "다음",
-              onPressed: () => showDialog(
+              onPressed: ref.watch(_selectedWithdrawalReason) == WithdrawalReason.none ? null : () => showDialog(
                 context: context,
                 builder: (_) => SquareAlertDialog(
                   text: "탈퇴 후 계정은 비활성 처리되며, 7일 이내로 완전 삭제됩니다. 진행하시겠어요?",
@@ -76,7 +76,7 @@ class WithdrawalDialog extends ConsumerWidget {
                   positiveButtonText: "아니오",
                   onDismiss: () => Navigator.of(context).pop(),
                   onNegativeButtonPress: () {
-                    myPageViewModel.withdraw(reason: ref.watch(_selectedWithdrawalReason));
+                    myPageViewModel.withdraw(reason: ref.watch(_selectedWithdrawalReason), context: context);
                     Navigator.of(context).pop();
                   },
                   onPositiveButtonPress: () => Navigator.of(context).pop()

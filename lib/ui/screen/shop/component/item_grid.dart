@@ -41,7 +41,7 @@ class ItemGrid extends ConsumerWidget {
     return SmartRefresher(
       controller: refreshController,
       onRefresh: () async {
-        await shopViewModel.refreshData();
+        await shopViewModel.refreshData(context: context);
         refreshController.refreshCompleted();
       },
       child: GridView.builder(

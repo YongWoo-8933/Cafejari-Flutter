@@ -78,7 +78,8 @@ class LoginViewModel extends StateNotifier<LoginState> {
         nickname: state.nicknameController.text,
         userId: globalViewModel.state.user.userId,
         profileImageId: state.selectedProfileImage.profileImageId,
-        marketingPushEnabled: state.isMarketingAgreed
+        marketingPushEnabled: state.isMarketingAgreed,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.init(
         accessToken: loginRes.accessToken,
@@ -103,7 +104,8 @@ class LoginViewModel extends StateNotifier<LoginState> {
         nickname: state.nicknameController.text,
         userId: globalViewModel.state.user.userId,
         profileImageId: state.selectedProfileImage.profileImageId,
-        marketingPushEnabled: state.isMarketingAgreed
+        marketingPushEnabled: state.isMarketingAgreed,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.init(
         accessToken: loginRes.accessToken,

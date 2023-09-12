@@ -28,6 +28,7 @@ abstract class UserRepository {
     required int profileImageId,
     required bool marketingPushEnabled
   });
+  Future<void> withdraw({required String accessToken, required String reason});
   // PUT
   Future<UserResponse> updateProfile({
     required String accessToken,
@@ -227,6 +228,23 @@ class UserRepositoryImpl implements UserRepository {
         }
       );
       return UserResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<void> withdraw({required String accessToken, required String reason}) async {
+    try {
+      await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "request",
+          endpoint: "withdrawal/",
+          accessToken: accessToken,
+          body: {"reason": reason}
+      );
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

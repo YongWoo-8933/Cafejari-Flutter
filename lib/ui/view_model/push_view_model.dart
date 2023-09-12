@@ -17,7 +17,10 @@ class PushViewModel extends StateNotifier<PushState> {
 
   refreshPushes({required BuildContext context}) async {
     try {
-      final Pushes pushes = await _pushUseCase.getMyPushes(accessToken: globalViewModel.state.accessToken);
+      final Pushes pushes = await _pushUseCase.getMyPushes(
+        accessToken: globalViewModel.state.accessToken,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
       List<Pushes> typePushes = [[], [], [], [], []];
       for(Push push in pushes) {
         typePushes[push.type.index].add(push);
@@ -26,7 +29,7 @@ class PushViewModel extends StateNotifier<PushState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 }

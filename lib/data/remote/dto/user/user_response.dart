@@ -151,10 +151,12 @@ class NicknameResponse {
 class KakaoLoginCallbackResponse {
   final String access_token;
   final bool user_exists;
+  final bool is_inactive;
 
   KakaoLoginCallbackResponse({
     required this.access_token,
-    required this.user_exists
+    required this.user_exists,
+    required this.is_inactive,
   });
 
   factory KakaoLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$KakaoLoginCallbackResponseFromJson(json);
@@ -165,11 +167,13 @@ class AppleLoginCallbackResponse {
   final String id_token;
   final String code;
   final bool user_exists;
+  final bool is_inactive;
 
   AppleLoginCallbackResponse({
     required this.id_token,
     required this.code,
-    required this.user_exists
+    required this.user_exists,
+    required this.is_inactive,
   });
 
   factory AppleLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$AppleLoginCallbackResponseFromJson(json);

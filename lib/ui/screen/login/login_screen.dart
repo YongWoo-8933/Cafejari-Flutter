@@ -119,7 +119,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       case false:
                         if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
                       default:
-                        loginViewModel.globalViewModel.showSnackBar(content: "로그인 실패, 잠시 후 다시 시도해주세요", type: SnackBarType.error);
+                        null;
                     }
                   }
                 },
@@ -157,7 +157,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             case false:
                               if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
                             default:
-                              loginViewModel.globalViewModel.showSnackBar(content: "로그인 실패, 잠시 후 다시 시도해주세요", type: SnackBarType.error);
+                              null;
                           }
                         }
                       },

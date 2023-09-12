@@ -10,17 +10,16 @@ import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 
 class ShopViewModel extends StateNotifier<ShopState> {
   final ShopUseCase _shopUseCase;
-  final UserUseCase _userUseCase;
   final GlobalViewModel globalViewModel;
 
   ShopViewModel({
     required ShopUseCase shopUseCase,
-    required UserUseCase userUseCase,
     required this.globalViewModel
-  }) : _shopUseCase = shopUseCase, _userUseCase = userUseCase, super(ShopState.empty());
+  }) : _shopUseCase = shopUseCase, super(ShopState.empty());
 
-  refreshData() async {
+  refreshData({required BuildContext context}) async {
     state = state.copyWith(isLoading: true);
+    print(globalViewModel.state.accessToken);
     try {
       final Brands newBrands = state.brandList.isEmpty ? await _shopUseCase.getBrands() : state.brandList;
       final Items newItems = await _shopUseCase.getItems();
@@ -28,8 +27,13 @@ class ShopViewModel extends StateNotifier<ShopState> {
         brandList: newBrands,
         itemList: newItems,
         myBrandcons: globalViewModel.state.isLoggedIn ?
-          await _shopUseCase.getMyBrandcons(accessToken: globalViewModel.state.accessToken) : []
+          await _shopUseCase.getMyBrandcons(
+            accessToken: globalViewModel.state.accessToken,
+            onAccessTokenRefresh: globalViewModel.setAccessToken
+          ) : []
       );
+    } on RefreshTokenExpired {
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } finally {
@@ -44,7 +48,8 @@ class ShopViewModel extends StateNotifier<ShopState> {
     try {
       final Brandcon newBrandcon = await _shopUseCase.buyBrandcon(
         accessToken: globalViewModel.state.accessToken,
-        itemId: item.itemId
+        itemId: item.itemId,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       Brandcons newMyBrandcons = List.from(state.myBrandcons);
       newMyBrandcons.add(newBrandcon);
@@ -54,7 +59,7 @@ class ShopViewModel extends StateNotifier<ShopState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -65,9 +70,10 @@ class ShopViewModel extends StateNotifier<ShopState> {
   }) async {
     try {
       final Brandcon usedBrandcon = await _shopUseCase.updateBrandconIsUsed(
-          accessToken: globalViewModel.state.accessToken,
-          brandconId: brandcon.brandconId,
-          isUsed: isUsed
+        accessToken: globalViewModel.state.accessToken,
+        brandconId: brandcon.brandconId,
+        isUsed: isUsed,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       Brandcons newMyBrandcons = List.from(state.myBrandcons);
       final int index = newMyBrandcons.indexWhere((element) => element.brandconId == brandcon.brandconId);
@@ -76,7 +82,7 @@ class ShopViewModel extends StateNotifier<ShopState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -84,7 +90,8 @@ class ShopViewModel extends StateNotifier<ShopState> {
     try {
       await _shopUseCase.deleteBrandcon(
         accessToken: globalViewModel.state.accessToken,
-        brandconId: brandcon.brandconId
+        brandconId: brandcon.brandconId,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       Brandcons newMyBrandcons = List.from(state.myBrandcons);
       newMyBrandcons.removeWhere((element) => element.brandconId == brandcon.brandconId);
@@ -92,7 +99,7 @@ class ShopViewModel extends StateNotifier<ShopState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 }

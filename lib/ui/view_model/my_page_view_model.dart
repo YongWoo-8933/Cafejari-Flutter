@@ -28,17 +28,37 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
       final User updatedUser = await _userUseCase.updateProfile(
         accessToken: globalViewModel.state.accessToken,
         profileId: globalViewModel.state.user.profileId,
-        profileImageId: profileImageId
+        profileImageId: profileImageId,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: updatedUser);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 
-  withdraw({required WithdrawalReason reason}) async {
-
+  withdraw({required WithdrawalReason reason, required BuildContext context}) async {
+    try {
+      await _userUseCase.withdraw(
+        accessToken: globalViewModel.state.accessToken,
+        reason: switch(reason) {
+          WithdrawalReason.none => "기타",
+          WithdrawalReason.noCafe => "카페",
+          WithdrawalReason.occupancyRate => "혼잡도",
+          WithdrawalReason.appUse => "앱사용",
+          WithdrawalReason.design => "디자인",
+          WithdrawalReason.etc => "기타",
+        },
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      await globalViewModel.clearUserInfo();
+      globalViewModel.showSnackBar(content: "탈퇴 처리됨", type: SnackBarType.complete);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
+    }
   }
 }

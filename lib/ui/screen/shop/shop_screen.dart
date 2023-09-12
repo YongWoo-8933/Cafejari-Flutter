@@ -34,7 +34,7 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
     super.initState();
     Future.delayed(Duration.zero, () async {
       final ShopViewModel shopViewModel = ref.watch(shopViewModelProvider.notifier);
-      await shopViewModel.refreshData();
+      await shopViewModel.refreshData(context: context);
     });
   }
 
@@ -181,7 +181,7 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                           child: SmartRefresher(
                             controller: refreshController,
                             onRefresh: () async {
-                              await shopViewModel.refreshData();
+                              await shopViewModel.refreshData(context: context);
                               refreshController.refreshCompleted();
                             },
                             child: ListView.builder(

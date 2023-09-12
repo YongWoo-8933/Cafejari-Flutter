@@ -182,7 +182,8 @@ class MapViewModel extends StateNotifier<MapState> {
       final User updatedUser = await _userUseCase.updateProfile(
         accessToken: globalViewModel.state.accessToken,
         profileId: globalViewModel.state.user.profileId,
-        favoriteCafeIdList: newCafeList.map((e) => e.id).toList()
+        favoriteCafeIdList: newCafeList.map((e) => e.id).toList(),
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.setUser(updatedUser);
       if (updatedUser.favoriteCafes.where((e) => e.id == cafe.id).isNotEmpty) {
@@ -193,7 +194,7 @@ class MapViewModel extends StateNotifier<MapState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -215,7 +216,7 @@ class MapViewModel extends StateNotifier<MapState> {
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
 

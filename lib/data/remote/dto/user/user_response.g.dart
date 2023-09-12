@@ -170,6 +170,7 @@ KakaoLoginCallbackResponse _$KakaoLoginCallbackResponseFromJson(
     KakaoLoginCallbackResponse(
       access_token: json['access_token'] as String,
       user_exists: json['user_exists'] as bool,
+      is_inactive: json['is_inactive'] as bool,
     );
 
 Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
@@ -177,6 +178,7 @@ Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
     <String, dynamic>{
       'access_token': instance.access_token,
       'user_exists': instance.user_exists,
+      'is_inactive': instance.is_inactive,
     };
 
 AppleLoginCallbackResponse _$AppleLoginCallbackResponseFromJson(
@@ -185,6 +187,7 @@ AppleLoginCallbackResponse _$AppleLoginCallbackResponseFromJson(
       id_token: json['id_token'] as String,
       code: json['code'] as String,
       user_exists: json['user_exists'] as bool,
+      is_inactive: json['is_inactive'] as bool,
     );
 
 Map<String, dynamic> _$AppleLoginCallbackResponseToJson(
@@ -193,6 +196,7 @@ Map<String, dynamic> _$AppleLoginCallbackResponseToJson(
       'id_token': instance.id_token,
       'code': instance.code,
       'user_exists': instance.user_exists,
+      'is_inactive': instance.is_inactive,
     };
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>

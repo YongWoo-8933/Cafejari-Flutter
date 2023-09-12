@@ -13,15 +13,30 @@ abstract interface class ShopUseCase {
   Future<Brands> getBrands();
   Future<Coupons> getCoupons();
   Future<Items> getItems();
-  Future<Brandcons> getMyBrandcons({required String accessToken});
-  Future<UserCoupons> getMyUserCoupons({required String accessToken});
-  Future<Brandcon> buyBrandcon({required String accessToken, required int itemId});
+  Future<Brandcons> getMyBrandcons({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<UserCoupons> getMyUserCoupons({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<Brandcon> buyBrandcon({
+    required String accessToken,
+    required int itemId,
+    required Function(String) onAccessTokenRefresh
+  });
   Future<Brandcon> updateBrandconIsUsed({
     required String accessToken,
     required int brandconId,
-    required bool isUsed
+    required bool isUsed,
+    required Function(String) onAccessTokenRefresh
   });
-  Future<void> deleteBrandcon({required String accessToken, required int brandconId});
+  Future<void> deleteBrandcon({
+    required String accessToken,
+    required int brandconId,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 /// ShopUseCase 구현 부분
@@ -84,7 +99,10 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   }
 
   @override
-  Future<Brandcons> getMyBrandcons({required String accessToken}) async {
+  Future<Brandcons> getMyBrandcons({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     try {
       List<BrandconResponse> brandconResponseList = await shopRepository.fetchMyBrandcon(accessToken: accessToken);
       return brandconResponseList.map((brandconResponse) {
@@ -92,6 +110,7 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
       }).toList();
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         List<BrandconResponse> brandconResponseList = await shopRepository.fetchMyBrandcon(accessToken: newToken);
         return brandconResponseList.map((brandconResponse) {
@@ -101,6 +120,7 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
     } on RefreshTokenExpired {
+      print("여까지 오는지?");
       rethrow;
     } on ErrorWithMessage {
       rethrow;
@@ -108,7 +128,10 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   }
 
   @override
-  Future<UserCoupons> getMyUserCoupons({required String accessToken}) async {
+  Future<UserCoupons> getMyUserCoupons({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetMyUserCoupons();
     try {
       return await f(
@@ -117,6 +140,7 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return await f(
             shopRepository: shopRepository,
@@ -133,13 +157,18 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   }
 
   @override
-  Future<Brandcon> buyBrandcon({required String accessToken, required int itemId}) async {
+  Future<Brandcon> buyBrandcon({
+    required String accessToken,
+    required int itemId,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     try {
       return parseBrandconFromBrandconResponse(
         brandconResponse: await shopRepository.postBrandcon(accessToken: accessToken, itemId: itemId)
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return parseBrandconFromBrandconResponse(
           brandconResponse: await shopRepository.postBrandcon(accessToken: newToken, itemId: itemId)
@@ -158,7 +187,8 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   Future<Brandcon> updateBrandconIsUsed({
     required String accessToken,
     required int brandconId,
-    required bool isUsed
+    required bool isUsed,
+    required Function(String) onAccessTokenRefresh
   }) async {
     try {
       return parseBrandconFromBrandconResponse(
@@ -170,6 +200,7 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return parseBrandconFromBrandconResponse(
           brandconResponse: await shopRepository.updateBrandcon(
@@ -189,11 +220,16 @@ class ShopUseCaseImpl extends BaseUseCase implements ShopUseCase {
   }
 
   @override
-  Future<void> deleteBrandcon({required String accessToken, required int brandconId}) async {
+  Future<void> deleteBrandcon({
+    required String accessToken,
+    required int brandconId,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     try {
       await shopRepository.deleteBrandcon(accessToken: accessToken, brandconId: brandconId);
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         await shopRepository.deleteBrandcon(accessToken: newToken, brandconId: brandconId);
       } on AccessTokenExpired {
