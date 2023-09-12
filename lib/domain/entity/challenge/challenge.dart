@@ -21,6 +21,7 @@ class Challenge with _$Challenge {
     required final DateTime finishAt,
     required final bool available,
     required final List<int> challengerUserIds,
+    required final List<String> challengerProfileImages,
     required final ChallengeMilestones challengeMilestones,
   }) = _Challenge;
 
@@ -36,6 +37,7 @@ class Challenge with _$Challenge {
       finishAt: DateTime(2022),
       available: false,
       challengerUserIds: [],
+      challengerProfileImages: [],
       challengeMilestones: []);
 }
 

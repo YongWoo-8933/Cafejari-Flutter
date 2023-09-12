@@ -1,14 +1,10 @@
 import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
-import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_filter.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/location_dialog.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,20 +70,26 @@ class OnMap extends ConsumerWidget {
             const VerticalSpacer(20),
             AnimatedCrossFade(
               crossFadeState: mapState.isRefreshButtonVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-              firstChild: Padding(
-                padding: const EdgeInsets.only(bottom: 10, right: 10),
-                child: SizedBox(
-                  height: 36,
-                  child: FloatingActionButton.extended(
-                    elevation: 3,
-                    icon: const Icon(size: 18, CupertinoIcons.refresh),
-                    onPressed: () async {
-                      mapViewModel.closeBottomSheetPreview();
-                      await mapViewModel.refreshCafes();
-                    },
-                    label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
-                    backgroundColor: AppColor.white,
-                  ),
+              firstChild: SizedBox(
+                height: 42,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 36,
+                      child: FloatingActionButton.extended(
+                        elevation: 3,
+                        icon: const Icon(size: 18, CupertinoIcons.refresh),
+                        onPressed: () async {
+                          mapViewModel.closeBottomSheetPreview();
+                          await mapViewModel.refreshCafes();
+                        },
+                        label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
+                        backgroundColor: AppColor.white,
+                      ),
+                    ),
+                    const VerticalSpacer(6)
+                  ],
                 ),
               ),
               secondChild: const HorizontalSpacer(0.001),

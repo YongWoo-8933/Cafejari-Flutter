@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_row.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/point_card.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
@@ -314,6 +315,14 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             context: context
                           )
                         ),
+                        MyPageRow(
+                          text: "사용자 정보 이전",
+                          width: deviceSize.width - sidePadding * 2,
+                          onPress: () => globalViewModel.navigateToWebView(
+                            route: WebViewRoute.userMigration(),
+                            context: context
+                          )
+                        ),
                         const VerticalSpacer(80),
 
                         Visibility(
@@ -322,7 +331,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                                onTap: () => showDialog(
+                                    context: context,
+                                    builder: (_) => WithdrawalDialog()
+                                ),
                                 child: const Text("회원탈퇴", style: TextSize.textSize_grey_12),
                               ),
                               const HorizontalSpacer(30),

@@ -179,6 +179,22 @@ Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
       'user_exists': instance.user_exists,
     };
 
+AppleLoginCallbackResponse _$AppleLoginCallbackResponseFromJson(
+        Map<String, dynamic> json) =>
+    AppleLoginCallbackResponse(
+      id_token: json['id_token'] as String,
+      code: json['code'] as String,
+      user_exists: json['user_exists'] as bool,
+    );
+
+Map<String, dynamic> _$AppleLoginCallbackResponseToJson(
+        AppleLoginCallbackResponse instance) =>
+    <String, dynamic>{
+      'id_token': instance.id_token,
+      'code': instance.code,
+      'user_exists': instance.user_exists,
+    };
+
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       access: json['access'] as String,

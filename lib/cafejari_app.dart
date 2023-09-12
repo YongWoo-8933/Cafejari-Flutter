@@ -199,6 +199,10 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
             body: SafeArea(
               top: false,
               child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                bottomNavigationBar: const SafeArea(top: false, child: BottomNavBar()),
+                backgroundColor: AppColor.transparent,
+                extendBody: true,
                 body: IndexedStack(
                   index: globalState.currentPage.index,
                   children: const [
@@ -207,11 +211,7 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
                     ChallengeScreen(),
                     MyPageScreen()
                   ],
-                ),
-                resizeToAvoidBottomInset: false,
-                bottomNavigationBar: const BottomNavBar(),
-                backgroundColor: AppColor.transparent,
-                extendBody: true,
+                )
               ),
             ),
             // 카페 bottom sheet

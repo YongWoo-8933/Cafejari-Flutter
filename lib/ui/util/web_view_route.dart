@@ -15,6 +15,7 @@ sealed class WebViewRoute {
   factory WebViewRoute.privacyPolicy() => _PrivacyPolicy("개인정보 처리방침", Uri.parse("https://cafejari.co.kr/privacy_policy/"));
   factory WebViewRoute.tos() => _TOS("서비스 이용약관", Uri.parse("https://cafejari.co.kr/tos/"));
   factory WebViewRoute.inquiry() => _Inquiry("1:1문의", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
+  factory WebViewRoute.userMigration() => _UserMigration("사용자 정보 이전", Uri.parse("https://cafejari.notion.site/71335bdfd0f34ff3b8d96fef97ab9c82?pvs=4"));
 
 }
 
@@ -27,3 +28,4 @@ class _Blog extends WebViewRoute { _Blog(super.index, super.tag); }
 class _PrivacyPolicy extends WebViewRoute { _PrivacyPolicy(super.index, super.tag); }
 class _TOS extends WebViewRoute { _TOS(super.index, super.tag); }
 class _Inquiry extends WebViewRoute { _Inquiry(super.index, super.tag); }
+class _UserMigration extends WebViewRoute { _UserMigration(super.index, super.tag); }

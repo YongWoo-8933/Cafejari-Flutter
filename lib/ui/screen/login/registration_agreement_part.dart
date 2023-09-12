@@ -97,8 +97,8 @@ class AgreementPart extends ConsumerWidget {
                 if (loginState.kakaoAccessToken.isNotEmpty) {
                   ref.watch(_isRegistrationLoading.notifier).update((state) => true);
                   result = await loginViewModel.registerAsKakaoUser();
-                } else if (loginState.appleAccessToken.isNotEmpty) {
-                  // result = await loginViewModel.registerAsKakaoUser();
+                } else if (loginState.appleIdToken.isNotEmpty) {
+                  result = await loginViewModel.registerAsAppleUser();
                 }
                 ref.watch(_isRegistrationLoading.notifier).update((state) => false);
                 switch(result) {

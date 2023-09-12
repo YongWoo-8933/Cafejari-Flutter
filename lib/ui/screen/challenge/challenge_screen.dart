@@ -34,7 +34,6 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
     Future.delayed(Duration.zero, () async {
       final viewModel = ref.watch(challengeViewModelProvider.notifier);
       await viewModel.refreshChallenges();
-      await viewModel.setProfileImages();
     });
   }
 
@@ -46,7 +45,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('챌린지', style: TextSize.textSize_bold_16),
-        leading: null,
+        centerTitle: false,
         backgroundColor: AppColor.white,
         elevation: 0,
       ),
@@ -74,8 +73,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                       children: [
                         ChallengeBlock(
                           challenge: challenge,
-                          // smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
-                          smallProfileImageUrls: challengeState.profileImageUrls,
+                          smallProfileImageUrls: challenge.challengerProfileImages,
                           onPressed: () {
                             challengeViewModel.selectChallenge(challenge);
                             GoRouter.of(context).goNamed(ScreenRoute.challengeInfo);

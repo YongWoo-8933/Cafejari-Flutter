@@ -20,8 +20,6 @@ mixin _$ChallengeState {
   List<Challenge> get unavailableChallenges =>
       throw _privateConstructorUsedError;
   Challenge get selectedChallenge => throw _privateConstructorUsedError;
-  List<String> get profileImageUrls =>
-      throw _privateConstructorUsedError; // required final Challengers myChallengers,
   Challenger get selectedChallenger => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -39,7 +37,6 @@ abstract class $ChallengeStateCopyWith<$Res> {
       {List<Challenge> availableChallenges,
       List<Challenge> unavailableChallenges,
       Challenge selectedChallenge,
-      List<String> profileImageUrls,
       Challenger selectedChallenger});
 
   $ChallengeCopyWith<$Res> get selectedChallenge;
@@ -62,7 +59,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
     Object? availableChallenges = null,
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
-    Object? profileImageUrls = null,
     Object? selectedChallenger = null,
   }) {
     return _then(_value.copyWith(
@@ -78,10 +74,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
           ? _value.selectedChallenge
           : selectedChallenge // ignore: cast_nullable_to_non_nullable
               as Challenge,
-      profileImageUrls: null == profileImageUrls
-          ? _value.profileImageUrls
-          : profileImageUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       selectedChallenger: null == selectedChallenger
           ? _value.selectedChallenger
           : selectedChallenger // ignore: cast_nullable_to_non_nullable
@@ -118,7 +110,6 @@ abstract class _$$_ChallengeStateCopyWith<$Res>
       {List<Challenge> availableChallenges,
       List<Challenge> unavailableChallenges,
       Challenge selectedChallenge,
-      List<String> profileImageUrls,
       Challenger selectedChallenger});
 
   @override
@@ -141,7 +132,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
     Object? availableChallenges = null,
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
-    Object? profileImageUrls = null,
     Object? selectedChallenger = null,
   }) {
     return _then(_$_ChallengeState(
@@ -157,10 +147,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
           ? _value.selectedChallenge
           : selectedChallenge // ignore: cast_nullable_to_non_nullable
               as Challenge,
-      profileImageUrls: null == profileImageUrls
-          ? _value._profileImageUrls
-          : profileImageUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       selectedChallenger: null == selectedChallenger
           ? _value.selectedChallenger
           : selectedChallenger // ignore: cast_nullable_to_non_nullable
@@ -176,11 +162,9 @@ class _$_ChallengeState implements _ChallengeState {
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
       required this.selectedChallenge,
-      required final List<String> profileImageUrls,
       required this.selectedChallenger})
       : _availableChallenges = availableChallenges,
-        _unavailableChallenges = unavailableChallenges,
-        _profileImageUrls = profileImageUrls;
+        _unavailableChallenges = unavailableChallenges;
 
   final List<Challenge> _availableChallenges;
   @override
@@ -202,22 +186,12 @@ class _$_ChallengeState implements _ChallengeState {
 
   @override
   final Challenge selectedChallenge;
-  final List<String> _profileImageUrls;
-  @override
-  List<String> get profileImageUrls {
-    if (_profileImageUrls is EqualUnmodifiableListView)
-      return _profileImageUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_profileImageUrls);
-  }
-
-// required final Challengers myChallengers,
   @override
   final Challenger selectedChallenger;
 
   @override
   String toString() {
-    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge, profileImageUrls: $profileImageUrls, selectedChallenger: $selectedChallenger)';
+    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge, selectedChallenger: $selectedChallenger)';
   }
 
   @override
@@ -231,8 +205,6 @@ class _$_ChallengeState implements _ChallengeState {
                 .equals(other._unavailableChallenges, _unavailableChallenges) &&
             (identical(other.selectedChallenge, selectedChallenge) ||
                 other.selectedChallenge == selectedChallenge) &&
-            const DeepCollectionEquality()
-                .equals(other._profileImageUrls, _profileImageUrls) &&
             (identical(other.selectedChallenger, selectedChallenger) ||
                 other.selectedChallenger == selectedChallenger));
   }
@@ -243,7 +215,6 @@ class _$_ChallengeState implements _ChallengeState {
       const DeepCollectionEquality().hash(_availableChallenges),
       const DeepCollectionEquality().hash(_unavailableChallenges),
       selectedChallenge,
-      const DeepCollectionEquality().hash(_profileImageUrls),
       selectedChallenger);
 
   @JsonKey(ignore: true)
@@ -258,7 +229,6 @@ abstract class _ChallengeState implements ChallengeState {
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
       required final Challenge selectedChallenge,
-      required final List<String> profileImageUrls,
       required final Challenger selectedChallenger}) = _$_ChallengeState;
 
   @override
@@ -268,8 +238,6 @@ abstract class _ChallengeState implements ChallengeState {
   @override
   Challenge get selectedChallenge;
   @override
-  List<String> get profileImageUrls;
-  @override // required final Challengers myChallengers,
   Challenger get selectedChallenger;
   @override
   @JsonKey(ignore: true)

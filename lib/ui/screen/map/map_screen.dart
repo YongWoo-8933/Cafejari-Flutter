@@ -1,11 +1,9 @@
 
 import 'dart:async';
 import 'package:cafejari_flutter/core/extension/null.dart';
-import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
 import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +56,7 @@ class MapScreenState extends ConsumerState<MapScreen> {
 
     return Padding(
       padding: EdgeInsets.only(bottom: bottomNavBarHeight - bottomNavBarCornerRadius),
-      child: Stack(
+      child: const Stack(
         children: [
           _NaverMap(),
           OnMap(),

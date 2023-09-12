@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
@@ -35,7 +34,31 @@ class LoginViewModel extends StateNotifier<LoginState> {
         return true;
       } else {
         // 가입 유저
-        state = state.copyWith(kakaoAccessToken: loginRes.accessToken, appleAccessToken: "");
+        state = state.copyWith(kakaoAccessToken: loginRes.accessToken, appleIdToken: "", appleServerCode: "");
+        return false;
+      }
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      return null;
+    }
+  }
+
+  Future<bool?> appleLogin({required String idToken, required String code}) async {
+    try {
+      final loginRes = await _userUseCase.appleLogin(idToken: idToken, code: code);
+      if (loginRes.isUserExist) {
+        // 기존 유저
+        final loginFinishRes =
+            await _userUseCase.appleLoginFinish(idToken: idToken, code: code);
+        globalViewModel.init(
+          accessToken: loginFinishRes.accessToken,
+          refreshToken: loginFinishRes.refreshToken,
+          user: loginFinishRes.user
+        );
+        return true;
+      } else {
+        // 가입 유저
+        state = state.copyWith(kakaoAccessToken: "", appleIdToken: idToken, appleServerCode: code);
         return false;
       }
     } on ErrorWithMessage catch (e) {
@@ -48,6 +71,31 @@ class LoginViewModel extends StateNotifier<LoginState> {
     try {
       final ({String accessToken, String refreshToken, User user}) loginRes =
           await _userUseCase.kakaoLoginFinish(accessToken: state.kakaoAccessToken);
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      final User makeNewProfileRes = await _userUseCase.makeNewProfile(
+        accessToken: loginRes.accessToken,
+        fcmToken: fcmToken ?? "",
+        nickname: state.nicknameController.text,
+        userId: globalViewModel.state.user.userId,
+        profileImageId: state.selectedProfileImage.profileImageId,
+        marketingPushEnabled: state.isMarketingAgreed
+      );
+      globalViewModel.init(
+        accessToken: loginRes.accessToken,
+        refreshToken: loginRes.refreshToken,
+        user: makeNewProfileRes
+      );
+      return true;
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      return false;
+    }
+  }
+
+  Future<bool> registerAsAppleUser() async {
+    try {
+      final ({String accessToken, String refreshToken, User user}) loginRes =
+          await _userUseCase.appleLoginFinish(idToken: state.appleIdToken, code: state.appleServerCode);
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       final User makeNewProfileRes = await _userUseCase.makeNewProfile(
         accessToken: loginRes.accessToken,

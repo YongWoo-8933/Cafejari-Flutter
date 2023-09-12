@@ -10,14 +10,16 @@ abstract class UserRepository {
   Future<bool> getIsInstalledFirstTime();
   putIsInstalledFirstTime(bool isInstalled);
   // GET
-  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
-  Future<LoginResponse> kakaoLoginFinish({required String accessToken});
   Future<List<GradeResponse>> fetchGrade();
   Future<NicknameResponse> validateNickname({required String nickname});
   Future<NicknameResponse> autoGenerateNickname();
   Future<UserResponse> fetchUser({required String accessToken});
   Future<List<ProfileImageResponse>> fetchProfileImage();
   // POST
+  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
+  Future<LoginResponse> kakaoLoginFinish({required String accessToken});
+  Future<AppleLoginCallbackResponse> appleLogin({required String idToken, required String code});
+  Future<LoginResponse> appleLoginFinish({required String idToken, required String code});
   Future<UserResponse> makeNewProfile({
     required String accessToken,
     required String fcmToken,
@@ -67,36 +69,6 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   // GET
-  @override
-  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken}) async {
-    try {
-      dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "kakao/login/callback/",
-          body: {"access_token": accessToken}
-      );
-      return KakaoLoginCallbackResponse.fromJson(response);
-    } on ErrorWithMessage {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<LoginResponse> kakaoLoginFinish({required String accessToken}) async {
-    try {
-      dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "kakao/login/finish/",
-          body: {"access_token": accessToken}
-      );
-      return LoginResponse.fromJson(response);
-    } on ErrorWithMessage {
-      rethrow;
-    }
-  }
-
   @override
   Future<List<GradeResponse>> fetchGrade() async {
     try {
@@ -172,6 +144,66 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   // POST
+  @override
+  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "kakao/login/callback/",
+          body: {"access_token": accessToken}
+      );
+      return KakaoLoginCallbackResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LoginResponse> kakaoLoginFinish({required String accessToken}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "kakao/login/finish/",
+          body: {"access_token": accessToken}
+      );
+      return LoginResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AppleLoginCallbackResponse> appleLogin({required String idToken, required String code}) async {
+    try {
+      dynamic response = await apiService.request(
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "apple/login/callback/",
+        body: {"id_token": idToken, "code": code}
+      );
+      return AppleLoginCallbackResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LoginResponse> appleLoginFinish({required String idToken, required String code}) async {
+    try {
+      dynamic response = await apiService.request(
+          method: HttpMethod.post,
+          appLabel: "user",
+          endpoint: "apple/login/finish/",
+          body: {"id_token": idToken, "code": code}
+      );
+      return LoginResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
   @override
   Future<UserResponse> makeNewProfile({
     required String accessToken,

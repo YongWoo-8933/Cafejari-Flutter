@@ -22,6 +22,8 @@ class GetPushes {
       }).toList();
       resList.sort((a, b) => b.pushedAt.compareTo(a.pushedAt));
       return resList;
+    } on AccessTokenExpired {
+      rethrow;
     } on ErrorWithMessage {
       rethrow;
     }

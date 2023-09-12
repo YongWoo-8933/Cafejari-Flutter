@@ -134,7 +134,7 @@ class SearchPage extends ConsumerWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 35),
+                padding: const EdgeInsets.only(bottom: 60),
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(

@@ -12,6 +12,7 @@ class LoginButton extends StatelessWidget {
   final double? buttonHeight;
   final Color textColor;
   final Color backgroundColor;
+  final Color loadingColor;
   final VoidCallback? onPressed;
   final String imagePath;
   final String text;
@@ -23,6 +24,7 @@ class LoginButton extends StatelessWidget {
     required this.buttonHeight,
     required this.textColor,
     required this.backgroundColor,
+    required this.loadingColor,
     required this.text,
     required this.imagePath,
     required this.isLoading,
@@ -51,7 +53,7 @@ class LoginButton extends StatelessWidget {
               opacity: isLoading ? 1.0 : 0.0,
               duration: AppDuration.animationDefault,
               child: Center(
-                child: LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20)
+                child: LoadingAnimationWidget.hexagonDots(color: loadingColor, size: 20)
               ),
             ),
             AnimatedOpacity(

@@ -61,9 +61,9 @@ class ShareButton extends ConsumerWidget {
             try {
               Uri uri = await ShareClient.instance.shareDefault(template: template);
               await ShareClient.instance.launchKakaoTalk(uri);
-            } catch (error) {
+            } catch (_) {
               mapViewModel.globalViewModel.showSnackBar(
-                content: error.toString(), type: SnackBarType.error
+                content: "취소", type: SnackBarType.error
               );
             }
           } else {
@@ -72,7 +72,7 @@ class ShareButton extends ConsumerWidget {
               await launchBrowserTab(shareUrl, popupOpen: true);
             } catch (error) {
               mapViewModel.globalViewModel.showSnackBar(
-                content: error.toString(), type: SnackBarType.error
+                  content: "취소됨", type: SnackBarType.error
               );
             }
           }

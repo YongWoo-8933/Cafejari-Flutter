@@ -27,6 +27,8 @@ mixin _$Challenge {
   DateTime get finishAt => throw _privateConstructorUsedError;
   bool get available => throw _privateConstructorUsedError;
   List<int> get challengerUserIds => throw _privateConstructorUsedError;
+  List<String> get challengerProfileImages =>
+      throw _privateConstructorUsedError;
   List<ChallengeMilestone> get challengeMilestones =>
       throw _privateConstructorUsedError;
 
@@ -52,6 +54,7 @@ abstract class $ChallengeCopyWith<$Res> {
       DateTime finishAt,
       bool available,
       List<int> challengerUserIds,
+      List<String> challengerProfileImages,
       List<ChallengeMilestone> challengeMilestones});
 }
 
@@ -79,6 +82,7 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
     Object? finishAt = null,
     Object? available = null,
     Object? challengerUserIds = null,
+    Object? challengerProfileImages = null,
     Object? challengeMilestones = null,
   }) {
     return _then(_value.copyWith(
@@ -126,6 +130,10 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
           ? _value.challengerUserIds
           : challengerUserIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      challengerProfileImages: null == challengerProfileImages
+          ? _value.challengerProfileImages
+          : challengerProfileImages // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       challengeMilestones: null == challengeMilestones
           ? _value.challengeMilestones
           : challengeMilestones // ignore: cast_nullable_to_non_nullable
@@ -153,6 +161,7 @@ abstract class _$$_ChallengeCopyWith<$Res> implements $ChallengeCopyWith<$Res> {
       DateTime finishAt,
       bool available,
       List<int> challengerUserIds,
+      List<String> challengerProfileImages,
       List<ChallengeMilestone> challengeMilestones});
 }
 
@@ -178,6 +187,7 @@ class __$$_ChallengeCopyWithImpl<$Res>
     Object? finishAt = null,
     Object? available = null,
     Object? challengerUserIds = null,
+    Object? challengerProfileImages = null,
     Object? challengeMilestones = null,
   }) {
     return _then(_$_Challenge(
@@ -225,6 +235,10 @@ class __$$_ChallengeCopyWithImpl<$Res>
           ? _value._challengerUserIds
           : challengerUserIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      challengerProfileImages: null == challengerProfileImages
+          ? _value._challengerProfileImages
+          : challengerProfileImages // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       challengeMilestones: null == challengeMilestones
           ? _value._challengeMilestones
           : challengeMilestones // ignore: cast_nullable_to_non_nullable
@@ -248,8 +262,10 @@ class _$_Challenge implements _Challenge {
       required this.finishAt,
       required this.available,
       required final List<int> challengerUserIds,
+      required final List<String> challengerProfileImages,
       required final List<ChallengeMilestone> challengeMilestones})
       : _challengerUserIds = challengerUserIds,
+        _challengerProfileImages = challengerProfileImages,
         _challengeMilestones = challengeMilestones;
 
   @override
@@ -281,6 +297,15 @@ class _$_Challenge implements _Challenge {
     return EqualUnmodifiableListView(_challengerUserIds);
   }
 
+  final List<String> _challengerProfileImages;
+  @override
+  List<String> get challengerProfileImages {
+    if (_challengerProfileImages is EqualUnmodifiableListView)
+      return _challengerProfileImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_challengerProfileImages);
+  }
+
   final List<ChallengeMilestone> _challengeMilestones;
   @override
   List<ChallengeMilestone> get challengeMilestones {
@@ -292,7 +317,7 @@ class _$_Challenge implements _Challenge {
 
   @override
   String toString() {
-    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengeMilestones: $challengeMilestones)';
+    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengerProfileImages: $challengerProfileImages, challengeMilestones: $challengeMilestones)';
   }
 
   @override
@@ -318,6 +343,8 @@ class _$_Challenge implements _Challenge {
                 other.available == available) &&
             const DeepCollectionEquality()
                 .equals(other._challengerUserIds, _challengerUserIds) &&
+            const DeepCollectionEquality().equals(
+                other._challengerProfileImages, _challengerProfileImages) &&
             const DeepCollectionEquality()
                 .equals(other._challengeMilestones, _challengeMilestones));
   }
@@ -336,6 +363,7 @@ class _$_Challenge implements _Challenge {
       finishAt,
       available,
       const DeepCollectionEquality().hash(_challengerUserIds),
+      const DeepCollectionEquality().hash(_challengerProfileImages),
       const DeepCollectionEquality().hash(_challengeMilestones));
 
   @JsonKey(ignore: true)
@@ -358,6 +386,7 @@ abstract class _Challenge implements Challenge {
           required final DateTime finishAt,
           required final bool available,
           required final List<int> challengerUserIds,
+          required final List<String> challengerProfileImages,
           required final List<ChallengeMilestone> challengeMilestones}) =
       _$_Challenge;
 
@@ -383,6 +412,8 @@ abstract class _Challenge implements Challenge {
   bool get available;
   @override
   List<int> get challengerUserIds;
+  @override
+  List<String> get challengerProfileImages;
   @override
   List<ChallengeMilestone> get challengeMilestones;
   @override

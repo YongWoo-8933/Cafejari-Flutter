@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +60,8 @@ class ChallengeSlider extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 36),
           decoration: BoxDecoration(
             color: AppColor.grey_0,
-            borderRadius: BorderRadius.circular(10)
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: AppColor.grey_200)
           ),
           child: Container(
             width: (deviceWidth - 72) * challenger.progressRate,

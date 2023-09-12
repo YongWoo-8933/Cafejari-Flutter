@@ -142,7 +142,12 @@ final shopUseCaseProvider = Provider<ShopUseCase>((ref) {
 final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   ChallengeRepository challengeRepository = ref.watch(challengeRepositoryProvider);
-  return ChallengeUseCaseImpl(tokenRepository: tokenRepository, challengeRepository: challengeRepository);
+  UserRepository userRepository = ref.watch(userRepositoryProvider);
+  return ChallengeUseCaseImpl(
+    tokenRepository: tokenRepository,
+    challengeRepository: challengeRepository,
+    userRepository: userRepository
+  );
 });
 
 
@@ -203,8 +208,7 @@ final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>
 final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, ChallengeState>((ref) {
   final viewModel = ref.watch(globalViewModelProvider.notifier);
   final ChallengeUseCase challengeUseCase = ref.watch(challengeUseCaseProvider);
-  final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
-  return ChallengeViewModel(challengeUseCase: challengeUseCase, userUseCase: userUseCase, globalViewModel: viewModel);
+  return ChallengeViewModel(challengeUseCase: challengeUseCase, globalViewModel: viewModel);
 });
 
 final requestViewModelProvider = StateNotifierProvider<RequestViewModel, RequestState>((ref) {

@@ -5,11 +5,12 @@ import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/login/component/login_button.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/util/web_view_route.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -43,6 +44,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final LoginViewModel loginViewModel = ref.watch(loginViewModelProvider.notifier);
+    final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
 
     return DefaultTextStyle(
@@ -98,6 +100,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 buttonHeight: 48,
                 textColor: AppColor.black,
                 backgroundColor: AppColor.kakaoYellow,
+                loadingColor: AppColor.black,
                 text: "카카오 계정으로 시작",
                 imagePath: 'asset/image/kakao_icon.png',
                 isLoading: ref.watch(_kakaoLoginLoadingProvider),
@@ -132,17 +135,31 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       buttonHeight: 48,
                       textColor: AppColor.white,
                       backgroundColor: AppColor.black,
+                      loadingColor: AppColor.white,
                       text: "Apple 계정으로 시작",
                       imagePath: 'asset/image/apple_icon.png',
                       isLoading: ref.watch(_appleLoginLoadingProvider),
                       onPressed: () async {
-                        final credential = await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            AppleIDAuthorizationScopes.fullName,
-                          ],
-                        );
-                        print(credential);
+                        if(!ref.watch(_appleLoginLoadingProvider)) {
+                          ref.watch(_appleLoginLoadingProvider.notifier).update((state) => true);
+                          final AuthorizationCredentialAppleID credential = await SignInWithApple.getAppleIDCredential(
+                            scopes: [
+                              AppleIDAuthorizationScopes.email,
+                              AppleIDAuthorizationScopes.fullName,
+                            ],
+                          );
+                          final bool? isUserExist = await loginViewModel.appleLogin(idToken: credential.identityToken ?? "", code: credential.authorizationCode);
+                          ref.watch(_appleLoginLoadingProvider.notifier).update((state) => false);
+                          switch(isUserExist) {
+                            case true:
+                              if (context.mounted) GoRouter.of(context).pop();
+                              loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
+                            case false:
+                              if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
+                            default:
+                              loginViewModel.globalViewModel.showSnackBar(content: "로그인 실패, 잠시 후 다시 시도해주세요", type: SnackBarType.error);
+                          }
+                        }
                       },
                     ),
                   ],
@@ -155,7 +172,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 child: FloatingActionButton(
                     foregroundColor: AppColor.black,
                     backgroundColor: AppColor.transparentGrey_300,
-                    onPressed: () => {},
+                    onPressed: () => globalViewModel.navigateToWebView(
+                        route: WebViewRoute.userMigration(), context: context),
                     elevation: 1,
                     focusElevation: 0,
                     hoverElevation: 0,
@@ -166,13 +184,13 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                     child: const Padding(
                       padding: AppPadding.padding_horizon_20,
                       child: Text(
-                          "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: AppColor.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12
-                          )
+                        "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12
+                        )
                       ),
                     )
                 ),

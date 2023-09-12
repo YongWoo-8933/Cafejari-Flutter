@@ -100,7 +100,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                             if (index != globalState.user.favoriteCafes.length) {
                               final Cafe cafe = globalState.user.favoriteCafes[index];
                               return Padding(
-                                padding: const EdgeInsets.only(right: 20),
+                                padding: const EdgeInsets.only(right: 10),
                                 child: BookMarkedCard(
                                   cafe: cafe,
                                   width: 160,

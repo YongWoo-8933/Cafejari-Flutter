@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+final _isLoading = StateProvider<bool>((ref) => false);
 
 class ChallengeInfoScreen extends ConsumerStatefulWidget {
   const ChallengeInfoScreen({super.key});
@@ -38,7 +39,7 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
     return Scaffold(
       appBar: BackButtonAppBar(
         backGroundColor: AppColor.white,
-        backButtonText: "챌린지",
+        backButtonText: "챌린지 상세",
         onBack: GoRouter.of(context).pop,
       ),
       backgroundColor: AppColor.white,
@@ -51,13 +52,15 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
           buttonWidth: deviceSize.width - 60,
           buttonHeight: 48,
           title: globalState.isLoggedIn ? (isParticipated ? "진행상황" : "참여하기") : "로그인 후 참여가능",
+          isLoading: ref.watch(_isLoading),
           onPressed: globalState.isLoggedIn ? () {
             if (isParticipated) {
               GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
               challengeViewModel.setChallenger();
             } else {
-              GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
-              challengeViewModel.setDebugChallenger();
+              ref.watch(_isLoading.notifier).update((state) => true);
+              challengeViewModel.participate(challenge: challengeState.selectedChallenge, context: context);
+              ref.watch(_isLoading.notifier).update((state) => false);
             }
           } : null,
         ),

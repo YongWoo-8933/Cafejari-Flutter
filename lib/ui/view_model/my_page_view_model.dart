@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +13,7 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
   final GlobalViewModel globalViewModel;
 
   MyPageViewModel({required UserUseCase userUseCase, required this.globalViewModel})
-      :_userUseCase = userUseCase,
-        super(MyPageState.empty());
+      :_userUseCase = userUseCase, super(MyPageState.empty());
 
   getDefaultProfileImages() async {
     try {
@@ -36,5 +36,9 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
     } on RefreshTokenExpired {
       if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
+  }
+
+  withdraw({required WithdrawalReason reason}) async {
+
   }
 }

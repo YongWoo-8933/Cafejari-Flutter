@@ -121,11 +121,16 @@ class ItemGrid extends ConsumerWidget {
                                 )
                               ),
                               const VerticalSpacer(10),
-                              SizedBox(
+                              Container(
                                 width: dialogWidth,
                                 height: 160,
+                                alignment: Alignment.center,
                                 child: ref.watch(_isBuyLoading) ?
-                                  const CircularProgressIndicator() :
+                                  const SizedBox(
+                                    width: 32,
+                                    height: 32,
+                                    child: CircularProgressIndicator()
+                                  ) :
                                   SingleChildScrollView(
                                     child: Text(item.description)
                                   ),

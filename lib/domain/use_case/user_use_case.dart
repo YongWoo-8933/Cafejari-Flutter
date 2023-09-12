@@ -12,6 +12,8 @@ abstract class UserUseCase {
   setIsInstalledFirstTime(bool isInstalled);
   Future<({bool isUserExist, String accessToken})> kakaoLogin({required String accessToken});
   Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken});
+  Future<({bool isUserExist, String idToken, String code})> appleLogin({required String idToken, required String code});
+  Future<({String accessToken, String refreshToken, User user})> appleLoginFinish({required String idToken, required String code});
   Future<User> getUser({required String accessToken});
   Future<Grades> getGrades();
   Future<String> validateNickname({required String nickname});
@@ -69,6 +71,26 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken}) async {
     try{
       LoginResponse response = await userRepository.kakaoLoginFinish(accessToken: accessToken);
+      return (accessToken: response.access, refreshToken: response.refresh, user: parseUserFromUserResponse(response.user));
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<({String idToken, String code, bool isUserExist})> appleLogin({required String idToken, required String code}) async {
+    try {
+      AppleLoginCallbackResponse response = await userRepository.appleLogin(idToken: idToken, code: code);
+      return (idToken: response.id_token, code: response.code, isUserExist: response.user_exists);
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<({String accessToken, String refreshToken, User user})> appleLoginFinish({required String idToken, required String code}) async {
+    try{
+      LoginResponse response = await userRepository.appleLoginFinish(idToken: idToken, code: code);
       return (accessToken: response.access, refreshToken: response.refresh, user: parseUserFromUserResponse(response.user));
     } on ErrorWithMessage{
       rethrow;

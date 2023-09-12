@@ -9,15 +9,11 @@ class ChallengeState with _$ChallengeState {
       {required final Challenges availableChallenges,
         required final Challenges unavailableChallenges,
         required final Challenge selectedChallenge,
-        required final List<String> profileImageUrls,
-        // required final Challengers myChallengers,
         required final Challenger selectedChallenger}) = _ChallengeState;
 
   factory ChallengeState.empty() => ChallengeState(
       availableChallenges: [],
       unavailableChallenges: [],
       selectedChallenge: Challenge.empty(),
-      profileImageUrls: [],
-      // myChallengers: [],
       selectedChallenger: Challenger.empty());
 }

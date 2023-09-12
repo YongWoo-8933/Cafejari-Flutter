@@ -161,6 +161,21 @@ class KakaoLoginCallbackResponse {
 }
 
 @JsonSerializable()
+class AppleLoginCallbackResponse {
+  final String id_token;
+  final String code;
+  final bool user_exists;
+
+  AppleLoginCallbackResponse({
+    required this.id_token,
+    required this.code,
+    required this.user_exists
+  });
+
+  factory AppleLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$AppleLoginCallbackResponseFromJson(json);
+}
+
+@JsonSerializable()
 class LoginResponse {
   final String access, refresh;
   final UserResponse user;

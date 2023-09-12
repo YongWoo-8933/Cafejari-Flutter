@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
@@ -282,31 +284,39 @@ CafeLog parseCafeLogFromCafeLogResponse({required CafeLogResponse cafeLogRespons
 }
 
 /// ChallengeResponse로부터 Challenge 객체를 뽑아내는 함수
-Challenge parseChallengeFromChallengeResponse({required ChallengeResponse challengeResponse}) {
+Challenge parseChallengeFromChallengeResponse({
+  required ChallengeResponse challengeResponse,
+  required List<String> challengerProfileImages
+}) {
   var totalPoint = 0;
   for(ChallengeMilestoneResponse milestoneResponse in challengeResponse.challenge_milestone) {
     totalPoint += milestoneResponse.point;
   }
+  List<String> newImages = List.from(challengerProfileImages);
+  newImages.shuffle(Random(DateTime.now().millisecond));
+  if (newImages.length > 2) newImages = newImages.sublist(0, 3);
   return Challenge(
-      id: challengeResponse.id,
-      participantLimit: challengeResponse.participant_limit,
-      goal: challengeResponse.goal,
-      totalPoint: totalPoint,
-      name: challengeResponse.name,
-      description: challengeResponse.description,
-      imageUrl: challengeResponse.image,
-      startAt: DateTime.parse(challengeResponse.start),
-      finishAt: DateTime.parse(challengeResponse.finish),
-      available: challengeResponse.available,
-      challengerUserIds: challengeResponse.challenger,
-      challengeMilestones: challengeResponse.challenge_milestone.map((e) {
-        return ChallengeMilestone(
-          id: e.id,
-          point: e.point,
-          count: e.count,
-          progressRate: double.parse(e.progress_rate),
-          description: e.description);
-      }).toList());
+    id: challengeResponse.id,
+    participantLimit: challengeResponse.participant_limit,
+    goal: challengeResponse.goal,
+    totalPoint: totalPoint,
+    name: challengeResponse.name,
+    description: challengeResponse.description,
+    imageUrl: challengeResponse.image,
+    startAt: DateTime.parse(challengeResponse.start),
+    finishAt: DateTime.parse(challengeResponse.finish),
+    available: challengeResponse.available,
+    challengerUserIds: challengeResponse.challenger,
+    challengerProfileImages: newImages,
+    challengeMilestones: challengeResponse.challenge_milestone.map((e) {
+      return ChallengeMilestone(
+        id: e.id,
+        point: e.point,
+        count: e.count,
+        progressRate: double.parse(e.progress_rate),
+        description: e.description);
+    }).toList()
+  );
 }
 
 /// BrandconResponse로부터 Brandcon 객체를 뽑아내는 함수
