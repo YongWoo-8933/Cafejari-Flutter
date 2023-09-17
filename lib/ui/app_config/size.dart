@@ -12,6 +12,10 @@ class TextSize {
   static const textSize_20 = TextStyle(
     fontSize: 20
   );
+  static const textSize_bold_18 = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold
+  );
   static const textSize_bold_20 = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold

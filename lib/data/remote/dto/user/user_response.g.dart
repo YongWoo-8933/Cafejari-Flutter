@@ -58,6 +58,10 @@ ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
       favorite_cafe: (json['favorite_cafe'] as List<dynamic>)
           .map((e) => CafeResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
+      cati_openness: json['cati_openness'] as int,
+      cati_coffee: json['cati_coffee'] as int,
+      cati_workspace: json['cati_workspace'] as int,
+      cati_acidity: json['cati_acidity'] as int,
     );
 
 Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
@@ -76,6 +80,10 @@ Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
       'grade': instance.grade,
       'profile_image': instance.profile_image,
       'favorite_cafe': instance.favorite_cafe,
+      'cati_openness': instance.cati_openness,
+      'cati_coffee': instance.cati_coffee,
+      'cati_workspace': instance.cati_workspace,
+      'cati_acidity': instance.cati_acidity,
     };
 
 GradeResponse _$GradeResponseFromJson(Map<String, dynamic> json) =>

@@ -35,12 +35,13 @@ class ActionButtonPrimary extends StatelessWidget {
             borderRadius: BorderRadius.circular(buttonHeight ?? 0 / 2),
           ),
         ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: AnimatedCrossFade(
-            duration: AppDuration.animationDefault,
-            firstChild: Row(
+        child: AnimatedCrossFade(
+          duration: AppDuration.animationDefault,
+          firstChild: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 if (icon.isNotNull) Icon(icon, color: AppColor.white),
                 Text(
@@ -49,9 +50,9 @@ class ActionButtonPrimary extends StatelessWidget {
                 ),
               ],
             ),
-            secondChild: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20),
-            crossFadeState: isLoading == true ? CrossFadeState.showSecond : CrossFadeState.showFirst
           ),
+          secondChild: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 16),
+          crossFadeState: isLoading == true ? CrossFadeState.showSecond : CrossFadeState.showFirst
         ),
       ),
     );

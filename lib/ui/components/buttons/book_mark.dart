@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +33,7 @@ class BookmarkButton extends ConsumerWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
+          HapticFeedback.lightImpact();
           if (globalState.isLoggedIn) {
             mapViewModel.updateFavoriteCafeList(cafe: mapState.selectedCafe, context: context);
           } else {

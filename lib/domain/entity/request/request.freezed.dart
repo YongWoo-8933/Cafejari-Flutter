@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CafeAdditionRequest {
   int get id => throw _privateConstructorUsedError;
-  int get totalFloor => throw _privateConstructorUsedError;
-  int get firstFloor => throw _privateConstructorUsedError;
+  int get topFloor => throw _privateConstructorUsedError;
+  int get bottomFloor => throw _privateConstructorUsedError;
   String get cafeName => throw _privateConstructorUsedError;
   String get dongAddress => throw _privateConstructorUsedError;
   String get roadAddress => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $CafeAdditionRequestCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int totalFloor,
-      int firstFloor,
+      int topFloor,
+      int bottomFloor,
       String cafeName,
       String dongAddress,
       String roadAddress,
@@ -73,8 +73,8 @@ class _$CafeAdditionRequestCopyWithImpl<$Res, $Val extends CafeAdditionRequest>
   @override
   $Res call({
     Object? id = null,
-    Object? totalFloor = null,
-    Object? firstFloor = null,
+    Object? topFloor = null,
+    Object? bottomFloor = null,
     Object? cafeName = null,
     Object? dongAddress = null,
     Object? roadAddress = null,
@@ -91,13 +91,13 @@ class _$CafeAdditionRequestCopyWithImpl<$Res, $Val extends CafeAdditionRequest>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFloor: null == totalFloor
-          ? _value.totalFloor
-          : totalFloor // ignore: cast_nullable_to_non_nullable
+      topFloor: null == topFloor
+          ? _value.topFloor
+          : topFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      firstFloor: null == firstFloor
-          ? _value.firstFloor
-          : firstFloor // ignore: cast_nullable_to_non_nullable
+      bottomFloor: null == bottomFloor
+          ? _value.bottomFloor
+          : bottomFloor // ignore: cast_nullable_to_non_nullable
               as int,
       cafeName: null == cafeName
           ? _value.cafeName
@@ -165,8 +165,8 @@ abstract class _$$_CafeAdditionRequestCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int totalFloor,
-      int firstFloor,
+      int topFloor,
+      int bottomFloor,
       String cafeName,
       String dongAddress,
       String roadAddress,
@@ -194,8 +194,8 @@ class __$$_CafeAdditionRequestCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? totalFloor = null,
-    Object? firstFloor = null,
+    Object? topFloor = null,
+    Object? bottomFloor = null,
     Object? cafeName = null,
     Object? dongAddress = null,
     Object? roadAddress = null,
@@ -212,13 +212,13 @@ class __$$_CafeAdditionRequestCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFloor: null == totalFloor
-          ? _value.totalFloor
-          : totalFloor // ignore: cast_nullable_to_non_nullable
+      topFloor: null == topFloor
+          ? _value.topFloor
+          : topFloor // ignore: cast_nullable_to_non_nullable
               as int,
-      firstFloor: null == firstFloor
-          ? _value.firstFloor
-          : firstFloor // ignore: cast_nullable_to_non_nullable
+      bottomFloor: null == bottomFloor
+          ? _value.bottomFloor
+          : bottomFloor // ignore: cast_nullable_to_non_nullable
               as int,
       cafeName: null == cafeName
           ? _value.cafeName
@@ -269,8 +269,8 @@ class __$$_CafeAdditionRequestCopyWithImpl<$Res>
 class _$_CafeAdditionRequest implements _CafeAdditionRequest {
   _$_CafeAdditionRequest(
       {required this.id,
-      required this.totalFloor,
-      required this.firstFloor,
+      required this.topFloor,
+      required this.bottomFloor,
       required this.cafeName,
       required this.dongAddress,
       required this.roadAddress,
@@ -286,9 +286,9 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
   @override
   final int id;
   @override
-  final int totalFloor;
+  final int topFloor;
   @override
-  final int firstFloor;
+  final int bottomFloor;
   @override
   final String cafeName;
   @override
@@ -318,7 +318,7 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
 
   @override
   String toString() {
-    return 'CafeAdditionRequest(id: $id, totalFloor: $totalFloor, firstFloor: $firstFloor, cafeName: $cafeName, dongAddress: $dongAddress, roadAddress: $roadAddress, etc: $etc, rejectionReason: $rejectionReason, isApproved: $isApproved, requestedAt: $requestedAt, answeredAt: $answeredAt, wallSocketRates: $wallSocketRates, openingHour: $openingHour)';
+    return 'CafeAdditionRequest(id: $id, topFloor: $topFloor, bottomFloor: $bottomFloor, cafeName: $cafeName, dongAddress: $dongAddress, roadAddress: $roadAddress, etc: $etc, rejectionReason: $rejectionReason, isApproved: $isApproved, requestedAt: $requestedAt, answeredAt: $answeredAt, wallSocketRates: $wallSocketRates, openingHour: $openingHour)';
   }
 
   @override
@@ -327,10 +327,10 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
         (other.runtimeType == runtimeType &&
             other is _$_CafeAdditionRequest &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.totalFloor, totalFloor) ||
-                other.totalFloor == totalFloor) &&
-            (identical(other.firstFloor, firstFloor) ||
-                other.firstFloor == firstFloor) &&
+            (identical(other.topFloor, topFloor) ||
+                other.topFloor == topFloor) &&
+            (identical(other.bottomFloor, bottomFloor) ||
+                other.bottomFloor == bottomFloor) &&
             (identical(other.cafeName, cafeName) ||
                 other.cafeName == cafeName) &&
             (identical(other.dongAddress, dongAddress) ||
@@ -356,8 +356,8 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      totalFloor,
-      firstFloor,
+      topFloor,
+      bottomFloor,
       cafeName,
       dongAddress,
       roadAddress,
@@ -380,8 +380,8 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
 abstract class _CafeAdditionRequest implements CafeAdditionRequest {
   factory _CafeAdditionRequest(
       {required final int id,
-      required final int totalFloor,
-      required final int firstFloor,
+      required final int topFloor,
+      required final int bottomFloor,
       required final String cafeName,
       required final String dongAddress,
       required final String roadAddress,
@@ -396,9 +396,9 @@ abstract class _CafeAdditionRequest implements CafeAdditionRequest {
   @override
   int get id;
   @override
-  int get totalFloor;
+  int get topFloor;
   @override
-  int get firstFloor;
+  int get bottomFloor;
   @override
   String get cafeName;
   @override

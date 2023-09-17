@@ -21,6 +21,9 @@ CafeResponse _$CafeResponseFromJson(Map<String, dynamic> json) => CafeResponse(
       brand: json['brand'] == null
           ? null
           : BrandResponse.fromJson(json['brand'] as Map<String, dynamic>),
+      cati: json['cati'] == null
+          ? null
+          : CATIResponse.fromJson(json['cati'] as Map<String, dynamic>),
       cafe_floor: (json['cafe_floor'] as List<dynamic>)
           .map((e) =>
               CafeFloorCafeRepResponse.fromJson(e as Map<String, dynamic>))
@@ -44,6 +47,7 @@ Map<String, dynamic> _$CafeResponseToJson(CafeResponse instance) =>
       'is_closed': instance.is_closed,
       'opening_hour': instance.opening_hour,
       'brand': instance.brand,
+      'cati': instance.cati,
       'cafe_floor': instance.cafe_floor,
       'cafe_vip': instance.cafe_vip,
       'cafe_image': instance.cafe_image,
@@ -161,6 +165,21 @@ Map<String, dynamic> _$CafeImageResponseToJson(CafeImageResponse instance) =>
       'id': instance.id,
       'image': instance.image,
       'is_visible': instance.is_visible,
+    };
+
+CATIResponse _$CATIResponseFromJson(Map<String, dynamic> json) => CATIResponse(
+      openness: (json['openness'] as num).toDouble(),
+      coffee: (json['coffee'] as num).toDouble(),
+      workspace: (json['workspace'] as num).toDouble(),
+      acidity: (json['acidity'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$CATIResponseToJson(CATIResponse instance) =>
+    <String, dynamic>{
+      'openness': instance.openness,
+      'coffee': instance.coffee,
+      'workspace': instance.workspace,
+      'acidity': instance.acidity,
     };
 
 OpeningHourResponse _$OpeningHourResponseFromJson(Map<String, dynamic> json) =>

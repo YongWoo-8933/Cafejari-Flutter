@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,6 +32,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user
         );
+        await FirebaseAnalytics.instance.setUserId(id: loginFinishRes.user.userId.toString());
         return true;
       } else {
         // 가입 유저
@@ -55,6 +57,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user
         );
+        await FirebaseAnalytics.instance.setUserId(id: loginFinishRes.user.userId.toString());
         return true;
       } else {
         // 가입 유저
@@ -86,6 +89,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         refreshToken: loginRes.refreshToken,
         user: makeNewProfileRes
       );
+      await FirebaseAnalytics.instance.setUserId(id: makeNewProfileRes.userId.toString());
       return true;
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);

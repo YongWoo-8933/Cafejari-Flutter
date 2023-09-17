@@ -37,12 +37,14 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
   CafeRegistrationScreenState();
 
   @override
-  void dispose() {
-    super.dispose();
-    ref.watch(_isWallSocketPartExpandedProvider.notifier).update((state) => false);
-    ref.watch(_isOpeningHourPartExpanded.notifier).update((state) => false);
-    ref.watch(_isFreePartExpanded.notifier).update((state) => false);
-    ref.watch(requestViewModelProvider.notifier).clearViewModel();
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      ref.watch(_isWallSocketPartExpandedProvider.notifier).update((state) => false);
+      ref.watch(_isOpeningHourPartExpanded.notifier).update((state) => false);
+      ref.watch(_isFreePartExpanded.notifier).update((state) => false);
+      ref.watch(requestViewModelProvider.notifier).clearViewModel();
+    });
   }
 
   @override
@@ -129,7 +131,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                   buttonWidth: greyAreaWidth,
                   buttonHeight: 48,
                   title: "등록 요청",
-                  onPressed: () {},
+                  onPressed: () async => await requestViewModel.requestCafeRegistration(context: context),
                 ),
                 const VerticalSpacer(60),
               ],

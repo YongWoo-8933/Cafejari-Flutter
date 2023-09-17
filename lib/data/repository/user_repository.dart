@@ -28,7 +28,6 @@ abstract class UserRepository {
     required int profileImageId,
     required bool marketingPushEnabled
   });
-  Future<void> withdraw({required String accessToken, required String reason});
   // PUT
   Future<UserResponse> updateProfile({
     required String accessToken,
@@ -44,6 +43,10 @@ abstract class UserRepository {
     bool? occupancyPushEnabled,
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
+    int? openness,
+    int? coffee,
+    int? workspace,
+    int? acidity,
   });
   Future<void> logout({required String accessToken, required String refreshToken});
 }
@@ -236,23 +239,6 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> withdraw({required String accessToken, required String reason}) async {
-    try {
-      await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "request",
-          endpoint: "withdrawal/",
-          accessToken: accessToken,
-          body: {"reason": reason}
-      );
-    } on ErrorWithMessage {
-      rethrow;
-    } on TokenExpired {
-      throw AccessTokenExpired();
-    }
-  }
-
-  @override
   Future<UserResponse> updateProfile({
     required String accessToken,
     required int profileId,
@@ -267,6 +253,10 @@ class UserRepositoryImpl implements UserRepository {
     bool? occupancyPushEnabled,
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
+    int? openness,
+    int? coffee,
+    int? workspace,
+    int? acidity,
   }) async {
     Map<String, dynamic> requestBody = {};
     if (nickname.isNotNull) requestBody["nickname"] = nickname!;
@@ -280,6 +270,10 @@ class UserRepositoryImpl implements UserRepository {
     if (occupancyPushEnabled.isNotNull) requestBody["occupancy_push_enabled"] = occupancyPushEnabled!;
     if (logPushEnabled.isNotNull) requestBody["log_push_enabled"] = logPushEnabled!;
     if (favoriteCafeIdList.isNotNull) requestBody["favorite_cafe_id_list"] = favoriteCafeIdList!;
+    if (openness.isNotNull) requestBody["cati_openness"] = openness!;
+    if (coffee.isNotNull) requestBody["cati_coffee"] = coffee!;
+    if (workspace.isNotNull) requestBody["cati_workspace"] = workspace!;
+    if (acidity.isNotNull) requestBody["cati_acidity"] = acidity!;
     try {
       dynamic response = await apiService.request(
         method: HttpMethod.put,

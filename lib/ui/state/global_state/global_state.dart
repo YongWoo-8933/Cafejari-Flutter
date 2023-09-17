@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -11,6 +12,7 @@ part 'global_state.freezed.dart';
 @freezed
 class GlobalState with _$GlobalState {
   factory GlobalState({
+    required final Versions versions,
     required final bool isPermissionChecked,
     required final String accessToken,
     required final bool isLoggedIn,
@@ -29,6 +31,7 @@ class GlobalState with _$GlobalState {
   }) = _GlobalState;
 
   factory GlobalState.empty() => GlobalState(
+    versions: [],
     isPermissionChecked: false,
     accessToken: "",
     isLoggedIn: false,

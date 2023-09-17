@@ -5,7 +5,8 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
-import 'package:cafejari_flutter/ui/components/cati_dialog.dart';
+import 'package:cafejari_flutter/ui/components/cati_description_dialog.dart';
+import 'package:cafejari_flutter/ui/screen/my_cafe/component/my_cati_editor.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/cafe_recommendation_card.dart';
@@ -14,8 +15,8 @@ import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
-import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/my_cafe_view_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
   Widget build(BuildContext context) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-    final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+    final MyCafeViewModel myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final Size deviceSize = MediaQuery.of(context).size;
     final double bottomNavBarHeight = ref.watch(bottomNavBarHeightProvider);
@@ -119,7 +120,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                   padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
                                   child: GestureDetector(
                                     onTap: () async {
-                                      globalViewModel.updateCurrentPageTo(0);
+                                      myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
                                       final currentUserCameraPosition = NCameraPosition(
                                         target: NLatLng(
                                             globalState.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
@@ -207,10 +208,10 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                   const VerticalSpacer(10),
                   Row(
                     children: [
-                      const Text('내가 선호하는 CATI ', style: TextSize.textSize_bold_16),
+                      const Text('내가 선호하는 카페, CATI ', style: TextSize.textSize_bold_16),
                       const HorizontalSpacer(4),
                       QuestionButton(
-                        onPressed: () {}
+                        onPressed: () => showDialog(context: context, builder: (_) => const CATIDescriptionDialog())
                       )
                     ],
                   ),
@@ -218,13 +219,11 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: GestureDetector(
-                      onTap: () => showCATIDialog(context: context, type: CATIDialogType.my),
-                      child: const CATIBlocks(
-                        hasOpenness: true,
-                        isCoffeeFocused: false,
-                        isWorkFriendly: true,
-                        is4thBlockClicked: true
-                      ),
+                      onTap: () {
+                        myCafeViewModel.initSliderValue();
+                        showDialog(context: context, builder: (_) => const MyCATIEditor());
+                      },
+                      child: CATIBlocks(cati: globalState.user.myCATI),
                     ),
                   ),
                   const VerticalSpacer(20)

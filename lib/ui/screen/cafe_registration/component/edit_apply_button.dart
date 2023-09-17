@@ -1,8 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 
 
 class EditApplyButton extends StatelessWidget {

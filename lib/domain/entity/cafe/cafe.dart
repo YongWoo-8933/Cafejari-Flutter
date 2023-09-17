@@ -21,6 +21,7 @@ class Cafe with _$Cafe {
     required final String address,
     required final String? brandName,
     required final String? brandImageUrl,
+    required final CATI? cati,
     required final NLatLng latLng,
     required final CafeFloors cafeFloors,
     required final OpeningHour? openingHour,
@@ -39,6 +40,7 @@ class Cafe with _$Cafe {
       address: "",
       brandName: null,
       brandImageUrl: null,
+      cati: null,
       latLng: NLocation.sinchon().cameraPosition.target,
       cafeFloors: [],
       openingHour: null,
@@ -114,6 +116,22 @@ class OpeningHour with _$OpeningHour {
       fri: "",
       sat: "",
       sun: "");
+}
+
+/// CATI 모델
+@freezed
+class CATI with _$CATI {
+  factory CATI(
+      {required final int openness,
+        required final int coffee,
+        required final int workspace,
+        required final int acidity}) = _CATI;
+
+  factory CATI.empty() => CATI(
+      openness: 1,
+      coffee: -1,
+      workspace: 1,
+      acidity: -1);
 }
 
 typedef NaverSearchCafes = List<NaverSearchCafe>;

@@ -11,8 +11,8 @@ typedef CafeAdditionRequests = List<CafeAdditionRequest>;
 class CafeAdditionRequest with _$CafeAdditionRequest {
   factory CafeAdditionRequest({
     required final int id,
-    required final int totalFloor,
-    required final int firstFloor,
+    required final int topFloor,
+    required final int bottomFloor,
     required final String cafeName,
     required final String dongAddress,
     required final String roadAddress,
@@ -27,8 +27,8 @@ class CafeAdditionRequest with _$CafeAdditionRequest {
 
   factory CafeAdditionRequest.empty() => CafeAdditionRequest(
       id: 0,
-      totalFloor: 1,
-      firstFloor: 1,
+      topFloor: 1,
+      bottomFloor: 1,
       cafeName: "",
       dongAddress: "",
       roadAddress: "",

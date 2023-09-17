@@ -1,92 +1,29 @@
+import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
-import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/buttons/x_button.dart';
-import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
-import 'package:cafejari_flutter/ui/components/cati_description_dialog.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
-import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
+import 'package:cafejari_flutter/ui/view_model/my_cafe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-
-class BottomSheetCATI extends ConsumerWidget {
-  const BottomSheetCATI({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-
-    return  Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-      color: AppColor.background,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Text("CATI ", style: TextSize.textSize_bold_16),
-              const HorizontalSpacer(4),
-              QuestionButton(
-                onPressed: () => showDialog(context: context, builder: (_) => const CATIDescriptionDialog())
-              )
-            ],
-          ),
-          const VerticalSpacer(20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  if(globalState.isLoggedIn) {
-                    mapViewModel.initCATISliderValue();
-                    showDialog(context: context, builder: (_) => const CafeCATIEditor());
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) => SquareAlertDialog(
-                        text: "정확한 카페 정보를 위해 CATI평가는 로그인한 유저만 진행할 수 있어요. 로그인 페이지로 이동할까요?",
-                        negativeButtonText: "아니오",
-                        positiveButtonText: "예",
-                        onDismiss: () => Navigator.of(context).pop(),
-                        onNegativeButtonPress: () {},
-                        onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
-                      )
-                    );
-                  }
-                },
-                child: CATIBlocks(cati: mapState.selectedCafe.cati),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
 
 
 final _isLoading = StateProvider<bool>((ref) => false);
 
 
-class CafeCATIEditor extends ConsumerWidget {
-  const CafeCATIEditor({Key? key}) : super(key: key);
+class MyCATIEditor extends ConsumerWidget {
+  const MyCATIEditor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-    final MapState mapState = ref.watch(mapViewModelProvider);
+    final MyCafeViewModel myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
+    final MyCafeState myCafeState = ref.watch(myCafeViewModelProvider);
     const double sidePadding = 20;
     return Dialog(
       elevation: 0,
@@ -115,7 +52,7 @@ class CafeCATIEditor extends ConsumerWidget {
                 SizedBox(
                   width: sliderWidth,
                   child: const Text(
-                    "이 카페에 대해 알려주세요",
+                    "선호하는 카페의 스타일을 선택해보세요",
                     style: TextSize.textSize_bold_16,
                     textAlign: TextAlign.center,
                   ),
@@ -124,7 +61,7 @@ class CafeCATIEditor extends ConsumerWidget {
                 SizedBox(
                   width: sliderWidth,
                   child: const Text(
-                    "CATI를 설정해주시면, 다른 사람들이 이 카페에 대해 쉽게 알 수 있어요!",
+                    "내가 설정한 CATI에 부합하는 카페를 추천해드려요!",
                     style: TextStyle(
                       color: AppColor.grey_600,
                       fontSize: 12
@@ -134,9 +71,9 @@ class CafeCATIEditor extends ConsumerWidget {
                 ),
                 const VerticalSpacer(40),
                 CATISlider(
-                  value: mapState.catiOpennessSliderValue,
+                  value: myCafeState.catiOpennessSliderValue,
                   width: sliderWidth,
-                  onChange: (value) => mapViewModel.setCATIOpenness(value),
+                  onChange: (value) => myCafeViewModel.setCATIOpenness(value),
                   title: "공간의 개방감",
                   negativeValueText: "아늑함",
                   positiveValueText: "개방적임",
@@ -147,9 +84,9 @@ class CafeCATIEditor extends ConsumerWidget {
                 ),
                 const VerticalSpacer(10),
                 CATISlider(
-                  value: mapState.catiCoffeeSliderValue,
+                  value: myCafeState.catiCoffeeSliderValue,
                   width: sliderWidth,
-                  onChange: (value) => mapViewModel.setCATICoffee(value),
+                  onChange: (value) => myCafeViewModel.setCATICoffee(value),
                   title: "주력 음료",
                   negativeValueText: "음료",
                   positiveValueText: "커피",
@@ -160,9 +97,9 @@ class CafeCATIEditor extends ConsumerWidget {
                 ),
                 const VerticalSpacer(10),
                 CATISlider(
-                  value: mapState.catiWorkspaceSliderValue,
+                  value: myCafeState.catiWorkspaceSliderValue,
                   width: sliderWidth,
-                  onChange: (value) => mapViewModel.setCATIWorkspace(value),
+                  onChange: (value) => myCafeViewModel.setCATIWorkspace(value),
                   title: "공간의 분위기",
                   negativeValueText: "감성카페",
                   positiveValueText: "업무공간",
@@ -173,9 +110,9 @@ class CafeCATIEditor extends ConsumerWidget {
                 ),
                 const VerticalSpacer(10),
                 CATISlider(
-                  value: mapState.catiAciditySliderValue,
+                  value: myCafeState.catiAciditySliderValue,
                   width: sliderWidth,
-                  onChange: (value) => mapViewModel.setCATIAcidity(value),
+                  onChange: (value) => myCafeViewModel.setCATIAcidity(value),
                   title: "커피맛(산미의 정도)",
                   negativeValueText: "씁쓸한맛",
                   positiveValueText: "산미",
@@ -192,7 +129,7 @@ class CafeCATIEditor extends ConsumerWidget {
                   isLoading: ref.watch(_isLoading),
                   onPressed: () async {
                     ref.watch(_isLoading.notifier).update((ref) => true);
-                    await mapViewModel.voteCATI(context: context);
+                    await myCafeViewModel.updateMyCATI(context: context);
                     ref.watch(_isLoading.notifier).update((ref) => false);
                     if(context.mounted) Navigator.of(context).pop();
                   }
@@ -244,6 +181,7 @@ class CATISlider extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(title, style: TextSize.textSize_bold_14),
@@ -271,17 +209,17 @@ class CATISlider extends StatelessWidget {
               )
             ),
             child: SfSlider(
-              min: -2,
-              max: 2,
+              min: -3,
+              max: 3,
               value: value,
-              stepSize: 1.0,
-              interval: 1.0,
+              stepSize: 2.0,
+              interval: 2.0,
               showTicks: true,
               showLabels: true,
               labelFormatterCallback: (_, value) {
                 switch(int.parse(value)) {
-                  case -2: return negativeValueText;
-                  case 2: return positiveValueText;
+                  case -3: return negativeValueText;
+                  case 3: return positiveValueText;
                   default: return "";
                 }
               },
@@ -289,11 +227,10 @@ class CATISlider extends StatelessWidget {
               enableTooltip: true,
               tooltipTextFormatterCallback: (_, value) {
                 switch(int.parse(value)) {
-                  case -2: return tooltip1stText;
+                  case -3: return tooltip1stText;
                   case -1: return tooltip2ndText;
-                  case 0: return "보통/잘 모르겠음";
                   case 1: return tooltip3rdText;
-                  case 2: return tooltip4thText;
+                  case 3: return tooltip4thText;
                   default: return "";
                 }
               },
@@ -319,4 +256,3 @@ class CATISlider extends StatelessWidget {
     );
   }
 }
-

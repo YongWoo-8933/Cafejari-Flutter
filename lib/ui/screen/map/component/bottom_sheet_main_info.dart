@@ -7,11 +7,11 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,6 @@ class BottomSheetMainInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
     const double photoFrameHeight = 240;
@@ -176,7 +175,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                             buttonWidth: 208,
                             buttonHeight: 48,
                             title: "혼잡도 등록",
-                            onPressed: () => mapState.bottomSheetOccupancyController.open(),
+                            onPressed: () => showDialog(context: context, builder: (_) => const OccupancyUpdateDialog()),
                           ),
                           const HorizontalSpacer(10),
                           const ShareButton(),

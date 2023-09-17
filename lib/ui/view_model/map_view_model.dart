@@ -1,6 +1,4 @@
-
 import 'dart:math';
-
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -112,8 +110,6 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
-  clearSearchPredictions() => state = state.copyWith(searchPredictions: []);
-
   openBottomSheetPreview() {
     state = state.copyWith(isBottomSheetPreviewOpened: true, isBottomSheetPreviewExpanded: true);
   }
@@ -124,36 +120,6 @@ class MapViewModel extends StateNotifier<MapState> {
       state = state.copyWith(isBottomSheetPreviewOpened: false);
     });
   }
-
-  initMapController(NaverMapController mapController) {
-    state = state.copyWith(mapController: mapController);
-  }
-
-  setInitTempCameraPosition(NCameraPosition? cameraPosition) {
-    state = state.copyWith(initTempCameraPosition: cameraPosition);
-  }
-
-  setShareTempCameraPosition(NCameraPosition? cameraPosition) {
-    state = state.copyWith(shareTempCameraPosition: cameraPosition);
-  }
-
-  selectCafe(Cafe changedSelectedCafe){
-    state = state.copyWith(selectedCafe: changedSelectedCafe);
-  }
-
-  selectCafeFloor(CafeFloor changedSelectedCafeFloor){
-    state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
-  }
-
-  setCurrentCafeImagePage(int page) => state = state.copyWith(currentCafeImagePage: page);
-
-  setRefreshButtonVisible(bool visible) => state = state.copyWith(isRefreshButtonVisible: visible);
-
-  setBottomSheetFullContentVisible(bool visible) => state = state.copyWith(isBottomSheetFullContentVisible: visible);
-
-  setOccupancyBottomSheetDraggable(bool draggable) => state = state.copyWith(isOccupancyBottomSheetDraggable: draggable);
-
-  updateOccupancySliderValue(value) => state = state.copyWith(occupancySliderValue: value);
 
   openSearchPage() {
     state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
@@ -211,7 +177,6 @@ class MapViewModel extends StateNotifier<MapState> {
         accessToken: globalViewModel.state.accessToken,
         user: globalViewModel.state.user.copyWith(point: globalViewModel.state.user.point + updateResponse.point)
       );
-      state.bottomSheetOccupancyController.close();
       Future.delayed(Duration.zero, () => _showPointAnimation(context: context, point: updateResponse.point));
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
@@ -228,7 +193,6 @@ class MapViewModel extends StateNotifier<MapState> {
       );
       final Cafe updatedCafe = await _cafeUseCase.getCafe(cafeId: updateResponse.cafeFloor.cafe.id);
       _replaceCafe(updatedCafe);
-      state.bottomSheetOccupancyController.close();
       globalViewModel.showSnackBar(content: "등록 완료", type: SnackBarType.complete);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
@@ -251,6 +215,65 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
+  initCATISliderValue() {
+    state = state.copyWith(
+      catiOpennessSliderValue: state.selectedCafe.cati?.openness ?? CATI.empty().openness,
+      catiCoffeeSliderValue: state.selectedCafe.cati?.coffee ?? CATI.empty().coffee,
+      catiWorkspaceSliderValue: state.selectedCafe.cati?.workspace ?? CATI.empty().workspace,
+      catiAciditySliderValue: state.selectedCafe.cati?.acidity ?? CATI.empty().acidity
+    );
+  }
+
+  voteCATI({required BuildContext context}) async {
+    try {
+      await _cafeUseCase.voteCATI(
+        accessToken: globalViewModel.state.accessToken,
+        cafeId: state.selectedCafe.id,
+        openness: state.catiOpennessSliderValue,
+        coffee: state.catiCoffeeSliderValue,
+        workspace: state.catiWorkspaceSliderValue,
+        acidity: state.catiAciditySliderValue,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      _replaceCafe(await _cafeUseCase.getCafe(cafeId: state.selectedCafe.id));
+      globalViewModel.showSnackBar(content: "CATI등록됨", type: SnackBarType.complete);
+    } on ErrorWithMessage {
+      null;
+    } on RefreshTokenExpired {
+      if (context.mounted) globalViewModel.expireRefreshToken(context: context);
+    }
+  }
+
+  initMapController(NaverMapController mapController) => state = state.copyWith(mapController: mapController);
+
+  updateOccupancySliderValue(value) => state = state.copyWith(occupancySliderValue: value);
+
+  clearSearchPredictions() => state = state.copyWith(searchPredictions: []);
+
+  setInitTempCameraPosition(NCameraPosition? cameraPosition) => state = state.copyWith(initTempCameraPosition: cameraPosition);
+
+  setShareTempCameraPosition(NCameraPosition? cameraPosition) => state = state.copyWith(shareTempCameraPosition: cameraPosition);
+
+  selectCafe(Cafe changedSelectedCafe) => state = state.copyWith(selectedCafe: changedSelectedCafe);
+
+  selectCafeFloor(CafeFloor changedSelectedCafeFloor) => state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
+
+  setCurrentCafeImagePage(int page) => state = state.copyWith(currentCafeImagePage: page);
+
+  setRefreshButtonVisible(bool visible) => state = state.copyWith(isRefreshButtonVisible: visible);
+
+  setBottomSheetFullContentVisible(bool visible) => state = state.copyWith(isBottomSheetFullContentVisible: visible);
+
+  setCATIOpenness(int value) => state = state.copyWith(catiOpennessSliderValue: value);
+
+  setCATICoffee(int value) => state = state.copyWith(catiCoffeeSliderValue: value);
+
+  setCATIWorkspace(int value) => state = state.copyWith(catiWorkspaceSliderValue: value);
+
+  setCATIAcidity(int value) => state = state.copyWith(catiAciditySliderValue: value);
+
+  // ===============================================================================================
+
   _replaceCafe(Cafe cafe) {
     // cafe list 대체
     Cafes copiedCafes = List.from(state.cafes);
@@ -259,8 +282,8 @@ class MapViewModel extends StateNotifier<MapState> {
 
     // 대체할 selected cafe floor 추출
     final CafeFloor newCafeFloor = cafe.cafeFloors.firstWhere(
-        (element) => element.id == state.selectedCafeFloor.id,
-        orElse: () => state.selectedCafeFloor
+      (element) => element.id == state.selectedCafeFloor.id,
+      orElse: () => state.selectedCafeFloor
     );
 
     // marker 교체
@@ -309,7 +332,7 @@ class MapViewModel extends StateNotifier<MapState> {
         insetPadding: AppPadding.padding_0,
         backgroundColor: AppColor.transparent,
         child: Container(
-          width: 180,
+          width: 160,
           height: 300,
           alignment: Alignment.center,
           decoration: BoxDecoration(

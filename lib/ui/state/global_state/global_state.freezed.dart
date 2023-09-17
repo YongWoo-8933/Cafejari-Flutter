@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GlobalState {
+  List<Version> get versions => throw _privateConstructorUsedError;
   bool get isPermissionChecked => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
   bool get isLoggedIn => throw _privateConstructorUsedError;
@@ -46,7 +47,8 @@ abstract class $GlobalStateCopyWith<$Res> {
       _$GlobalStateCopyWithImpl<$Res, GlobalState>;
   @useResult
   $Res call(
-      {bool isPermissionChecked,
+      {List<Version> versions,
+      bool isPermissionChecked,
       String accessToken,
       bool isLoggedIn,
       User user,
@@ -78,6 +80,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? versions = null,
     Object? isPermissionChecked = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
@@ -95,6 +98,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? webViewUri = null,
   }) {
     return _then(_value.copyWith(
+      versions: null == versions
+          ? _value.versions
+          : versions // ignore: cast_nullable_to_non_nullable
+              as List<Version>,
       isPermissionChecked: null == isPermissionChecked
           ? _value.isPermissionChecked
           : isPermissionChecked // ignore: cast_nullable_to_non_nullable
@@ -176,7 +183,8 @@ abstract class _$$_GlobalStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isPermissionChecked,
+      {List<Version> versions,
+      bool isPermissionChecked,
       String accessToken,
       bool isLoggedIn,
       User user,
@@ -207,6 +215,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? versions = null,
     Object? isPermissionChecked = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
@@ -224,6 +233,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? webViewUri = null,
   }) {
     return _then(_$_GlobalState(
+      versions: null == versions
+          ? _value._versions
+          : versions // ignore: cast_nullable_to_non_nullable
+              as List<Version>,
       isPermissionChecked: null == isPermissionChecked
           ? _value.isPermissionChecked
           : isPermissionChecked // ignore: cast_nullable_to_non_nullable
@@ -292,7 +305,8 @@ class __$$_GlobalStateCopyWithImpl<$Res>
 
 class _$_GlobalState implements _GlobalState {
   _$_GlobalState(
-      {required this.isPermissionChecked,
+      {required final List<Version> versions,
+      required this.isPermissionChecked,
       required this.accessToken,
       required this.isLoggedIn,
       required this.user,
@@ -307,7 +321,16 @@ class _$_GlobalState implements _GlobalState {
       required this.webViewController,
       required this.webViewTitle,
       required this.webViewUri})
-      : _myChallengers = myChallengers;
+      : _versions = versions,
+        _myChallengers = myChallengers;
+
+  final List<Version> _versions;
+  @override
+  List<Version> get versions {
+    if (_versions is EqualUnmodifiableListView) return _versions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_versions);
+  }
 
   @override
   final bool isPermissionChecked;
@@ -348,7 +371,7 @@ class _$_GlobalState implements _GlobalState {
 
   @override
   String toString() {
-    return 'GlobalState(isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
+    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
   }
 
   @override
@@ -356,6 +379,7 @@ class _$_GlobalState implements _GlobalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GlobalState &&
+            const DeepCollectionEquality().equals(other._versions, _versions) &&
             (identical(other.isPermissionChecked, isPermissionChecked) ||
                 other.isPermissionChecked == isPermissionChecked) &&
             (identical(other.accessToken, accessToken) ||
@@ -390,6 +414,7 @@ class _$_GlobalState implements _GlobalState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_versions),
       isPermissionChecked,
       accessToken,
       isLoggedIn,
@@ -415,7 +440,8 @@ class _$_GlobalState implements _GlobalState {
 
 abstract class _GlobalState implements GlobalState {
   factory _GlobalState(
-      {required final bool isPermissionChecked,
+      {required final List<Version> versions,
+      required final bool isPermissionChecked,
       required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
@@ -431,6 +457,8 @@ abstract class _GlobalState implements GlobalState {
       required final String webViewTitle,
       required final Uri webViewUri}) = _$_GlobalState;
 
+  @override
+  List<Version> get versions;
   @override
   bool get isPermissionChecked;
   @override

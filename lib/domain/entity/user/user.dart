@@ -24,6 +24,7 @@ class User with _$User {
     required final String? phoneNumber,
     required final String? ageRange,
     required final String? dateOfBirth,
+    required final CATI myCATI,
     required final int? gender,
     required final Grade grade,
     required final List<Cafe> favoriteCafes}) = _User;
@@ -46,6 +47,7 @@ class User with _$User {
       phoneNumber: null,
       ageRange: null,
       dateOfBirth: null,
+      myCATI: CATI.empty(),
       gender: null,
       grade: Grade.empty(),
       favoriteCafes: []);

@@ -9,6 +9,7 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/privacy_policy.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/service_agreement.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,7 @@ class AgreementPart extends ConsumerWidget {
                 switch(result) {
                   case true:
                     loginViewModel.globalViewModel.showSnackBar(content: "가입 완료", type: SnackBarType.complete);
+                    await FirebaseAnalytics.instance.logSignUp(signUpMethod: loginState.kakaoAccessToken.isNotEmpty ? "kakao" : "apple");
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
                   case false:
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);

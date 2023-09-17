@@ -72,6 +72,9 @@ dependencies:
   # URL 이동 ok
   url_launcher: ^6.1.10
 
+  # 스토어로 이동 ok
+  launch_review: ^3.0.1
+
   # 네이버 지도 ok
   flutter_naver_map: ^1.0.2
 

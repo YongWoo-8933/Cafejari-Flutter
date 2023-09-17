@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MapState {
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
-  PanelController get bottomSheetOccupancyController =>
-      throw _privateConstructorUsedError;
   PageController get pageController => throw _privateConstructorUsedError;
   int get currentCafeImagePage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
@@ -37,13 +35,15 @@ mixin _$MapState {
       throw _privateConstructorUsedError;
   List<Cafe> get searchPredictions => throw _privateConstructorUsedError;
   double get occupancySliderValue => throw _privateConstructorUsedError;
+  int get catiOpennessSliderValue => throw _privateConstructorUsedError;
+  int get catiCoffeeSliderValue => throw _privateConstructorUsedError;
+  int get catiWorkspaceSliderValue => throw _privateConstructorUsedError;
+  int get catiAciditySliderValue => throw _privateConstructorUsedError;
   bool get isSearchPageVisible => throw _privateConstructorUsedError;
   bool get isSearchPageFadedIn => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewOpened => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewExpanded => throw _privateConstructorUsedError;
   bool get isBottomSheetFullContentVisible =>
-      throw _privateConstructorUsedError;
-  bool get isOccupancyBottomSheetDraggable =>
       throw _privateConstructorUsedError;
   bool get isRefreshButtonVisible => throw _privateConstructorUsedError;
 
@@ -59,7 +59,6 @@ abstract class $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      PanelController bottomSheetOccupancyController,
       PageController pageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
@@ -74,12 +73,15 @@ abstract class $MapStateCopyWith<$Res> {
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
       double occupancySliderValue,
+      int catiOpennessSliderValue,
+      int catiCoffeeSliderValue,
+      int catiWorkspaceSliderValue,
+      int catiAciditySliderValue,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
-      bool isOccupancyBottomSheetDraggable,
       bool isRefreshButtonVisible});
 
   $CafeCopyWith<$Res> get selectedCafe;
@@ -100,7 +102,6 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? bottomSheetOccupancyController = null,
     Object? pageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
@@ -115,22 +116,21 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? searchQueryController = null,
     Object? searchPredictions = null,
     Object? occupancySliderValue = null,
+    Object? catiOpennessSliderValue = null,
+    Object? catiCoffeeSliderValue = null,
+    Object? catiWorkspaceSliderValue = null,
+    Object? catiAciditySliderValue = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
-    Object? isOccupancyBottomSheetDraggable = null,
     Object? isRefreshButtonVisible = null,
   }) {
     return _then(_value.copyWith(
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
-              as PanelController,
-      bottomSheetOccupancyController: null == bottomSheetOccupancyController
-          ? _value.bottomSheetOccupancyController
-          : bottomSheetOccupancyController // ignore: cast_nullable_to_non_nullable
               as PanelController,
       pageController: null == pageController
           ? _value.pageController
@@ -188,6 +188,22 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.occupancySliderValue
           : occupancySliderValue // ignore: cast_nullable_to_non_nullable
               as double,
+      catiOpennessSliderValue: null == catiOpennessSliderValue
+          ? _value.catiOpennessSliderValue
+          : catiOpennessSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiCoffeeSliderValue: null == catiCoffeeSliderValue
+          ? _value.catiCoffeeSliderValue
+          : catiCoffeeSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiWorkspaceSliderValue: null == catiWorkspaceSliderValue
+          ? _value.catiWorkspaceSliderValue
+          : catiWorkspaceSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiAciditySliderValue: null == catiAciditySliderValue
+          ? _value.catiAciditySliderValue
+          : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -207,10 +223,6 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
       isBottomSheetFullContentVisible: null == isBottomSheetFullContentVisible
           ? _value.isBottomSheetFullContentVisible
           : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isOccupancyBottomSheetDraggable: null == isOccupancyBottomSheetDraggable
-          ? _value.isOccupancyBottomSheetDraggable
-          : isOccupancyBottomSheetDraggable // ignore: cast_nullable_to_non_nullable
               as bool,
       isRefreshButtonVisible: null == isRefreshButtonVisible
           ? _value.isRefreshButtonVisible
@@ -245,7 +257,6 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      PanelController bottomSheetOccupancyController,
       PageController pageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
@@ -260,12 +271,15 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       TextEditingController searchQueryController,
       List<Cafe> searchPredictions,
       double occupancySliderValue,
+      int catiOpennessSliderValue,
+      int catiCoffeeSliderValue,
+      int catiWorkspaceSliderValue,
+      int catiAciditySliderValue,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
       bool isBottomSheetPreviewExpanded,
       bool isBottomSheetFullContentVisible,
-      bool isOccupancyBottomSheetDraggable,
       bool isRefreshButtonVisible});
 
   @override
@@ -286,7 +300,6 @@ class __$$_MapStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? bottomSheetOccupancyController = null,
     Object? pageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
@@ -301,22 +314,21 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? searchQueryController = null,
     Object? searchPredictions = null,
     Object? occupancySliderValue = null,
+    Object? catiOpennessSliderValue = null,
+    Object? catiCoffeeSliderValue = null,
+    Object? catiWorkspaceSliderValue = null,
+    Object? catiAciditySliderValue = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
     Object? isBottomSheetPreviewExpanded = null,
     Object? isBottomSheetFullContentVisible = null,
-    Object? isOccupancyBottomSheetDraggable = null,
     Object? isRefreshButtonVisible = null,
   }) {
     return _then(_$_MapState(
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
-              as PanelController,
-      bottomSheetOccupancyController: null == bottomSheetOccupancyController
-          ? _value.bottomSheetOccupancyController
-          : bottomSheetOccupancyController // ignore: cast_nullable_to_non_nullable
               as PanelController,
       pageController: null == pageController
           ? _value.pageController
@@ -374,6 +386,22 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.occupancySliderValue
           : occupancySliderValue // ignore: cast_nullable_to_non_nullable
               as double,
+      catiOpennessSliderValue: null == catiOpennessSliderValue
+          ? _value.catiOpennessSliderValue
+          : catiOpennessSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiCoffeeSliderValue: null == catiCoffeeSliderValue
+          ? _value.catiCoffeeSliderValue
+          : catiCoffeeSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiWorkspaceSliderValue: null == catiWorkspaceSliderValue
+          ? _value.catiWorkspaceSliderValue
+          : catiWorkspaceSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiAciditySliderValue: null == catiAciditySliderValue
+          ? _value.catiAciditySliderValue
+          : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -394,10 +422,6 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.isBottomSheetFullContentVisible
           : isBottomSheetFullContentVisible // ignore: cast_nullable_to_non_nullable
               as bool,
-      isOccupancyBottomSheetDraggable: null == isOccupancyBottomSheetDraggable
-          ? _value.isOccupancyBottomSheetDraggable
-          : isOccupancyBottomSheetDraggable // ignore: cast_nullable_to_non_nullable
-              as bool,
       isRefreshButtonVisible: null == isRefreshButtonVisible
           ? _value.isRefreshButtonVisible
           : isRefreshButtonVisible // ignore: cast_nullable_to_non_nullable
@@ -411,7 +435,6 @@ class __$$_MapStateCopyWithImpl<$Res>
 class _$_MapState implements _MapState {
   _$_MapState(
       {required this.bottomSheetController,
-      required this.bottomSheetOccupancyController,
       required this.pageController,
       required this.currentCafeImagePage,
       required final List<Cafe> cafes,
@@ -426,12 +449,15 @@ class _$_MapState implements _MapState {
       required this.searchQueryController,
       required final List<Cafe> searchPredictions,
       required this.occupancySliderValue,
+      required this.catiOpennessSliderValue,
+      required this.catiCoffeeSliderValue,
+      required this.catiWorkspaceSliderValue,
+      required this.catiAciditySliderValue,
       required this.isSearchPageVisible,
       required this.isSearchPageFadedIn,
       required this.isBottomSheetPreviewOpened,
       required this.isBottomSheetPreviewExpanded,
       required this.isBottomSheetFullContentVisible,
-      required this.isOccupancyBottomSheetDraggable,
       required this.isRefreshButtonVisible})
       : _cafes = cafes,
         _locations = locations,
@@ -439,8 +465,6 @@ class _$_MapState implements _MapState {
 
   @override
   final PanelController bottomSheetController;
-  @override
-  final PanelController bottomSheetOccupancyController;
   @override
   final PageController pageController;
   @override
@@ -489,6 +513,14 @@ class _$_MapState implements _MapState {
   @override
   final double occupancySliderValue;
   @override
+  final int catiOpennessSliderValue;
+  @override
+  final int catiCoffeeSliderValue;
+  @override
+  final int catiWorkspaceSliderValue;
+  @override
+  final int catiAciditySliderValue;
+  @override
   final bool isSearchPageVisible;
   @override
   final bool isSearchPageFadedIn;
@@ -499,13 +531,11 @@ class _$_MapState implements _MapState {
   @override
   final bool isBottomSheetFullContentVisible;
   @override
-  final bool isOccupancyBottomSheetDraggable;
-  @override
   final bool isRefreshButtonVisible;
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, bottomSheetOccupancyController: $bottomSheetOccupancyController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isOccupancyBottomSheetDraggable: $isOccupancyBottomSheetDraggable, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -515,9 +545,6 @@ class _$_MapState implements _MapState {
             other is _$_MapState &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
-            (identical(other.bottomSheetOccupancyController, bottomSheetOccupancyController) ||
-                other.bottomSheetOccupancyController ==
-                    bottomSheetOccupancyController) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
             (identical(other.currentCafeImagePage, currentCafeImagePage) ||
@@ -545,6 +572,14 @@ class _$_MapState implements _MapState {
                 .equals(other._searchPredictions, _searchPredictions) &&
             (identical(other.occupancySliderValue, occupancySliderValue) ||
                 other.occupancySliderValue == occupancySliderValue) &&
+            (identical(other.catiOpennessSliderValue, catiOpennessSliderValue) ||
+                other.catiOpennessSliderValue == catiOpennessSliderValue) &&
+            (identical(other.catiCoffeeSliderValue, catiCoffeeSliderValue) ||
+                other.catiCoffeeSliderValue == catiCoffeeSliderValue) &&
+            (identical(other.catiWorkspaceSliderValue, catiWorkspaceSliderValue) ||
+                other.catiWorkspaceSliderValue == catiWorkspaceSliderValue) &&
+            (identical(other.catiAciditySliderValue, catiAciditySliderValue) ||
+                other.catiAciditySliderValue == catiAciditySliderValue) &&
             (identical(other.isSearchPageVisible, isSearchPageVisible) ||
                 other.isSearchPageVisible == isSearchPageVisible) &&
             (identical(other.isSearchPageFadedIn, isSearchPageFadedIn) ||
@@ -555,13 +590,10 @@ class _$_MapState implements _MapState {
             (identical(other.isBottomSheetPreviewExpanded, isBottomSheetPreviewExpanded) ||
                 other.isBottomSheetPreviewExpanded ==
                     isBottomSheetPreviewExpanded) &&
-            (identical(other.isBottomSheetFullContentVisible, isBottomSheetFullContentVisible) ||
+            (identical(other.isBottomSheetFullContentVisible,
+                    isBottomSheetFullContentVisible) ||
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
-            (identical(other.isOccupancyBottomSheetDraggable,
-                    isOccupancyBottomSheetDraggable) ||
-                other.isOccupancyBottomSheetDraggable ==
-                    isOccupancyBottomSheetDraggable) &&
             (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) ||
                 other.isRefreshButtonVisible == isRefreshButtonVisible));
   }
@@ -570,7 +602,6 @@ class _$_MapState implements _MapState {
   int get hashCode => Object.hashAll([
         runtimeType,
         bottomSheetController,
-        bottomSheetOccupancyController,
         pageController,
         currentCafeImagePage,
         const DeepCollectionEquality().hash(_cafes),
@@ -585,12 +616,15 @@ class _$_MapState implements _MapState {
         searchQueryController,
         const DeepCollectionEquality().hash(_searchPredictions),
         occupancySliderValue,
+        catiOpennessSliderValue,
+        catiCoffeeSliderValue,
+        catiWorkspaceSliderValue,
+        catiAciditySliderValue,
         isSearchPageVisible,
         isSearchPageFadedIn,
         isBottomSheetPreviewOpened,
         isBottomSheetPreviewExpanded,
         isBottomSheetFullContentVisible,
-        isOccupancyBottomSheetDraggable,
         isRefreshButtonVisible
       ]);
 
@@ -604,7 +638,6 @@ class _$_MapState implements _MapState {
 abstract class _MapState implements MapState {
   factory _MapState(
       {required final PanelController bottomSheetController,
-      required final PanelController bottomSheetOccupancyController,
       required final PageController pageController,
       required final int currentCafeImagePage,
       required final List<Cafe> cafes,
@@ -619,18 +652,19 @@ abstract class _MapState implements MapState {
       required final TextEditingController searchQueryController,
       required final List<Cafe> searchPredictions,
       required final double occupancySliderValue,
+      required final int catiOpennessSliderValue,
+      required final int catiCoffeeSliderValue,
+      required final int catiWorkspaceSliderValue,
+      required final int catiAciditySliderValue,
       required final bool isSearchPageVisible,
       required final bool isSearchPageFadedIn,
       required final bool isBottomSheetPreviewOpened,
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
-      required final bool isOccupancyBottomSheetDraggable,
       required final bool isRefreshButtonVisible}) = _$_MapState;
 
   @override
   PanelController get bottomSheetController;
-  @override
-  PanelController get bottomSheetOccupancyController;
   @override
   PageController get pageController;
   @override
@@ -660,6 +694,14 @@ abstract class _MapState implements MapState {
   @override
   double get occupancySliderValue;
   @override
+  int get catiOpennessSliderValue;
+  @override
+  int get catiCoffeeSliderValue;
+  @override
+  int get catiWorkspaceSliderValue;
+  @override
+  int get catiAciditySliderValue;
+  @override
   bool get isSearchPageVisible;
   @override
   bool get isSearchPageFadedIn;
@@ -669,8 +711,6 @@ abstract class _MapState implements MapState {
   bool get isBottomSheetPreviewExpanded;
   @override
   bool get isBottomSheetFullContentVisible;
-  @override
-  bool get isOccupancyBottomSheetDraggable;
   @override
   bool get isRefreshButtonVisible;
   @override

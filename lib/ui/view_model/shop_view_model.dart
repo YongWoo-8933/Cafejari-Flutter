@@ -1,7 +1,6 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +18,6 @@ class ShopViewModel extends StateNotifier<ShopState> {
 
   refreshData({required BuildContext context}) async {
     state = state.copyWith(isLoading: true);
-    print(globalViewModel.state.accessToken);
     try {
       final Brands newBrands = state.brandList.isEmpty ? await _shopUseCase.getBrands() : state.brandList;
       final Items newItems = await _shopUseCase.getItems();

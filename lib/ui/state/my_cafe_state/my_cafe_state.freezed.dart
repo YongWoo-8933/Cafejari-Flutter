@@ -16,8 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MyCafeState {
-  User get user => throw _privateConstructorUsedError;
-  List<Cafe> get favoriteCafe => throw _privateConstructorUsedError;
+  int get catiOpennessSliderValue => throw _privateConstructorUsedError;
+  int get catiCoffeeSliderValue => throw _privateConstructorUsedError;
+  int get catiWorkspaceSliderValue => throw _privateConstructorUsedError;
+  int get catiAciditySliderValue => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyCafeStateCopyWith<MyCafeState> get copyWith =>
@@ -30,9 +32,11 @@ abstract class $MyCafeStateCopyWith<$Res> {
           MyCafeState value, $Res Function(MyCafeState) then) =
       _$MyCafeStateCopyWithImpl<$Res, MyCafeState>;
   @useResult
-  $Res call({User user, List<Cafe> favoriteCafe});
-
-  $UserCopyWith<$Res> get user;
+  $Res call(
+      {int catiOpennessSliderValue,
+      int catiCoffeeSliderValue,
+      int catiWorkspaceSliderValue,
+      int catiAciditySliderValue});
 }
 
 /// @nodoc
@@ -48,27 +52,29 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
-    Object? favoriteCafe = null,
+    Object? catiOpennessSliderValue = null,
+    Object? catiCoffeeSliderValue = null,
+    Object? catiWorkspaceSliderValue = null,
+    Object? catiAciditySliderValue = null,
   }) {
     return _then(_value.copyWith(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-      favoriteCafe: null == favoriteCafe
-          ? _value.favoriteCafe
-          : favoriteCafe // ignore: cast_nullable_to_non_nullable
-              as List<Cafe>,
+      catiOpennessSliderValue: null == catiOpennessSliderValue
+          ? _value.catiOpennessSliderValue
+          : catiOpennessSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiCoffeeSliderValue: null == catiCoffeeSliderValue
+          ? _value.catiCoffeeSliderValue
+          : catiCoffeeSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiWorkspaceSliderValue: null == catiWorkspaceSliderValue
+          ? _value.catiWorkspaceSliderValue
+          : catiWorkspaceSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiAciditySliderValue: null == catiAciditySliderValue
+          ? _value.catiAciditySliderValue
+          : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -80,10 +86,11 @@ abstract class _$$_MyCafeStateCopyWith<$Res>
       __$$_MyCafeStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, List<Cafe> favoriteCafe});
-
-  @override
-  $UserCopyWith<$Res> get user;
+  $Res call(
+      {int catiOpennessSliderValue,
+      int catiCoffeeSliderValue,
+      int catiWorkspaceSliderValue,
+      int catiAciditySliderValue});
 }
 
 /// @nodoc
@@ -97,18 +104,28 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
-    Object? favoriteCafe = null,
+    Object? catiOpennessSliderValue = null,
+    Object? catiCoffeeSliderValue = null,
+    Object? catiWorkspaceSliderValue = null,
+    Object? catiAciditySliderValue = null,
   }) {
     return _then(_$_MyCafeState(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-      favoriteCafe: null == favoriteCafe
-          ? _value._favoriteCafe
-          : favoriteCafe // ignore: cast_nullable_to_non_nullable
-              as List<Cafe>,
+      catiOpennessSliderValue: null == catiOpennessSliderValue
+          ? _value.catiOpennessSliderValue
+          : catiOpennessSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiCoffeeSliderValue: null == catiCoffeeSliderValue
+          ? _value.catiCoffeeSliderValue
+          : catiCoffeeSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiWorkspaceSliderValue: null == catiWorkspaceSliderValue
+          ? _value.catiWorkspaceSliderValue
+          : catiWorkspaceSliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      catiAciditySliderValue: null == catiAciditySliderValue
+          ? _value.catiAciditySliderValue
+          : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -116,22 +133,24 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MyCafeState implements _MyCafeState {
-  _$_MyCafeState({required this.user, required final List<Cafe> favoriteCafe})
-      : _favoriteCafe = favoriteCafe;
+  _$_MyCafeState(
+      {required this.catiOpennessSliderValue,
+      required this.catiCoffeeSliderValue,
+      required this.catiWorkspaceSliderValue,
+      required this.catiAciditySliderValue});
 
   @override
-  final User user;
-  final List<Cafe> _favoriteCafe;
+  final int catiOpennessSliderValue;
   @override
-  List<Cafe> get favoriteCafe {
-    if (_favoriteCafe is EqualUnmodifiableListView) return _favoriteCafe;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favoriteCafe);
-  }
+  final int catiCoffeeSliderValue;
+  @override
+  final int catiWorkspaceSliderValue;
+  @override
+  final int catiAciditySliderValue;
 
   @override
   String toString() {
-    return 'MyCafeState(user: $user, favoriteCafe: $favoriteCafe)';
+    return 'MyCafeState(catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue)';
   }
 
   @override
@@ -139,14 +158,21 @@ class _$_MyCafeState implements _MyCafeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MyCafeState &&
-            (identical(other.user, user) || other.user == user) &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteCafe, _favoriteCafe));
+            (identical(
+                    other.catiOpennessSliderValue, catiOpennessSliderValue) ||
+                other.catiOpennessSliderValue == catiOpennessSliderValue) &&
+            (identical(other.catiCoffeeSliderValue, catiCoffeeSliderValue) ||
+                other.catiCoffeeSliderValue == catiCoffeeSliderValue) &&
+            (identical(
+                    other.catiWorkspaceSliderValue, catiWorkspaceSliderValue) ||
+                other.catiWorkspaceSliderValue == catiWorkspaceSliderValue) &&
+            (identical(other.catiAciditySliderValue, catiAciditySliderValue) ||
+                other.catiAciditySliderValue == catiAciditySliderValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, user, const DeepCollectionEquality().hash(_favoriteCafe));
+  int get hashCode => Object.hash(runtimeType, catiOpennessSliderValue,
+      catiCoffeeSliderValue, catiWorkspaceSliderValue, catiAciditySliderValue);
 
   @JsonKey(ignore: true)
   @override
@@ -157,13 +183,19 @@ class _$_MyCafeState implements _MyCafeState {
 
 abstract class _MyCafeState implements MyCafeState {
   factory _MyCafeState(
-      {required final User user,
-      required final List<Cafe> favoriteCafe}) = _$_MyCafeState;
+      {required final int catiOpennessSliderValue,
+      required final int catiCoffeeSliderValue,
+      required final int catiWorkspaceSliderValue,
+      required final int catiAciditySliderValue}) = _$_MyCafeState;
 
   @override
-  User get user;
+  int get catiOpennessSliderValue;
   @override
-  List<Cafe> get favoriteCafe;
+  int get catiCoffeeSliderValue;
+  @override
+  int get catiWorkspaceSliderValue;
+  @override
+  int get catiAciditySliderValue;
   @override
   @JsonKey(ignore: true)
   _$$_MyCafeStateCopyWith<_$_MyCafeState> get copyWith =>

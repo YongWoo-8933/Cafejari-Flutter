@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/data/repository/app_config_repository.dart';
 import 'package:cafejari_flutter/data/repository/cafe_log_repository.dart';
 import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
 import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
@@ -5,6 +6,7 @@ import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/shop_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
+import 'package:cafejari_flutter/domain/use_case/app_config_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_log_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
@@ -44,6 +46,11 @@ final apiServiceProvider = Provider<APIService>((ref) {
 
 
 // repository --------------------------------------------------------------------------------------
+final appConfigRepositoryProvider = Provider<AppConfigRepository>((ref) {
+  APIService apiService = ref.watch(apiServiceProvider);
+  return AppConfigRepositoryImpl(apiService);
+});
+
 final tokenRepositoryProvider = Provider<TokenRepository>((ref) {
   APIService apiService = ref.watch(apiServiceProvider);
   return TokenRepositoryImpl(apiService);
@@ -91,6 +98,11 @@ final challengeRepositoryProvider = Provider<ChallengeRepository>((ref) {
 
 
 // use_case ----------------------------------------------------------------------------------------
+final appConfigUseCaseProvider = Provider<AppConfigUseCase>((ref) {
+  AppConfigRepository appConfigRepository = ref.watch(appConfigRepositoryProvider);
+  return AppConfigUseCaseImpl(appConfigRepository);
+});
+
 final tokenUseCaseProvider = Provider<TokenUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   return TokenUseCaseImpl(tokenRepository);
@@ -109,7 +121,8 @@ final cafeUseCaseProvider = Provider<CafeUseCase>((ref) {
 final userUseCaseProvider = Provider<UserUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   UserRepository userRepository = ref.watch(userRepositoryProvider);
-  return UserUseCaseImpl(tokenRepository: tokenRepository, userRepository: userRepository);
+  RequestRepository requestRepository = ref.watch(requestRepositoryProvider);
+  return UserUseCaseImpl(tokenRepository: tokenRepository, userRepository: userRepository, requestRepository: requestRepository);
 });
 
 final leaderboardUseCaseProvider = Provider<LeaderboardUseCase>((ref) {
@@ -155,7 +168,8 @@ final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalSta
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
   final LeaderboardUseCase leaderUseCase = ref.watch(leaderboardUseCaseProvider);
   final ChallengeUseCase challengeUseCase = ref.watch(challengeUseCaseProvider);
-  return GlobalViewModel(tokenUseCase, userUseCase, leaderUseCase, challengeUseCase, null, null);
+  final AppConfigUseCase appConfigUseCase = ref.watch(appConfigUseCaseProvider);
+  return GlobalViewModel(appConfigUseCase, tokenUseCase, userUseCase, leaderUseCase, challengeUseCase, null, null);
 });
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {
@@ -166,10 +180,9 @@ final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref)
 });
 
 final myCafeViewModelProvider = StateNotifierProvider<MyCafeViewModel, MyCafeState>((ref) {
-  final viewModel = ref.watch(globalViewModelProvider.notifier);
-  final mapViewModel = ref.watch(mapViewModelProvider.notifier);
+  final globalViewModel = ref.watch(globalViewModelProvider.notifier);
   final UserUseCase userUseCase = ref.watch(userUseCaseProvider);
-  return MyCafeViewModel(userUseCase: userUseCase, globalViewModel: viewModel, mapViewModel: mapViewModel);
+  return MyCafeViewModel(userUseCase: userUseCase, globalViewModel: globalViewModel);
 });
 
 final myPageViewModelProvider = StateNotifierProvider<MyPageViewModel, MyPageState>((ref) {
@@ -210,7 +223,8 @@ final challengeViewModelProvider = StateNotifierProvider<ChallengeViewModel, Cha
 
 final requestViewModelProvider = StateNotifierProvider<RequestViewModel, RequestState>((ref) {
   final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
-  return RequestViewModel(cafeUseCase: cafeUseCase);
+  final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+  return RequestViewModel(cafeUseCase: cafeUseCase, globalViewModel: globalViewModel);
 });
 
 

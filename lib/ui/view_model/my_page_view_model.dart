@@ -61,4 +61,19 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
+
+  userMigrate({required BuildContext context}) async {
+    try {
+      await _userUseCase.userMigrate(
+        accessToken: globalViewModel.state.accessToken,
+        phoneNumber: state.userMigrationPhoneNumberController.text,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      globalViewModel.showSnackBar(content: "요청 완료", type: SnackBarType.complete);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
+    }
+  }
 }

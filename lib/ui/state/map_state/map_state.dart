@@ -11,7 +11,6 @@ part 'map_state.freezed.dart';
 class MapState with _$MapState {
   factory MapState(
       {required final PanelController bottomSheetController,
-      required final PanelController bottomSheetOccupancyController,
       required final PageController pageController,
       required final int currentCafeImagePage,
       required final Cafes cafes,
@@ -26,17 +25,19 @@ class MapState with _$MapState {
       required final TextEditingController searchQueryController,
       required final Cafes searchPredictions,
       required final double occupancySliderValue,
+      required final int catiOpennessSliderValue,
+      required final int catiCoffeeSliderValue,
+      required final int catiWorkspaceSliderValue,
+      required final int catiAciditySliderValue,
       required final bool isSearchPageVisible,
       required final bool isSearchPageFadedIn,
       required final bool isBottomSheetPreviewOpened,
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
-      required final bool isOccupancyBottomSheetDraggable,
       required final bool isRefreshButtonVisible}) = _MapState;
 
   factory MapState.empty() => MapState(
       bottomSheetController: PanelController(),
-      bottomSheetOccupancyController: PanelController(),
       pageController: PageController(),
       currentCafeImagePage: 0,
       cafes: [],
@@ -51,11 +52,14 @@ class MapState with _$MapState {
       searchQueryController: TextEditingController(),
       searchPredictions: [],
       occupancySliderValue: 0.0,
+      catiOpennessSliderValue: CATI.empty().openness,
+      catiCoffeeSliderValue: CATI.empty().coffee,
+      catiWorkspaceSliderValue: CATI.empty().workspace,
+      catiAciditySliderValue: CATI.empty().acidity,
       isSearchPageVisible: false,
       isSearchPageFadedIn: false,
       isBottomSheetPreviewOpened: false,
       isBottomSheetPreviewExpanded: false,
       isBottomSheetFullContentVisible: false,
-      isOccupancyBottomSheetDraggable: true,
       isRefreshButtonVisible: false);
 }

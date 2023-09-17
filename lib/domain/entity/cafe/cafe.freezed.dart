@@ -26,6 +26,7 @@ mixin _$Cafe {
   String get address => throw _privateConstructorUsedError;
   String? get brandName => throw _privateConstructorUsedError;
   String? get brandImageUrl => throw _privateConstructorUsedError;
+  CATI? get cati => throw _privateConstructorUsedError;
   NLatLng get latLng => throw _privateConstructorUsedError;
   List<CafeFloor> get cafeFloors => throw _privateConstructorUsedError;
   OpeningHour? get openingHour => throw _privateConstructorUsedError;
@@ -52,12 +53,14 @@ abstract class $CafeCopyWith<$Res> {
       String address,
       String? brandName,
       String? brandImageUrl,
+      CATI? cati,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
       List<String> imageUrls,
       List<PartialUser> vips});
 
+  $CATICopyWith<$Res>? get cati;
   $OpeningHourCopyWith<$Res>? get openingHour;
 }
 
@@ -84,6 +87,7 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
     Object? address = null,
     Object? brandName = freezed,
     Object? brandImageUrl = freezed,
+    Object? cati = freezed,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -131,6 +135,10 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           ? _value.brandImageUrl
           : brandImageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      cati: freezed == cati
+          ? _value.cati
+          : cati // ignore: cast_nullable_to_non_nullable
+              as CATI?,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -152,6 +160,18 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           : vips // ignore: cast_nullable_to_non_nullable
               as List<PartialUser>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CATICopyWith<$Res>? get cati {
+    if (_value.cati == null) {
+      return null;
+    }
+
+    return $CATICopyWith<$Res>(_value.cati!, (value) {
+      return _then(_value.copyWith(cati: value) as $Val);
+    });
   }
 
   @override
@@ -184,12 +204,15 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
       String address,
       String? brandName,
       String? brandImageUrl,
+      CATI? cati,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
       List<String> imageUrls,
       List<PartialUser> vips});
 
+  @override
+  $CATICopyWith<$Res>? get cati;
   @override
   $OpeningHourCopyWith<$Res>? get openingHour;
 }
@@ -213,6 +236,7 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? address = null,
     Object? brandName = freezed,
     Object? brandImageUrl = freezed,
+    Object? cati = freezed,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -260,6 +284,10 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
           ? _value.brandImageUrl
           : brandImageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      cati: freezed == cati
+          ? _value.cati
+          : cati // ignore: cast_nullable_to_non_nullable
+              as CATI?,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -298,6 +326,7 @@ class _$_Cafe implements _Cafe {
       required this.address,
       required this.brandName,
       required this.brandImageUrl,
+      required this.cati,
       required this.latLng,
       required final List<CafeFloor> cafeFloors,
       required this.openingHour,
@@ -328,6 +357,8 @@ class _$_Cafe implements _Cafe {
   @override
   final String? brandImageUrl;
   @override
+  final CATI? cati;
+  @override
   final NLatLng latLng;
   final List<CafeFloor> _cafeFloors;
   @override
@@ -357,7 +388,7 @@ class _$_Cafe implements _Cafe {
 
   @override
   String toString() {
-    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
+    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, cati: $cati, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
   }
 
   @override
@@ -384,6 +415,7 @@ class _$_Cafe implements _Cafe {
                 other.brandName == brandName) &&
             (identical(other.brandImageUrl, brandImageUrl) ||
                 other.brandImageUrl == brandImageUrl) &&
+            (identical(other.cati, cati) || other.cati == cati) &&
             (identical(other.latLng, latLng) || other.latLng == latLng) &&
             const DeepCollectionEquality()
                 .equals(other._cafeFloors, _cafeFloors) &&
@@ -407,6 +439,7 @@ class _$_Cafe implements _Cafe {
       address,
       brandName,
       brandImageUrl,
+      cati,
       latLng,
       const DeepCollectionEquality().hash(_cafeFloors),
       openingHour,
@@ -432,6 +465,7 @@ abstract class _Cafe implements Cafe {
       required final String address,
       required final String? brandName,
       required final String? brandImageUrl,
+      required final CATI? cati,
       required final NLatLng latLng,
       required final List<CafeFloor> cafeFloors,
       required final OpeningHour? openingHour,
@@ -458,6 +492,8 @@ abstract class _Cafe implements Cafe {
   String? get brandName;
   @override
   String? get brandImageUrl;
+  @override
+  CATI? get cati;
   @override
   NLatLng get latLng;
   @override
@@ -1259,6 +1295,175 @@ abstract class _OpeningHour implements OpeningHour {
   @JsonKey(ignore: true)
   _$$_OpeningHourCopyWith<_$_OpeningHour> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CATI {
+  int get openness => throw _privateConstructorUsedError;
+  int get coffee => throw _privateConstructorUsedError;
+  int get workspace => throw _privateConstructorUsedError;
+  int get acidity => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CATICopyWith<CATI> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CATICopyWith<$Res> {
+  factory $CATICopyWith(CATI value, $Res Function(CATI) then) =
+      _$CATICopyWithImpl<$Res, CATI>;
+  @useResult
+  $Res call({int openness, int coffee, int workspace, int acidity});
+}
+
+/// @nodoc
+class _$CATICopyWithImpl<$Res, $Val extends CATI>
+    implements $CATICopyWith<$Res> {
+  _$CATICopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? openness = null,
+    Object? coffee = null,
+    Object? workspace = null,
+    Object? acidity = null,
+  }) {
+    return _then(_value.copyWith(
+      openness: null == openness
+          ? _value.openness
+          : openness // ignore: cast_nullable_to_non_nullable
+              as int,
+      coffee: null == coffee
+          ? _value.coffee
+          : coffee // ignore: cast_nullable_to_non_nullable
+              as int,
+      workspace: null == workspace
+          ? _value.workspace
+          : workspace // ignore: cast_nullable_to_non_nullable
+              as int,
+      acidity: null == acidity
+          ? _value.acidity
+          : acidity // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CATICopyWith<$Res> implements $CATICopyWith<$Res> {
+  factory _$$_CATICopyWith(_$_CATI value, $Res Function(_$_CATI) then) =
+      __$$_CATICopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int openness, int coffee, int workspace, int acidity});
+}
+
+/// @nodoc
+class __$$_CATICopyWithImpl<$Res> extends _$CATICopyWithImpl<$Res, _$_CATI>
+    implements _$$_CATICopyWith<$Res> {
+  __$$_CATICopyWithImpl(_$_CATI _value, $Res Function(_$_CATI) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? openness = null,
+    Object? coffee = null,
+    Object? workspace = null,
+    Object? acidity = null,
+  }) {
+    return _then(_$_CATI(
+      openness: null == openness
+          ? _value.openness
+          : openness // ignore: cast_nullable_to_non_nullable
+              as int,
+      coffee: null == coffee
+          ? _value.coffee
+          : coffee // ignore: cast_nullable_to_non_nullable
+              as int,
+      workspace: null == workspace
+          ? _value.workspace
+          : workspace // ignore: cast_nullable_to_non_nullable
+              as int,
+      acidity: null == acidity
+          ? _value.acidity
+          : acidity // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CATI implements _CATI {
+  _$_CATI(
+      {required this.openness,
+      required this.coffee,
+      required this.workspace,
+      required this.acidity});
+
+  @override
+  final int openness;
+  @override
+  final int coffee;
+  @override
+  final int workspace;
+  @override
+  final int acidity;
+
+  @override
+  String toString() {
+    return 'CATI(openness: $openness, coffee: $coffee, workspace: $workspace, acidity: $acidity)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CATI &&
+            (identical(other.openness, openness) ||
+                other.openness == openness) &&
+            (identical(other.coffee, coffee) || other.coffee == coffee) &&
+            (identical(other.workspace, workspace) ||
+                other.workspace == workspace) &&
+            (identical(other.acidity, acidity) || other.acidity == acidity));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, openness, coffee, workspace, acidity);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CATICopyWith<_$_CATI> get copyWith =>
+      __$$_CATICopyWithImpl<_$_CATI>(this, _$identity);
+}
+
+abstract class _CATI implements CATI {
+  factory _CATI(
+      {required final int openness,
+      required final int coffee,
+      required final int workspace,
+      required final int acidity}) = _$_CATI;
+
+  @override
+  int get openness;
+  @override
+  int get coffee;
+  @override
+  int get workspace;
+  @override
+  int get acidity;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CATICopyWith<_$_CATI> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

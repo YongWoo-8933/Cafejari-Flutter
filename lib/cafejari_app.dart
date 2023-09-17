@@ -7,13 +7,13 @@ import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_full_content.dart';
-import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_occupancy_update.dart';
 import 'package:cafejari_flutter/ui/screen/map/bottom_sheet_preview.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -93,6 +93,12 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       await globalViewModel.init();
       FlutterNativeSplash.remove();
 
+      // 버전 체크
+      if(context.mounted) await globalViewModel.checkVersion(context: context);
+
+      // GA에 로깅
+      await FirebaseAnalytics.instance.logAppOpen();
+
       // 딥링크관련 로직 처리
       Future.delayed(const Duration(seconds: 1), () async {
         final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
@@ -148,9 +154,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
         } else if(mapState.isSearchPageVisible) {
           mapViewModel.closeSearchPage();
           return false;
-        } else if(mapState.bottomSheetOccupancyController.isPanelOpen) {
-          mapState.bottomSheetOccupancyController.close();
-          return false;
         } else if(mapState.bottomSheetController.isPanelOpen) {
           mapState.bottomSheetController.close();
           return false;
@@ -180,66 +183,54 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           height: 1.2
         ),
         child: SlidingUpPanel(
-          controller: mapState.bottomSheetOccupancyController,
-          minHeight: 0,
-          maxHeight: 480,
-          backdropEnabled: true,
+          controller: mapState.bottomSheetController,
+          minHeight: mapState.isBottomSheetPreviewOpened ?
+            bottomSheetPreviewHeight - bottomSheetPreviewCornerRadius : 0,
+          maxHeight: deviceHeight,
+          backdropEnabled: false,
+          boxShadow: null,
           color: AppColor.transparent,
-          isDraggable: mapState.isOccupancyBottomSheetDraggable,
-          body: SlidingUpPanel(
-            controller: mapState.bottomSheetController,
-            minHeight: mapState.isBottomSheetPreviewOpened ?
-              bottomSheetPreviewHeight - bottomSheetPreviewCornerRadius : 0,
-            maxHeight: deviceHeight,
-            backdropEnabled: false,
-            boxShadow: null,
-            color: AppColor.transparent,
-            onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
-            onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
-            body: SafeArea(
-              top: false,
-              child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                bottomNavigationBar: const SafeArea(top: false, child: BottomNavBar()),
-                backgroundColor: AppColor.transparent,
-                extendBody: true,
-                body: IndexedStack(
-                  index: globalState.currentPage.index,
-                  children: const [
-                    MapScreen(),
-                    MyCafeScreen(),
-                    ChallengeScreen(),
-                    MyPageScreen()
-                  ],
-                )
-              ),
+          onPanelOpened: () => mapViewModel.setBottomSheetFullContentVisible(true),
+          onPanelClosed: () => mapViewModel.setBottomSheetFullContentVisible(false),
+          body: SafeArea(
+            top: false,
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              bottomNavigationBar: const SafeArea(top: false, child: BottomNavBar()),
+              backgroundColor: AppColor.transparent,
+              extendBody: true,
+              body: IndexedStack(
+                index: globalState.currentPage.index,
+                children: const [
+                  MapScreen(),
+                  MyCafeScreen(),
+                  ChallengeScreen(),
+                  MyPageScreen()
+                ],
+              )
             ),
-            // 카페 bottom sheet
-            panelBuilder: (scrollController) {
-              return Container(
-                color: AppColor.transparent,
-                child: AnimatedCrossFade(
-                  firstChild: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
-                      Container(
-                        color: AppColor.white,
-                        height: deviceHeight - bottomSheetPreviewHeight,
-                      ),
-                    ],
-                  ),
-                  secondChild: BottomSheetFullContent(scrollController: scrollController),
-                  crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                  duration: AppDuration.animationDefault
-                )
-              );
-            }
           ),
-          // 카페 혼잡도 업데이트 패널
-          panelBuilder: (_) {
-            return const BottomSheetOccupancyUpdate();
-          },
+          // 카페 bottom sheet
+          panelBuilder: (scrollController) {
+            return Container(
+              color: AppColor.transparent,
+              child: AnimatedCrossFade(
+                firstChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
+                    Container(
+                      color: AppColor.white,
+                      height: deviceHeight - bottomSheetPreviewHeight,
+                    ),
+                  ],
+                ),
+                secondChild: BottomSheetFullContent(scrollController: scrollController),
+                crossFadeState: mapState.isBottomSheetFullContentVisible ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                duration: AppDuration.animationDefault
+              )
+            );
+          }
         ),
       ),
     );

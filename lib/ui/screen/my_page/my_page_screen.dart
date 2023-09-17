@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_row.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/point_card.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/user_migration_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
@@ -318,9 +319,9 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                         MyPageRow(
                           text: "사용자 정보 이전",
                           width: deviceSize.width - sidePadding * 2,
-                          onPress: () => globalViewModel.navigateToWebView(
-                            route: WebViewRoute.userMigration(),
-                            context: context
+                          onPress: () => showDialog(
+                              context: context,
+                              builder: (_) => const UserMigrationDialog()
                           )
                         ),
                         const VerticalSpacer(80),

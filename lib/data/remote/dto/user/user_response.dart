@@ -46,6 +46,10 @@ class ProfileResponse {
   final GradeResponse grade;
   final ProfileImageResponse profile_image;
   final List<CafeResponse> favorite_cafe;
+  final int cati_openness;
+  final int cati_coffee;
+  final int cati_workspace;
+  final int cati_acidity;
 
   ProfileResponse({
     required this.id,
@@ -62,6 +66,10 @@ class ProfileResponse {
     required this.occupancy_push_enabled,
     required this.log_push_enabled,
     required this.favorite_cafe,
+    required this.cati_openness,
+    required this.cati_coffee,
+    required this.cati_workspace,
+    required this.cati_acidity,
   });
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => _$ProfileResponseFromJson(json);

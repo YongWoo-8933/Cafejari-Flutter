@@ -6,11 +6,13 @@ import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/request/request_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/cafe_log.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
+import 'package:cafejari_flutter/domain/entity/request/request.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -122,6 +124,12 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     brandImageUrl: cafeResponse.brand?.image,
     latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
     cafeFloors: cafeFloors,
+    cati: cafeResponse.cati.isNotNull ? CATI(
+      openness: cafeResponse.cati!.openness.round(),
+      coffee: cafeResponse.cati!.coffee.round(),
+      workspace: cafeResponse.cati!.workspace.round(),
+      acidity: cafeResponse.cati!.acidity.round()
+    ) : null,
     openingHour: cafeResponse.opening_hour.isNotNull ? OpeningHour(
       mon: cafeResponse.opening_hour!.mon,
       tue: cafeResponse.opening_hour!.tue,
@@ -157,15 +165,21 @@ User parseUserFromUserResponse(UserResponse userResponse) {
     ageRange: userResponse.profile?.age_range,
     dateOfBirth: userResponse.profile?.date_of_birth,
     gender: userResponse.profile?.gender,
+    myCATI: CATI(
+      openness: userResponse.profile?.cati_openness ?? User.empty().myCATI.openness,
+      coffee: userResponse.profile?.cati_coffee ?? User.empty().myCATI.coffee,
+      workspace: userResponse.profile?.cati_workspace ?? User.empty().myCATI.workspace,
+      acidity: userResponse.profile?.cati_acidity ?? User.empty().myCATI.acidity
+    ),
     grade: Grade(
-        id: userResponse.profile?.grade.id ?? User.empty().grade.id,
-        step: userResponse.profile?.grade.step ?? User.empty().grade.step,
-        updateCountRequirement: userResponse.profile?.grade.sharing_count_requirement ?? User.empty().grade.updateCountRequirement,
-        updateRestrictionPerCafe: userResponse.profile?.grade.sharing_restriction_per_cafe ?? User.empty().grade.updateRestrictionPerCafe,
-        stackRestrictionPerDay: userResponse.profile?.grade.activity_stack_restriction_per_day ?? User.empty().grade.stackRestrictionPerDay,
-        name: userResponse.profile?.grade.name ?? User.empty().grade.name,
-        imageUrl: userResponse.profile?.grade.image ?? User.empty().grade.imageUrl,
-        description: userResponse.profile?.grade.description ?? User.empty().grade.description),
+      id: userResponse.profile?.grade.id ?? User.empty().grade.id,
+      step: userResponse.profile?.grade.step ?? User.empty().grade.step,
+      updateCountRequirement: userResponse.profile?.grade.sharing_count_requirement ?? User.empty().grade.updateCountRequirement,
+      updateRestrictionPerCafe: userResponse.profile?.grade.sharing_restriction_per_cafe ?? User.empty().grade.updateRestrictionPerCafe,
+      stackRestrictionPerDay: userResponse.profile?.grade.activity_stack_restriction_per_day ?? User.empty().grade.stackRestrictionPerDay,
+      name: userResponse.profile?.grade.name ?? User.empty().grade.name,
+      imageUrl: userResponse.profile?.grade.image ?? User.empty().grade.imageUrl,
+      description: userResponse.profile?.grade.description ?? User.empty().grade.description),
     favoriteCafes: userResponse.profile?.favorite_cafe.map((e) => parseCafeFromCafeResponse(e)).toList() ?? []
   );
 }
@@ -181,14 +195,14 @@ PartialUser parsePartialUserFromPartialUserResponse({
       imageUrl: partialUserResponse.profile.profile_image.image,
       nickname: partialUserResponse.profile.nickname,
       grade: Grade(
-          id: partialUserResponse.profile.grade.id,
-          step: partialUserResponse.profile.grade.step,
-          updateCountRequirement: partialUserResponse.profile.grade.sharing_count_requirement,
-          updateRestrictionPerCafe: partialUserResponse.profile.grade.sharing_restriction_per_cafe,
-          stackRestrictionPerDay: partialUserResponse.profile.grade.activity_stack_restriction_per_day,
-          name: partialUserResponse.profile.grade.name,
-          imageUrl: partialUserResponse.profile.grade.image ?? User.empty().grade.imageUrl,
-          description: partialUserResponse.profile.grade.description ?? User.empty().grade.description));
+        id: partialUserResponse.profile.grade.id,
+        step: partialUserResponse.profile.grade.step,
+        updateCountRequirement: partialUserResponse.profile.grade.sharing_count_requirement,
+        updateRestrictionPerCafe: partialUserResponse.profile.grade.sharing_restriction_per_cafe,
+        stackRestrictionPerDay: partialUserResponse.profile.grade.activity_stack_restriction_per_day,
+        name: partialUserResponse.profile.grade.name,
+        imageUrl: partialUserResponse.profile.grade.image ?? User.empty().grade.imageUrl,
+        description: partialUserResponse.profile.grade.description ?? User.empty().grade.description));
 }
 
 /// OccupancyRateUpdateRepResponse로부터 occupancyRateUpdate 객체를 뽑아내는 함수
@@ -246,6 +260,7 @@ Cafe parseCafeFromCafeRepResponse({required CafeRepResponse cafeRepResponse}) {
       address: cafeRepResponse.address,
       brandName: null,
       brandImageUrl: null,
+      cati: null,
       latLng: NLatLng(cafeRepResponse.latitude, cafeRepResponse.longitude),
       cafeFloors: [],
       openingHour: null,
@@ -327,5 +342,24 @@ Brandcon parseBrandconFromBrandconResponse({required BrandconResponse brandconRe
     imageUrl: brandconResponse.image,
     expirationDate: DateTime.parse(brandconResponse.expiration_period),
     isUsed: brandconResponse.is_used
+  );
+}
+
+/// CafeAdditionRequestResponse로부터 CafeAdditionRequest 객체를 뽑아내는 함수
+CafeAdditionRequest parseCafeAdditionRequestFromCafeAdditionRequestResponse({required CafeAdditionRequestResponse requestResponse}) {
+  return CafeAdditionRequest(
+    id: requestResponse.id,
+    topFloor: 1,
+    bottomFloor: 1,
+    cafeName: requestResponse.cafe.name,
+    dongAddress: "",
+    roadAddress: requestResponse.cafe.address,
+    etc: "",
+    rejectionReason: requestResponse.rejection_reason,
+    isApproved: requestResponse.is_approved,
+    requestedAt: DateTime.parse(requestResponse.requested_at),
+    answeredAt: DateTime.parse(requestResponse.answered_at),
+    wallSocketRates: [],
+    openingHour: null
   );
 }

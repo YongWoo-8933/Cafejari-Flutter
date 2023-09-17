@@ -71,7 +71,7 @@ class CafeRecommendationCard extends StatelessWidget {
                       const HorizontalSpacer(4),
                       Text(
                         cafe.maximumWallSocketRate.isNotNull ?
-                          "${(cafe.maximumWallSocketRate! * 100).toInt()}% (${cafe.maximumWallSocketFloor.toFloor()}층)" :
+                          "${(cafe.maximumWallSocketRate! * 100).toInt()}% (${cafe.maximumWallSocketFloor!.toFloor()}층)" :
                           "정보없음",
                         style: TextSize.textSize_bold_12
                       ),

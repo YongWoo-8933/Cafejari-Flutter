@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
+import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -46,6 +47,10 @@ abstract class UserUseCase {
     bool? occupancyPushEnabled,
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
+    int? openness,
+    int? coffee,
+    int? workspace,
+    int? acidity,
     required Function(String) onAccessTokenRefresh
   });
   Future<void> logout({
@@ -57,13 +62,19 @@ abstract class UserUseCase {
     required String reason,
     required Function(String) onAccessTokenRefresh
   });
+  Future<void> userMigrate({
+    required String accessToken,
+    required String phoneNumber,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
   final TokenRepository tokenRepository;
   final UserRepository userRepository;
+  final RequestRepository requestRepository;
 
-  UserUseCaseImpl({required this.tokenRepository, required this.userRepository});
+  UserUseCaseImpl({required this.tokenRepository, required this.userRepository, required this.requestRepository});
 
   @override
   Future<bool> getIsInstalledFirstTime() async => await userRepository.getIsInstalledFirstTime();
@@ -250,6 +261,10 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     bool? occupancyPushEnabled,
     bool? logPushEnabled,
     List<int>? favoriteCafeIdList,
+    int? openness,
+    int? coffee,
+    int? workspace,
+    int? acidity,
     required Function(String) onAccessTokenRefresh
   }) async {
     try {
@@ -266,7 +281,11 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
         marketingPushEnabled: marketingPushEnabled,
         occupancyPushEnabled: occupancyPushEnabled,
         logPushEnabled: logPushEnabled,
-        favoriteCafeIdList: favoriteCafeIdList
+        favoriteCafeIdList: favoriteCafeIdList,
+        openness: openness,
+        coffee: coffee,
+        workspace: workspace,
+        acidity: acidity
       );
       return parseUserFromUserResponse(userRes);
     } on AccessTokenExpired {
@@ -286,7 +305,11 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
           marketingPushEnabled: marketingPushEnabled,
           occupancyPushEnabled: occupancyPushEnabled,
           logPushEnabled: logPushEnabled,
-          favoriteCafeIdList: favoriteCafeIdList
+          favoriteCafeIdList: favoriteCafeIdList,
+          openness: openness,
+          coffee: coffee,
+          workspace: workspace,
+          acidity: acidity
         );
         return parseUserFromUserResponse(userRes);
       } on AccessTokenExpired{
@@ -329,12 +352,36 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
     required Function(String) onAccessTokenRefresh
   }) async {
     try {
-      await userRepository.withdraw(accessToken: accessToken, reason: reason);
+      await requestRepository.postUserWithdrawalRequest(accessToken: accessToken, reason: reason);
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       onAccessTokenRefresh(newToken);
       try {
-        await userRepository.withdraw(accessToken: newToken, reason: reason);
+        await requestRepository.postUserWithdrawalRequest(accessToken: newToken, reason: reason);
+      } on AccessTokenExpired{
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired{
+      rethrow;
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> userMigrate({
+    required String accessToken,
+    required String phoneNumber,
+    required Function(String) onAccessTokenRefresh
+  }) async {
+    final replacedPhoneNumber = phoneNumber.replaceFirst("010", "");
+    try {
+      await requestRepository.postUserMigrationRequest(accessToken: accessToken, phoneNumber: replacedPhoneNumber);
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
+      try {
+        await requestRepository.postUserMigrationRequest(accessToken: accessToken, phoneNumber: replacedPhoneNumber);
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }

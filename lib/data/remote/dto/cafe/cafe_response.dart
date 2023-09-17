@@ -16,6 +16,7 @@ class CafeResponse {
   final bool is_visible, is_closed;
   final OpeningHourResponse? opening_hour;
   final BrandResponse? brand;
+  final CATIResponse? cati;
   final List<CafeFloorCafeRepResponse> cafe_floor;
   final List<CafeVIPResponse> cafe_vip;
   final List<CafeImageResponse> cafe_image;
@@ -30,6 +31,7 @@ class CafeResponse {
       required this.is_closed,
       required this.opening_hour,
       required this.brand,
+      required this.cati,
       required this.cafe_floor,
       required this.cafe_vip,
       required this.cafe_image});
@@ -132,6 +134,23 @@ class CafeImageResponse {
 
   factory CafeImageResponse.fromJson(Map<String, dynamic> json) =>
       _$CafeImageResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CATIResponse {
+  final double openness;
+  final double coffee;
+  final double workspace;
+  final double acidity;
+
+  CATIResponse({
+    required this.openness,
+    required this.coffee,
+    required this.workspace,
+    required this.acidity,
+  });
+
+  factory CATIResponse.fromJson(Map<String, dynamic> json) => _$CATIResponseFromJson(json);
 }
 
 @JsonSerializable()

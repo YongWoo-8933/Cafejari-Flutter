@@ -22,6 +22,7 @@ abstract interface class CafeRepository {
   Future<NaverSearchCafeResponse> fetchNaverSearchResult(
       {required String query});
   Future<List<LocationResponse>> fetchLocation();
+  Future<List<CATIResponse>> fetchCATI({required int cafeId});
 
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser(
       {required String accessToken,
@@ -30,6 +31,13 @@ abstract interface class CafeRepository {
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest(
       {required double occupancyRate,
       required int cafeFloorId});
+  Future<CATIResponse> postCATI(
+      {required String accessToken,
+      required int cafeId,
+      required int openness,
+      required int coffee,
+      required int workspace,
+      required int acidity});
 }
 
 /// cafe repository의 구현부
@@ -144,6 +152,35 @@ class CafeRepositoryImpl implements CafeRepository {
     }
   }
 
+  @override
+  Future<List<LocationResponse>> fetchLocation() async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "location/"
+      );
+      return response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CATIResponse>> fetchCATI({required int cafeId}) async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "cati/",
+        query: {"cafe_id": cafeId}
+      );
+      return response.map((dynamic e) => CATIResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
   // post //////////////////////////////////////////////////////////////////////////////////////////
   @override
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser({
@@ -183,14 +220,31 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<List<LocationResponse>> fetchLocation() async {
+  Future<CATIResponse> postCATI({
+    required String accessToken,
+    required int cafeId,
+    required int openness,
+    required int coffee,
+    required int workspace,
+    required int acidity
+  }) async {
     try {
-      final List<dynamic> response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "cafe",
-          endpoint: "location/"
+      final dynamic response = await apiService.request(
+        method: HttpMethod.post,
+        appLabel: "cafe",
+        endpoint: "cati/",
+        accessToken: accessToken,
+        body: {
+          "cafe_id": cafeId,
+          "openness": openness,
+          "coffee": coffee,
+          "workspace": workspace,
+          "acidity": acidity,
+        }
       );
-      return response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
+      return CATIResponse.fromJson(response);
+    } on TokenExpired {
+      throw AccessTokenExpired();
     } on ErrorWithMessage {
       rethrow;
     }

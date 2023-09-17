@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MyPageState {
   List<({String imageUrl, int profileImageId})> get defaultProfileImages =>
       throw _privateConstructorUsedError;
+  TextEditingController get userMigrationPhoneNumberController =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyPageStateCopyWith<MyPageState> get copyWith =>
@@ -31,7 +33,8 @@ abstract class $MyPageStateCopyWith<$Res> {
       _$MyPageStateCopyWithImpl<$Res, MyPageState>;
   @useResult
   $Res call(
-      {List<({String imageUrl, int profileImageId})> defaultProfileImages});
+      {List<({String imageUrl, int profileImageId})> defaultProfileImages,
+      TextEditingController userMigrationPhoneNumberController});
 }
 
 /// @nodoc
@@ -48,12 +51,18 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
   @override
   $Res call({
     Object? defaultProfileImages = null,
+    Object? userMigrationPhoneNumberController = null,
   }) {
     return _then(_value.copyWith(
       defaultProfileImages: null == defaultProfileImages
           ? _value.defaultProfileImages
           : defaultProfileImages // ignore: cast_nullable_to_non_nullable
               as List<({String imageUrl, int profileImageId})>,
+      userMigrationPhoneNumberController: null ==
+              userMigrationPhoneNumberController
+          ? _value.userMigrationPhoneNumberController
+          : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ) as $Val);
   }
 }
@@ -67,7 +76,8 @@ abstract class _$$_MyPageStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<({String imageUrl, int profileImageId})> defaultProfileImages});
+      {List<({String imageUrl, int profileImageId})> defaultProfileImages,
+      TextEditingController userMigrationPhoneNumberController});
 }
 
 /// @nodoc
@@ -82,12 +92,18 @@ class __$$_MyPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? defaultProfileImages = null,
+    Object? userMigrationPhoneNumberController = null,
   }) {
     return _then(_$_MyPageState(
       defaultProfileImages: null == defaultProfileImages
           ? _value._defaultProfileImages
           : defaultProfileImages // ignore: cast_nullable_to_non_nullable
               as List<({String imageUrl, int profileImageId})>,
+      userMigrationPhoneNumberController: null ==
+              userMigrationPhoneNumberController
+          ? _value.userMigrationPhoneNumberController
+          : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -97,7 +113,8 @@ class __$$_MyPageStateCopyWithImpl<$Res>
 class _$_MyPageState implements _MyPageState {
   _$_MyPageState(
       {required final List<({String imageUrl, int profileImageId})>
-          defaultProfileImages})
+          defaultProfileImages,
+      required this.userMigrationPhoneNumberController})
       : _defaultProfileImages = defaultProfileImages;
 
   final List<({String imageUrl, int profileImageId})> _defaultProfileImages;
@@ -110,8 +127,11 @@ class _$_MyPageState implements _MyPageState {
   }
 
   @override
+  final TextEditingController userMigrationPhoneNumberController;
+
+  @override
   String toString() {
-    return 'MyPageState(defaultProfileImages: $defaultProfileImages)';
+    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController)';
   }
 
   @override
@@ -120,12 +140,18 @@ class _$_MyPageState implements _MyPageState {
         (other.runtimeType == runtimeType &&
             other is _$_MyPageState &&
             const DeepCollectionEquality()
-                .equals(other._defaultProfileImages, _defaultProfileImages));
+                .equals(other._defaultProfileImages, _defaultProfileImages) &&
+            (identical(other.userMigrationPhoneNumberController,
+                    userMigrationPhoneNumberController) ||
+                other.userMigrationPhoneNumberController ==
+                    userMigrationPhoneNumberController));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_defaultProfileImages));
+      runtimeType,
+      const DeepCollectionEquality().hash(_defaultProfileImages),
+      userMigrationPhoneNumberController);
 
   @JsonKey(ignore: true)
   @override
@@ -137,10 +163,14 @@ class _$_MyPageState implements _MyPageState {
 abstract class _MyPageState implements MyPageState {
   factory _MyPageState(
       {required final List<({String imageUrl, int profileImageId})>
-          defaultProfileImages}) = _$_MyPageState;
+          defaultProfileImages,
+      required final TextEditingController
+          userMigrationPhoneNumberController}) = _$_MyPageState;
 
   @override
   List<({String imageUrl, int profileImageId})> get defaultProfileImages;
+  @override
+  TextEditingController get userMigrationPhoneNumberController;
   @override
   @JsonKey(ignore: true)
   _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>

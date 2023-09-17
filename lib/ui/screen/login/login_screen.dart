@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       case true:
                         if (context.mounted) GoRouter.of(context).pop();
                         loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
+                        await FirebaseAnalytics.instance.logLogin();
                       case false:
                         if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
                       default:
@@ -154,6 +156,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             case true:
                               if (context.mounted) GoRouter.of(context).pop();
                               loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
+                              await FirebaseAnalytics.instance.logLogin();
                             case false:
                               if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
                             default:

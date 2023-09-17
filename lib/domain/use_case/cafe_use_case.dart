@@ -1,11 +1,11 @@
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/request/request_response.dart';
 import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/request/request.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_map_cafes.dart';
-import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_cafe_addition_requests.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_occupancy_updates.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/update_occupancy_rate.dart';
 import 'package:cafejari_flutter/domain/use_case/util.dart';
@@ -38,6 +38,29 @@ abstract interface class CafeUseCase {
     required int cafeFloorId,
     String? accessToken,
     Function(String)? onAccessTokenRefresh
+  });
+  Future<CafeAdditionRequest> requestCafeAddition({
+    required String accessToken,
+    required String cafeName,
+    required String dongAddress,
+    required String roadAddress,
+    required double latitude,
+    required double longitude,
+    required int topFloor,
+    required int bottomFloor,
+    required List<double> wallSocketRateList,
+    required List<String> openingHourList,
+    required String etc,
+    required Function(String) onAccessTokenRefresh
+  });
+  Future<void> voteCATI({
+    required String accessToken,
+    required int cafeId,
+    required int openness,
+    required int coffee,
+    required int workspace,
+    required int acidity,
+    required Function(String) onAccessTokenRefresh
   });
 }
 
@@ -158,20 +181,19 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   }) async {
-    final f = GetMyCafeAdditionRequests();
     try {
-      return await f(
-          requestRepository: requestRepository,
-          accessToken: accessToken
-      );
+      List<CafeAdditionRequestResponse> requestResponseList = await requestRepository.fetchMyCafeAdditionRequest(accessToken: accessToken);
+      return requestResponseList.map((requestResponse) {
+        return parseCafeAdditionRequestFromCafeAdditionRequestResponse(requestResponse: requestResponse);
+      }).toList();
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       onAccessTokenRefresh(newToken);
       try {
-        return await f(
-            requestRepository: requestRepository,
-            accessToken: newToken
-        );
+        List<CafeAdditionRequestResponse> requestResponseList = await requestRepository.fetchMyCafeAdditionRequest(accessToken: newToken);
+        return requestResponseList.map((requestResponse) {
+          return parseCafeAdditionRequestFromCafeAdditionRequestResponse(requestResponse: requestResponse);
+        }).toList();
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
@@ -247,6 +269,107 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CafeAdditionRequest> requestCafeAddition({
+    required String accessToken,
+    required String cafeName,
+    required String dongAddress,
+    required String roadAddress,
+    required double latitude,
+    required double longitude,
+    required int topFloor,
+    required int bottomFloor,
+    required List<double> wallSocketRateList,
+    required List<String> openingHourList,
+    required String etc,
+    required Function(String) onAccessTokenRefresh
+  }) async {
+    try {
+      return parseCafeAdditionRequestFromCafeAdditionRequestResponse(
+        requestResponse: await requestRepository.postCafeAdditionRequest(
+          accessToken: accessToken,
+          cafeName: cafeName,
+          dongAddress: dongAddress,
+          roadAddress: roadAddress,
+          latitude: latitude,
+          longitude: longitude,
+          topFloor: topFloor,
+          bottomFloor: bottomFloor,
+          wallSocketRateList: wallSocketRateList,
+          openingHourList: openingHourList,
+          etc: etc
+        )
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
+      try {
+        return parseCafeAdditionRequestFromCafeAdditionRequestResponse(
+          requestResponse: await requestRepository.postCafeAdditionRequest(
+            accessToken: accessToken,
+            cafeName: cafeName,
+            dongAddress: dongAddress,
+            roadAddress: roadAddress,
+            latitude: latitude,
+            longitude: longitude,
+            topFloor: topFloor,
+            bottomFloor: bottomFloor,
+            wallSocketRateList: wallSocketRateList,
+            openingHourList: openingHourList,
+            etc: etc
+          )
+        );
+      } on AccessTokenExpired {
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired {
+      rethrow;
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> voteCATI({
+    required String accessToken,
+    required int cafeId,
+    required int openness,
+    required int coffee,
+    required int workspace,
+    required int acidity,
+    required Function(String) onAccessTokenRefresh
+  }) async {
+    try {
+      await cafeRepository.postCATI(
+        accessToken: accessToken,
+        cafeId: cafeId,
+        openness: openness,
+        coffee: coffee,
+        workspace: workspace,
+        acidity: acidity
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
+      try {
+        await cafeRepository.postCATI(
+          accessToken: accessToken,
+          cafeId: cafeId,
+          openness: openness,
+          coffee: coffee,
+          workspace: workspace,
+          acidity: acidity
+        );
+      } on AccessTokenExpired {
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired {
+      rethrow;
     } on ErrorWithMessage {
       rethrow;
     }
