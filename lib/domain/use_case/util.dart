@@ -37,6 +37,7 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     cafeFloors.add(CafeFloor(
         id: cafeFloorResponse.id,
         floor: cafeFloorResponse.floor,
+        pointPrediction: cafeFloorResponse.point_prediction,
         restroom: cafeFloorResponse.restroom,
         hasSeat: cafeFloorResponse.has_seat,
         wallSocketRate: wallSocketRate,
@@ -109,6 +110,29 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
       }
     }
   }
+  // cati tag text 정리
+  final cati = cafeResponse.cati;
+  String returnTage = "";
+  if (cati.isNull) {
+    returnTage = "# 카페의 태그를 만들어주세요!";
+  } else if (cati!.openness == 0 && cati.coffee == 0 && cati.workspace == 0 && cati.acidity == 0) {
+    returnTage = "# 카페의 태그를 만들어주세요!";
+  } else {
+    List<String> returnTagList = [];
+    if(cati.openness > 0) returnTagList.add("#개방적인  ");
+    if(cati.openness < 0) returnTagList.add("#아늑한  ");
+    if(cati.coffee > 0) returnTagList.add("#커피맛집  ");
+    if(cati.coffee < 0) returnTagList.add("#음료맛집  ");
+    if(cati.workspace > 0) returnTagList.add("#공부/업무  ");
+    if(cati.workspace < 0) returnTagList.add("#감성카페  ");
+    if(cati.acidity > 0) returnTagList.add("#산미  ");
+    if(cati.acidity < 0) returnTagList.add("#산미없음  ");
+
+    returnTagList.asMap().forEach((index, tag) {
+      if(index == 2) returnTage += "\n";
+      returnTage += tag;
+    });
+  }
 
   // 최종 산출
   return Cafe(
@@ -124,6 +148,7 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     brandImageUrl: cafeResponse.brand?.image,
     latLng: NLatLng(cafeResponse.latitude, cafeResponse.longitude),
     cafeFloors: cafeFloors,
+    catiTagText: returnTage,
     cati: cafeResponse.cati.isNotNull ? CATI(
       openness: cafeResponse.cati!.openness.round(),
       coffee: cafeResponse.cati!.coffee.round(),
@@ -237,6 +262,7 @@ OccupancyRateUpdate parseOccupancyRateUpdateFromOccupancyRateUpdateResponse({
       cafeFloor: CafeFloor(
           id: updateResponse.cafe_floor.id,
           floor: updateResponse.cafe_floor.floor,
+          pointPrediction: 0,
           restroom: updateResponse.cafe_floor.restroom,
           hasSeat: updateResponse.cafe_floor.has_seat,
           wallSocketRate: wallSocketRate,
@@ -261,6 +287,7 @@ Cafe parseCafeFromCafeRepResponse({required CafeRepResponse cafeRepResponse}) {
       brandName: null,
       brandImageUrl: null,
       cati: null,
+      catiTagText: "",
       latLng: NLatLng(cafeRepResponse.latitude, cafeRepResponse.longitude),
       cafeFloors: [],
       openingHour: null,

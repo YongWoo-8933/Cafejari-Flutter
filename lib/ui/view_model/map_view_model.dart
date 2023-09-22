@@ -10,6 +10,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,41 +32,15 @@ class MapViewModel extends StateNotifier<MapState> {
     required this.globalViewModel
   }): _cafeUseCase = cafeUseCase, _userUseCase = userUseCase, super(MapState.empty().copyWith());
 
-  Future<Cafes> refreshCafes({NCameraPosition? cameraPosition}) async {
+  Future<Cafes> refreshCafes({NCameraPosition? cameraPosition, int? selectedCafeId}) async {
     final NCameraPosition nonNullCameraPosition = cameraPosition ?? await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition;
     try {
       final Cafes newCafes = await _cafeUseCase.getMapCafes(cameraPosition: nonNullCameraPosition);
 
       // 마커 설정
       Set<NMarker> resSet = {};
-      for (var cafe in newCafes) {
-        var marker = NMarker(
-            id: cafe.id.toString(),
-            position: cafe.latLng,
-            icon: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().nMarker,
-            size: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize);
-        marker.setZIndex(1);
-        marker.setOnTapListener((tappedMarker) async {
-          if (state.selectedMarker.isNotNull) {
-            state.selectedMarker?.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize);
-            state.selectedMarker?.setZIndex(1);
-          }
-          tappedMarker.setCaptionOffset(1.0);
-          tappedMarker.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize * 1.25);
-          tappedMarker.setZIndex(3);
-          tappedMarker.setCaptionAligns([NAlign.top]);
-          tappedMarker.setCaptionOffset(4.0);
-          state = state.copyWith(
-            selectedCafe: cafe,
-            selectedMarker: tappedMarker,
-            selectedCafeFloor: cafe.recentUpdatedFloor.isNull ? cafe.cafeFloors.first :
-              cafe.cafeFloors.firstWhere((e) => e.floor == cafe.recentUpdatedFloor)
-          );
-          state.mapController?.updateCamera(
-            NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
-          openBottomSheetPreview();
-        });
-        resSet.add(marker);
+      for (final cafe in newCafes) {
+        resSet.add(_makeMarkerFromCafe(cafe: cafe, isTapped: selectedCafeId == cafe.id));
       }
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
@@ -76,6 +51,33 @@ class MapViewModel extends StateNotifier<MapState> {
     } on ErrorWithMessage catch(e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
       return [];
+    }
+  }
+
+  moveToCafeWithRefresh({required int cafeId}) async {
+    try {
+      final Cafe cafe = await _cafeUseCase.getCafe(cafeId: cafeId);
+      final NCameraPosition cameraPosition = NCameraPosition(target: cafe.latLng, zoom: Zoom.large);
+      await refreshCafes(cameraPosition: cameraPosition, selectedCafeId: cafeId);
+      selectCafe(cafe);
+      selectCafeFloor(cafe.cafeFloors.first);
+      state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+      openBottomSheetPreview();
+    } on ErrorWithMessage {
+      null;
+    }
+  }
+
+  refreshMyTodayOccupancyRateUpdates({required BuildContext context}) async {
+    try {
+      state = state.copyWith(myTodayUpdates: await _cafeUseCase.getMyTodayOccupancyUpdates(
+        accessToken: globalViewModel.state.accessToken,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      ));
+    } on ErrorWithMessage catch (e) {
+      null;
+    } on RefreshTokenExpired {
+      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
     }
   }
 
@@ -172,6 +174,13 @@ class MapViewModel extends StateNotifier<MapState> {
         accessToken: globalViewModel.state.accessToken
       );
       final Cafe updatedCafe = await _cafeUseCase.getCafe(cafeId: updateResponse.cafeFloor.cafe.id);
+      Map<int, OccupancyRateUpdates> newUpdates = Map.from(state.myTodayUpdates);
+      if(newUpdates.containsKey(updateResponse.cafeFloor.id)) {
+        newUpdates[updateResponse.cafeFloor.id]!.insert(0, updateResponse);
+      } else {
+        newUpdates[updateResponse.cafeFloor.id] = [updateResponse];
+      }
+      state = state.copyWith(myTodayUpdates: newUpdates);
       _replaceCafe(updatedCafe);
       globalViewModel.init(
         accessToken: globalViewModel.state.accessToken,
@@ -207,7 +216,7 @@ class MapViewModel extends StateNotifier<MapState> {
       final NCameraPosition cameraPosition = NCameraPosition(target: cafe.latLng, zoom: Zoom.large);
       setShareTempCameraPosition(cameraPosition);
       if(state.mapController.isNotNull) {
-        await refreshCafes(cameraPosition: cameraPosition);
+        await refreshCafes(cameraPosition: cameraPosition, selectedCafeId: cafe.id);
         state.mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
       }
     } on ErrorWithMessage {
@@ -254,7 +263,13 @@ class MapViewModel extends StateNotifier<MapState> {
 
   setShareTempCameraPosition(NCameraPosition? cameraPosition) => state = state.copyWith(shareTempCameraPosition: cameraPosition);
 
-  selectCafe(Cafe changedSelectedCafe) => state = state.copyWith(selectedCafe: changedSelectedCafe);
+  selectCafe(Cafe changedSelectedCafe) {
+    state = state.copyWith(
+      selectedCafe: changedSelectedCafe,
+      currentCafeImagePage: 0
+    );
+    if(state.cafeImagePageController.hasClients) state.cafeImagePageController.jumpToPage(0);
+  }
 
   selectCafeFloor(CafeFloor changedSelectedCafeFloor) => state = state.copyWith(selectedCafeFloor: changedSelectedCafeFloor);
 
@@ -287,47 +302,62 @@ class MapViewModel extends StateNotifier<MapState> {
     );
 
     // marker 교체
+    var marker = _makeMarkerFromCafe(cafe: cafe, isTapped: true);
+    state.mapController?.addOverlay(marker);
+
+    // state 적용
+    selectCafe(cafe);
+    selectCafeFloor(newCafeFloor);
+    state = state.copyWith(cafes: copiedCafes);
+  }
+
+  NMarker _makeMarkerFromCafe({required Cafe cafe, required bool isTapped}) {
     var marker = NMarker(
       id: cafe.id.toString(),
       position: cafe.latLng,
       icon: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().nMarker,
-      size: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize * 1.25
+      size: cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize
     );
-    marker.setZIndex(3);
+    marker.setZIndex(1);
     marker.setOnTapListener((tappedMarker) async {
-      if (state.selectedMarker.isNotNull) {
-        state.selectedMarker?.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize);
-        state.selectedMarker?.setZIndex(1);
-      }
-      tappedMarker.setCaptionOffset(1.0);
-      tappedMarker.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize * 1.25);
-      tappedMarker.setZIndex(3);
-      tappedMarker.setCaptionAligns([NAlign.top]);
-      tappedMarker.setCaptionOffset(4.0);
-      state = state.copyWith(
-        selectedCafe: cafe,
-        selectedMarker: tappedMarker,
-        selectedCafeFloor: cafe.recentUpdatedFloor.isNull ? cafe.cafeFloors.first :
+      _tapMarker(marker: tappedMarker, cafe: cafe);
+      selectCafe(cafe);
+      selectCafeFloor(cafe.recentUpdatedFloor.isNull ?
+        cafe.cafeFloors.first :
         cafe.cafeFloors.firstWhere((e) => e.floor == cafe.recentUpdatedFloor)
       );
-      state.mapController?.updateCamera(
-          NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
+      state.mapController?.updateCamera(NCameraUpdate.scrollAndZoomTo(target: cafe.latLng, zoom: Zoom.large));
       openBottomSheetPreview();
     });
-    state.mapController?.addOverlay(marker);
+    if(isTapped) _tapMarker(cafe: cafe, marker: marker);
+    return marker;
+  }
 
-    // state 적용
-    state = state.copyWith(
-      cafes: copiedCafes,
-      selectedCafe: cafe,
-      selectedCafeFloor: newCafeFloor,
-      selectedMarker: marker,
+  _tapMarker({required NMarker marker, required Cafe cafe}) async {
+    await FirebaseAnalytics.instance.logEvent(
+      name: "marker_click",
+      parameters: {
+        "cafe_id": cafe.id,
+        "cafe_brand": cafe.brandName ?? "None"
+      },
     );
+    if (state.selectedMarker.isNotNull) {
+      state.selectedMarker?.setSize(state.selectedMarker!.size * 5 / 6);
+      state.selectedMarker?.setZIndex(1);
+      state.selectedMarker?.setCaption(const NOverlayCaption(text: ""));
+    }
+    marker.setCaptionOffset(1.0);
+    marker.setSize(cafe.recentUpdatedOccupancyRate.toOccupancyLevel().markerSize * 1.2);
+    marker.setZIndex(3);
+    marker.setCaptionAligns([NAlign.top]);
+    marker.setCaptionOffset(4.0);
+    marker.setCaption(NOverlayCaption(text: cafe.name, textSize: 14));
+    state = state.copyWith(selectedMarker: marker);
   }
 
   _showPointAnimation({required BuildContext context, required int point}) {
     showDialog(context: context, builder: (context) {
-      Future.delayed(const Duration(seconds: 4), () => Navigator.of(context).pop());
+      Future.delayed(const Duration(seconds: 4), () {if(context.mounted) Navigator.of(context).pop();});
       return Dialog(
         insetPadding: AppPadding.padding_0,
         backgroundColor: AppColor.transparent,

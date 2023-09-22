@@ -24,9 +24,12 @@ class PushBlock extends StatelessWidget {
       child: Row(
         children: [
           Container(
+            padding: EdgeInsets.all(10),
             alignment: Alignment.center,
-            width: 55,
-            child: push.type.image,
+            child: Image.asset(
+              "asset/image/icon_loud_speaker.png",
+              width: 28,
+            ),
           ),
           Container(
             width: blockWidth-75,
@@ -42,14 +45,14 @@ class PushBlock extends StatelessWidget {
                         style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColor.unselectedTabBarColor
+                            color: AppColor.grey_500
                         )),
                     const HorizontalSpacer(5),
                     Text(_formatTimeDifference(push.pushedAt),
                         style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColor.unselectedTabBarColor
+                            color: AppColor.grey_500
                         ))
                   ],
                 ),

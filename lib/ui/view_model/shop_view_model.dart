@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/use_case/shop_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
@@ -48,6 +49,12 @@ class ShopViewModel extends StateNotifier<ShopState> {
         accessToken: globalViewModel.state.accessToken,
         itemId: item.itemId,
         onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      await FirebaseAnalytics.instance.logEvent(
+        name: "buy_brandcon",
+        parameters: {
+          "item_id": item.itemId,
+        },
       );
       Brandcons newMyBrandcons = List.from(state.myBrandcons);
       newMyBrandcons.add(newBrandcon);

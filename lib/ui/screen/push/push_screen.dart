@@ -7,6 +7,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -61,7 +62,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
                 Tab(height: 40, child: _tab(56, PushType.activity().tag)),
                 Tab(height: 40, child: _tab(68, PushType.event().tag)),
                 Tab(height: 40, child: _tab(68, PushType.marketing().tag)),
-                Tab(height: 40, child: _tab(56, PushType.etc().tag)),
+                Tab(height: 40, child: _tab(56, PushType.etc().tag))
               ],
             ),
             Expanded(
@@ -101,17 +102,17 @@ class PushScreenState extends ConsumerState<PushScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(height: 1, width: 120, color: AppColor.grey_600),
+                          Container(height: 0.5, width: 120, color: AppColor.grey_500),
                           Text("   ${pushes[index].pushedAt.year}."
                               "${pushes[index].pushedAt.month.toString().padLeft(2, '0')}."
                               "${pushes[index].pushedAt.day.toString().padLeft(2, '0')}   ",
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColor.grey_600,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColor.grey_500,
                                 ),
                               ),
-                          Container(height: 1, width: 120, color: AppColor.grey_600),
+                          Container(height: 0.5, width: 120, color: AppColor.grey_500),
                         ],
                       ),
                     ),

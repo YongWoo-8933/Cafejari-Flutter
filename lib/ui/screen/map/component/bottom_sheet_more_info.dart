@@ -111,6 +111,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                 const Text("화장실 ", style: TextSize.textSize_grey_14),
                 const HorizontalSpacer(letterSpacing - 2),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...restroomDescriptionList.map((e) {
                       return Column(

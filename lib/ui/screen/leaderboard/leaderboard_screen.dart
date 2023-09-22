@@ -181,7 +181,14 @@ class _RankersPart extends StatelessWidget {
           Container(
             height: firstRankerHeight,
             alignment: Alignment.center,
-            child: const Text("랭킹 없음"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Image.asset("asset/image/icon_empty.png", width: 100),
+                const VerticalSpacer(20),
+                const Text("아직 산정된 랭킹이 없어요", style: TextSize.textSize_16,),
+              ],
+            ),
           )
         );
       case 1:

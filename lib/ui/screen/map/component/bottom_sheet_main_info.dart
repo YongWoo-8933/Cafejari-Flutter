@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
@@ -12,6 +13,7 @@ import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,13 +58,17 @@ class BottomSheetMainInfo extends ConsumerWidget {
                           PhotoViewGallery.builder(
                             scrollPhysics: const BouncingScrollPhysics(),
                             itemCount: mapState.selectedCafe.imageUrls.length,
-                            wantKeepAlive: true,
+                            pageController: PageController(initialPage: mapState.currentCafeImagePage, keepPage: false),
+                            onPageChanged: (value) {
+                              mapViewModel.setCurrentCafeImagePage(value);
+                              mapState.cafeImagePageController.jumpToPage(value);
+                            },
                             builder: (BuildContext context, int index) {
                               return PhotoViewGalleryPageOptions(
                                 imageProvider: CachedNetworkImageProvider(mapState.selectedCafe.imageUrls[index]),
                                 initialScale: PhotoViewComputedScale.contained,
-                                maxScale: 1.5,
-                                minScale: 0.4,
+                                maxScale: PhotoViewComputedScale.covered,
+                                minScale: PhotoViewComputedScale.contained,
                                 tightMode: true
                               );
                             },
@@ -86,7 +92,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                     ),
                   ),
                   child: PageView(
-                    controller: mapState.pageController,
+                    controller: mapState.cafeImagePageController,
                     onPageChanged: (value) => mapViewModel.setCurrentCafeImagePage(value),
                     children: [
                       ...mapState.selectedCafe.imageUrls.map((e) {
@@ -204,15 +210,17 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("${cafeFloor.floor}층", style: TextSize.textSize_bold_16),
-                                      const VerticalSpacer(4),
-                                      Image.asset(
-                                        cafeFloor.recentUpdates.isNotEmpty
-                                          ? cafeFloor.recentUpdates.first.occupancyRate
-                                          .toOccupancyLevel()
-                                          .thumbImagePath
-                                          : 'asset/image/cafe_icon_0.png',
+                                      Text("${cafeFloor.floor.toFloor()}층", style: TextSize.textSize_bold_16),
+                                      const VerticalSpacer(8),
+                                      cafeFloor.recentUpdates.isNotEmpty ? Image.asset(
+                                        cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().markerImagePath,
                                         width: 48,
+                                      ) : Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 6),
+                                        child: Image.asset(
+                                          OccupancyLevel.minus().markerImagePath,
+                                          width: 36,
+                                        ),
                                       ),
                                       const VerticalSpacer(10),
                                       Text(

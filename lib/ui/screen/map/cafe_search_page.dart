@@ -74,19 +74,7 @@ class SearchPage extends ConsumerWidget {
                                 GestureDetector(
                                   onTap: () async {
                                     mapViewModel.closeSearchPage();
-                                    mapState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
-                                      NCameraPosition(target: searchCafe.latLng, zoom: Zoom.large)
-                                    ));
-                                    final Cafes refreshedCafes = await mapViewModel.refreshCafes(
-                                      cameraPosition: NCameraPosition(target: searchCafe.latLng, zoom: Zoom.large)
-                                    );
-                                    final List<Cafe> selectedCafes = refreshedCafes.where((e) => e.id == searchCafe.id).toList();
-                                    if (selectedCafes.isNotEmpty) {
-                                      final Cafe cafe = selectedCafes.first;
-                                      mapViewModel.selectCafe(cafe);
-                                      mapViewModel.selectCafeFloor(cafe.cafeFloors.first);
-                                      mapViewModel.openBottomSheetPreview();
-                                    }
+                                    await mapViewModel.moveToCafeWithRefresh(cafeId: searchCafe.id);
                                   },
                                   child: Container(
                                     width: deviceWidth,

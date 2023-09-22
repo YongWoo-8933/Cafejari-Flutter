@@ -48,6 +48,7 @@ class CafejariApp extends ConsumerWidget {
           MaterialApp.router(
             theme: Theming.lightTheme,
             routerConfig: appRouter,
+            debugShowCheckedModeBanner: false
           ),
           CustomSnackBar(
             isVisible: globalState.isSnackBarOpened,
@@ -77,6 +78,9 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
 
     Future.delayed(Duration.zero, () async {
       final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+      final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+      final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
+      final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
       final GlobalState globalState = ref.watch(globalViewModelProvider);
 
       // 권한 확인 + 이동 및 온보딩 띄우기
@@ -91,6 +95,11 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
 
       // 앱 시작
       await globalViewModel.init();
+      await globalViewModel.locationTrackingStart();
+      await mapViewModel.refreshLocations();
+      await mapViewModel.getRandomCafeImageUrl();
+      await challengeViewModel.refreshChallenges();
+      await myPageViewModel.getDefaultProfileImages();
       FlutterNativeSplash.remove();
 
       // 버전 체크

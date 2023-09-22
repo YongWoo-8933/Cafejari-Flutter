@@ -6,7 +6,7 @@ import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/request/request.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_map_cafes.dart';
-import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_occupancy_updates.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case/get_my_today_occupancy_updates.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case/update_occupancy_rate.dart';
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -23,7 +23,7 @@ abstract interface class CafeUseCase {
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   });
-  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({
+  Future<Map<int, OccupancyRateUpdates>> getMyTodayOccupancyUpdates({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   });
@@ -119,22 +119,21 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   }) async {
-    final f = GetMyOccupancyUpdates();
     try {
-      return await f(
-          cafeRepository: cafeRepository,
-          accessToken: accessToken,
-          type: GetMyOccupancyUpdateType.all
-      );
+      List<OccupancyRateUpdateResponse> updateResponseList;
+      updateResponseList = await cafeRepository.fetchMyOccupancyUpdate(accessToken: accessToken);
+      return updateResponseList.map((e) {
+        return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: e);
+      }).toList();
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       onAccessTokenRefresh(newToken);
       try {
-        return f(
-            cafeRepository: cafeRepository,
-            accessToken: newToken,
-            type: GetMyOccupancyUpdateType.all
-        );
+        List<OccupancyRateUpdateResponse> updateResponseList;
+        updateResponseList = await cafeRepository.fetchMyOccupancyUpdate(accessToken: newToken);
+        return updateResponseList.map((e) {
+          return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: e);
+        }).toList();
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
@@ -146,26 +145,21 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   }
 
   @override
-  Future<OccupancyRateUpdates> getMyRecentOccupancyUpdates({
+  Future<Map<int, OccupancyRateUpdates>> getMyTodayOccupancyUpdates({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   }) async {
     final f = GetMyOccupancyUpdates();
     try {
       return await f(
-          cafeRepository: cafeRepository,
-          accessToken: accessToken,
-          type: GetMyOccupancyUpdateType.recent
+        cafeRepository: cafeRepository,
+        accessToken: accessToken,
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
       onAccessTokenRefresh(newToken);
       try {
-        return await f(
-          cafeRepository: cafeRepository,
-          accessToken: newToken,
-          type: GetMyOccupancyUpdateType.recent
-        );
+        return await f(cafeRepository: cafeRepository, accessToken: newToken);
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }

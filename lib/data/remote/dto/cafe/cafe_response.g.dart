@@ -76,6 +76,7 @@ CafeFloorCafeRepResponse _$CafeFloorCafeRepResponseFromJson(
     CafeFloorCafeRepResponse(
       id: json['id'] as int,
       floor: json['floor'] as int,
+      point_prediction: json['point_prediction'] as int,
       wall_socket_rate: json['wall_socket_rate'] as String?,
       restroom: json['restroom'] as String?,
       has_seat: json['has_seat'] as bool,
@@ -94,6 +95,7 @@ Map<String, dynamic> _$CafeFloorCafeRepResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'floor': instance.floor,
+      'point_prediction': instance.point_prediction,
       'wall_socket_rate': instance.wall_socket_rate,
       'restroom': instance.restroom,
       'has_seat': instance.has_seat,

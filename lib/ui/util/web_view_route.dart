@@ -8,8 +8,8 @@ sealed class WebViewRoute {
 
   factory WebViewRoute.faq() => _FAQ("FAQ", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
   factory WebViewRoute.guide() => _Guide("가이드", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
-  factory WebViewRoute.event() => _Event("이벤트", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
-  factory WebViewRoute.update() => _Update("업데이트노트", Uri.parse("https://cafejari.notion.site/a81ea1d045f24d26865b68373e30e15f?pvs=4"));
+  factory WebViewRoute.notification() => _Notification("공지사항", Uri.parse("https://cafejari.notion.site/3ebe53162df04aa79146765424bf5c80?pvs=4"));
+  factory WebViewRoute.update() => _Update("업데이트 소식", Uri.parse("https://cafejari.notion.site/a81ea1d045f24d26865b68373e30e15f?pvs=4"));
   factory WebViewRoute.insta() => _Insta("카페자리 인스타", Uri.parse("https://www.instagram.com/cafejari_official/"));
   factory WebViewRoute.blog() => _Blog("카페자리 블로그", Uri.parse("https://blog.naver.com/cafejari22"));
   factory WebViewRoute.privacyPolicy() => _PrivacyPolicy("개인정보 처리방침", Uri.parse("https://cafejari.co.kr/privacy_policy/"));
@@ -21,7 +21,7 @@ sealed class WebViewRoute {
 
 class _FAQ extends WebViewRoute { _FAQ(super.index, super.tag); }
 class _Guide extends WebViewRoute { _Guide(super.index, super.tag); }
-class _Event extends WebViewRoute { _Event(super.index, super.tag); }
+class _Notification extends WebViewRoute { _Notification(super.index, super.tag); }
 class _Update extends WebViewRoute { _Update(super.index, super.tag); }
 class _Insta extends WebViewRoute { _Insta(super.index, super.tag); }
 class _Blog extends WebViewRoute { _Blog(super.index, super.tag); }

@@ -12,20 +12,17 @@ import 'package:flutter/material.dart';
 class CafeRecommendationCard extends StatelessWidget {
   final Cafe cafe;
   final double width;
-  final double height;
 
   const CafeRecommendationCard({
     super.key,
     required this.cafe,
-    required this.width,
-    required this.height
+    required this.width
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height,
       decoration: BoxDecoration(
         color: AppColor.white,
         borderRadius: BorderRadius.circular(20),
@@ -34,22 +31,27 @@ class CafeRecommendationCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomCachedNetworkImage(
               imageUrl: cafe.imageUrls.isNotEmpty ? cafe.imageUrls.first : cafe.brandImageUrl ?? "",
               width: width,
-              height: 120
+              height: 120,
+              fit: BoxFit.cover,
             ),
             Padding(
               padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("#대표 태그", style: TextSize.textSize_grey_12),
-                  const VerticalSpacer(4),
-                  Text(cafe.name, style: TextSize.textSize_bold_16),
-                  const VerticalSpacer(15),
+                  Text(cafe.catiTagText, style: TextSize.textSize_grey_12),
+                  const VerticalSpacer(8),
+                  SizedBox(
+                    height: 36,
+                    child: Text(cafe.name, style: TextSize.textSize_bold_16)
+                  ),
+                  const VerticalSpacer(18),
                   Row(
                     children: [
                       Image.asset("asset/image/icon_people4_black.png"),

@@ -57,7 +57,7 @@ class CafeSearchResponse {
 
 @JsonSerializable()
 class CafeFloorCafeRepResponse {
-  final int id, floor;
+  final int id, floor, point_prediction;
   final String? wall_socket_rate, restroom;
   final bool has_seat;
   final OccupancyRatePredictionResponse? occupancy_rate_prediction;
@@ -66,6 +66,7 @@ class CafeFloorCafeRepResponse {
   CafeFloorCafeRepResponse(
       {required this.id,
         required this.floor,
+        required this.point_prediction,
         required this.wall_socket_rate,
         required this.restroom,
         required this.has_seat,

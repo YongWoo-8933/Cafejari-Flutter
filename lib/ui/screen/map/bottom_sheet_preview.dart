@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
@@ -5,6 +6,7 @@ import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -87,15 +89,18 @@ class BottomSheetPreview extends ConsumerWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                    width: constraint.maxWidth - componentHeight - 10,
-                                    child: Text(
-                                    _tagGenerator(mapState.selectedCafe.cati),
-                                    style: const TextStyle(
-                                      color: AppColor.grey_700,
-                                      fontSize: 11,
-                                      height: 0.98
-                                    )),
+                                  GestureDetector(
+                                    onTap: () => showDialog(context: context, builder: (_) => const CafeCATIEditor()),
+                                    child: SizedBox(
+                                      width: constraint.maxWidth - componentHeight - 10,
+                                      child: Text(
+                                      mapState.selectedCafe.catiTagText,
+                                      style: const TextStyle(
+                                        color: AppColor.grey_700,
+                                        fontSize: 12,
+                                        height: 0.95
+                                      )),
+                                    ),
                                   ),
                                   const BookmarkButton(buttonSize: componentHeight)
                                 ],
@@ -235,36 +240,6 @@ class BottomSheetPreview extends ConsumerWidget {
   }
 }
 
-String _tagGenerator(CATI? cati) {
-  if (cati.isNull) {
-    return "# 카페의 태그를 만들어주세요!";
-  } else {
-    if (cati!.openness == 0 && cati.coffee == 0 && cati.workspace == 0 && cati.acidity == 0) {
-      return "# 카페의 태그를 만들어주세요!";
-    }
-    String returnTag = "";
-    if(cati.acidity > 0) returnTag += "산미가 느껴지는 아메리카노";
-    if(cati.acidity < 0) returnTag += "산미없이 씁쓸한 아메리카노";
-
-    if(cati.acidity != 0 && cati.coffee != 0) returnTag += "와 ";
-
-    if(cati.coffee > 0) returnTag += "커피 음료";
-    if(cati.coffee < 0) returnTag += "논커피 음료";
-
-    if(returnTag.isNotEmpty) returnTag += "가 맛있는 ";
-
-    if(cati.openness > 0) returnTag += "개방적인 ";
-    if(cati.openness < 0) returnTag += "아늑한 ";
-
-    if(cati.workspace > 0) returnTag += "업무보기 좋은";
-    if(cati.workspace < 0) returnTag += "감성";
-
-    if(returnTag.isNotEmpty) returnTag += "카페";
-
-    return "# $returnTag";
-  }
-}
-
 class _FloorTabRow extends ConsumerWidget {
   final double width;
   final double height;
@@ -280,35 +255,35 @@ class _FloorTabRow extends ConsumerWidget {
         height: height,
         width: width,
         child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ...mapState.selectedCafe.cafeFloors.map((e) {
-                  final isSelected = e.floor == mapState.selectedCafeFloor.floor;
-                  return Row(
-                    children: [
-                      const HorizontalSpacer(10),
-                      GestureDetector(
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          mapViewModel.selectCafeFloor(e);
-                        },
-                        child: Text(
-                          "${e.floor}층",
-                          style: TextStyle(
-                              fontWeight: isSelected ? FontWeight.w800 : FontWeight.w400,
-                              fontSize: 15,
-                              color: isSelected ? AppColor.black : AppColor.grey_500
-                          ),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ...mapState.selectedCafe.cafeFloors.map((e) {
+                final isSelected = e.floor == mapState.selectedCafeFloor.floor;
+                return Row(
+                  children: [
+                    const HorizontalSpacer(10),
+                    GestureDetector(
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        mapViewModel.selectCafeFloor(e);
+                      },
+                      child: Text(
+                        "${e.floor.toFloor()}층",
+                        style: TextStyle(
+                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w400,
+                            fontSize: 15,
+                            color: isSelected ? AppColor.black : AppColor.grey_500
                         ),
                       ),
-                      const HorizontalSpacer(12)
-                    ],
-                  );
-                }).toList()
-              ],
-            )
+                    ),
+                    const HorizontalSpacer(12)
+                  ],
+                );
+              }).toList()
+            ],
+          )
         )
     );
   }

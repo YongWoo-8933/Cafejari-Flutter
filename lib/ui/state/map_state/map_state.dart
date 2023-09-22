@@ -11,9 +11,10 @@ part 'map_state.freezed.dart';
 class MapState with _$MapState {
   factory MapState(
       {required final PanelController bottomSheetController,
-      required final PageController pageController,
+      required final PageController cafeImagePageController,
       required final int currentCafeImagePage,
       required final Cafes cafes,
+      required final Map<int, OccupancyRateUpdates> myTodayUpdates,
       required final Locations locations,
       required final String? randomCafeImageUrl,
       required final Cafe selectedCafe,
@@ -38,9 +39,10 @@ class MapState with _$MapState {
 
   factory MapState.empty() => MapState(
       bottomSheetController: PanelController(),
-      pageController: PageController(),
+      cafeImagePageController: PageController(initialPage: 0),
       currentCafeImagePage: 0,
       cafes: [],
+      myTodayUpdates: {},
       locations: [],
       randomCafeImageUrl: null,
       selectedCafe: Cafe.empty(),

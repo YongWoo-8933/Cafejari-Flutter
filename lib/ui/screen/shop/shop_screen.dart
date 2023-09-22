@@ -9,7 +9,6 @@ import 'package:cafejari_flutter/ui/screen/shop/component/item_grid.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/shop_my_gifticon.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
@@ -196,7 +195,18 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                         ),
                         Visibility(
                           visible: shopState.myBrandcons.isEmpty,
-                          child: Container(alignment: Alignment.center, height: 300, child: Text("구매한 상품이 없어요")),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 300,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Image.asset("asset/image/icon_empty.png", width: 100),
+                                const VerticalSpacer(20),
+                                const Text("구매한 상품이 없어요", style: TextSize.textSize_16,),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),

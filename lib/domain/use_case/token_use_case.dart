@@ -1,6 +1,5 @@
 
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/core/util.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 
 /// 토큰 관련 data CRUD를 처리하는 use case
@@ -34,5 +33,5 @@ class TokenUseCaseImpl implements TokenUseCase {
   }
 
   @override
-  deleteRefreshToken() => tokenRepository.putRefreshToken(newToken: none);
+  deleteRefreshToken() => tokenRepository.putRefreshToken(newToken: "");
 }

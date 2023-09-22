@@ -1,5 +1,7 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/core/extension/int.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
@@ -33,6 +35,63 @@ class OccupancyUpdateDialog extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     const double sidePadding = 30;
+    String pointText = "지금 혼잡도 등록시 ${mapState.selectedCafeFloor.pointPrediction}P 획득!";
+    Color pointTextColor = AppColor.grey_500;
+    bool isUpdatePossible = true;
+    if (globalState.isLoggedIn) {
+      if(mapState.myTodayUpdates.containsKey(mapState.selectedCafeFloor.id)) {
+        // 오늘 이 카페에서 업데이트를 한적있음
+        final OccupancyRateUpdates todayThisCafeUpdates = mapState.myTodayUpdates[mapState.selectedCafeFloor.id]!;
+        if(todayThisCafeUpdates.last.point == 0) {
+          // 해당 카페 업데이트가 스택 한도초과 업데이트임
+          final now = DateTime.now();
+          final Duration difference = now.difference(todayThisCafeUpdates.first.update);
+          final int minutesDifference = difference.inMinutes;
+          if (minutesDifference.abs() <= 10) {
+            // 최근 업데이트로부터 아직 10분이 안지남
+            isUpdatePossible = false;
+            pointText = "${10 - minutesDifference.abs()}분 후 혼잡도 등록 가능";
+            pointTextColor = AppColor.error;
+          } else {
+            pointText = "현재 등급에서는 하루 ${globalState.user.grade.stackRestrictionPerDay}개의 층에서만 포인트 획득이 가능해요";
+            pointTextColor = AppColor.secondary;
+          }
+        } else {
+          // 스택 한도 초과 업데이트가 아님
+          final now = DateTime.now();
+          final Duration difference = now.difference(todayThisCafeUpdates.first.update);
+          final int minutesDifference = difference.inMinutes;
+          if(todayThisCafeUpdates.length >= globalState.user.grade.updateRestrictionPerCafe) {
+            // 오늘 할 수 있는 업데이트 횟수 초과
+            if (minutesDifference.abs() <= 10) {
+              // 최근 업데이트로부터 아직 10분이 안지남
+              isUpdatePossible = false;
+              pointText = "${10 - minutesDifference.abs()}분 후 혼잡도 등록가능";
+              pointTextColor = AppColor.error;
+            } else {
+              pointText = "오늘 해당 층에서 얻을 수 있는 포인트를 모두 획득하셨어요!\n현재 등급의 포인트 지급 횟수: 층당 ${globalState.user.grade.updateRestrictionPerCafe}회";
+              pointTextColor = AppColor.secondary;
+            }
+          } else {
+            // 오늘 업데이트 아직 가능
+            if (minutesDifference.abs() <= 10) {
+              // 최근 업데이트로부터 아직 10분이 안지남
+              isUpdatePossible = false;
+              pointText = "${10 - minutesDifference.abs()}분 후 혼잡도 등록시 ${mapState.selectedCafeFloor.pointPrediction}P 획득!";
+              pointTextColor = AppColor.error;
+            }
+          }
+        }
+      } else {
+        // 오늘 이 카페에서 업데이트를 한적없음
+        if(mapState.myTodayUpdates.keys.length >= globalState.user.grade.stackRestrictionPerDay) {
+          // 혼잡도 업데이트 스택 한도초과
+          pointText = "현재 등급에서는 하루 ${globalState.user.grade.stackRestrictionPerDay}개의 층에서만 포인트 획득이 가능해요";
+          pointTextColor = AppColor.error;
+        }
+      }
+    }
+
     return Dialog(
       elevation: 0,
       backgroundColor: AppColor.transparent,
@@ -66,7 +125,14 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                   ],
                 ),
                 const VerticalSpacer(4),
-                const Text("혼잡도를 등록하고 포인트 받아가세요", style: TextSize.textSize_grey_12),
+                Text(
+                  pointText,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: pointTextColor,
+                  )
+                ),
                 const VerticalSpacer(20),
                 const _FloorRow(),
                 const VerticalSpacer(100),
@@ -76,9 +142,9 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                   child: ActionButtonPrimary(
                     buttonWidth: 280,
                     buttonHeight: 48,
-                    title: "등록하기",
+                    title: isUpdatePossible ? "등록하기" : "아직 등록할 수 없어요",
                     isLoading: ref.watch(_isLoading),
-                    onPressed: () async {
+                    onPressed: !isUpdatePossible ? null : () async {
                       if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 1000)) {
                         if(globalState.isLoggedIn) {
                           ref.watch(_isLoading.notifier).update((state) => true);
@@ -130,6 +196,7 @@ class _FloorRow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+    const pointColor = AppColor.secondary;
 
     return Row(
       children: [
@@ -145,20 +212,20 @@ class _FloorRow extends ConsumerWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
                       color: mapState.selectedCafeFloor.id == cafeFloor.id
-                          ? AppColor.secondary
+                          ? pointColor
                           : AppColor.white,
-                      border: Border.all(color: AppColor.secondary, width: 1)
+                      border: Border.all(color: pointColor, width: 1)
                   ),
                   width: 54,
                   height: 36.0,
                   child: Center(
                     child: Text(
-                      "${cafeFloor.floor}층",
+                      "${cafeFloor.floor.toFloor()}층",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         color: mapState.selectedCafeFloor.id == cafeFloor.id
                           ? AppColor.white
-                          : AppColor.brown_300),
+                          : pointColor),
                     ),
                   ),
                 ),

@@ -22,6 +22,7 @@ class Cafe with _$Cafe {
     required final String? brandName,
     required final String? brandImageUrl,
     required final CATI? cati,
+    required final String catiTagText,
     required final NLatLng latLng,
     required final CafeFloors cafeFloors,
     required final OpeningHour? openingHour,
@@ -41,6 +42,7 @@ class Cafe with _$Cafe {
       brandName: null,
       brandImageUrl: null,
       cati: null,
+      catiTagText: "",
       latLng: NLocation.sinchon().cameraPosition.target,
       cafeFloors: [],
       openingHour: null,
@@ -56,6 +58,7 @@ class CafeFloor with _$CafeFloor {
   factory CafeFloor(
       {required final int id,
       required final int floor,
+      required final int pointPrediction,
       required final String? restroom,
       required final bool hasSeat,
       required final double? wallSocketRate,
@@ -66,6 +69,7 @@ class CafeFloor with _$CafeFloor {
   factory CafeFloor.empty() => CafeFloor(
       id: 0,
       floor: 1,
+      pointPrediction: 0,
       restroom: null,
       hasSeat: true,
       wallSocketRate: null,

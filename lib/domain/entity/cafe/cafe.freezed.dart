@@ -27,6 +27,7 @@ mixin _$Cafe {
   String? get brandName => throw _privateConstructorUsedError;
   String? get brandImageUrl => throw _privateConstructorUsedError;
   CATI? get cati => throw _privateConstructorUsedError;
+  String get catiTagText => throw _privateConstructorUsedError;
   NLatLng get latLng => throw _privateConstructorUsedError;
   List<CafeFloor> get cafeFloors => throw _privateConstructorUsedError;
   OpeningHour? get openingHour => throw _privateConstructorUsedError;
@@ -54,6 +55,7 @@ abstract class $CafeCopyWith<$Res> {
       String? brandName,
       String? brandImageUrl,
       CATI? cati,
+      String catiTagText,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
@@ -88,6 +90,7 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
     Object? brandName = freezed,
     Object? brandImageUrl = freezed,
     Object? cati = freezed,
+    Object? catiTagText = null,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -139,6 +142,10 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           ? _value.cati
           : cati // ignore: cast_nullable_to_non_nullable
               as CATI?,
+      catiTagText: null == catiTagText
+          ? _value.catiTagText
+          : catiTagText // ignore: cast_nullable_to_non_nullable
+              as String,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -205,6 +212,7 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
       String? brandName,
       String? brandImageUrl,
       CATI? cati,
+      String catiTagText,
       NLatLng latLng,
       List<CafeFloor> cafeFloors,
       OpeningHour? openingHour,
@@ -237,6 +245,7 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? brandName = freezed,
     Object? brandImageUrl = freezed,
     Object? cati = freezed,
+    Object? catiTagText = null,
     Object? latLng = null,
     Object? cafeFloors = null,
     Object? openingHour = freezed,
@@ -288,6 +297,10 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
           ? _value.cati
           : cati // ignore: cast_nullable_to_non_nullable
               as CATI?,
+      catiTagText: null == catiTagText
+          ? _value.catiTagText
+          : catiTagText // ignore: cast_nullable_to_non_nullable
+              as String,
       latLng: null == latLng
           ? _value.latLng
           : latLng // ignore: cast_nullable_to_non_nullable
@@ -327,6 +340,7 @@ class _$_Cafe implements _Cafe {
       required this.brandName,
       required this.brandImageUrl,
       required this.cati,
+      required this.catiTagText,
       required this.latLng,
       required final List<CafeFloor> cafeFloors,
       required this.openingHour,
@@ -359,6 +373,8 @@ class _$_Cafe implements _Cafe {
   @override
   final CATI? cati;
   @override
+  final String catiTagText;
+  @override
   final NLatLng latLng;
   final List<CafeFloor> _cafeFloors;
   @override
@@ -388,7 +404,7 @@ class _$_Cafe implements _Cafe {
 
   @override
   String toString() {
-    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, cati: $cati, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
+    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, cati: $cati, catiTagText: $catiTagText, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
   }
 
   @override
@@ -416,6 +432,8 @@ class _$_Cafe implements _Cafe {
             (identical(other.brandImageUrl, brandImageUrl) ||
                 other.brandImageUrl == brandImageUrl) &&
             (identical(other.cati, cati) || other.cati == cati) &&
+            (identical(other.catiTagText, catiTagText) ||
+                other.catiTagText == catiTagText) &&
             (identical(other.latLng, latLng) || other.latLng == latLng) &&
             const DeepCollectionEquality()
                 .equals(other._cafeFloors, _cafeFloors) &&
@@ -440,6 +458,7 @@ class _$_Cafe implements _Cafe {
       brandName,
       brandImageUrl,
       cati,
+      catiTagText,
       latLng,
       const DeepCollectionEquality().hash(_cafeFloors),
       openingHour,
@@ -466,6 +485,7 @@ abstract class _Cafe implements Cafe {
       required final String? brandName,
       required final String? brandImageUrl,
       required final CATI? cati,
+      required final String catiTagText,
       required final NLatLng latLng,
       required final List<CafeFloor> cafeFloors,
       required final OpeningHour? openingHour,
@@ -495,6 +515,8 @@ abstract class _Cafe implements Cafe {
   @override
   CATI? get cati;
   @override
+  String get catiTagText;
+  @override
   NLatLng get latLng;
   @override
   List<CafeFloor> get cafeFloors;
@@ -513,6 +535,7 @@ abstract class _Cafe implements Cafe {
 mixin _$CafeFloor {
   int get id => throw _privateConstructorUsedError;
   int get floor => throw _privateConstructorUsedError;
+  int get pointPrediction => throw _privateConstructorUsedError;
   String? get restroom => throw _privateConstructorUsedError;
   bool get hasSeat => throw _privateConstructorUsedError;
   double? get wallSocketRate => throw _privateConstructorUsedError;
@@ -534,6 +557,7 @@ abstract class $CafeFloorCopyWith<$Res> {
   $Res call(
       {int id,
       int floor,
+      int pointPrediction,
       String? restroom,
       bool hasSeat,
       double? wallSocketRate,
@@ -559,6 +583,7 @@ class _$CafeFloorCopyWithImpl<$Res, $Val extends CafeFloor>
   $Res call({
     Object? id = null,
     Object? floor = null,
+    Object? pointPrediction = null,
     Object? restroom = freezed,
     Object? hasSeat = null,
     Object? wallSocketRate = freezed,
@@ -574,6 +599,10 @@ class _$CafeFloorCopyWithImpl<$Res, $Val extends CafeFloor>
       floor: null == floor
           ? _value.floor
           : floor // ignore: cast_nullable_to_non_nullable
+              as int,
+      pointPrediction: null == pointPrediction
+          ? _value.pointPrediction
+          : pointPrediction // ignore: cast_nullable_to_non_nullable
               as int,
       restroom: freezed == restroom
           ? _value.restroom
@@ -621,6 +650,7 @@ abstract class _$$_CafeFloorCopyWith<$Res> implements $CafeFloorCopyWith<$Res> {
   $Res call(
       {int id,
       int floor,
+      int pointPrediction,
       String? restroom,
       bool hasSeat,
       double? wallSocketRate,
@@ -645,6 +675,7 @@ class __$$_CafeFloorCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? floor = null,
+    Object? pointPrediction = null,
     Object? restroom = freezed,
     Object? hasSeat = null,
     Object? wallSocketRate = freezed,
@@ -660,6 +691,10 @@ class __$$_CafeFloorCopyWithImpl<$Res>
       floor: null == floor
           ? _value.floor
           : floor // ignore: cast_nullable_to_non_nullable
+              as int,
+      pointPrediction: null == pointPrediction
+          ? _value.pointPrediction
+          : pointPrediction // ignore: cast_nullable_to_non_nullable
               as int,
       restroom: freezed == restroom
           ? _value.restroom
@@ -695,6 +730,7 @@ class _$_CafeFloor implements _CafeFloor {
   _$_CafeFloor(
       {required this.id,
       required this.floor,
+      required this.pointPrediction,
       required this.restroom,
       required this.hasSeat,
       required this.wallSocketRate,
@@ -707,6 +743,8 @@ class _$_CafeFloor implements _CafeFloor {
   final int id;
   @override
   final int floor;
+  @override
+  final int pointPrediction;
   @override
   final String? restroom;
   @override
@@ -727,7 +765,7 @@ class _$_CafeFloor implements _CafeFloor {
 
   @override
   String toString() {
-    return 'CafeFloor(id: $id, floor: $floor, restroom: $restroom, hasSeat: $hasSeat, wallSocketRate: $wallSocketRate, occupancyRatePrediction: $occupancyRatePrediction, cafe: $cafe, recentUpdates: $recentUpdates)';
+    return 'CafeFloor(id: $id, floor: $floor, pointPrediction: $pointPrediction, restroom: $restroom, hasSeat: $hasSeat, wallSocketRate: $wallSocketRate, occupancyRatePrediction: $occupancyRatePrediction, cafe: $cafe, recentUpdates: $recentUpdates)';
   }
 
   @override
@@ -737,6 +775,8 @@ class _$_CafeFloor implements _CafeFloor {
             other is _$_CafeFloor &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.floor, floor) || other.floor == floor) &&
+            (identical(other.pointPrediction, pointPrediction) ||
+                other.pointPrediction == pointPrediction) &&
             (identical(other.restroom, restroom) ||
                 other.restroom == restroom) &&
             (identical(other.hasSeat, hasSeat) || other.hasSeat == hasSeat) &&
@@ -755,6 +795,7 @@ class _$_CafeFloor implements _CafeFloor {
       runtimeType,
       id,
       floor,
+      pointPrediction,
       restroom,
       hasSeat,
       wallSocketRate,
@@ -773,6 +814,7 @@ abstract class _CafeFloor implements CafeFloor {
   factory _CafeFloor(
       {required final int id,
       required final int floor,
+      required final int pointPrediction,
       required final String? restroom,
       required final bool hasSeat,
       required final double? wallSocketRate,
@@ -784,6 +826,8 @@ abstract class _CafeFloor implements CafeFloor {
   int get id;
   @override
   int get floor;
+  @override
+  int get pointPrediction;
   @override
   String? get restroom;
   @override

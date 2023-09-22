@@ -16,8 +16,8 @@ class BottomSheetCafeVIP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    const int maximumVipCount = 2;
-    const double imageSize = 60;
+    const int maximumVipCount = 5;
+    const double imageSize = 64;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
@@ -31,8 +31,7 @@ class BottomSheetCafeVIP extends ConsumerWidget {
             visible: mapState.selectedCafe.vips.isNotEmpty,
             child: Container(
               alignment: Alignment.center,
-              width: 300,
-              height: 100,
+              height: 140,
               padding: AppPadding.padding_10,
               child: Stack(
                 alignment: Alignment.centerLeft,
@@ -40,22 +39,42 @@ class BottomSheetCafeVIP extends ConsumerWidget {
                   Visibility(
                     visible: mapState.selectedCafe.vips.length <= maximumVipCount,
                     child: Stack(
+                      alignment: Alignment.center,
                       children: [
                         ...mapState.selectedCafe.vips.map((e) {
                           final int index = mapState.selectedCafe.vips.indexOf(e);
                           return Positioned(
-                            left: (imageSize - 10.0) * index,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(imageSize / 2),
-                                boxShadow: AppShadow.box
-                              ),
-                              child: CustomCachedNetworkImage(
-                                imageUrl: e.imageUrl,
-                                width: imageSize,
-                                height: imageSize,
-                              )
+                            left: imageSize * index,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    borderRadius: BorderRadius.circular((imageSize + 8) / 2),
+                                    boxShadow: AppShadow.box
+                                  ),
+                                  child: CustomCachedNetworkImage(
+                                    imageUrl: e.imageUrl,
+                                    width: imageSize,
+                                    height: imageSize,
+                                  )
+                                ),
+                                const VerticalSpacer(12),
+                                SizedBox(
+                                  width: imageSize,
+                                  height: 30,
+                                  child: Text(
+                                    e.nickname,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.grey_600
+                                    ),
+                                  )
+                                )
+                              ],
                             ),
                           );
                         }).toList()
@@ -65,6 +84,7 @@ class BottomSheetCafeVIP extends ConsumerWidget {
                   Visibility(
                     visible: mapState.selectedCafe.vips.length > maximumVipCount,
                     child: Stack(
+                      alignment: Alignment.center,
                       children: [
                         ...mapState.selectedCafe.vips.map((e) {
                           final int index = mapState.selectedCafe.vips.indexOf(e);
@@ -72,37 +92,66 @@ class BottomSheetCafeVIP extends ConsumerWidget {
                             return const HorizontalSpacer(1);
                           } else {
                             return Positioned(
-                              left: (imageSize - 10.0) * index,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(imageSize / 2),
-                                    boxShadow: AppShadow.box
-                                ),
-                                child: CustomCachedNetworkImage(
-                                  imageUrl: e.imageUrl,
-                                  width: imageSize,
-                                  height: imageSize,
-                                )
+                              left: imageSize * index,
+                              child: Column(
+                                children: [
+                                  Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                          color: AppColor.white,
+                                          borderRadius: BorderRadius.circular((imageSize + 8) / 2),
+                                          boxShadow: AppShadow.box
+                                      ),
+                                      child: CustomCachedNetworkImage(
+                                        imageUrl: e.imageUrl,
+                                        width: imageSize,
+                                        height: imageSize,
+                                      )
+                                  ),
+                                  const VerticalSpacer(12),
+                                  SizedBox(
+                                    width: imageSize,
+                                    height: 30,
+                                    child: Text(
+                                      e.nickname,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColor.grey_600
+                                      ),
+                                    )
+                                  )
+                                ],
                               ),
                             );
                           }
                         }).toList(),
                         Positioned(
-                          left: (imageSize - 10.0) * maximumVipCount,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: imageSize,
-                            height: imageSize,
-                            decoration: BoxDecoration(
-                              color: AppColor.occupancyLevel1,
-                              borderRadius: BorderRadius.circular(imageSize / 2),
-                              boxShadow: AppShadow.box
-                            ),
-                            child: Text(
-                              "+${mapState.selectedCafe.vips.length - maximumVipCount} ",
-                              style: const TextStyle(color: AppColor.white),
-                            ),
+                          left: imageSize * maximumVipCount,
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                width: imageSize + 8,
+                                height: imageSize + 8,
+                                decoration: BoxDecoration(
+                                  color: AppColor.grey_400,
+                                  borderRadius: BorderRadius.circular((imageSize + 8) / 2),
+                                  boxShadow: AppShadow.box
+                                ),
+                                child: Text(
+                                  "+${mapState.selectedCafe.vips.length - maximumVipCount} ",
+                                  style: const TextStyle(color: AppColor.white),
+                                ),
+                              ),
+                              const VerticalSpacer(12),
+                              SizedBox(
+                                width: imageSize,
+                                height: 30,
+                                child: Container(color: AppColor.white,),
+                              )
+                            ],
                           ),
                         )
                       ],
@@ -117,7 +166,7 @@ class BottomSheetCafeVIP extends ConsumerWidget {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
-                "아직 이곳에 카페지기가 없습니다. 혼잡도를 공유하고 카페지기가 되어보세요!",
+                "아직 이곳에 카페지기가 없어요",
                 textAlign: TextAlign.center,
               ),
             )

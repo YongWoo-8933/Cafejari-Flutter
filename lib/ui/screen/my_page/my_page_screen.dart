@@ -34,9 +34,6 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), () async {
-      await ref.watch(myPageViewModelProvider.notifier).getDefaultProfileImages();
-    });
   }
 
   @override
@@ -231,10 +228,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                           )
                         ),
                         MyPageRow(
-                          text: "공지 및 이벤트",
+                          text: "공지사항",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.event(),
+                              route: WebViewRoute.notification(),
                               context: context
                           )
                         ),

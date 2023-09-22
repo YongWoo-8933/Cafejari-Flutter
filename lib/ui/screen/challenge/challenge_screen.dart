@@ -31,10 +31,6 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      final viewModel = ref.watch(challengeViewModelProvider.notifier);
-      await viewModel.refreshChallenges();
-    });
   }
 
   @override
@@ -88,9 +84,19 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
             ),
             Visibility(
               visible: challengeState.availableChallenges.isEmpty,
-              child: const SizedBox(
+              child: Container(
                 height: 444,
-                child: Text("진행중인 챌린지가 없습니다"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "asset/image/icon_empty.png",
+                      width: 100,
+                    ),
+                    const VerticalSpacer(30),
+                    const Text("현재 진행중인 챌린지가 없어요", style: TextSize.textSize_16),
+                  ],
+                ),
               ),
             ),
             // Container(

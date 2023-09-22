@@ -18,9 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MapState {
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
-  PageController get pageController => throw _privateConstructorUsedError;
+  PageController get cafeImagePageController =>
+      throw _privateConstructorUsedError;
   int get currentCafeImagePage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates =>
+      throw _privateConstructorUsedError;
   List<Location> get locations => throw _privateConstructorUsedError;
   String? get randomCafeImageUrl => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
@@ -59,9 +62,10 @@ abstract class $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      PageController pageController,
+      PageController cafeImagePageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       List<Location> locations,
       String? randomCafeImageUrl,
       Cafe selectedCafe,
@@ -102,9 +106,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? pageController = null,
+    Object? cafeImagePageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
+    Object? myTodayUpdates = null,
     Object? locations = null,
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
@@ -132,9 +137,9 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
-      pageController: null == pageController
-          ? _value.pageController
-          : pageController // ignore: cast_nullable_to_non_nullable
+      cafeImagePageController: null == cafeImagePageController
+          ? _value.cafeImagePageController
+          : cafeImagePageController // ignore: cast_nullable_to_non_nullable
               as PageController,
       currentCafeImagePage: null == currentCafeImagePage
           ? _value.currentCafeImagePage
@@ -144,6 +149,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value.myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
       locations: null == locations
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
@@ -257,9 +266,10 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
   @useResult
   $Res call(
       {PanelController bottomSheetController,
-      PageController pageController,
+      PageController cafeImagePageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       List<Location> locations,
       String? randomCafeImageUrl,
       Cafe selectedCafe,
@@ -300,9 +310,10 @@ class __$$_MapStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomSheetController = null,
-    Object? pageController = null,
+    Object? cafeImagePageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
+    Object? myTodayUpdates = null,
     Object? locations = null,
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
@@ -330,9 +341,9 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
               as PanelController,
-      pageController: null == pageController
-          ? _value.pageController
-          : pageController // ignore: cast_nullable_to_non_nullable
+      cafeImagePageController: null == cafeImagePageController
+          ? _value.cafeImagePageController
+          : cafeImagePageController // ignore: cast_nullable_to_non_nullable
               as PageController,
       currentCafeImagePage: null == currentCafeImagePage
           ? _value.currentCafeImagePage
@@ -342,6 +353,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value._cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value._myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
       locations: null == locations
           ? _value._locations
           : locations // ignore: cast_nullable_to_non_nullable
@@ -435,9 +450,10 @@ class __$$_MapStateCopyWithImpl<$Res>
 class _$_MapState implements _MapState {
   _$_MapState(
       {required this.bottomSheetController,
-      required this.pageController,
+      required this.cafeImagePageController,
       required this.currentCafeImagePage,
       required final List<Cafe> cafes,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final List<Location> locations,
       required this.randomCafeImageUrl,
       required this.selectedCafe,
@@ -460,13 +476,14 @@ class _$_MapState implements _MapState {
       required this.isBottomSheetFullContentVisible,
       required this.isRefreshButtonVisible})
       : _cafes = cafes,
+        _myTodayUpdates = myTodayUpdates,
         _locations = locations,
         _searchPredictions = searchPredictions;
 
   @override
   final PanelController bottomSheetController;
   @override
-  final PageController pageController;
+  final PageController cafeImagePageController;
   @override
   final int currentCafeImagePage;
   final List<Cafe> _cafes;
@@ -475,6 +492,14 @@ class _$_MapState implements _MapState {
     if (_cafes is EqualUnmodifiableListView) return _cafes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cafes);
+  }
+
+  final Map<int, List<OccupancyRateUpdate>> _myTodayUpdates;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates {
+    if (_myTodayUpdates is EqualUnmodifiableMapView) return _myTodayUpdates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_myTodayUpdates);
   }
 
   final List<Location> _locations;
@@ -535,7 +560,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, pageController: $pageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, myTodayUpdates: $myTodayUpdates, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -545,11 +570,13 @@ class _$_MapState implements _MapState {
             other is _$_MapState &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
-            (identical(other.pageController, pageController) ||
-                other.pageController == pageController) &&
+            (identical(other.cafeImagePageController, cafeImagePageController) ||
+                other.cafeImagePageController == cafeImagePageController) &&
             (identical(other.currentCafeImagePage, currentCafeImagePage) ||
                 other.currentCafeImagePage == currentCafeImagePage) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
+            const DeepCollectionEquality()
+                .equals(other._myTodayUpdates, _myTodayUpdates) &&
             const DeepCollectionEquality()
                 .equals(other._locations, _locations) &&
             (identical(other.randomCafeImageUrl, randomCafeImageUrl) ||
@@ -590,8 +617,7 @@ class _$_MapState implements _MapState {
             (identical(other.isBottomSheetPreviewExpanded, isBottomSheetPreviewExpanded) ||
                 other.isBottomSheetPreviewExpanded ==
                     isBottomSheetPreviewExpanded) &&
-            (identical(other.isBottomSheetFullContentVisible,
-                    isBottomSheetFullContentVisible) ||
+            (identical(other.isBottomSheetFullContentVisible, isBottomSheetFullContentVisible) ||
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
             (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) ||
@@ -602,9 +628,10 @@ class _$_MapState implements _MapState {
   int get hashCode => Object.hashAll([
         runtimeType,
         bottomSheetController,
-        pageController,
+        cafeImagePageController,
         currentCafeImagePage,
         const DeepCollectionEquality().hash(_cafes),
+        const DeepCollectionEquality().hash(_myTodayUpdates),
         const DeepCollectionEquality().hash(_locations),
         randomCafeImageUrl,
         selectedCafe,
@@ -638,9 +665,10 @@ class _$_MapState implements _MapState {
 abstract class _MapState implements MapState {
   factory _MapState(
       {required final PanelController bottomSheetController,
-      required final PageController pageController,
+      required final PageController cafeImagePageController,
       required final int currentCafeImagePage,
       required final List<Cafe> cafes,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final List<Location> locations,
       required final String? randomCafeImageUrl,
       required final Cafe selectedCafe,
@@ -666,11 +694,13 @@ abstract class _MapState implements MapState {
   @override
   PanelController get bottomSheetController;
   @override
-  PageController get pageController;
+  PageController get cafeImagePageController;
   @override
   int get currentCafeImagePage;
   @override
   List<Cafe> get cafes;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates;
   @override
   List<Location> get locations;
   @override

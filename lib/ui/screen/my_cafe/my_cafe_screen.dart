@@ -39,8 +39,6 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-    });
   }
 
   @override
@@ -72,14 +70,17 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text("내 카페 PICK", style: TextSize.textSize_bold_16),
-                      GestureDetector(
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          ref.watch(_isEditMode.notifier).update((state) => !ref.watch(_isEditMode));
-                        },
-                        child: ref.watch(_isEditMode) ?
-                          const Text("완료", style: TextStyle(color: AppColor.error)) :
-                          const Icon(CupertinoIcons.delete_simple, size: 20)
+                      Visibility(
+                        visible: globalState.user.favoriteCafes.isNotEmpty,
+                        child: GestureDetector(
+                          onTap: () {
+                            HapticFeedback.lightImpact();
+                            ref.watch(_isEditMode.notifier).update((state) => !ref.watch(_isEditMode));
+                          },
+                          child: ref.watch(_isEditMode) ?
+                            const Text("완료", style: TextStyle(color: AppColor.error)) :
+                            const Icon(CupertinoIcons.delete_simple, size: 20)
+                        ),
                       )
                     ],
                   )
@@ -110,7 +111,11 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                   onDelete: () {
                                     HapticFeedback.lightImpact();
                                     mapViewModel.updateFavoriteCafeList(cafe: cafe, context: context);
-                                  }
+                                  },
+                                  onTap: () async {
+                                    myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
+                                    await mapViewModel.moveToCafeWithRefresh(cafeId: cafe.id);
+                                  },
                                 ),
                               );
                             } else {
@@ -123,8 +128,8 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                       myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
                                       final currentUserCameraPosition = NCameraPosition(
                                         target: NLatLng(
-                                            globalState.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
-                                            globalState.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
+                                          globalState.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
+                                          globalState.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
                                         ), zoom: Zoom.large
                                       );
                                       mapState.mapController?.updateCamera(
@@ -198,36 +203,41 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
             ),
             const VerticalSpacer(20),
             // Cati 파트
-            Container(
-              width: deviceSize.width,
-              color: AppColor.background,
-              padding: const EdgeInsets.all(sidePadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const VerticalSpacer(10),
-                  Row(
-                    children: [
-                      const Text('내가 선호하는 카페, CATI ', style: TextSize.textSize_bold_16),
-                      const HorizontalSpacer(4),
-                      QuestionButton(
-                        onPressed: () => showDialog(context: context, builder: (_) => const CATIDescriptionDialog())
-                      )
-                    ],
-                  ),
-                  const VerticalSpacer(30),
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {
-                        myCafeViewModel.initSliderValue();
-                        showDialog(context: context, builder: (_) => const MyCATIEditor());
-                      },
-                      child: CATIBlocks(cati: globalState.user.myCATI),
+            Visibility(
+              visible: globalState.isLoggedIn,
+              child: Container(
+                width: deviceSize.width,
+                color: AppColor.background,
+                padding: const EdgeInsets.all(sidePadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const VerticalSpacer(10),
+                    Row(
+                      children: [
+                        const Text('내가 선호하는 카페, CATI ', style: TextSize.textSize_bold_16),
+                        const HorizontalSpacer(4),
+                        QuestionButton(
+                          onPressed: () => showDialog(context: context, builder: (_) => const CATIDescriptionDialog())
+                        )
+                      ],
                     ),
-                  ),
-                  const VerticalSpacer(20)
-                ],
+                    const VerticalSpacer(30),
+                    Visibility(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () {
+                            myCafeViewModel.initSliderValue();
+                            showDialog(context: context, builder: (_) => const MyCATIEditor());
+                          },
+                          child: CATIBlocks(cati: globalState.user.myCATI),
+                        ),
+                      ),
+                    ),
+                    const VerticalSpacer(20)
+                  ],
+                ),
               ),
             ),
             Container(
@@ -240,15 +250,14 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                   const Text("이런 카페는 어때요?", style: TextSize.textSize_bold_16),
                   const VerticalSpacer(20),
                   SizedBox(
-                    height: 240,
                     width: deviceSize.width,
+                    height: 270,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         CafeRecommendationCard(
                           cafe: mapState.selectedCafe,
-                          width: 210,
-                          height: 240
+                          width: 210
                         )
                       ],
                     ),
