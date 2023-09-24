@@ -120,7 +120,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                               );
                             } else {
                               return Visibility(
-                                visible: !ref.watch(_isEditMode),
+                                visible: !ref.watch(_isEditMode) && globalState.user.favoriteCafes.length < 10,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
                                   child: GestureDetector(
@@ -181,11 +181,17 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                           children: [
                             const VerticalSpacer(20),
                             const Text(
-                              "로그인하고 자주 가는 카페를 \n등록해보세요!",
+                              "로그인 해주세요",
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w500),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                             ),
-                            const VerticalSpacer(15),
+                            const VerticalSpacer(6),
+                            const Text(
+                              "자주 가는 카페를 등록할 수 있어요!",
+                              textAlign: TextAlign.center,
+                              style: TextSize.textSize_grey_12,
+                            ),
+                            const VerticalSpacer(25),
                             ActionButtonPrimary(
                               title: '로그인 하러가기',
                               buttonWidth: 120,

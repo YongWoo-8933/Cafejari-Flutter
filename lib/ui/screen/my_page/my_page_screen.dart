@@ -2,6 +2,7 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_editable.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -132,14 +133,50 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 140,
-                              child: const Text(
-                                "로그인하고 포인트를\n받아보세요!",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.white
-                                ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const VerticalSpacer(25),
+                                  const Text(
+                                    "카페자리에 오신 것을 환영합니다",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.white
+                                    ),
+                                  ),
+                                  const VerticalSpacer(6),
+                                  const Text(
+                                    "로그인하시고, 많은 혜택을 누려보세요",
+                                    textAlign: TextAlign.center,
+                                    style: TextSize.textSize_grey_12,
+                                  ),
+                                  const VerticalSpacer(15),
+                                  TextButton(
+                                    onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "로그인 하러가기 ",
+                                          style: TextStyle(
+                                            color: AppColor.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15
+                                          ),
+                                        ),
+                                        HorizontalSpacer(4),
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: AppColor.white,
+                                          size: 16,
+                                        )
+                                      ],
+                                    )
+                                  )
+                                ],
                               ),
                             )
                           ),

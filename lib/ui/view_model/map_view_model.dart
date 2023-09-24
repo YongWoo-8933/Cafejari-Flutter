@@ -143,6 +143,15 @@ class MapViewModel extends StateNotifier<MapState> {
       globalViewModel.setUser(updatedUser);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      List<Cafe> newCafeList = List.from(globalViewModel.state.user.favoriteCafes);
+      if(newCafeList.where((e) => e.id == cafe.id).isNotEmpty) {
+        // 내 카페 해제
+        newCafeList.removeWhere((e) => e.id == cafe.id);
+      } else {
+        // 내 카페 등록
+        newCafeList.add(cafe);
+      }
+      globalViewModel.setUser(globalViewModel.state.user.copyWith(favoriteCafes: newCafeList));
     } on RefreshTokenExpired {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }

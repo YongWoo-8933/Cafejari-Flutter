@@ -48,7 +48,10 @@ class BookMarkedCard extends StatelessWidget {
                     Container(
                       width: width - sidePadding * 2,
                       height: width - sidePadding * 2,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 1, color: AppColor.grey_200)
+                      ),
                       child: ClipOval(
                         child: CustomCachedNetworkImage(
                           imageUrl: cafe.imageUrls.isNotEmpty ? cafe.imageUrls.first :
@@ -85,9 +88,25 @@ class BookMarkedCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: sidePadding - 10),
                 child: Column(
                   children: [
-                    Text(cafe.name, style: TextSize.textSize_bold_14, textAlign: TextAlign.center),
-                    const SizedBox(height: 6),
-                    Text(cafe.address, style: TextSize.textSize_grey_12, textAlign: TextAlign.center),
+                    SizedBox(
+                      height: 32,
+                      child: Text(
+                        cafe.name,
+                        style: TextSize.textSize_bold_14,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      )
+                    ),
+                    const VerticalSpacer(6),
+                    SizedBox(
+                      height: 45,
+                      child: Text(
+                        cafe.address,
+                        style: TextSize.textSize_grey_12,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                      )
+                    ),
                   ],
                 ),
               ),
