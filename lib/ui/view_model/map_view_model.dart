@@ -68,19 +68,6 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
-  refreshMyTodayOccupancyRateUpdates({required BuildContext context}) async {
-    try {
-      state = state.copyWith(myTodayUpdates: await _cafeUseCase.getMyTodayOccupancyUpdates(
-        accessToken: globalViewModel.state.accessToken,
-        onAccessTokenRefresh: globalViewModel.setAccessToken
-      ));
-    } on ErrorWithMessage catch (e) {
-      null;
-    } on RefreshTokenExpired {
-      if(context.mounted) globalViewModel.expireRefreshToken(context: context);
-    }
-  }
-
   refreshLocations() async {
     try {
       state = state.copyWith(locations: await _cafeUseCase.getLocations());
@@ -154,11 +141,6 @@ class MapViewModel extends StateNotifier<MapState> {
         onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.setUser(updatedUser);
-      if (updatedUser.favoriteCafes.where((e) => e.id == cafe.id).isNotEmpty) {
-        globalViewModel.showSnackBar(content: "내 카페에\n추가됨", type: SnackBarType.complete);
-      } else {
-        globalViewModel.showSnackBar(content: "내 카페에서\n제외됨", type: SnackBarType.complete);
-      }
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
@@ -166,45 +148,35 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
-  updateOccupancyRateAsUser({required BuildContext context}) async {
+  updateOccupancyRate({required BuildContext context, required bool isGuest}) async {
     try {
       final OccupancyRateUpdate updateResponse = await _cafeUseCase.updateOccupancy(
         occupancyRate: state.occupancySliderValue / 100,
         cafeFloorId: state.selectedCafeFloor.id,
-        accessToken: globalViewModel.state.accessToken
+        accessToken: isGuest ? null : globalViewModel.state.accessToken
       );
       final Cafe updatedCafe = await _cafeUseCase.getCafe(cafeId: updateResponse.cafeFloor.cafe.id);
-      Map<int, OccupancyRateUpdates> newUpdates = Map.from(state.myTodayUpdates);
+      Map<int, OccupancyRateUpdates> newUpdates = Map.from(globalViewModel.state.myTodayUpdates);
       if(newUpdates.containsKey(updateResponse.cafeFloor.id)) {
         newUpdates[updateResponse.cafeFloor.id]!.insert(0, updateResponse);
       } else {
         newUpdates[updateResponse.cafeFloor.id] = [updateResponse];
       }
-      state = state.copyWith(myTodayUpdates: newUpdates);
+      globalViewModel.setMyOccupancyUpdates(newUpdates);
       _replaceCafe(updatedCafe);
-      globalViewModel.init(
-        accessToken: globalViewModel.state.accessToken,
-        user: globalViewModel.state.user.copyWith(point: globalViewModel.state.user.point + updateResponse.point)
-      );
-      Future.delayed(Duration.zero, () => _showPointAnimation(context: context, point: updateResponse.point));
+      if (isGuest) {
+        globalViewModel.showSnackBar(content: "등록 완료", type: SnackBarType.complete);
+      } else {
+        globalViewModel.init(
+          accessToken: globalViewModel.state.accessToken,
+          user: globalViewModel.state.user.copyWith(point: globalViewModel.state.user.point + updateResponse.point)
+        );
+        Future.delayed(Duration.zero, () => _showPointAnimation(context: context, point: updateResponse.point));
+      }
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
-    }
-  }
-
-  updateOccupancyRateAsGuest({required BuildContext context}) async {
-    try {
-      final OccupancyRateUpdate updateResponse = await _cafeUseCase.updateOccupancy(
-        occupancyRate: state.occupancySliderValue / 100,
-        cafeFloorId: state.selectedCafeFloor.id
-      );
-      final Cafe updatedCafe = await _cafeUseCase.getCafe(cafeId: updateResponse.cafeFloor.cafe.id);
-      _replaceCafe(updatedCafe);
-      globalViewModel.showSnackBar(content: "등록 완료", type: SnackBarType.complete);
-    } on ErrorWithMessage catch (e) {
-      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
 

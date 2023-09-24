@@ -49,7 +49,7 @@ class CafeRecommendationCard extends StatelessWidget {
                   const VerticalSpacer(8),
                   SizedBox(
                     height: 36,
-                    child: Text(cafe.name, style: TextSize.textSize_bold_16)
+                    child: Text(cafe.name, style: TextSize.textSize_bold_16, maxLines: 2)
                   ),
                   const VerticalSpacer(18),
                   Row(

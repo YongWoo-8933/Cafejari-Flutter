@@ -4,12 +4,13 @@ import 'package:cafejari_flutter/core/app_version.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/app_config_use_case.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
@@ -33,6 +34,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   final AppConfigUseCase _appConfigUseCase;
   final TokenUseCase _tokenUseCase;
   final UserUseCase _userUseCase;
+  final CafeUseCase _cafeUseCase;
   final LeaderboardUseCase _leaderboardUseCase;
   final ChallengeUseCase _challengeUseCase;
   Timer? _showSnackBarTimer1;
@@ -42,6 +44,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     this._appConfigUseCase,
     this._tokenUseCase,
     this._userUseCase,
+    this._cafeUseCase,
     this._leaderboardUseCase,
     this._challengeUseCase,
     this._showSnackBarTimer1,
@@ -133,6 +136,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
       final int monthRankingIndex = monthRankers.indexWhere((e) => e.userId == newUser.userId);
       final PartialUsers totalRankers = await _leaderboardUseCase.getTotalRankers();
       final int totalRankingIndex = totalRankers.indexWhere((e) => e.userId == newUser.userId);
+
       state = state.copyWith(
         user: newUser,
         accessToken: newAccessToken,
@@ -143,6 +147,10 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
           total: totalRankingIndex < 0 ? null : totalRankingIndex + 1
         ),
         myChallengers: await _challengeUseCase.getMyChallengers(
+          accessToken: newAccessToken,
+          onAccessTokenRefresh: setAccessToken
+        ),
+        myTodayUpdates: await _cafeUseCase.getMyTodayOccupancyUpdates(
           accessToken: newAccessToken,
           onAccessTokenRefresh: setAccessToken
         )
@@ -163,6 +171,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   setUser(User user) => state = state.copyWith(user: user);
 
   setAccessToken(String accessToken) => state = state.copyWith(accessToken: accessToken);
+
+  setMyOccupancyUpdates(Map<int, OccupancyRateUpdates> updates) => state = state.copyWith(myTodayUpdates: updates);
 
   logout({required BuildContext context}) async {
     try {
@@ -255,16 +265,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     GoRouter.of(context).goNamed(ScreenRoute.webView);
   }
 
-  showOnBoarding({required BuildContext context}) {
-    showDialog(context: context, builder: (_) => Dialog(
-      insetPadding: const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
-      child: Container(
-        color: AppColor.white,
-        child: const Text("여기는 온보딩 빠바방"),
-      ),
-    ));
-  }
-
   clearUserInfo() async {
     await _tokenUseCase.deleteRefreshToken();
     state = state.copyWith(
@@ -272,7 +272,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
       accessToken: "",
       isLoggedIn: false,
       myChallengers: [],
-      myRanking: (week: null, month: null, total: null)
+      myRanking: (week: null, month: null, total: null),
+      myTodayUpdates: {}
     );
   }
 }

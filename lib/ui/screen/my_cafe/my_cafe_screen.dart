@@ -93,7 +93,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                       visible: globalState.isLoggedIn,
                       child: SizedBox(
                         width: deviceSize.width,
-                        height: 220,
+                        height: 240,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: sidePadding),
@@ -251,7 +251,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                   const VerticalSpacer(20),
                   SizedBox(
                     width: deviceSize.width,
-                    height: 270,
+                    height: 280,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [

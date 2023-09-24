@@ -22,8 +22,6 @@ mixin _$MapState {
       throw _privateConstructorUsedError;
   int get currentCafeImagePage => throw _privateConstructorUsedError;
   List<Cafe> get cafes => throw _privateConstructorUsedError;
-  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates =>
-      throw _privateConstructorUsedError;
   List<Location> get locations => throw _privateConstructorUsedError;
   String? get randomCafeImageUrl => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
@@ -65,7 +63,6 @@ abstract class $MapStateCopyWith<$Res> {
       PageController cafeImagePageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
-      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       List<Location> locations,
       String? randomCafeImageUrl,
       Cafe selectedCafe,
@@ -109,7 +106,6 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? cafeImagePageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
-    Object? myTodayUpdates = null,
     Object? locations = null,
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
@@ -149,10 +145,6 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
-      myTodayUpdates: null == myTodayUpdates
-          ? _value.myTodayUpdates
-          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
-              as Map<int, List<OccupancyRateUpdate>>,
       locations: null == locations
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
@@ -269,7 +261,6 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       PageController cafeImagePageController,
       int currentCafeImagePage,
       List<Cafe> cafes,
-      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       List<Location> locations,
       String? randomCafeImageUrl,
       Cafe selectedCafe,
@@ -313,7 +304,6 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? cafeImagePageController = null,
     Object? currentCafeImagePage = null,
     Object? cafes = null,
-    Object? myTodayUpdates = null,
     Object? locations = null,
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
@@ -353,10 +343,6 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value._cafes
           : cafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
-      myTodayUpdates: null == myTodayUpdates
-          ? _value._myTodayUpdates
-          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
-              as Map<int, List<OccupancyRateUpdate>>,
       locations: null == locations
           ? _value._locations
           : locations // ignore: cast_nullable_to_non_nullable
@@ -453,7 +439,6 @@ class _$_MapState implements _MapState {
       required this.cafeImagePageController,
       required this.currentCafeImagePage,
       required final List<Cafe> cafes,
-      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final List<Location> locations,
       required this.randomCafeImageUrl,
       required this.selectedCafe,
@@ -476,7 +461,6 @@ class _$_MapState implements _MapState {
       required this.isBottomSheetFullContentVisible,
       required this.isRefreshButtonVisible})
       : _cafes = cafes,
-        _myTodayUpdates = myTodayUpdates,
         _locations = locations,
         _searchPredictions = searchPredictions;
 
@@ -492,14 +476,6 @@ class _$_MapState implements _MapState {
     if (_cafes is EqualUnmodifiableListView) return _cafes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cafes);
-  }
-
-  final Map<int, List<OccupancyRateUpdate>> _myTodayUpdates;
-  @override
-  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates {
-    if (_myTodayUpdates is EqualUnmodifiableMapView) return _myTodayUpdates;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_myTodayUpdates);
   }
 
   final List<Location> _locations;
@@ -560,7 +536,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, myTodayUpdates: $myTodayUpdates, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -575,8 +551,6 @@ class _$_MapState implements _MapState {
             (identical(other.currentCafeImagePage, currentCafeImagePage) ||
                 other.currentCafeImagePage == currentCafeImagePage) &&
             const DeepCollectionEquality().equals(other._cafes, _cafes) &&
-            const DeepCollectionEquality()
-                .equals(other._myTodayUpdates, _myTodayUpdates) &&
             const DeepCollectionEquality()
                 .equals(other._locations, _locations) &&
             (identical(other.randomCafeImageUrl, randomCafeImageUrl) ||
@@ -631,7 +605,6 @@ class _$_MapState implements _MapState {
         cafeImagePageController,
         currentCafeImagePage,
         const DeepCollectionEquality().hash(_cafes),
-        const DeepCollectionEquality().hash(_myTodayUpdates),
         const DeepCollectionEquality().hash(_locations),
         randomCafeImageUrl,
         selectedCafe,
@@ -668,7 +641,6 @@ abstract class _MapState implements MapState {
       required final PageController cafeImagePageController,
       required final int currentCafeImagePage,
       required final List<Cafe> cafes,
-      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final List<Location> locations,
       required final String? randomCafeImageUrl,
       required final Cafe selectedCafe,
@@ -699,8 +671,6 @@ abstract class _MapState implements MapState {
   int get currentCafeImagePage;
   @override
   List<Cafe> get cafes;
-  @override
-  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates;
   @override
   List<Location> get locations;
   @override

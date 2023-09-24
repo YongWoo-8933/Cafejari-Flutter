@@ -3,7 +3,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 
 const _occupancyMarkerSize = Size(51.75, 67.5);
-const _noDataMarkerSize = Size(48.6, 54);
+const _noDataMarkerSize = Size(43.2, 48);
 
 /// 혼잡도 레벨 객체. 직접 생성하지 말고 factory 객체를 사용할 것.
 class OccupancyLevel {
@@ -19,9 +19,6 @@ class OccupancyLevel {
 
   OccupancyLevel(this.stringValue, this.nMarker, this.markerSize, this.markerImagePath,
       this.pinImagePath, this.thumbImagePath, this.color, this.complementaryColor, this.description);
-
-  final occupancyMarkerSize = const Size(51.75, 67.5);
-  final noDataMarkerSize = const Size(48.6, 54);
 
   factory OccupancyLevel.minus() => OccupancyLevel(
       "정보 없음",

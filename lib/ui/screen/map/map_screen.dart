@@ -31,7 +31,6 @@ class MapScreenState extends ConsumerState<MapScreen> {
     Future.delayed(const Duration(seconds: 2), () async {
       final mapViewModel = ref.watch(mapViewModelProvider.notifier);
       final mapState = ref.watch(mapViewModelProvider);
-      if(context.mounted) await mapViewModel.refreshMyTodayOccupancyRateUpdates(context: context);
       if (mapState.shareTempCameraPosition.isNull) {
         Position? location = await mapViewModel.globalViewModel.getFirstLocation();
         final NCameraPosition cameraPosition = location.isNotNull ?

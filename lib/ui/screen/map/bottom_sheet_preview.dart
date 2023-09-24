@@ -177,19 +177,20 @@ class BottomSheetPreview extends ConsumerWidget {
                               child: const Padding(
                                 padding: AppPadding.padding_15,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "아직 혼잡도가 없어요",
                                       style: TextSize.textSize_bold_14,
+                                      textAlign: TextAlign.center,
                                     ),
                                     VerticalSpacer(8),
                                     Text(
-                                      "3초만에 혼잡도 등록하고 포인트를 받아보세요!",
+                                      "3초만에 혼잡도 등록하고\n포인트를 받아보세요!",
                                       style: TextStyle(
                                         color: AppColor.grey_800,
                                         fontSize: 12
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),

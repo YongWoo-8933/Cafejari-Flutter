@@ -21,6 +21,8 @@ mixin _$GlobalState {
   String get accessToken => throw _privateConstructorUsedError;
   bool get isLoggedIn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates =>
+      throw _privateConstructorUsedError;
   ({int? month, int? total, int? week}) get myRanking =>
       throw _privateConstructorUsedError;
   List<Challenger> get myChallengers => throw _privateConstructorUsedError;
@@ -52,6 +54,7 @@ abstract class $GlobalStateCopyWith<$Res> {
       String accessToken,
       bool isLoggedIn,
       User user,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       ({int? month, int? total, int? week}) myRanking,
       List<Challenger> myChallengers,
       PageType currentPage,
@@ -85,6 +88,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
+    Object? myTodayUpdates = null,
     Object? myRanking = null,
     Object? myChallengers = null,
     Object? currentPage = null,
@@ -118,6 +122,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value.myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
       myRanking: null == myRanking
           ? _value.myRanking
           : myRanking // ignore: cast_nullable_to_non_nullable
@@ -188,6 +196,7 @@ abstract class _$$_GlobalStateCopyWith<$Res>
       String accessToken,
       bool isLoggedIn,
       User user,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       ({int? month, int? total, int? week}) myRanking,
       List<Challenger> myChallengers,
       PageType currentPage,
@@ -220,6 +229,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
+    Object? myTodayUpdates = null,
     Object? myRanking = null,
     Object? myChallengers = null,
     Object? currentPage = null,
@@ -253,6 +263,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value._myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
       myRanking: null == myRanking
           ? _value.myRanking
           : myRanking // ignore: cast_nullable_to_non_nullable
@@ -310,6 +324,7 @@ class _$_GlobalState implements _GlobalState {
       required this.accessToken,
       required this.isLoggedIn,
       required this.user,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required this.myRanking,
       required final List<Challenger> myChallengers,
       required this.currentPage,
@@ -322,6 +337,7 @@ class _$_GlobalState implements _GlobalState {
       required this.webViewTitle,
       required this.webViewUri})
       : _versions = versions,
+        _myTodayUpdates = myTodayUpdates,
         _myChallengers = myChallengers;
 
   final List<Version> _versions;
@@ -340,6 +356,14 @@ class _$_GlobalState implements _GlobalState {
   final bool isLoggedIn;
   @override
   final User user;
+  final Map<int, List<OccupancyRateUpdate>> _myTodayUpdates;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates {
+    if (_myTodayUpdates is EqualUnmodifiableMapView) return _myTodayUpdates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_myTodayUpdates);
+  }
+
   @override
   final ({int? month, int? total, int? week}) myRanking;
   final List<Challenger> _myChallengers;
@@ -371,7 +395,7 @@ class _$_GlobalState implements _GlobalState {
 
   @override
   String toString() {
-    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
+    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
   }
 
   @override
@@ -387,6 +411,8 @@ class _$_GlobalState implements _GlobalState {
             (identical(other.isLoggedIn, isLoggedIn) ||
                 other.isLoggedIn == isLoggedIn) &&
             (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality()
+                .equals(other._myTodayUpdates, _myTodayUpdates) &&
             (identical(other.myRanking, myRanking) ||
                 other.myRanking == myRanking) &&
             const DeepCollectionEquality()
@@ -419,6 +445,7 @@ class _$_GlobalState implements _GlobalState {
       accessToken,
       isLoggedIn,
       user,
+      const DeepCollectionEquality().hash(_myTodayUpdates),
       myRanking,
       const DeepCollectionEquality().hash(_myChallengers),
       currentPage,
@@ -445,6 +472,7 @@ abstract class _GlobalState implements GlobalState {
       required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final ({int? month, int? total, int? week}) myRanking,
       required final List<Challenger> myChallengers,
       required final PageType currentPage,
@@ -467,6 +495,8 @@ abstract class _GlobalState implements GlobalState {
   bool get isLoggedIn;
   @override
   User get user;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates;
   @override
   ({int? month, int? total, int? week}) get myRanking;
   @override

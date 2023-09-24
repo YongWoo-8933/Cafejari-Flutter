@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -17,6 +18,7 @@ class GlobalState with _$GlobalState {
     required final String accessToken,
     required final bool isLoggedIn,
     required final User user,
+    required final Map<int, OccupancyRateUpdates> myTodayUpdates,
     required final ({int? week, int? month, int? total}) myRanking,
     required final Challengers myChallengers,
     required final PageType currentPage,
@@ -36,6 +38,7 @@ class GlobalState with _$GlobalState {
     accessToken: "",
     isLoggedIn: false,
     user: User.empty(),
+    myTodayUpdates: {},
     myRanking: (week: null, month: null, total: null),
     myChallengers: [],
     currentPage: PageType.map,

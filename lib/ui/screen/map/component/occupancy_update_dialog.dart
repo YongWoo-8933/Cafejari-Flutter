@@ -38,10 +38,11 @@ class OccupancyUpdateDialog extends ConsumerWidget {
     String pointText = "지금 혼잡도 등록시 ${mapState.selectedCafeFloor.pointPrediction}P 획득!";
     Color pointTextColor = AppColor.grey_500;
     bool isUpdatePossible = true;
-    if (globalState.isLoggedIn) {
-      if(mapState.myTodayUpdates.containsKey(mapState.selectedCafeFloor.id)) {
-        // 오늘 이 카페에서 업데이트를 한적있음
-        final OccupancyRateUpdates todayThisCafeUpdates = mapState.myTodayUpdates[mapState.selectedCafeFloor.id]!;
+    if(globalState.myTodayUpdates.containsKey(mapState.selectedCafeFloor.id)) {
+      // 오늘 이 카페에서 업데이트를 한적있음
+      final OccupancyRateUpdates todayThisCafeUpdates = globalState.myTodayUpdates[mapState.selectedCafeFloor.id]!;
+      if (globalState.isLoggedIn) {
+        // 로그인 유저
         if(todayThisCafeUpdates.last.point == 0) {
           // 해당 카페 업데이트가 스택 한도초과 업데이트임
           final now = DateTime.now();
@@ -83,12 +84,23 @@ class OccupancyUpdateDialog extends ConsumerWidget {
           }
         }
       } else {
-        // 오늘 이 카페에서 업데이트를 한적없음
-        if(mapState.myTodayUpdates.keys.length >= globalState.user.grade.stackRestrictionPerDay) {
-          // 혼잡도 업데이트 스택 한도초과
-          pointText = "현재 등급에서는 하루 ${globalState.user.grade.stackRestrictionPerDay}개의 층에서만 포인트 획득이 가능해요";
+        // 게스트 유저
+        final now = DateTime.now();
+        final Duration difference = now.difference(todayThisCafeUpdates.first.update);
+        final int minutesDifference = difference.inMinutes;
+        if (minutesDifference.abs() <= 10) {
+          // 최근 업데이트로부터 아직 10분이 안지남
+          isUpdatePossible = false;
+          pointText = "${10 - minutesDifference.abs()}분 후 혼잡도 등록 가능";
           pointTextColor = AppColor.error;
         }
+      }
+    } else {
+      // 오늘 이 카페에서 업데이트를 한적없음
+      if(globalState.isLoggedIn && globalState.myTodayUpdates.keys.length >= globalState.user.grade.stackRestrictionPerDay) {
+        // 혼잡도 업데이트 스택 한도초과
+        pointText = "현재 등급에서는 하루 ${globalState.user.grade.stackRestrictionPerDay}개의 층에서만 포인트 획득이 가능해요";
+        pointTextColor = AppColor.error;
       }
     }
 
@@ -148,7 +160,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                       if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 1000)) {
                         if(globalState.isLoggedIn) {
                           ref.watch(_isLoading.notifier).update((state) => true);
-                          if(context.mounted) await mapViewModel.updateOccupancyRateAsUser(context: context);
+                          if(context.mounted) await mapViewModel.updateOccupancyRate(context: context, isGuest: false);
                           ref.watch(_isLoading.notifier).update((state) => false);
                           if(context.mounted) Navigator.of(context).pop();
                         } else {
@@ -162,7 +174,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                                 onDismiss: () => Navigator.of(context).pop(),
                                 onNegativeButtonPress: () async {
                                   ref.watch(_isLoading.notifier).update((state) => true);
-                                  await mapViewModel.updateOccupancyRateAsGuest(context: context);
+                                  await mapViewModel.updateOccupancyRate(context: context, isGuest: true);
                                   ref.watch(_isLoading.notifier).update((state) => false);
                                   if(context.mounted) Navigator.of(context).pop();
                                 },

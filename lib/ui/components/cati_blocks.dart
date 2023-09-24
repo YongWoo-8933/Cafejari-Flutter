@@ -22,7 +22,7 @@ class CATIBlocks extends StatelessWidget {
         const HorizontalSpacer(8),
         _buildCategoryColumn(topText: "업무공간", bottomText: "감성카페", catiValue: cati?.workspace),
         const HorizontalSpacer(8),
-        _buildCategoryColumn(topText: "산미있는", bottomText: "산미적은", catiValue: cati?.acidity),
+        _buildCategoryColumn(topText: "산미있는", bottomText: "고소한", catiValue: cati?.acidity),
       ],
     );
   }

@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/components/page_view_dot_indicator.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
@@ -124,28 +125,10 @@ class BottomSheetMainInfo extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(cornerRadius * 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...mapState.selectedCafe.imageUrls.map((e) {
-                      final index = mapState.selectedCafe.imageUrls.indexWhere((element) => e == element);
-                      final isSelected = index == mapState.currentCafeImagePage;
-                      if(index < 9) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 6),
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isSelected ? AppColor.grey_100 : AppColor.grey_300.withOpacity(0.6),
-                          ),
-                        );
-                      } else {
-                        return const HorizontalSpacer(1);
-                      }
-                    }).toList()
-                  ],
-                ),
+                child: PageViewDotIndicator(
+                  dotCount: mapState.selectedCafe.imageUrls.length > 8 ? 8 : mapState.selectedCafe.imageUrls.length,
+                  selectedDotIndex: mapState.currentCafeImagePage,
+                )
               )
             ],
           )

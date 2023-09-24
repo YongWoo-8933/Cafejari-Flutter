@@ -169,7 +169,8 @@ final globalViewModelProvider = StateNotifierProvider<GlobalViewModel, GlobalSta
   final LeaderboardUseCase leaderUseCase = ref.watch(leaderboardUseCaseProvider);
   final ChallengeUseCase challengeUseCase = ref.watch(challengeUseCaseProvider);
   final AppConfigUseCase appConfigUseCase = ref.watch(appConfigUseCaseProvider);
-  return GlobalViewModel(appConfigUseCase, tokenUseCase, userUseCase, leaderUseCase, challengeUseCase, null, null);
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  return GlobalViewModel(appConfigUseCase, tokenUseCase, userUseCase, cafeUseCase, leaderUseCase, challengeUseCase, null, null);
 });
 
 final mapViewModelProvider = StateNotifierProvider<MapViewModel, MapState>((ref) {

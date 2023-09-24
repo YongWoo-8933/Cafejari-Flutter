@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
+import 'package:cafejari_flutter/ui/components/onboarding_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
@@ -87,7 +88,11 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         if (globalState.isPermissionChecked) {
           globalViewModel.setIsInstalledFirst(false);
-          globalViewModel.showOnBoarding(context: context);
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const OnboardingDialog()
+          );
         } else {
           GoRouter.of(context).goNamed(ScreenRoute.appPermission);
         }
