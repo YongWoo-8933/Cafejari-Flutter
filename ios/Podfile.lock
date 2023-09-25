@@ -136,6 +136,8 @@ PODS:
     - Flutter
   - kakao_flutter_sdk_common (1.5.0):
     - Flutter
+  - launch_review (0.0.1):
+    - Flutter
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -184,6 +186,7 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - kakao_flutter_sdk_common (from `.symlinks/plugins/kakao_flutter_sdk_common/ios`)
+  - launch_review (from `.symlinks/plugins/launch_review/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -241,6 +244,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/just_audio/ios"
   kakao_flutter_sdk_common:
     :path: ".symlinks/plugins/kakao_flutter_sdk_common/ios"
+  launch_review:
+    :path: ".symlinks/plugins/launch_review/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -287,6 +292,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   kakao_flutter_sdk_common: ceb36a134b53ae973da184f67f39993142377af4
+  launch_review: 75d5a956ba8eaa493e9c9d4bf4c05e505e8d5ed0
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
