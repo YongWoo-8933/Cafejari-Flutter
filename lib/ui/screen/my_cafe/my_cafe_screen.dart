@@ -12,6 +12,7 @@ import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.da
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/cafe_recommendation_card.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
@@ -45,6 +46,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
   Widget build(BuildContext context) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+    final MyCafeState myCafeState = ref.watch(myCafeViewModelProvider);
     final MyCafeViewModel myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final Size deviceSize = MediaQuery.of(context).size;
@@ -257,15 +259,28 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                   const VerticalSpacer(20),
                   SizedBox(
                     width: deviceSize.width,
-                    height: 280,
-                    child: ListView(
+                    height: 300,
+                    child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        CafeRecommendationCard(
-                          cafe: mapState.selectedCafe,
-                          width: 210
-                        )
-                      ],
+                      itemCount: myCafeState.recommendedCafes.length,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemBuilder: (context, index) {
+                        final cafe = myCafeState.recommendedCafes[index];
+                        return Row(
+                          children: [
+                            CafeRecommendationCard(
+                              cafe: cafe,
+                              randomImageUrl: mapState.randomCafeImageUrl ?? "",
+                              width: 210,
+                              onTap: () async {
+                                myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
+                                await mapViewModel.moveToCafeWithRefresh(cafeId: cafe.id);
+                              }
+                            ),
+                            const HorizontalSpacer(20)
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ],

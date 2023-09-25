@@ -20,6 +20,7 @@ mixin _$MyCafeState {
   int get catiCoffeeSliderValue => throw _privateConstructorUsedError;
   int get catiWorkspaceSliderValue => throw _privateConstructorUsedError;
   int get catiAciditySliderValue => throw _privateConstructorUsedError;
+  List<Cafe> get recommendedCafes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyCafeStateCopyWith<MyCafeState> get copyWith =>
@@ -36,7 +37,8 @@ abstract class $MyCafeStateCopyWith<$Res> {
       {int catiOpennessSliderValue,
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
-      int catiAciditySliderValue});
+      int catiAciditySliderValue,
+      List<Cafe> recommendedCafes});
 }
 
 /// @nodoc
@@ -56,6 +58,7 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
     Object? catiCoffeeSliderValue = null,
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
+    Object? recommendedCafes = null,
   }) {
     return _then(_value.copyWith(
       catiOpennessSliderValue: null == catiOpennessSliderValue
@@ -74,6 +77,10 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
           ? _value.catiAciditySliderValue
           : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
               as int,
+      recommendedCafes: null == recommendedCafes
+          ? _value.recommendedCafes
+          : recommendedCafes // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
     ) as $Val);
   }
 }
@@ -90,7 +97,8 @@ abstract class _$$_MyCafeStateCopyWith<$Res>
       {int catiOpennessSliderValue,
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
-      int catiAciditySliderValue});
+      int catiAciditySliderValue,
+      List<Cafe> recommendedCafes});
 }
 
 /// @nodoc
@@ -108,6 +116,7 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
     Object? catiCoffeeSliderValue = null,
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
+    Object? recommendedCafes = null,
   }) {
     return _then(_$_MyCafeState(
       catiOpennessSliderValue: null == catiOpennessSliderValue
@@ -126,6 +135,10 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
           ? _value.catiAciditySliderValue
           : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
               as int,
+      recommendedCafes: null == recommendedCafes
+          ? _value._recommendedCafes
+          : recommendedCafes // ignore: cast_nullable_to_non_nullable
+              as List<Cafe>,
     ));
   }
 }
@@ -137,7 +150,9 @@ class _$_MyCafeState implements _MyCafeState {
       {required this.catiOpennessSliderValue,
       required this.catiCoffeeSliderValue,
       required this.catiWorkspaceSliderValue,
-      required this.catiAciditySliderValue});
+      required this.catiAciditySliderValue,
+      required final List<Cafe> recommendedCafes})
+      : _recommendedCafes = recommendedCafes;
 
   @override
   final int catiOpennessSliderValue;
@@ -147,10 +162,18 @@ class _$_MyCafeState implements _MyCafeState {
   final int catiWorkspaceSliderValue;
   @override
   final int catiAciditySliderValue;
+  final List<Cafe> _recommendedCafes;
+  @override
+  List<Cafe> get recommendedCafes {
+    if (_recommendedCafes is EqualUnmodifiableListView)
+      return _recommendedCafes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_recommendedCafes);
+  }
 
   @override
   String toString() {
-    return 'MyCafeState(catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue)';
+    return 'MyCafeState(catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, recommendedCafes: $recommendedCafes)';
   }
 
   @override
@@ -167,12 +190,19 @@ class _$_MyCafeState implements _MyCafeState {
                     other.catiWorkspaceSliderValue, catiWorkspaceSliderValue) ||
                 other.catiWorkspaceSliderValue == catiWorkspaceSliderValue) &&
             (identical(other.catiAciditySliderValue, catiAciditySliderValue) ||
-                other.catiAciditySliderValue == catiAciditySliderValue));
+                other.catiAciditySliderValue == catiAciditySliderValue) &&
+            const DeepCollectionEquality()
+                .equals(other._recommendedCafes, _recommendedCafes));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, catiOpennessSliderValue,
-      catiCoffeeSliderValue, catiWorkspaceSliderValue, catiAciditySliderValue);
+  int get hashCode => Object.hash(
+      runtimeType,
+      catiOpennessSliderValue,
+      catiCoffeeSliderValue,
+      catiWorkspaceSliderValue,
+      catiAciditySliderValue,
+      const DeepCollectionEquality().hash(_recommendedCafes));
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +216,8 @@ abstract class _MyCafeState implements MyCafeState {
       {required final int catiOpennessSliderValue,
       required final int catiCoffeeSliderValue,
       required final int catiWorkspaceSliderValue,
-      required final int catiAciditySliderValue}) = _$_MyCafeState;
+      required final int catiAciditySliderValue,
+      required final List<Cafe> recommendedCafes}) = _$_MyCafeState;
 
   @override
   int get catiOpennessSliderValue;
@@ -196,6 +227,8 @@ abstract class _MyCafeState implements MyCafeState {
   int get catiWorkspaceSliderValue;
   @override
   int get catiAciditySliderValue;
+  @override
+  List<Cafe> get recommendedCafes;
   @override
   @JsonKey(ignore: true)
   _$$_MyCafeStateCopyWith<_$_MyCafeState> get copyWith =>

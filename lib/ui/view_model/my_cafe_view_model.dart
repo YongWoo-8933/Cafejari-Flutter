@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/int.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
+import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
@@ -11,11 +15,14 @@ import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 class MyCafeViewModel extends StateNotifier<MyCafeState> {
   final GlobalViewModel globalViewModel;
   final UserUseCase _userUseCase;
+  final CafeUseCase _cafeUseCase;
+  Timer? _cafeRecommendationGetTimer;
 
   MyCafeViewModel({
     required UserUseCase userUseCase,
+    required CafeUseCase cafeUseCase,
     required this.globalViewModel
-  }): _userUseCase = userUseCase, super(MyCafeState.empty());
+  }): _userUseCase = userUseCase, _cafeUseCase = cafeUseCase, super(MyCafeState.empty());
 
   initSliderValue() {
     state = state.copyWith(
@@ -24,6 +31,17 @@ class MyCafeViewModel extends StateNotifier<MyCafeState> {
       catiWorkspaceSliderValue: globalViewModel.state.user.myCATI.workspace.toCATISliderInt(),
       catiAciditySliderValue: globalViewModel.state.user.myCATI.acidity.toCATISliderInt()
     );
+  }
+  
+  initCafeRecommendationData() async {
+    state = state.copyWith(
+      recommendedCafes: await _cafeUseCase.getRecommendedCafes(
+        latitude: globalViewModel.state.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
+        longitude: globalViewModel.state.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
+      )
+    );
+    _cafeRecommendationGetTimer?.cancel();
+    _cafeRecommendationGetTimer = Timer(const Duration(minutes: 1), initCafeRecommendationData);
   }
 
   setCATIOpenness(int value) => state = state.copyWith(catiOpennessSliderValue: value);

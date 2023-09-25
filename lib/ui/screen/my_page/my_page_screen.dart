@@ -136,7 +136,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const VerticalSpacer(25),
+                                  const VerticalSpacer(30),
                                   const Text(
                                     "카페자리에 오신 것을 환영합니다",
                                     textAlign: TextAlign.center,

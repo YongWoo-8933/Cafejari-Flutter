@@ -23,6 +23,10 @@ abstract interface class CafeUseCase {
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   });
+  Future<Cafes> getRecommendedCafes({
+    required double latitude,
+    required double longitude
+  });
   Future<Map<int, OccupancyRateUpdates>> getMyTodayOccupancyUpdates({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
@@ -108,6 +112,19 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
           address: cafeSearchResponse.address,
           latLng: NLatLng(cafeSearchResponse.latitude, cafeSearchResponse.longitude)
         );
+      }).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Cafes> getRecommendedCafes({required double latitude, required double longitude}) async {
+    try {
+      List<CafeResponse> cafeResponseList = await cafeRepository.fetchRecommendedCafe(
+          latitude: latitude, longitude: longitude);
+      return cafeResponseList.map((cafeResponse) {
+        return parseCafeFromCafeResponse(cafeResponse);
       }).toList();
     } on ErrorWithMessage {
       rethrow;

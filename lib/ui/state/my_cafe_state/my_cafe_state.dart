@@ -9,13 +9,15 @@ class MyCafeState with _$MyCafeState {
     required final int catiOpennessSliderValue,
     required final int catiCoffeeSliderValue,
     required final int catiWorkspaceSliderValue,
-    required final int catiAciditySliderValue
+    required final int catiAciditySliderValue,
+    required final Cafes recommendedCafes
   }) = _MyCafeState;
 
   factory MyCafeState.empty() => MyCafeState(
-      catiOpennessSliderValue: CATI.empty().openness,
-      catiCoffeeSliderValue: CATI.empty().coffee,
-      catiWorkspaceSliderValue: CATI.empty().workspace,
-      catiAciditySliderValue: CATI.empty().acidity
+    catiOpennessSliderValue: CATI.empty().openness,
+    catiCoffeeSliderValue: CATI.empty().coffee,
+    catiWorkspaceSliderValue: CATI.empty().workspace,
+    catiAciditySliderValue: CATI.empty().acidity,
+    recommendedCafes: [],
   );
 }

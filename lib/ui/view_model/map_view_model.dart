@@ -58,10 +58,10 @@ class MapViewModel extends StateNotifier<MapState> {
     try {
       final Cafe cafe = await _cafeUseCase.getCafe(cafeId: cafeId);
       final NCameraPosition cameraPosition = NCameraPosition(target: cafe.latLng, zoom: Zoom.large);
+      state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
       await refreshCafes(cameraPosition: cameraPosition, selectedCafeId: cafeId);
       selectCafe(cafe);
       selectCafeFloor(cafe.cafeFloors.first);
-      state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
       openBottomSheetPreview();
     } on ErrorWithMessage {
       null;

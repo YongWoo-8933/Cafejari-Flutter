@@ -13,14 +13,12 @@ abstract interface class CafeRepository {
       required double longitude,
       required int zoomLevel});
   Future<CafeResponse> retrieveCafe({required int cafeId});
-  Future<List<CafeSearchResponse>> fetchSearchCafe(
-      {required String query});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate(
-      {required String accessToken});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate(
-      {required String accessToken});
-  Future<NaverSearchCafeResponse> fetchNaverSearchResult(
-      {required String query});
+  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query});
+  Future<List<CafeResponse>> fetchRecommendedCafe({
+    required double latitude, required double longitude});
+  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken});
+  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate({required String accessToken});
+  Future<NaverSearchCafeResponse> fetchNaverSearchResult({required String query});
   Future<List<LocationResponse>> fetchLocation();
   Future<List<CATIResponse>> fetchCATI({required int cafeId});
 
@@ -89,6 +87,22 @@ class CafeRepositoryImpl implements CafeRepository {
         query: {"query": query},
       );
       return response.map((dynamic e) => CafeSearchResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CafeResponse>> fetchRecommendedCafe({
+    required double latitude, required double longitude}) async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "recommendation/",
+        query: {"latitude": latitude, "longitude": longitude},
+      );
+      return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     }

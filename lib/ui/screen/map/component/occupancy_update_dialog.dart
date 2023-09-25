@@ -210,43 +210,46 @@ class _FloorRow extends ConsumerWidget {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     const pointColor = AppColor.secondary;
 
-    return Row(
-      children: [
-        ...mapState.selectedCafe.cafeFloors.map((cafeFloor) {
-          return Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  mapViewModel.selectCafeFloor(cafeFloor);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: mapState.selectedCafeFloor.id == cafeFloor.id
-                          ? pointColor
-                          : AppColor.white,
-                      border: Border.all(color: pointColor, width: 1)
-                  ),
-                  width: 54,
-                  height: 36.0,
-                  child: Center(
-                    child: Text(
-                      "${cafeFloor.floor.toFloor()}층",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...mapState.selectedCafe.cafeFloors.map((cafeFloor) {
+            return Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    mapViewModel.selectCafeFloor(cafeFloor);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
                         color: mapState.selectedCafeFloor.id == cafeFloor.id
-                          ? AppColor.white
-                          : pointColor),
+                            ? pointColor
+                            : AppColor.white,
+                        border: Border.all(color: pointColor, width: 1)
+                    ),
+                    width: 54,
+                    height: 36.0,
+                    child: Center(
+                      child: Text(
+                        "${cafeFloor.floor.toFloor()}층",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: mapState.selectedCafeFloor.id == cafeFloor.id
+                            ? AppColor.white
+                            : pointColor),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const HorizontalSpacer(10)
-            ],
-          );
-        }).toList()
-      ],
+                const HorizontalSpacer(10)
+              ],
+            );
+          }).toList()
+        ],
+      )
     );
   }
 }

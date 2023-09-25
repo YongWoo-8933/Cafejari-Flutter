@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:cafejari_flutter/core/app_version.dart';
 import 'package:cafejari_flutter/core/exception.dart';
