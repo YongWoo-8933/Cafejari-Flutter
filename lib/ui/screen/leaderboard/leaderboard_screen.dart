@@ -170,10 +170,11 @@ class _RankersPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double firstRankerWidth = 120;
-    const double firstRankerHeight = 200;
-    const double otherRankerWidth = firstRankerWidth * 0.85;
-    const double otherRankerHeight = firstRankerHeight * 0.85;
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final double firstRankerWidth = deviceWidth > 360 ? 120 : 100;
+    final double firstRankerHeight = deviceWidth > 360 ? 200 : 170;
+    final double otherRankerWidth = firstRankerWidth * 0.85;
+    final double otherRankerHeight = firstRankerHeight * 0.85;
     List<Widget> topRankers = [];
     switch(rankers.length) {
       case 0:

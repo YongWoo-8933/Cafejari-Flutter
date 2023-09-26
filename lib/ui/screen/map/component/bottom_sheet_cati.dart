@@ -91,7 +91,7 @@ class CafeCATIEditor extends ConsumerWidget {
     return Dialog(
       elevation: 0,
       backgroundColor: AppColor.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 40),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 30),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final double sliderWidth = constraints.maxWidth - sidePadding * 2;

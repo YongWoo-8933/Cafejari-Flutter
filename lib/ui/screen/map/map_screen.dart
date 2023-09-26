@@ -32,9 +32,9 @@ class MapScreenState extends ConsumerState<MapScreen> {
       final mapViewModel = ref.watch(mapViewModelProvider.notifier);
       final myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
       final mapState = ref.watch(mapViewModelProvider);
+      Position? location = await mapViewModel.globalViewModel.getFirstLocation();
+      myCafeViewModel.initCafeRecommendationData(location: location);
       if (mapState.shareTempCameraPosition.isNull) {
-        Position? location = await mapViewModel.globalViewModel.getFirstLocation();
-        myCafeViewModel.initCafeRecommendationData();
         final NCameraPosition cameraPosition = location.isNotNull ?
         NCameraPosition(target: NLatLng(location!.latitude, location.longitude), zoom: Zoom.medium) :
         NLocation.sinchon().cameraPosition;

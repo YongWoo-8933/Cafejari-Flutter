@@ -12,17 +12,22 @@ class CATIBlocks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final blockWidth = deviceWidth > 380 ? 78.0 : 70.0;
+    final blockHeight = deviceWidth > 380 ? 84.0 : 78.0;
+    final spacing = deviceWidth > 380 ? 8.0 : 6.0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildCategoryColumn(topText: "개방적인", bottomText: "아늑한", catiValue: cati?.openness),
-        const HorizontalSpacer(8),
-        _buildCategoryColumn(topText: "커피맛집", bottomText: "음료맛집", catiValue: cati?.coffee),
-        const HorizontalSpacer(8),
-        _buildCategoryColumn(topText: "업무공간", bottomText: "감성카페", catiValue: cati?.workspace),
-        const HorizontalSpacer(8),
-        _buildCategoryColumn(topText: "산미있는", bottomText: "고소한", catiValue: cati?.acidity),
+        _buildCategoryColumn(topText: "개방적인", bottomText: "아늑한", catiValue: cati?.openness, width: blockWidth, height: blockHeight),
+        HorizontalSpacer(spacing),
+        _buildCategoryColumn(topText: "커피맛집", bottomText: "음료맛집", catiValue: cati?.coffee, width: blockWidth, height: blockHeight),
+        HorizontalSpacer(spacing),
+        _buildCategoryColumn(topText: "업무공간", bottomText: "감성카페", catiValue: cati?.workspace, width: blockWidth, height: blockHeight),
+        HorizontalSpacer(spacing),
+        _buildCategoryColumn(topText: "산미있는", bottomText: "고소한", catiValue: cati?.acidity, width: blockWidth, height: blockHeight),
       ],
     );
   }
@@ -30,16 +35,16 @@ class CATIBlocks extends StatelessWidget {
   Widget _buildCategoryColumn({
     required String topText,
     required String bottomText,
-    required int? catiValue
+    required int? catiValue,
+    required double width,
+    required double height
   }) {
-    const double blockHeight = 84;
-    const double blockWidth = 78;
     const double cornerRadius = 15;
 
     return Container(
       alignment: Alignment.center,
-      width: blockWidth,
-      height: blockHeight,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cornerRadius),
         boxShadow: AppShadow.box
@@ -50,8 +55,8 @@ class CATIBlocks extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.center,
-              width: blockWidth,
-              height: blockHeight / 2,
+              width: width,
+              height: height / 2,
               decoration: BoxDecoration(
                 color: catiValue.isNotNull && catiValue! > 0 ? AppColor.secondary : AppColor.white,
                 border: const Border(
@@ -69,8 +74,8 @@ class CATIBlocks extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              width: blockWidth,
-              height: blockHeight / 2,
+              width: width,
+              height: height / 2,
               decoration: BoxDecoration(
                 color: catiValue.isNotNull && catiValue! < 0 ? AppColor.secondary : AppColor.white,
                 border: const Border(

@@ -11,6 +11,7 @@ import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MyCafeViewModel extends StateNotifier<MyCafeState> {
   final GlobalViewModel globalViewModel;
@@ -33,11 +34,11 @@ class MyCafeViewModel extends StateNotifier<MyCafeState> {
     );
   }
   
-  initCafeRecommendationData() async {
+  initCafeRecommendationData({Position? location}) async {
     state = state.copyWith(
       recommendedCafes: await _cafeUseCase.getRecommendedCafes(
-        latitude: globalViewModel.state.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
-        longitude: globalViewModel.state.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
+        latitude: location?.latitude ?? globalViewModel.state.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
+        longitude: location?.longitude ?? globalViewModel.state.currentDeviceLocation?.longitude ?? NLocation.sinchon().cameraPosition.target.longitude
       )
     );
     _cafeRecommendationGetTimer?.cancel();

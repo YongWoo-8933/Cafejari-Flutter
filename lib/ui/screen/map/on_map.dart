@@ -36,6 +36,7 @@ class OnMap extends ConsumerWidget {
                   width: 48,
                   height: 48,
                   child: FloatingActionButton(
+                    heroTag: "location_button",
                     onPressed: () {
                       if (mapState.locations.isNotEmpty) {
                         showDialog(
@@ -78,6 +79,7 @@ class OnMap extends ConsumerWidget {
                     SizedBox(
                       height: 36,
                       child: FloatingActionButton.extended(
+                        heroTag: "cafe_refresh_button",
                         elevation: 3,
                         icon: const Icon(size: 18, CupertinoIcons.refresh),
                         onPressed: () async {

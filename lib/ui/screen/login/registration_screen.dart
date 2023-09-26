@@ -50,6 +50,7 @@ class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
               backGroundColor: AppColor.white,
               onBack: () => GoRouter.of(context).pop()
           ),
+          backgroundColor: AppColor.white,
           body: SlidingUpPanel(
             controller: loginState.bottomSheetController,
             minHeight: 0,

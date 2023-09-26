@@ -105,6 +105,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 text: "카카오 계정으로 시작",
                 imagePath: 'asset/image/kakao_icon.png',
                 isLoading: ref.watch(_kakaoLoginLoadingProvider),
+                heroTag: "kakao_login_button",
                 onPressed: () async {
                   if(!ref.watch(_kakaoLoginLoadingProvider)) {
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => true);
@@ -141,6 +142,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       text: "Apple 계정으로 시작",
                       imagePath: 'asset/image/apple_icon.png',
                       isLoading: ref.watch(_appleLoginLoadingProvider),
+                      heroTag: "apple_login_button",
                       onPressed: () async {
                         if(!ref.watch(_appleLoginLoadingProvider)) {
                           ref.watch(_appleLoginLoadingProvider.notifier).update((state) => true);
@@ -173,29 +175,30 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 width: deviceSize.width * 56 / 100,
                 height: 60,
                 child: FloatingActionButton(
-                    foregroundColor: AppColor.black,
-                    backgroundColor: AppColor.transparentGrey_300,
-                    onPressed: () => globalViewModel.navigateToWebView(
-                        route: WebViewRoute.userMigration(), context: context),
-                    elevation: 1,
-                    focusElevation: 0,
-                    hoverElevation: 0,
-                    highlightElevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60 / 2),
+                  heroTag: "user_migration_button",
+                  foregroundColor: AppColor.black,
+                  backgroundColor: AppColor.transparentGrey_300,
+                  onPressed: () => globalViewModel.navigateToWebView(
+                      route: WebViewRoute.userMigration(), context: context),
+                  elevation: 1,
+                  focusElevation: 0,
+                  hoverElevation: 0,
+                  highlightElevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60 / 2),
+                  ),
+                  child: const Padding(
+                    padding: AppPadding.padding_horizon_20,
+                    child: Text(
+                      "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColor.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12
+                      )
                     ),
-                    child: const Padding(
-                      padding: AppPadding.padding_horizon_20,
-                      child: Text(
-                        "이전 버전에서 카페자리 이메일로 가입한 유저이신가요?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColor.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12
-                        )
-                      ),
-                    )
+                  )
                 ),
               )
             ],

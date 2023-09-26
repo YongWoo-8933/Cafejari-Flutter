@@ -4,6 +4,7 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/privacy_policy.dart';
@@ -89,14 +90,16 @@ class AgreementPart extends ConsumerWidget {
                 onArrowClick: null
             ),
             const VerticalSpacer(40),
-            _RegistrationButton(
-              enabled: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
-                  loginState.nicknameErrorMessage.isEmpty,
+            ActionButtonPrimary(
+              buttonWidth: double.infinity,
+              buttonHeight: 48,
+              title: "가입하기",
               isLoading: ref.watch(_isRegistrationLoading),
-              onClick: () async {
+              onPressed: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
+                  loginState.nicknameErrorMessage.isEmpty ? () async {
                 bool result = false;
+                ref.watch(_isRegistrationLoading.notifier).update((state) => true);
                 if (loginState.kakaoAccessToken.isNotEmpty) {
-                  ref.watch(_isRegistrationLoading.notifier).update((state) => true);
                   result = await loginViewModel.registerAsKakaoUser();
                 } else if (loginState.appleIdToken.isNotEmpty) {
                   result = await loginViewModel.registerAsAppleUser();
@@ -110,7 +113,7 @@ class AgreementPart extends ConsumerWidget {
                   case false:
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);
                 }
-              }
+              } : null,
             ),
             const VerticalSpacer(100),
           ],
@@ -267,63 +270,6 @@ class _AgreementBox extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _RegistrationButton extends StatelessWidget {
-  final VoidCallback onClick;
-  final bool enabled;
-  final bool isLoading;
-
-  const _RegistrationButton({
-    super.key,
-    required this.onClick,
-    required this.enabled,
-    required this.isLoading
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: ElevatedButton(
-        onPressed: enabled ? onClick : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-        ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              AnimatedOpacity(
-                opacity: isLoading ? 1.0 : 0.0,
-                duration: AppDuration.animationDefault,
-                child: Center(
-                  child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
-                )
-              ),
-              AnimatedOpacity(
-                opacity: isLoading ? 0.0 : 1.0,
-                duration: AppDuration.animationDefault,
-                child: const Text(
-                  "가입하기",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.white
-                  )
-                )
-              )
-            ]
-          ),
-        ),
       ),
     );
   }

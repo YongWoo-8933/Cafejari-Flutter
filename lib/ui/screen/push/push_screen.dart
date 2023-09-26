@@ -5,9 +5,9 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -82,6 +82,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
   // 탭 내용을 생성하는 함수
   Widget _buildTabContent(Pushes pushes) {
     return Stack(
+      alignment: Alignment.center,
       children: [
         Visibility(
           visible: pushes.isNotEmpty,
@@ -124,10 +125,17 @@ class PushScreenState extends ConsumerState<PushScreen> {
         ),
         Visibility(
           visible: pushes.isEmpty,
-          child: Container(
-            alignment: Alignment.center,
-            color: AppColor.white,
-            child: const Text("비었음")
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "asset/image/icon_empty.png",
+                width: 100,
+              ),
+              const VerticalSpacer(30),
+              const Text("받은 알림이 없어요", style: TextSize.textSize_16),
+              const VerticalSpacer(80),
+            ],
           ),
         )
       ],

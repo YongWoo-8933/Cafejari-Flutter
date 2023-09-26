@@ -17,6 +17,7 @@ class LoginButton extends StatelessWidget {
   final String imagePath;
   final String text;
   final bool isLoading;
+  final String heroTag;
 
   const LoginButton({
     super.key,
@@ -28,7 +29,8 @@ class LoginButton extends StatelessWidget {
     required this.text,
     required this.imagePath,
     required this.isLoading,
-    required this.onPressed
+    required this.onPressed,
+    required this.heroTag
   });
 
   @override
@@ -37,6 +39,7 @@ class LoginButton extends StatelessWidget {
       width: buttonWidth,
       height: buttonHeight,
       child: FloatingActionButton(
+        heroTag: heroTag,
         foregroundColor: textColor,
         backgroundColor: backgroundColor,
         onPressed: onPressed,

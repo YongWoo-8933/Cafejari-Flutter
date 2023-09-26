@@ -21,6 +21,7 @@ class XButton extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: FloatingActionButton(
+        heroTag: "x_button",
         onPressed: () {
           if (onPressed != null) {
             onPressed!(); // 콜백 함수 호출

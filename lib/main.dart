@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/core/flutter_local_notification.dart';
 import 'package:cafejari_flutter/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -34,15 +35,17 @@ void main() async {
     badge: true,
     sound: true
   );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (message.notification.isNotNull) {
-      FlutterLocalNotification.showNotification(
-          title: message.notification!.title,
-          body: message.notification!.body
-      );
-    }
-  });
+  if(defaultTargetPlatform == TargetPlatform.android) {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification.isNotNull) {
+        FlutterLocalNotification.showNotification(
+            title: message.notification!.title,
+            body: message.notification!.body
+        );
+      }
+    });
+  }
 
   // Naver map init
   await NaverMapSdk.instance.initialize(clientId: dotenv.env['NAVER_MAP_CLIENT_ID']);

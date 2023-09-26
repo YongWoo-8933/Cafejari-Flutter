@@ -38,7 +38,8 @@ class ShareButton extends ConsumerWidget {
           final DynamicLinkParameters parameters = DynamicLinkParameters(
             link: Uri.parse("$urlPrefix/map/${mapState.selectedCafe.id}"),
             uriPrefix: urlPrefix,
-            androidParameters: const AndroidParameters(packageName: "kr.co.cafejari.cafejari_flutter")
+            androidParameters: const AndroidParameters(packageName: "kr.co.cafejari.cafejari_flutter"),
+            iosParameters: const IOSParameters(bundleId: "kr.co.cafejari.cafejariFlutter")
           );
           final Uri dynamicLink = await FirebaseDynamicLinks.instance.buildLink(parameters);
           final template = LocationTemplate(

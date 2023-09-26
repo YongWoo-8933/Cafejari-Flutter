@@ -84,9 +84,11 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
       final GlobalState globalState = ref.watch(globalViewModelProvider);
 
-      // 권한 확인 + 이동 및 온보딩 띄우기
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
+        // 앱 첫 사용자
         if (globalState.isPermissionChecked) {
+          // 권한 설정 마치고 돌아옴
+          FlutterNativeSplash.remove();
           globalViewModel.setIsInstalledFirst(false);
           showDialog(
             context: context,
@@ -94,49 +96,51 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
             builder: (_) => const OnboardingDialog()
           );
         } else {
+          // 권한 설정 전
           GoRouter.of(context).goNamed(ScreenRoute.appPermission);
+          FlutterNativeSplash.remove();
         }
-      }
+      } else {
+        // 앱 시작
+        await globalViewModel.init();
+        await mapViewModel.refreshLocations();
+        await mapViewModel.getRandomCafeImageUrl();
+        await challengeViewModel.refreshChallenges();
+        await myPageViewModel.getDefaultProfileImages();
+        FlutterNativeSplash.remove();
+        await globalViewModel.locationTrackingStart();
 
-      // 앱 시작
-      await globalViewModel.init();
-      await globalViewModel.locationTrackingStart();
-      await mapViewModel.refreshLocations();
-      await mapViewModel.getRandomCafeImageUrl();
-      await challengeViewModel.refreshChallenges();
-      await myPageViewModel.getDefaultProfileImages();
-      FlutterNativeSplash.remove();
+        // 버전 체크
+        if(context.mounted) await globalViewModel.checkVersion(context: context);
 
-      // 버전 체크
-      if(context.mounted) await globalViewModel.checkVersion(context: context);
+        // GA에 로깅
+        await FirebaseAnalytics.instance.logAppOpen();
 
-      // GA에 로깅
-      await FirebaseAnalytics.instance.logAppOpen();
+        // 지도관련 로직 처리
+        Future.delayed(const Duration(seconds: 1), () async {
+          final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+          final Uri? deepLink = data?.link;
 
-      // 딥링크관련 로직 처리
-      Future.delayed(const Duration(seconds: 1), () async {
-        final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
-        final Uri? deepLink = data?.link;
-
-        mapLinkFunction(Uri link) async {
-          final List<String> separatedString = [];
-          separatedString.addAll(link.path.split('/'));
-          if (separatedString[1] == "map") {
-            final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-            if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
-            globalViewModel.updateCurrentPageTo(PageType.map.index);
-            await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
-            await mapViewModel.openBottomSheetPreview();
+          mapLinkFunction(Uri link) async {
+            final List<String> separatedString = [];
+            separatedString.addAll(link.path.split('/'));
+            if (separatedString[1] == "map") {
+              final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+              if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+              globalViewModel.updateCurrentPageTo(PageType.map.index);
+              await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
+              await mapViewModel.openBottomSheetPreview();
+            }
           }
-        }
 
-        if (deepLink.isNotNull) mapLinkFunction(deepLink!);
+          if (deepLink.isNotNull) mapLinkFunction(deepLink!);
 
-        FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
-          final Uri deepLink = pendingDynamicLinkData.link;
-          mapLinkFunction(deepLink);
+          FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) async {
+            final Uri deepLink = pendingDynamicLinkData.link;
+            mapLinkFunction(deepLink);
+          });
         });
-      });
+      }
     });
   }
 

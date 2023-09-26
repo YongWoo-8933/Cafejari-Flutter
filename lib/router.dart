@@ -42,11 +42,6 @@ final GoRouter appRouter = GoRouter(
             ]
         ),
         GoRoute(
-          path: "my_cafe",
-          name: ScreenRoute.myCafe,
-          builder: (_, __) => const MyCafeScreen(),
-        ),
-        GoRoute(
             path: "challenge_info",
             name: ScreenRoute.challengeInfo,
             builder: (_, __) => const ChallengeInfoScreen(),
@@ -62,11 +57,6 @@ final GoRouter appRouter = GoRouter(
           path: "shop",
           name: ScreenRoute.shop,
           builder: (_, __) => const ShopScreen(),
-        ),
-        GoRoute(
-          path: "point",
-          name: ScreenRoute.point,
-          builder: (_, __) => const PointScreen(),
         ),
         GoRoute(
           path: "push",
