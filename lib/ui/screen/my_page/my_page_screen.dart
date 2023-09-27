@@ -1,8 +1,8 @@
+import 'package:cafejari_flutter/core/app_version.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_secondary.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_editable.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -358,7 +358,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                               builder: (_) => const UserMigrationDialog()
                           )
                         ),
-                        const VerticalSpacer(80),
+                        const VerticalSpacer(40),
 
                         Visibility(
                           visible: globalState.isLoggedIn,
@@ -391,7 +391,16 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             ],
                           ),
                         ),
-                        const VerticalSpacer(60)
+                        const VerticalSpacer(120),
+
+                        const Text(
+                          "ver ${LocalAppVersion.major}.${LocalAppVersion.minor}.${LocalAppVersion.patch}\n주식회사 자리매김\n서울특별시 이화여대 1길 33\n010-7607-4842",
+                          style: TextStyle(
+                            color: AppColor.grey_300,
+                            fontSize: 12
+                          )
+                        ),
+                        const VerticalSpacer(20),
                       ],
                     ),
                   ),

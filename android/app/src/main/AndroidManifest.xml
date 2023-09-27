@@ -16,7 +16,6 @@
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
@@ -30,16 +29,11 @@
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
                 android:resource="@drawable/launch_background"
                 />
-<!--            <meta-data-->
-<!--              android:name="io.flutter.embedding.android.NormalTheme"-->
-<!--              android:resource="@style/NormalTheme"-->
-<!--              />-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <!-- "kakao${YOUR_NATIVE_APP_KEY}://${PRODUCT_NAME}" 형식의 앱 실행 스킴 설정 -->
                 <!-- 카카오톡 공유, 카카오톡 메시지 -->
                 <data android:host="kakaolink"
                     android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
@@ -66,7 +60,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식의 앱 실행 스킴 설정 -->
                 <!-- 카카오 로그인 Redirect URI -->
                 <data android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" android:host="oauth"/>
             </intent-filter>
