@@ -66,8 +66,8 @@
 	<string>(권고) 지도에서 내 위치를 찾고, 카페의 혼잡도를 업데이트하기 위해 위치 권한이 필요합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>마이크 접근을 통해 음성 입력을 받습니다.</string>
-	<key></key>
-	<string></string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>애플 뮤직에 접근할 수 있는 권한을 받습니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>(권고) 지도에서 내 위치를 찾고, 카페의 혼잡도를 업데이트하기 위해 위치 권한이 필요합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
