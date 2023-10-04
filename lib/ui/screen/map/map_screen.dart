@@ -84,6 +84,8 @@ class _NaverMap extends ConsumerWidget {
         scaleBarEnable: false,
         indoorLevelPickerEnable: false,
         locationButtonEnable: true,
+        maxZoom: 20.0,
+        minZoom: 8.0,
         logoMargin: const EdgeInsets.symmetric(vertical: 25, horizontal: 12)
       ),
       forceGesture: true,
@@ -99,6 +101,11 @@ class _NaverMap extends ConsumerWidget {
           mapViewModel.setInitTempCameraPosition(null);
         }
         mapViewModel.initMapController(controller);
+      },
+      onMapTapped: (_, __) {
+        mapViewModel.closeBottomSheetPreview();
+        mapState.bottomSheetController.close();
+        mapViewModel.clearSelectedCafeAndMarker();
       },
       onCameraIdle: () {
         if(!mapState.isRefreshButtonVisible) {

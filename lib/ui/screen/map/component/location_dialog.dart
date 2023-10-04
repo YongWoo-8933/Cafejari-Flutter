@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/material.dart';
 
 class LocationDialog extends StatelessWidget {
@@ -23,7 +22,7 @@ class LocationDialog extends StatelessWidget {
         child: GridView.builder(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 160,
+            maxCrossAxisExtent: 180.0,
             mainAxisSpacing: 12,
             crossAxisSpacing: 8,
             childAspectRatio: 2.7

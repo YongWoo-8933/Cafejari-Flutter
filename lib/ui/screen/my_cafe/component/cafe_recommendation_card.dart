@@ -66,7 +66,10 @@ class CafeRecommendationCard extends StatelessWidget {
                         const HorizontalSpacer(4),
                         Text(
                           cafe.recentUpdatedOccupancyRate.isNotNull ? "${(cafe.recentUpdatedOccupancyRate! * 100).toInt()}%" : "정보없음",
-                          style: TextSize.textSize_bold_12
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500
+                          )
                         ),
                       ],
                     ),
@@ -81,7 +84,10 @@ class CafeRecommendationCard extends StatelessWidget {
                           cafe.maximumWallSocketRate.isNotNull ?
                             "${(cafe.maximumWallSocketRate! * 100).toInt()}% (${cafe.maximumWallSocketFloor!.toFloor()}층)" :
                             "정보없음",
-                          style: TextSize.textSize_bold_12
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500
+                          )
                         ),
                       ],
                     ),

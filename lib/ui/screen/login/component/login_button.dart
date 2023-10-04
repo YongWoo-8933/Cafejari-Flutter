@@ -69,7 +69,14 @@ class LoginButton extends StatelessWidget {
                     child: Image.asset(imagePath), // Image 위젯을 그대로 아이콘으로 사용합니다.
                   ),
                   Center(
-                      child: Text(text, style: TextStyle(color: textColor, fontWeight: FontWeight.w400, fontSize: 14),)
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14
+                      )
+                    )
                   ),
                 ]
               ),

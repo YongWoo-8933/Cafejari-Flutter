@@ -145,7 +145,7 @@ class _Page extends StatelessWidget {
       children: [
         Text(title, style: TextSize.textSize_bold_18),
         const VerticalSpacer(8),
-        Text(introduction, style: TextSize.textSize_12, textAlign: TextAlign.center),
+        Text(introduction, style: const TextStyle(fontSize: 13), textAlign: TextAlign.center),
         const VerticalSpacer(12),
         Image.asset(imagePath, height: 400),
       ],

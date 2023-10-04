@@ -112,7 +112,11 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                   isEditMode: ref.watch(_isEditMode),
                                   onDelete: () {
                                     HapticFeedback.lightImpact();
-                                    mapViewModel.updateFavoriteCafeList(cafe: cafe, context: context);
+                                    mapViewModel.updateFavoriteCafeList(
+                                      cafe: cafe,
+                                      context: context,
+                                      onFinish: () => ref.watch(_isEditMode.notifier).update((state) => !ref.watch(_isEditMode))
+                                    );
                                   },
                                   onTap: () async {
                                     myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
@@ -124,7 +128,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                               return Visibility(
                                 visible: !ref.watch(_isEditMode) && globalState.user.favoriteCafes.length < 10,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 15),
+                                  padding: const EdgeInsets.only(left: 15, right: 15, top: 45, bottom: 65),
                                   child: GestureDetector(
                                     onTap: () async {
                                       myCafeViewModel.globalViewModel.updateCurrentPageTo(0);

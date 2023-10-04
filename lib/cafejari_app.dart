@@ -83,6 +83,26 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
       final GlobalState globalState = ref.watch(globalViewModelProvider);
+      mapLinkFunction(Uri link) async {
+        final List<String> separatedString = [];
+        separatedString.addAll(link.path.split('/'));
+        if (separatedString[1] == "map") {
+          final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
+          if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+          globalViewModel.updateCurrentPageTo(PageType.map.index);
+          await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
+          await mapViewModel.openBottomSheetPreview();
+        }
+      }
+
+      // GA에 로깅 시작
+      await FirebaseAnalytics.instance.logAppOpen();
+
+      // 기본 서버 정보 로딩
+      await mapViewModel.refreshLocations();
+      await mapViewModel.getRandomCafeImageUrl();
+      await challengeViewModel.refreshChallenges();
+      await myPageViewModel.getDefaultProfileImages();
 
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
@@ -103,44 +123,28 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       } else {
         // 앱 시작
         await globalViewModel.init();
-        await mapViewModel.refreshLocations();
-        await mapViewModel.getRandomCafeImageUrl();
-        await challengeViewModel.refreshChallenges();
-        await myPageViewModel.getDefaultProfileImages();
         FlutterNativeSplash.remove();
-        await globalViewModel.locationTrackingStart();
 
-        // 버전 체크
-        if(context.mounted) await globalViewModel.checkVersion(context: context);
-
-        // GA에 로깅
-        await FirebaseAnalytics.instance.logAppOpen();
-
-        // 지도관련 로직 처리
+        // 지도 관련 deep link 로직 처리
         Future.delayed(const Duration(seconds: 1), () async {
           final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
           final Uri? deepLink = data?.link;
-
-          mapLinkFunction(Uri link) async {
-            final List<String> separatedString = [];
-            separatedString.addAll(link.path.split('/'));
-            if (separatedString[1] == "map") {
-              final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-              if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
-              globalViewModel.updateCurrentPageTo(PageType.map.index);
-              await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
-              await mapViewModel.openBottomSheetPreview();
-            }
-          }
-
           if (deepLink.isNotNull) mapLinkFunction(deepLink!);
-
-          FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) async {
-            final Uri deepLink = pendingDynamicLinkData.link;
-            mapLinkFunction(deepLink);
-          });
         });
       }
+
+      if(context.mounted) {
+        // 위치 트래킹 시작
+        await globalViewModel.locationTrackingStart(context: context);
+        // 버전 체크
+        if(context.mounted) await globalViewModel.checkVersion(context: context);
+      }
+
+      // 맵 딥링크 설정
+      FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) async {
+        final Uri deepLink = pendingDynamicLinkData.link;
+        mapLinkFunction(deepLink);
+      });
     });
   }
 

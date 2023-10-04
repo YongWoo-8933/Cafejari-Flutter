@@ -34,6 +34,7 @@ class MapState with _$MapState {
       required final bool isBottomSheetPreviewOpened,
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
+      required final bool isCafeRefreshIndicatorVisible,
       required final bool isRefreshButtonVisible}) = _MapState;
 
   factory MapState.empty() => MapState(
@@ -61,5 +62,6 @@ class MapState with _$MapState {
       isBottomSheetPreviewOpened: false,
       isBottomSheetPreviewExpanded: false,
       isBottomSheetFullContentVisible: false,
+      isCafeRefreshIndicatorVisible: false,
       isRefreshButtonVisible: false);
 }

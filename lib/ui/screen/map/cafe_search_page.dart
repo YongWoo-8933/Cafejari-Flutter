@@ -10,10 +10,8 @@ import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
-import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -65,11 +63,12 @@ class SearchPage extends ConsumerWidget {
                       alignment: Alignment.center,
                       children: [
                         ListView.builder(
-                          padding: EdgeInsets.only(bottom: bottomNavBarCornerRadius + 80),
+                          padding: EdgeInsets.only(bottom: bottomNavBarCornerRadius + 120),
                           itemCount: mapState.searchPredictions.length,
                           itemBuilder: (context, index) {
                             final Cafe searchCafe = mapState.searchPredictions[index];
                             return Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 GestureDetector(
                                   onTap: () async {
@@ -78,7 +77,6 @@ class SearchPage extends ConsumerWidget {
                                   },
                                   child: Container(
                                     width: deviceWidth,
-                                    height: 80,
                                     color: AppColor.transparent,
                                     alignment: Alignment.centerLeft,
                                     padding: const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 16),
@@ -86,6 +84,7 @@ class SearchPage extends ConsumerWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         CafeNameAddressBlock(
+                                          width: deviceWidth - 50,
                                           name: searchCafe.name,
                                           address: searchCafe.address,
                                           nameTextSize: 16,

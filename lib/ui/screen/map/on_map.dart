@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
+import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/location_dialog.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OnMap extends ConsumerWidget {
   const OnMap({Key? key}) : super(key: key);
@@ -20,9 +22,14 @@ class OnMap extends ConsumerWidget {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final MapState mapState = ref.watch(mapViewModelProvider);
     final double deviceWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       alignment: Alignment.center,
       children: [
+        Visibility(
+          visible: mapState.isCafeRefreshIndicatorVisible,
+          child: LoadingAnimationWidget.hexagonDots(color: AppColor.primary, size: 42)
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -8,7 +8,9 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 
 class BottomSheetMoreInfo extends ConsumerWidget {
-  const BottomSheetMoreInfo({Key? key}) : super(key: key);
+  final sidePadding;
+
+  const BottomSheetMoreInfo({Key? key, required this.sidePadding}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +25,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
     const double letterSpacing = 8;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 25),
       color: AppColor.background,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

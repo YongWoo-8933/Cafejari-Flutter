@@ -54,6 +54,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
     final double deviceWidth = MediaQuery.of(context).size.width;
     const greyAreaWidth = 280.0;
     const mapHeight = 240.0;
+    const sidePadding = 20.0;
 
     return Scaffold(
       appBar: BackButtonAppBar(
@@ -78,10 +79,11 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
           ),
           const VerticalSpacer(30),
           Padding(
-            padding: AppPadding.padding_horizon_20,
+            padding: const EdgeInsets.symmetric(horizontal: sidePadding),
             child: Column(
               children: [
                 CafeNameAddressBlock(
+                  width: deviceWidth - sidePadding * 2,
                   name: requestState.selectedSearchCafe.name,
                   address: requestState.selectedSearchCafe.roadAddress,
                   nameTextSize: 18,

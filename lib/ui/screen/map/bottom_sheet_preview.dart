@@ -1,6 +1,5 @@
 import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
-import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
@@ -108,12 +107,15 @@ class BottomSheetPreview extends ConsumerWidget {
                               const VerticalSpacer(8),
                               Padding(
                                 padding: const EdgeInsets.only(right: edgePadding),
-                                child: Text(
-                                  mapState.selectedCafe.name,
-                                  maxLines: 2,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600
+                                child: GestureDetector(
+                                  onTap: () => mapState.bottomSheetController.open(),
+                                  child: Text(
+                                    mapState.selectedCafe.name,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600
+                                    ),
                                   ),
                                 ),
                               ),

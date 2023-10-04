@@ -33,6 +33,7 @@ class MapViewModel extends StateNotifier<MapState> {
   }): _cafeUseCase = cafeUseCase, _userUseCase = userUseCase, super(MapState.empty().copyWith());
 
   Future<Cafes> refreshCafes({NCameraPosition? cameraPosition, int? selectedCafeId}) async {
+    state = state.copyWith(isCafeRefreshIndicatorVisible: true);
     final NCameraPosition nonNullCameraPosition = cameraPosition ?? await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition;
     try {
       final Cafes newCafes = await _cafeUseCase.getMapCafes(cameraPosition: nonNullCameraPosition);
@@ -45,8 +46,9 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
-      // 변경 사항 저장
-      state = state.copyWith(cafes: newCafes);
+      // 변경 사항 저장 + 로딩 종료
+      state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false);
+
       return newCafes;
     } on ErrorWithMessage catch(e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
@@ -123,7 +125,24 @@ class MapViewModel extends StateNotifier<MapState> {
     });
   }
 
-  updateFavoriteCafeList({required Cafe cafe, required BuildContext context}) async {
+  clearSelectedCafeAndMarker() {
+    if (state.selectedMarker.isNotNull) {
+      state.selectedMarker?.setSize(state.selectedMarker!.size * 5 / 6);
+      state.selectedMarker?.setZIndex(1);
+      state.selectedMarker?.setCaption(const NOverlayCaption(text: ""));
+    }
+    state = state.copyWith(
+      selectedCafe: Cafe.empty(),
+      selectedCafeFloor: CafeFloor.empty(),
+      selectedMarker: null
+    );
+  }
+
+  updateFavoriteCafeList({
+    required Cafe cafe,
+    required BuildContext context,
+    VoidCallback? onFinish
+  }) async {
     try {
       List<Cafe> newCafeList = List.from(globalViewModel.state.user.favoriteCafes);
       if(newCafeList.where((e) => e.id == cafe.id).isNotEmpty) {
@@ -141,6 +160,7 @@ class MapViewModel extends StateNotifier<MapState> {
         onAccessTokenRefresh: globalViewModel.setAccessToken
       );
       globalViewModel.setUser(updatedUser);
+      if(updatedUser.favoriteCafes.isEmpty && onFinish.isNotNull) onFinish!();
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
       List<Cafe> newCafeList = List.from(globalViewModel.state.user.favoriteCafes);

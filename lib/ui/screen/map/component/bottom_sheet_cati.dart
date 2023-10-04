@@ -21,7 +21,9 @@ import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class BottomSheetCATI extends ConsumerWidget {
-  const BottomSheetCATI({Key? key}) : super(key: key);
+  final sidePadding;
+
+  const BottomSheetCATI({Key? key, required this.sidePadding}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +32,7 @@ class BottomSheetCATI extends ConsumerWidget {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
     return  Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 25),
       color: AppColor.background,
       child: Column(
         children: [

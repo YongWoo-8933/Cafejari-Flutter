@@ -70,8 +70,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
               onDismiss: () => Navigator.of(context).pop(),
               onNegativeButtonPress: () {},
               onPositiveButtonPress: () => LaunchReview.launch(
-                androidAppId: "com.software.cafejariapp",
-                iOSAppId: "6444637809",
+                androidAppId: "kr.co.cafejari.cafejari_flutter",
+                iOSAppId: "6467621695",
                 writeReview: false
               )
             ));
@@ -94,8 +94,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
                 onDismiss: () => SystemNavigator.pop(),
                 onNegativeButtonPress: () {},
                 onPositiveButtonPress: () => LaunchReview.launch(
-                  androidAppId: "com.software.cafejariapp",
-                  iOSAppId: "6444637809",
+                  androidAppId: "kr.co.cafejari.cafejari_flutter",
+                  iOSAppId: "6467621695",
                   writeReview: false
                 )
               ),
@@ -194,13 +194,23 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);
   }
 
-  locationTrackingStart() async {
+  locationTrackingStart({required BuildContext context}) async {
     final permission = await Geolocator.requestPermission();
     if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-      showSnackBar(content: "위치 권한을 허용해주세요. 3초 후 설정 화면으로 이동합니다", type: SnackBarType.error);
-      Future.delayed(const Duration(seconds: 3), () { openAppSettings(); });
+      if(context.mounted) {
+        showDialog(context: context, builder: (_) =>
+          SquareAlertDialog(
+            text: "위치 권한을 허용하지 않으시면 앱 사용이 매우 불편할 수 있어요. 설정화면으로 이동해 권한을 허용하시겠어요?",
+            negativeButtonText: "아니오",
+            positiveButtonText: "네",
+            onDismiss: () => Navigator.of(context).pop(),
+            onNegativeButtonPress: () {},
+            onPositiveButtonPress: openAppSettings
+          )
+        );
+      }
     } else if (permission == LocationPermission.unableToDetermine) {
-      locationTrackingStart();
+      if(context.mounted) locationTrackingStart(context: context);
     } else {
       const LocationSettings locationSettings = LocationSettings(accuracy: LocationAccuracy.high);
       Geolocator.getPositionStream(locationSettings: locationSettings).listen(

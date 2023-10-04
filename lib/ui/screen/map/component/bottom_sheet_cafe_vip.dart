@@ -11,7 +11,9 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 
 class BottomSheetCafeVIP extends ConsumerWidget {
-  const BottomSheetCafeVIP({Key? key}) : super(key: key);
+  final sidePadding;
+
+  const BottomSheetCafeVIP({Key? key, required this.sidePadding}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +22,7 @@ class BottomSheetCafeVIP extends ConsumerWidget {
     const double imageSize = 64;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 25),
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

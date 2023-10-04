@@ -25,7 +25,9 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class BottomSheetMainInfo extends ConsumerWidget {
-  const BottomSheetMainInfo({Key? key}) : super(key: key);
+  final double sidePadding;
+
+  const BottomSheetMainInfo({Key? key, required this.sidePadding}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -146,7 +148,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: sidePadding),
               child: Column(
                 children: [
                   // 카페 이름 + 주소
@@ -154,6 +156,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CafeNameAddressBlock(
+                        width: deviceSize.width - sidePadding * 2,
                         name: mapState.selectedCafe.name,
                         address: mapState.selectedCafe.address
                       ),

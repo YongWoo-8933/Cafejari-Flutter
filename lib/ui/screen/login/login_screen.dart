@@ -195,7 +195,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       style: TextStyle(
                         color: AppColor.black,
                         fontWeight: FontWeight.w400,
-                        fontSize: 12
+                        fontSize: 13
                       )
                     ),
                   )

@@ -20,6 +20,7 @@ class BottomSheetFullContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size deviceSize = MediaQuery.of(context).size;
+    const double sidePadding = 20;
 
     return Container(
       color: AppColor.white,
@@ -30,11 +31,11 @@ class BottomSheetFullContent extends ConsumerWidget {
         padding: AppPadding.padding_0,
         itemBuilder: (_, index) {
           switch(index) {
-            case 0: return const BottomSheetMainInfo();
+            case 0: return const BottomSheetMainInfo(sidePadding: sidePadding);
             case 1: return const VerticalSpacer(30);
-            case 2: return const BottomSheetCATI();
-            case 3: return const BottomSheetCafeVIP();
-            default: return const BottomSheetMoreInfo();
+            case 2: return const BottomSheetCATI(sidePadding: sidePadding);
+            case 3: return const BottomSheetCafeVIP(sidePadding: sidePadding);
+            default: return const BottomSheetMoreInfo(sidePadding: sidePadding);
           }
         },
       ),
