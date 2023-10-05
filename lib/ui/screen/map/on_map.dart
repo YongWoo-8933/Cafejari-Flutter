@@ -91,7 +91,7 @@ class OnMap extends ConsumerWidget {
                         icon: const Icon(size: 18, CupertinoIcons.refresh),
                         onPressed: () async {
                           mapViewModel.closeBottomSheetPreview();
-                          await mapViewModel.refreshCafes();
+                          await mapViewModel.refreshCafes(showNoCafeSnackBar: true);
                         },
                         label: const Text("현 지도에서 검색", style: TextStyle(letterSpacing: 0)),
                         backgroundColor: AppColor.white,

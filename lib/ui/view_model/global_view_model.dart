@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:cafejari_flutter/core/app_version.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
@@ -263,15 +264,11 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   void updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
 
   Future<bool> isNearBy({required NLatLng from, required int meter}) async {
-    const double latitudeOf1Meter = 0.000009094341;
-    const double longitudeOf1Meter = 0.000011268875366;
     final myLocation = state.currentDeviceLocation ?? await getFirstLocation();
     return true;
     // if (myLocation.isNotNull) {
-    //   return myLocation!.latitude < from.latitude + latitudeOf1Meter * meter &&
-    //     myLocation.latitude > from.latitude - latitudeOf1Meter * meter &&
-    //     myLocation.longitude > from.longitude - longitudeOf1Meter * meter &&
-    //     myLocation.longitude < from.longitude + longitudeOf1Meter * meter;
+    //   final myLatLng = NLatLng(myLocation!.latitude, myLocation.longitude);
+    //   return getDistanceToMeter(from, myLatLng) < meter;
     // } else {
     //   return false;
     // }
@@ -314,5 +311,13 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     } on RefreshTokenExpired {
       if(context.mounted) expireRefreshToken(context: context);
     }
+  }
+
+  int getDistanceToMeter(NLatLng latLng1, NLatLng latLng2) {
+    const double latitudeOf1Meter = 0.000009094341;
+    const double longitudeOf1Meter = 0.000011268875366;
+    final double latDistanceMeter = (latLng1.latitude - latLng2.latitude).abs() / latitudeOf1Meter;
+    final double lngDistanceMeter = (latLng1.longitude - latLng2.longitude).abs() / longitudeOf1Meter;
+    return sqrt(pow(latDistanceMeter, 2) + pow(lngDistanceMeter, 2)).toInt();
   }
 }

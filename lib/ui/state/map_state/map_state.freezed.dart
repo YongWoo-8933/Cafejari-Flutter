@@ -26,6 +26,7 @@ mixin _$MapState {
   String? get randomCafeImageUrl => throw _privateConstructorUsedError;
   Cafe get selectedCafe => throw _privateConstructorUsedError;
   CafeFloor get selectedCafeFloor => throw _privateConstructorUsedError;
+  NLatLng? get lastCameraLatLng => throw _privateConstructorUsedError;
   NMarker? get selectedMarker => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   NCameraPosition? get initTempCameraPosition =>
@@ -68,6 +69,7 @@ abstract class $MapStateCopyWith<$Res> {
       String? randomCafeImageUrl,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
+      NLatLng? lastCameraLatLng,
       NMarker? selectedMarker,
       NaverMapController? mapController,
       NCameraPosition? initTempCameraPosition,
@@ -112,6 +114,7 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
+    Object? lastCameraLatLng = freezed,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? initTempCameraPosition = freezed,
@@ -164,6 +167,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.selectedCafeFloor
           : selectedCafeFloor // ignore: cast_nullable_to_non_nullable
               as CafeFloor,
+      lastCameraLatLng: freezed == lastCameraLatLng
+          ? _value.lastCameraLatLng
+          : lastCameraLatLng // ignore: cast_nullable_to_non_nullable
+              as NLatLng?,
       selectedMarker: freezed == selectedMarker
           ? _value.selectedMarker
           : selectedMarker // ignore: cast_nullable_to_non_nullable
@@ -272,6 +279,7 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       String? randomCafeImageUrl,
       Cafe selectedCafe,
       CafeFloor selectedCafeFloor,
+      NLatLng? lastCameraLatLng,
       NMarker? selectedMarker,
       NaverMapController? mapController,
       NCameraPosition? initTempCameraPosition,
@@ -316,6 +324,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? randomCafeImageUrl = freezed,
     Object? selectedCafe = null,
     Object? selectedCafeFloor = null,
+    Object? lastCameraLatLng = freezed,
     Object? selectedMarker = freezed,
     Object? mapController = freezed,
     Object? initTempCameraPosition = freezed,
@@ -368,6 +377,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.selectedCafeFloor
           : selectedCafeFloor // ignore: cast_nullable_to_non_nullable
               as CafeFloor,
+      lastCameraLatLng: freezed == lastCameraLatLng
+          ? _value.lastCameraLatLng
+          : lastCameraLatLng // ignore: cast_nullable_to_non_nullable
+              as NLatLng?,
       selectedMarker: freezed == selectedMarker
           ? _value.selectedMarker
           : selectedMarker // ignore: cast_nullable_to_non_nullable
@@ -456,6 +469,7 @@ class _$_MapState implements _MapState {
       required this.randomCafeImageUrl,
       required this.selectedCafe,
       required this.selectedCafeFloor,
+      required this.lastCameraLatLng,
       required this.selectedMarker,
       required this.mapController,
       required this.initTempCameraPosition,
@@ -507,6 +521,8 @@ class _$_MapState implements _MapState {
   @override
   final CafeFloor selectedCafeFloor;
   @override
+  final NLatLng? lastCameraLatLng;
+  @override
   final NMarker? selectedMarker;
   @override
   final NaverMapController? mapController;
@@ -552,7 +568,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isCafeRefreshIndicatorVisible: $isCafeRefreshIndicatorVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, lastCameraLatLng: $lastCameraLatLng, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isCafeRefreshIndicatorVisible: $isCafeRefreshIndicatorVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -575,6 +591,8 @@ class _$_MapState implements _MapState {
                 other.selectedCafe == selectedCafe) &&
             (identical(other.selectedCafeFloor, selectedCafeFloor) ||
                 other.selectedCafeFloor == selectedCafeFloor) &&
+            (identical(other.lastCameraLatLng, lastCameraLatLng) ||
+                other.lastCameraLatLng == lastCameraLatLng) &&
             (identical(other.selectedMarker, selectedMarker) ||
                 other.selectedMarker == selectedMarker) &&
             (identical(other.mapController, mapController) ||
@@ -611,8 +629,7 @@ class _$_MapState implements _MapState {
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
             (identical(other.isCafeRefreshIndicatorVisible, isCafeRefreshIndicatorVisible) ||
-                other.isCafeRefreshIndicatorVisible ==
-                    isCafeRefreshIndicatorVisible) &&
+                other.isCafeRefreshIndicatorVisible == isCafeRefreshIndicatorVisible) &&
             (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) || other.isRefreshButtonVisible == isRefreshButtonVisible));
   }
 
@@ -627,6 +644,7 @@ class _$_MapState implements _MapState {
         randomCafeImageUrl,
         selectedCafe,
         selectedCafeFloor,
+        lastCameraLatLng,
         selectedMarker,
         mapController,
         initTempCameraPosition,
@@ -664,6 +682,7 @@ abstract class _MapState implements MapState {
       required final String? randomCafeImageUrl,
       required final Cafe selectedCafe,
       required final CafeFloor selectedCafeFloor,
+      required final NLatLng? lastCameraLatLng,
       required final NMarker? selectedMarker,
       required final NaverMapController? mapController,
       required final NCameraPosition? initTempCameraPosition,
@@ -699,6 +718,8 @@ abstract class _MapState implements MapState {
   Cafe get selectedCafe;
   @override
   CafeFloor get selectedCafeFloor;
+  @override
+  NLatLng? get lastCameraLatLng;
   @override
   NMarker? get selectedMarker;
   @override

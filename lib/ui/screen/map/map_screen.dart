@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
 import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -107,11 +109,23 @@ class _NaverMap extends ConsumerWidget {
         mapState.bottomSheetController.close();
         mapViewModel.clearSelectedCafeAndMarker();
       },
-      onCameraIdle: () {
+      onCameraIdle: () async {
+        final cameraPosition = await mapState.mapController?.getCameraPosition();
+        if(cameraPosition.isNotNull) {
+          if(mapState.lastCameraLatLng.isNotNull) {
+            final distance = mapViewModel.globalViewModel.getDistanceToMeter(cameraPosition!.target, mapState.lastCameraLatLng!);
+            if(distance > 500 && !mapState.isCafeRefreshIndicatorVisible) {
+              mapViewModel.setLastCameraLatLng(cameraPosition.target);
+              mapViewModel.refreshCafes();
+            }
+          } else {
+            mapViewModel.setLastCameraLatLng(cameraPosition!.target);
+          }
+        }
         if(!mapState.isRefreshButtonVisible) {
           mapViewModel.setRefreshButtonVisible(true);
           Future.delayed(
-            const Duration(seconds: 4), () => mapViewModel.setRefreshButtonVisible(false));
+              const Duration(seconds: 4), () => mapViewModel.setRefreshButtonVisible(false));
         }
       },
     );

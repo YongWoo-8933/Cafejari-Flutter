@@ -157,7 +157,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                     title: isUpdatePossible ? "등록하기" : "아직 등록할 수 없어요",
                     isLoading: ref.watch(_isLoading),
                     onPressed: !isUpdatePossible ? null : () async {
-                      if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 1000)) {
+                      if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 35)) {
                         if(globalState.isLoggedIn) {
                           ref.watch(_isLoading.notifier).update((state) => true);
                           if(context.mounted) await mapViewModel.updateOccupancyRate(context: context, isGuest: false);
