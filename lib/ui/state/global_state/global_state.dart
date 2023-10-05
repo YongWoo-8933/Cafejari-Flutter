@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
+import 'package:cafejari_flutter/domain/entity/push/push.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -21,6 +22,7 @@ class GlobalState with _$GlobalState {
     required final Map<int, OccupancyRateUpdates> myTodayUpdates,
     required final ({int? week, int? month, int? total}) myRanking,
     required final Challengers myChallengers,
+    required final Pushes myPushes,
     required final PageType currentPage,
     required final bool isSnackBarOpened,
     required final bool isSnackBarExpanded,
@@ -41,6 +43,7 @@ class GlobalState with _$GlobalState {
     myTodayUpdates: {},
     myRanking: (week: null, month: null, total: null),
     myChallengers: [],
+    myPushes: [],
     currentPage: PageType.map,
     isSnackBarOpened: false,
     isSnackBarExpanded: false,

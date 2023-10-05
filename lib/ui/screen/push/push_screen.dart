@@ -7,10 +7,14 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
-import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+final _isLoading = StateProvider((ref) => false);
 
 class PushScreen extends ConsumerStatefulWidget {
   const PushScreen({super.key});
@@ -24,13 +28,27 @@ class PushScreenState extends ConsumerState<PushScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      ref.watch(pushViewModelProvider.notifier).refreshPushes(context: context);
+      final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+      ref.watch(_isLoading.notifier).update((state) => true);
+      globalViewModel.init(
+        onFinish: (globalState) async {
+          final Pushes unreadPushes = globalState.myPushes.where((e) => !e.isRead).toList();
+          for(Push unreadPush in unreadPushes) {
+            globalViewModel.readPush(pushId: unreadPush.id, context: context);
+          }
+          ref.watch(_isLoading.notifier).update((state) => false);
+        }
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final PushState pushState = ref.watch(pushViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
+    List<Pushes> typePushes = [[], [], [], [], []];
+    for(Push push in globalState.myPushes) {
+      typePushes[push.type.index].add(push);
+    }
 
     return Scaffold(
       appBar: BackButtonAppBar(
@@ -68,8 +86,8 @@ class PushScreenState extends ConsumerState<PushScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildTabContent(pushState.pushes),
-                  ...pushState.typePushes.map((e) => _buildTabContent(e)).toList()
+                  _buildTabContent(globalState.myPushes),
+                  ...typePushes.map((e) => _buildTabContent(e)).toList()
                 ],
               ),
             ),
@@ -85,7 +103,17 @@ class PushScreenState extends ConsumerState<PushScreen> {
       alignment: Alignment.center,
       children: [
         Visibility(
-          visible: pushes.isNotEmpty,
+          visible: ref.watch(_isLoading),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LoadingAnimationWidget.hexagonDots(color: AppColor.primary, size: 48),
+              const VerticalSpacer(80)
+            ],
+          ),
+        ),
+        Visibility(
+          visible: !ref.watch(_isLoading) && pushes.isNotEmpty,
           child: ListView.builder(
             itemCount: pushes.length,
             itemBuilder: (context, index) {
@@ -124,7 +152,7 @@ class PushScreenState extends ConsumerState<PushScreen> {
           ),
         ),
         Visibility(
-          visible: pushes.isEmpty,
+          visible: !ref.watch(_isLoading) && pushes.isEmpty,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

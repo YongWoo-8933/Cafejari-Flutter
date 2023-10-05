@@ -6,12 +6,14 @@ import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
+import 'package:cafejari_flutter/data/remote/dto/push/push_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/request/request_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/cafe_log.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
+import 'package:cafejari_flutter/domain/entity/push/push.dart';
 import 'package:cafejari_flutter/domain/entity/request/request.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -388,5 +390,17 @@ CafeAdditionRequest parseCafeAdditionRequestFromCafeAdditionRequestResponse({req
     answeredAt: DateTime.parse(requestResponse.answered_at),
     wallSocketRates: [],
     openingHour: null
+  );
+}
+
+/// PushResponse로부터 Push 객체를 뽑아내는 함수
+Push parsePushFromPushResponse({required PushResponse pushResponse}) {
+  return Push(
+    id: pushResponse.id,
+    title: pushResponse.title,
+    body: pushResponse.body,
+    pushedAt: DateTime.parse(pushResponse.pushed_at),
+    isRead: pushResponse.is_read,
+    type: pushResponse.type.toPushType()
   );
 }

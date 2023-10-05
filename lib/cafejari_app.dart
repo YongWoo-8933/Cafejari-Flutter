@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/core/extension/null.dart';
+import 'package:cafejari_flutter/core/flutter_local_notification.dart';
 import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
@@ -14,8 +15,10 @@ import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -83,20 +86,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
       final GlobalState globalState = ref.watch(globalViewModelProvider);
-      mapLinkFunction(Uri link) async {
-        final List<String> separatedString = [];
-        separatedString.addAll(link.path.split('/'));
-        if (separatedString[1] == "map") {
-          final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-          if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
-          globalViewModel.updateCurrentPageTo(PageType.map.index);
-          await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
-          await mapViewModel.openBottomSheetPreview();
-        }
-      }
-
-      // GA에 로깅 시작
-      await FirebaseAnalytics.instance.logAppOpen();
 
       // 기본 서버 정보 로딩
       await mapViewModel.refreshLocations();
@@ -129,7 +118,14 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
         Future.delayed(const Duration(seconds: 1), () async {
           final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
           final Uri? deepLink = data?.link;
-          if (deepLink.isNotNull) mapLinkFunction(deepLink!);
+          if (deepLink.isNotNull && context.mounted) {
+            _mapLinkFunction(
+              context: context,
+              mapViewModel: mapViewModel,
+              globalViewModel: globalViewModel,
+              link: deepLink!
+            );
+          }
         });
       }
 
@@ -143,7 +139,35 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       // 맵 딥링크 설정
       FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) async {
         final Uri deepLink = pendingDynamicLinkData.link;
-        mapLinkFunction(deepLink);
+        if (context.mounted) {
+          _mapLinkFunction(
+            context: context,
+            mapViewModel: mapViewModel,
+            globalViewModel: globalViewModel,
+            link: deepLink
+          );
+        }
+      });
+
+      // 알림 설정
+      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true
+      );
+      if(defaultTargetPlatform == TargetPlatform.android) {
+        FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          if (message.notification.isNotNull) {
+            FlutterLocalNotification.showNotification(
+                title: message.notification!.title,
+                body: message.notification!.body
+            );
+          }
+        });
+      }
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        if (message.notification.isNotNull) globalViewModel.init();
       });
     });
   }
@@ -240,7 +264,10 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
                 firstChild: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const BottomSheetPreview(height: bottomSheetPreviewHeight, cornerRadius: bottomSheetPreviewCornerRadius),
+                    const BottomSheetPreview(
+                      height: bottomSheetPreviewHeight,
+                      cornerRadius: bottomSheetPreviewCornerRadius
+                    ),
                     Container(
                       color: AppColor.white,
                       height: deviceHeight - bottomSheetPreviewHeight,
@@ -255,6 +282,40 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           }
         ),
       ),
+    );
+  }
+}
+
+
+_mapLinkFunction({
+  required BuildContext context,
+  required MapViewModel mapViewModel,
+  required GlobalViewModel globalViewModel,
+  required Uri link
+}) async {
+  final List<String> separatedString = [];
+  separatedString.addAll(link.path.split('/'));
+  if (separatedString[1] == "map") {
+    if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+    globalViewModel.updateCurrentPageTo(PageType.map.index);
+    await mapViewModel.initWithMapLinkCafeId(int.parse(separatedString[2]));
+    await mapViewModel.openBottomSheetPreview();
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  FlutterLocalNotification.init();
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true
+  );
+  if (message.notification.isNotNull) {
+    FlutterLocalNotification.showNotification(
+        title: message.notification!.title,
+        body: message.notification!.body
     );
   }
 }

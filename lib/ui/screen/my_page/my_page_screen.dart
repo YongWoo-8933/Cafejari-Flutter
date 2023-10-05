@@ -203,8 +203,12 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             children: [
                               const Text("알림함", style: TextStyle(color: AppColor.white)),
                               IconButton(
-                                iconSize: 20,
-                                icon: const Icon(CupertinoIcons.bell, color: AppColor.white),
+                                icon: Image.asset(
+                                  width: 24,
+                                  globalState.myPushes.any((e) => !e.isRead) ?
+                                    "asset/image/icon_bell_badge.png" :
+                                    "asset/image/icon_bell.png",
+                                ),
                                 onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.push),
                               )
                             ],

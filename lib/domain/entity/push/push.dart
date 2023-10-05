@@ -15,6 +15,7 @@ class Push with _$Push {
     required final String title,
     required final String body,
     required final DateTime pushedAt,
+    required final bool isRead,
     required final PushType type
   }) = _Push;
 
@@ -23,6 +24,7 @@ class Push with _$Push {
       title: "",
       body: "",
       pushedAt: DateTime(2022),
+      isRead: true,
       type: PushType.etc());
 }
 

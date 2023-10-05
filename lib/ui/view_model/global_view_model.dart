@@ -4,11 +4,13 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
+import 'package:cafejari_flutter/domain/entity/push/push.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/app_config_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
+import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
@@ -36,6 +38,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   final CafeUseCase _cafeUseCase;
   final LeaderboardUseCase _leaderboardUseCase;
   final ChallengeUseCase _challengeUseCase;
+  final PushUseCase _pushUseCase;
   Timer? _showSnackBarTimer1;
   Timer? _showSnackBarTimer2;
 
@@ -46,6 +49,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     this._cafeUseCase,
     this._leaderboardUseCase,
     this._challengeUseCase,
+    this._pushUseCase,
     this._showSnackBarTimer1,
     this._showSnackBarTimer2
   ) : super(GlobalState.empty());
@@ -112,6 +116,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     String? accessToken,
     String? refreshToken,
     User? user,
+    Function(GlobalState)? onFinish
   }) async {
     try {
       final String newAccessToken = accessToken ?? await _tokenUseCase.getAccessToken();
@@ -152,12 +157,18 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
         myTodayUpdates: await _cafeUseCase.getMyTodayOccupancyUpdates(
           accessToken: newAccessToken,
           onAccessTokenRefresh: setAccessToken
+        ),
+        myPushes: await _pushUseCase.getMyPushes(
+          accessToken: newAccessToken,
+          onAccessTokenRefresh: setAccessToken
         )
       );
     } on RefreshTokenExpired {
       null;
     } on ErrorWithMessage {
       null;
+    } finally {
+      if(onFinish.isNotNull) onFinish!(state);
     }
   }
 
@@ -172,6 +183,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   setAccessToken(String accessToken) => state = state.copyWith(accessToken: accessToken);
 
   setMyOccupancyUpdates(Map<int, OccupancyRateUpdates> updates) => state = state.copyWith(myTodayUpdates: updates);
+
+  setMyPushes(Pushes pushes) => state = state.copyWith(myPushes: pushes);
 
   logout({required BuildContext context}) async {
     try {
@@ -284,5 +297,22 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
       myRanking: (week: null, month: null, total: null),
       myTodayUpdates: {}
     );
+  }
+
+  readPush({required int pushId, required BuildContext context}) async {
+    try {
+      final Push readPush = await _pushUseCase.readPush(
+        accessToken: state.accessToken,
+        pushId: pushId,
+        onAccessTokenRefresh: setAccessToken
+      );
+      state = state.copyWith(
+        myPushes: state.myPushes.map((e) => e.id == readPush.id ? readPush : e).toList()
+      );
+    } on ErrorWithMessage catch(e) {
+      showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) expireRefreshToken(context: context);
+    }
   }
 }

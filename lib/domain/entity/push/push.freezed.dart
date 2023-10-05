@@ -20,6 +20,7 @@ mixin _$Push {
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
   DateTime get pushedAt => throw _privateConstructorUsedError;
+  bool get isRead => throw _privateConstructorUsedError;
   PushType get type => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +33,12 @@ abstract class $PushCopyWith<$Res> {
       _$PushCopyWithImpl<$Res, Push>;
   @useResult
   $Res call(
-      {int id, String title, String body, DateTime pushedAt, PushType type});
+      {int id,
+      String title,
+      String body,
+      DateTime pushedAt,
+      bool isRead,
+      PushType type});
 }
 
 /// @nodoc
@@ -52,6 +58,7 @@ class _$PushCopyWithImpl<$Res, $Val extends Push>
     Object? title = null,
     Object? body = null,
     Object? pushedAt = null,
+    Object? isRead = null,
     Object? type = null,
   }) {
     return _then(_value.copyWith(
@@ -71,6 +78,10 @@ class _$PushCopyWithImpl<$Res, $Val extends Push>
           ? _value.pushedAt
           : pushedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isRead: null == isRead
+          ? _value.isRead
+          : isRead // ignore: cast_nullable_to_non_nullable
+              as bool,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -86,7 +97,12 @@ abstract class _$$_PushCopyWith<$Res> implements $PushCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String title, String body, DateTime pushedAt, PushType type});
+      {int id,
+      String title,
+      String body,
+      DateTime pushedAt,
+      bool isRead,
+      PushType type});
 }
 
 /// @nodoc
@@ -102,6 +118,7 @@ class __$$_PushCopyWithImpl<$Res> extends _$PushCopyWithImpl<$Res, _$_Push>
     Object? title = null,
     Object? body = null,
     Object? pushedAt = null,
+    Object? isRead = null,
     Object? type = null,
   }) {
     return _then(_$_Push(
@@ -121,6 +138,10 @@ class __$$_PushCopyWithImpl<$Res> extends _$PushCopyWithImpl<$Res, _$_Push>
           ? _value.pushedAt
           : pushedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isRead: null == isRead
+          ? _value.isRead
+          : isRead // ignore: cast_nullable_to_non_nullable
+              as bool,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -137,6 +158,7 @@ class _$_Push implements _Push {
       required this.title,
       required this.body,
       required this.pushedAt,
+      required this.isRead,
       required this.type});
 
   @override
@@ -148,11 +170,13 @@ class _$_Push implements _Push {
   @override
   final DateTime pushedAt;
   @override
+  final bool isRead;
+  @override
   final PushType type;
 
   @override
   String toString() {
-    return 'Push(id: $id, title: $title, body: $body, pushedAt: $pushedAt, type: $type)';
+    return 'Push(id: $id, title: $title, body: $body, pushedAt: $pushedAt, isRead: $isRead, type: $type)';
   }
 
   @override
@@ -165,11 +189,13 @@ class _$_Push implements _Push {
             (identical(other.body, body) || other.body == body) &&
             (identical(other.pushedAt, pushedAt) ||
                 other.pushedAt == pushedAt) &&
+            (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.type, type) || other.type == type));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, body, pushedAt, type);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, body, pushedAt, isRead, type);
 
   @JsonKey(ignore: true)
   @override
@@ -184,6 +210,7 @@ abstract class _Push implements Push {
       required final String title,
       required final String body,
       required final DateTime pushedAt,
+      required final bool isRead,
       required final PushType type}) = _$_Push;
 
   @override
@@ -194,6 +221,8 @@ abstract class _Push implements Push {
   String get body;
   @override
   DateTime get pushedAt;
+  @override
+  bool get isRead;
   @override
   PushType get type;
   @override

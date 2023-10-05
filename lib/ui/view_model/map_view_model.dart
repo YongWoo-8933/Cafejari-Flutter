@@ -49,6 +49,9 @@ class MapViewModel extends StateNotifier<MapState> {
       // 변경 사항 저장 + 로딩 종료
       state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false);
 
+      // 카페 없으면 문구띄우기
+      if(newCafes.isEmpty) globalViewModel.showSnackBar(content: "이 지역에는 등록된 카페가 없어요", type: SnackBarType.error);
+
       return newCafes;
     } on ErrorWithMessage catch(e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
@@ -352,7 +355,7 @@ class MapViewModel extends StateNotifier<MapState> {
     marker.setZIndex(3);
     marker.setCaptionAligns([NAlign.top]);
     marker.setCaptionOffset(4.0);
-    marker.setCaption(NOverlayCaption(text: cafe.name, textSize: 14));
+    marker.setCaption(NOverlayCaption(text: cafe.name, textSize: 16));
     state = state.copyWith(selectedMarker: marker);
   }
 

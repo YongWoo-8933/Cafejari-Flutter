@@ -26,6 +26,7 @@ mixin _$GlobalState {
   ({int? month, int? total, int? week}) get myRanking =>
       throw _privateConstructorUsedError;
   List<Challenger> get myChallengers => throw _privateConstructorUsedError;
+  List<Push> get myPushes => throw _privateConstructorUsedError;
   PageType get currentPage => throw _privateConstructorUsedError;
   bool get isSnackBarOpened => throw _privateConstructorUsedError;
   bool get isSnackBarExpanded => throw _privateConstructorUsedError;
@@ -57,6 +58,7 @@ abstract class $GlobalStateCopyWith<$Res> {
       Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       ({int? month, int? total, int? week}) myRanking,
       List<Challenger> myChallengers,
+      List<Push> myPushes,
       PageType currentPage,
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
@@ -91,6 +93,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? myTodayUpdates = null,
     Object? myRanking = null,
     Object? myChallengers = null,
+    Object? myPushes = null,
     Object? currentPage = null,
     Object? isSnackBarOpened = null,
     Object? isSnackBarExpanded = null,
@@ -134,6 +137,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.myChallengers
           : myChallengers // ignore: cast_nullable_to_non_nullable
               as List<Challenger>,
+      myPushes: null == myPushes
+          ? _value.myPushes
+          : myPushes // ignore: cast_nullable_to_non_nullable
+              as List<Push>,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -199,6 +206,7 @@ abstract class _$$_GlobalStateCopyWith<$Res>
       Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       ({int? month, int? total, int? week}) myRanking,
       List<Challenger> myChallengers,
+      List<Push> myPushes,
       PageType currentPage,
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
@@ -232,6 +240,7 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? myTodayUpdates = null,
     Object? myRanking = null,
     Object? myChallengers = null,
+    Object? myPushes = null,
     Object? currentPage = null,
     Object? isSnackBarOpened = null,
     Object? isSnackBarExpanded = null,
@@ -275,6 +284,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value._myChallengers
           : myChallengers // ignore: cast_nullable_to_non_nullable
               as List<Challenger>,
+      myPushes: null == myPushes
+          ? _value._myPushes
+          : myPushes // ignore: cast_nullable_to_non_nullable
+              as List<Push>,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -327,6 +340,7 @@ class _$_GlobalState implements _GlobalState {
       required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required this.myRanking,
       required final List<Challenger> myChallengers,
+      required final List<Push> myPushes,
       required this.currentPage,
       required this.isSnackBarOpened,
       required this.isSnackBarExpanded,
@@ -338,7 +352,8 @@ class _$_GlobalState implements _GlobalState {
       required this.webViewUri})
       : _versions = versions,
         _myTodayUpdates = myTodayUpdates,
-        _myChallengers = myChallengers;
+        _myChallengers = myChallengers,
+        _myPushes = myPushes;
 
   final List<Version> _versions;
   @override
@@ -374,6 +389,14 @@ class _$_GlobalState implements _GlobalState {
     return EqualUnmodifiableListView(_myChallengers);
   }
 
+  final List<Push> _myPushes;
+  @override
+  List<Push> get myPushes {
+    if (_myPushes is EqualUnmodifiableListView) return _myPushes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_myPushes);
+  }
+
   @override
   final PageType currentPage;
   @override
@@ -395,7 +418,7 @@ class _$_GlobalState implements _GlobalState {
 
   @override
   String toString() {
-    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
+    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, myPushes: $myPushes, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
   }
 
   @override
@@ -417,6 +440,7 @@ class _$_GlobalState implements _GlobalState {
                 other.myRanking == myRanking) &&
             const DeepCollectionEquality()
                 .equals(other._myChallengers, _myChallengers) &&
+            const DeepCollectionEquality().equals(other._myPushes, _myPushes) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             (identical(other.isSnackBarOpened, isSnackBarOpened) ||
@@ -448,6 +472,7 @@ class _$_GlobalState implements _GlobalState {
       const DeepCollectionEquality().hash(_myTodayUpdates),
       myRanking,
       const DeepCollectionEquality().hash(_myChallengers),
+      const DeepCollectionEquality().hash(_myPushes),
       currentPage,
       isSnackBarOpened,
       isSnackBarExpanded,
@@ -475,6 +500,7 @@ abstract class _GlobalState implements GlobalState {
       required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
       required final ({int? month, int? total, int? week}) myRanking,
       required final List<Challenger> myChallengers,
+      required final List<Push> myPushes,
       required final PageType currentPage,
       required final bool isSnackBarOpened,
       required final bool isSnackBarExpanded,
@@ -501,6 +527,8 @@ abstract class _GlobalState implements GlobalState {
   ({int? month, int? total, int? week}) get myRanking;
   @override
   List<Challenger> get myChallengers;
+  @override
+  List<Push> get myPushes;
   @override
   PageType get currentPage;
   @override
