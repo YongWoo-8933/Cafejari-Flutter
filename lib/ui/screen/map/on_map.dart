@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/core/di.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
@@ -58,6 +59,7 @@ class OnMap extends ConsumerWidget {
                               mapState.mapController?.updateCamera(
                                 NCameraUpdate.fromCameraPosition(cameraPosition)
                               );
+                              mapViewModel.setLastCameraLatLng(cameraPosition.target);
                               mapViewModel.refreshCafes(cameraPosition: cameraPosition);
                             }
                           )

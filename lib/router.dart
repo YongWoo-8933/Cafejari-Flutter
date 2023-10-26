@@ -6,8 +6,6 @@ import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.d
 import 'package:cafejari_flutter/ui/screen/leaderboard/leaderboard_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/login_screen.dart';
 import 'package:cafejari_flutter/ui/screen/login/registration_screen.dart';
-import 'package:cafejari_flutter/ui/screen/my_cafe/my_cafe_screen.dart';
-import 'package:cafejari_flutter/ui/screen/point/point_screen.dart';
 import 'package:cafejari_flutter/ui/screen/push/push_screen.dart';
 import 'package:cafejari_flutter/ui/screen/shop/shop_screen.dart';
 import 'package:cafejari_flutter/ui/screen/web_view/web_view_screen.dart';
@@ -16,7 +14,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: "/",
+  initialLocation: "/app_permission",
   observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
   routes: [
     GoRoute(

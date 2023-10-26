@@ -39,6 +39,8 @@ class MapViewModel extends StateNotifier<MapState> {
   }) async {
     state = state.copyWith(isCafeRefreshIndicatorVisible: true);
     final NCameraPosition nonNullCameraPosition = cameraPosition ?? await state.mapController?.getCameraPosition() ?? NLocation.sinchon().cameraPosition;
+    state.bottomSheetController.close();
+    closeBottomSheetPreview();
     try {
       final Cafes newCafes = await _cafeUseCase.getMapCafes(cameraPosition: nonNullCameraPosition);
 
@@ -70,6 +72,7 @@ class MapViewModel extends StateNotifier<MapState> {
       final Cafe cafe = await _cafeUseCase.getCafe(cafeId: cafeId);
       final NCameraPosition cameraPosition = NCameraPosition(target: cafe.latLng, zoom: Zoom.large);
       state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+      setLastCameraLatLng(cameraPosition.target);
       await refreshCafes(cameraPosition: cameraPosition, selectedCafeId: cafeId);
       selectCafe(cafe);
       selectCafeFloor(cafe.cafeFloors.first);
@@ -228,6 +231,7 @@ class MapViewModel extends StateNotifier<MapState> {
       if(state.mapController.isNotNull) {
         await refreshCafes(cameraPosition: cameraPosition, selectedCafeId: cafe.id);
         state.mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+        setLastCameraLatLng(cameraPosition.target);
       }
     } on ErrorWithMessage {
       null;
@@ -263,7 +267,10 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
-  initMapController(NaverMapController mapController) => state = state.copyWith(mapController: mapController);
+  initMapController(NaverMapController mapController) {
+    state = state.copyWith(mapController: mapController);
+    print(state.mapController.isNull);
+  }
 
   updateOccupancySliderValue(value) => state = state.copyWith(occupancySliderValue: value);
 

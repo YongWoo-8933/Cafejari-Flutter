@@ -8,15 +8,40 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class AppPermissionScreen extends ConsumerWidget {
+
+class AppPermissionScreen extends ConsumerStatefulWidget {
   const AppPermissionScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  AppPermissionScreenState createState() => AppPermissionScreenState();
+}
+
+
+class AppPermissionScreenState extends ConsumerState<AppPermissionScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+      if (await globalViewModel.getIsInstalledFirst()) {
+        FlutterNativeSplash.remove();
+      } else {
+        if(context.mounted) {
+          await globalViewModel.locationTrackingStart(context: context);
+          GoRouter.of(context).goNamed(ScreenRoute.root);
+        }
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     const double padding = 30;
     final double deviceWidth = MediaQuery.of(context).size.width;
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
@@ -76,10 +101,10 @@ class AppPermissionScreen extends ConsumerWidget {
                   Permission.notification,
                   Permission.storage
                 ].request();
-                Future.delayed(const Duration(milliseconds: 100), () {
+                if(context.mounted) await globalViewModel.locationTrackingStart(context: context);
+                Future.delayed(const Duration(milliseconds: 50), () {
                   GoRouter.of(context).goNamed(ScreenRoute.root);
                   globalViewModel.showSnackBar(content: "권한 설정됨", type: SnackBarType.complete);
-                  globalViewModel.setIsPermissionChecked(true);
                 });
               },
             )

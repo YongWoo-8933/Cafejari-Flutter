@@ -93,21 +93,26 @@ class _NaverMap extends ConsumerWidget {
       forceGesture: true,
       onMapReady: (controller) {
         controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
-        if (mapState.shareTempCameraPosition.isNotNull) {
-          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.shareTempCameraPosition!));
-          mapViewModel.refreshCafes(cameraPosition: mapState.shareTempCameraPosition!);
-          mapViewModel.setShareTempCameraPosition(null);
-        } else if(mapState.initTempCameraPosition.isNotNull) {
-          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.initTempCameraPosition!));
-          mapViewModel.refreshCafes(cameraPosition: mapState.initTempCameraPosition!);
-          mapViewModel.setInitTempCameraPosition(null);
+        ref.watch(mapViewModelProvider.notifier).initMapController(controller);
+        if (ref.watch(mapViewModelProvider).shareTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(ref.watch(mapViewModelProvider).shareTempCameraPosition!));
+          ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).shareTempCameraPosition!);
+          ref.watch(mapViewModelProvider.notifier).setShareTempCameraPosition(null);
+        } else if(ref.watch(mapViewModelProvider).initTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(ref.watch(mapViewModelProvider).initTempCameraPosition!));
+          ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).initTempCameraPosition!);
+          ref.watch(mapViewModelProvider.notifier).setInitTempCameraPosition(null);
         }
-        mapViewModel.initMapController(controller);
+        ref.watch(mapViewModelProvider.notifier).initMapController(controller);
+        print("=====================================================");
+        print(ref.watch(mapViewModelProvider).mapController.isNull);
+        print("=====================================================");
       },
       onMapTapped: (_, __) {
         mapViewModel.closeBottomSheetPreview();
         mapState.bottomSheetController.close();
         mapViewModel.clearSelectedCafeAndMarker();
+        print(ref.watch(mapViewModelProvider).mapController.isNull);
       },
       onCameraIdle: () async {
         final cameraPosition = await mapState.mapController?.getCameraPosition();

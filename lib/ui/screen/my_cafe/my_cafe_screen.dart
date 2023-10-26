@@ -141,6 +141,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                                       mapState.mapController?.updateCamera(
                                         NCameraUpdate.fromCameraPosition(currentUserCameraPosition)
                                       );
+                                      mapViewModel.setLastCameraLatLng(currentUserCameraPosition.target);
                                       mapViewModel.refreshCafes(cameraPosition: currentUserCameraPosition);
                                     },
                                     child: DottedBorder(

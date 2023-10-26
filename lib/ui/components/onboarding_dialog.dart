@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
@@ -11,7 +12,9 @@ final _pageController = StateProvider((ref) => PageController(initialPage: 0));
 
 
 class OnboardingDialog extends ConsumerWidget {
-  const OnboardingDialog({Key? key}) : super(key: key);
+  final VoidCallback? onComplete;
+
+  const OnboardingDialog({Key? key, this.onComplete}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,6 +84,7 @@ class OnboardingDialog extends ConsumerWidget {
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 0) {
                             Navigator.of(context).pop();
+                            if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(
                               ref.watch(_currentPageIndex) + -1,
@@ -102,6 +106,7 @@ class OnboardingDialog extends ConsumerWidget {
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 3) {
                             Navigator.of(context).pop();
+                            if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(
                               ref.watch(_currentPageIndex) + 1,

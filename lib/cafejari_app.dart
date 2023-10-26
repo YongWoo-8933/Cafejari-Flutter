@@ -85,7 +85,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
       final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
-      final GlobalState globalState = ref.watch(globalViewModelProvider);
 
       // 기본 서버 정보 로딩
       await mapViewModel.refreshLocations();
@@ -95,44 +94,37 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
 
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
-        if (globalState.isPermissionChecked) {
-          // 권한 설정 마치고 돌아옴
-          FlutterNativeSplash.remove();
-          globalViewModel.setIsInstalledFirst(false);
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => const OnboardingDialog()
-          );
-        } else {
-          // 권한 설정 전
-          GoRouter.of(context).goNamed(ScreenRoute.appPermission);
-          FlutterNativeSplash.remove();
-        }
+        globalViewModel.setIsInstalledFirst(false);
+        // showDialog(
+        //   context: context,
+        //   barrierDismissible: false,
+        //   builder: (_) => const OnboardingDialog()
+        // );
       } else {
-        // 앱 시작
+        // 일반 앱 시작
         await globalViewModel.init();
-        FlutterNativeSplash.remove();
-
-        // 지도 관련 deep link 로직 처리
-        Future.delayed(const Duration(seconds: 1), () async {
-          final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
-          final Uri? deepLink = data?.link;
-          if (deepLink.isNotNull && context.mounted) {
-            _mapLinkFunction(
-              context: context,
-              mapViewModel: mapViewModel,
-              globalViewModel: globalViewModel,
-              link: deepLink!
-            );
-          }
-        });
       }
 
+      // splash 화면 종료
+      FlutterNativeSplash.remove();
+
+      // 지도 관련 deep link 로직 처리
+      Future.delayed(const Duration(seconds: 1), () async {
+        final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+        final Uri? deepLink = data?.link;
+        if (deepLink.isNotNull && context.mounted) {
+          _mapLinkFunction(
+            context: context,
+            mapViewModel: mapViewModel,
+            globalViewModel: globalViewModel,
+            link: deepLink!
+          );
+        }
+      });
+
+      // 위치 트래킹, 버전 체크
       if(context.mounted) {
-        // 위치 트래킹 시작
         await globalViewModel.locationTrackingStart(context: context);
-        // 버전 체크
         if(context.mounted) await globalViewModel.checkVersion(context: context);
       }
 
@@ -151,23 +143,29 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
 
       // 알림 설정
       FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-          alert: true,
-          badge: true,
-          sound: true
+        alert: true,
+        badge: true,
+        sound: true
       );
       if(defaultTargetPlatform == TargetPlatform.android) {
-        FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          if (message.notification.isNotNull) {
-            FlutterLocalNotification.showNotification(
-                title: message.notification!.title,
-                body: message.notification!.body
-            );
-          }
-        });
+        // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+        // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        //   if (message.notification.isNotNull) {
+        //     FlutterLocalNotification.showNotification(
+        //         title: message.notification!.title,
+        //         body: message.notification!.body
+        //     );
+        //   }
+        // });
       }
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        if (message.notification.isNotNull) globalViewModel.init();
+        if (message.notification.isNotNull) {
+          globalViewModel.init();
+          FlutterLocalNotification.showNotification(
+            title: message.notification!.title,
+            body: message.notification!.body
+          );
+        }
       });
     });
   }
@@ -303,19 +301,19 @@ _mapLinkFunction({
   }
 }
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  FlutterLocalNotification.init();
-  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true
-  );
-  if (message.notification.isNotNull) {
-    FlutterLocalNotification.showNotification(
-        title: message.notification!.title,
-        body: message.notification!.body
-    );
-  }
-}
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   FlutterLocalNotification.init();
+//   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+//       alert: true,
+//       badge: true,
+//       sound: true
+//   );
+//   if (message.notification.isNotNull) {
+//     FlutterLocalNotification.showNotification(
+//         title: message.notification!.title,
+//         body: message.notification!.body
+//     );
+//   }
+// }

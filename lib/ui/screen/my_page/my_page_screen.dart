@@ -17,11 +17,11 @@ import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/my_page_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kakao_flutter_sdk_talk/kakao_flutter_sdk_talk.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
@@ -349,10 +349,10 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                         MyPageRow(
                           text: "1:1 문의",
                           width: deviceSize.width - sidePadding * 2,
-                          onPress: () => globalViewModel.navigateToWebView(
-                            route: WebViewRoute.inquiry(),
-                            context: context
-                          )
+                          onPress: () async {
+                            Uri url = await TalkApi.instance.channelChatUrl('_xbxnxaRG');
+                            await launchBrowserTab(url);
+                          }
                         ),
                         MyPageRow(
                           text: "사용자 정보 이전",
