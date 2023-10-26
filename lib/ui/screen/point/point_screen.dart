@@ -1,7 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/point/component/point_record.dart';
@@ -36,7 +35,7 @@ class PointScreen extends ConsumerWidget {
                   bottom: BorderSide(width: 1, color:AppColor.grey_200), // 아래쪽 테두리
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("보유 포인트", style: TextSize.textSize_grey_14),
@@ -79,13 +78,13 @@ class PointScreen extends ConsumerWidget {
                   ListView.builder(
                     itemCount: 1,
                     itemBuilder: (context, index) {
-                      return PointRecord(title: '내가 받은 포인트');
+                      return const PointRecord(title: '내가 받은 포인트');
                     },
                   ),
                   ListView.builder(
                     itemCount: 1,
                     itemBuilder: (context, index) {
-                      return PointRecord(title: '내가 사용한 포인트');
+                      return const PointRecord(title: '내가 사용한 포인트');
                     },
                   ),
                 ],

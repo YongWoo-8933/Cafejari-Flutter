@@ -5,6 +5,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
+import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -47,21 +48,22 @@ class CafeRegistrationSearchPrediction extends ConsumerWidget {
                   requestViewModel.clearSearchCafePredictions();
                   requestState.mapController?.clearOverlays();
                   final marker = NMarker(
-                      id: "1",
-                      position: NLatLng(searchCafe.latitude, searchCafe.longitude),
-                      caption: NOverlayCaption(
-                          text: searchCafe.name.toPlainText(),
-                          color: AppColor.primary,
-                          haloColor: AppColor.white,
-                          textSize: 16.0
-                      ),
-                      captionAligns: [NAlign.top],
-                      captionOffset: 4,
-                      icon: const NOverlayImage.fromAssetImage("asset/image/3.0x/cafe_icon_0.png")
+                    id: "1",
+                    position: NLatLng(searchCafe.latitude, searchCafe.longitude),
+                    caption: NOverlayCaption(
+                      text: searchCafe.name.toPlainText(),
+                      color: AppColor.primary,
+                      haloColor: AppColor.white,
+                      textSize: 16.0
+                    ),
+                    captionAligns: [NAlign.top],
+                    captionOffset: 4,
+                    icon: OccupancyLevel.minus().nMarker
                   );
+                  marker.setSize(OccupancyLevel.minus().markerSize * 1.2);
                   requestState.mapController?.addOverlay(marker);
                   requestState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
-                      NCameraPosition(target: NLatLng(searchCafe.latitude + 0.001, searchCafe.longitude), zoom: Zoom.medium)
+                      NCameraPosition(target: NLatLng(searchCafe.latitude, searchCafe.longitude), zoom: Zoom.large)
                   ));
                 },
                 child: Container(

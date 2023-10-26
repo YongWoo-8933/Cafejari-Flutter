@@ -58,6 +58,10 @@ ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
       favorite_cafe: (json['favorite_cafe'] as List<dynamic>)
           .map((e) => CafeResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
+      cati_openness: json['cati_openness'] as int,
+      cati_coffee: json['cati_coffee'] as int,
+      cati_workspace: json['cati_workspace'] as int,
+      cati_acidity: json['cati_acidity'] as int,
     );
 
 Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
@@ -76,6 +80,10 @@ Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
       'grade': instance.grade,
       'profile_image': instance.profile_image,
       'favorite_cafe': instance.favorite_cafe,
+      'cati_openness': instance.cati_openness,
+      'cati_coffee': instance.cati_coffee,
+      'cati_workspace': instance.cati_workspace,
+      'cati_acidity': instance.cati_acidity,
     };
 
 GradeResponse _$GradeResponseFromJson(Map<String, dynamic> json) =>
@@ -170,6 +178,7 @@ KakaoLoginCallbackResponse _$KakaoLoginCallbackResponseFromJson(
     KakaoLoginCallbackResponse(
       access_token: json['access_token'] as String,
       user_exists: json['user_exists'] as bool,
+      is_inactive: json['is_inactive'] as bool,
     );
 
 Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
@@ -177,6 +186,25 @@ Map<String, dynamic> _$KakaoLoginCallbackResponseToJson(
     <String, dynamic>{
       'access_token': instance.access_token,
       'user_exists': instance.user_exists,
+      'is_inactive': instance.is_inactive,
+    };
+
+AppleLoginCallbackResponse _$AppleLoginCallbackResponseFromJson(
+        Map<String, dynamic> json) =>
+    AppleLoginCallbackResponse(
+      id_token: json['id_token'] as String,
+      code: json['code'] as String,
+      user_exists: json['user_exists'] as bool,
+      is_inactive: json['is_inactive'] as bool,
+    );
+
+Map<String, dynamic> _$AppleLoginCallbackResponseToJson(
+        AppleLoginCallbackResponse instance) =>
+    <String, dynamic>{
+      'id_token': instance.id_token,
+      'code': instance.code,
+      'user_exists': instance.user_exists,
+      'is_inactive': instance.is_inactive,
     };
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>

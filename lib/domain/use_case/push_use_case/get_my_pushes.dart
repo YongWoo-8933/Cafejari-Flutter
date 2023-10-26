@@ -11,7 +11,7 @@ class GetPushes {
     required PushRepository pushRepository, required String accessToken}) async {
     try {
       List<PushResponse> pushResponseList = await pushRepository.fetchMyPush(accessToken: accessToken);
-      return pushResponseList.map((pushResponse) {
+      Pushes resList =  pushResponseList.map((pushResponse) {
         return Push(
           id: pushResponse.id,
           title: pushResponse.title,
@@ -20,6 +20,10 @@ class GetPushes {
           type: pushResponse.type.toPushType()
         );
       }).toList();
+      resList.sort((a, b) => b.pushedAt.compareTo(a.pushedAt));
+      return resList;
+    } on AccessTokenExpired {
+      rethrow;
     } on ErrorWithMessage {
       rethrow;
     }

@@ -4,6 +4,7 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum CafeRegistrationFloorPickerType { max, min }
@@ -16,7 +17,8 @@ class CafeRegistrationFloorPicker extends ConsumerWidget {
     Key? key,
     required this.maximumFloorLimit,
     required this.minimumFloorLimit,
-    required this.type}) : super(key: key);
+    required this.type
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,6 +54,7 @@ class CafeRegistrationFloorPicker extends ConsumerWidget {
                 itemExtent: 36,
                 scrollController: FixedExtentScrollController(initialItem: 0),
                 onSelectedItemChanged: (index) {
+                  HapticFeedback.lightImpact();
                   switch(type) {
                     case CafeRegistrationFloorPickerType.max:
                       requestViewModel.selectMaxFloor(pickerItems[index].floor);
@@ -59,9 +62,7 @@ class CafeRegistrationFloorPicker extends ConsumerWidget {
                       requestViewModel.selectMinFloor(pickerItems[index].floor);
                   }
                 },
-                children: [
-                  ...pickerItems.map((e) => e.widget).toList()
-                ],
+                children: [...pickerItems.map((e) => e.widget).toList()],
               ),
             ),
           ],

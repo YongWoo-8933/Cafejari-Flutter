@@ -55,7 +55,6 @@ class Brandcon with _$Brandcon {
     required final int brandconId,
     required final int itemId,
     required final String imageUrl,
-    required final String description,
     required final DateTime expirationDate,
     required final bool isUsed
   }) = _Brandcon;
@@ -65,8 +64,7 @@ class Brandcon with _$Brandcon {
       itemId: 0,
       imageUrl: "",
       expirationDate: DateTime(2022),
-      isUsed: true,
-      description: "");
+      isUsed: true);
 }
 
 typedef Coupons = List<Coupon>;

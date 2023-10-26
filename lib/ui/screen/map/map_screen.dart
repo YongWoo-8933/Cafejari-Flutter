@@ -4,7 +4,6 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
 import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,40 +23,28 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 
-class MapScreenState extends ConsumerState<MapScreen> with WidgetsBindingObserver {
-  late AppLifecycleState _lastLifecycleState;
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    setState(() {
-      _lastLifecycleState = state;
-    });
-  }
+class MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    Future.delayed(Duration.zero, () async {
-      await ref.watch(globalViewModelProvider.notifier).locationTrackingStart();
-    });
-    Future.delayed(const Duration(seconds: 5), () async {
+    Future.delayed(const Duration(seconds: 2), () async {
       final mapViewModel = ref.watch(mapViewModelProvider.notifier);
+      final myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
       final mapState = ref.watch(mapViewModelProvider);
       Position? location = await mapViewModel.globalViewModel.getFirstLocation();
-      mapState.mapController?.setLocationTrackingMode(NLocationTrackingMode.face);
-      final NCameraPosition cameraPosition = location.isNotNull ?
+      myCafeViewModel.initCafeRecommendationData(location: location);
+      if (mapState.shareTempCameraPosition.isNull) {
+        final NCameraPosition cameraPosition = location.isNotNull ?
         NCameraPosition(target: NLatLng(location!.latitude, location.longitude), zoom: Zoom.medium) :
         NLocation.sinchon().cameraPosition;
-      mapState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
-      mapViewModel.refreshCafes(cameraPosition: cameraPosition);
+        if (mapState.mapController.isNull) {
+          mapViewModel.setInitTempCameraPosition(cameraPosition);
+        } else {
+          mapState.mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+          await mapViewModel.refreshCafes(cameraPosition: cameraPosition);
+        }
+      }
     });
   }
 
@@ -100,8 +87,19 @@ class _NaverMap extends ConsumerWidget {
         logoMargin: const EdgeInsets.symmetric(vertical: 25, horizontal: 12)
       ),
       forceGesture: true,
-      onMapReady: (controller) => mapViewModel.initMapController(controller),
-      onMapTapped: (_, latLng) => mapViewModel.closeBottomSheetPreview(),
+      onMapReady: (controller) {
+        controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
+        if (mapState.shareTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.shareTempCameraPosition!));
+          mapViewModel.refreshCafes(cameraPosition: mapState.shareTempCameraPosition!);
+          mapViewModel.setShareTempCameraPosition(null);
+        } else if(mapState.initTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.initTempCameraPosition!));
+          mapViewModel.refreshCafes(cameraPosition: mapState.initTempCameraPosition!);
+          mapViewModel.setInitTempCameraPosition(null);
+        }
+        mapViewModel.initMapController(controller);
+      },
       onCameraIdle: () {
         if(!mapState.isRefreshButtonVisible) {
           mapViewModel.setRefreshButtonVisible(true);

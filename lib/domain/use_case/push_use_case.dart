@@ -8,7 +8,10 @@ import 'package:cafejari_flutter/domain/use_case/push_use_case/get_my_pushes.dar
 
 /// 알림 관련 data를 처리하는 use case
 abstract interface class PushUseCase {
-  Future<Pushes> getMyPushes({required String accessToken});
+  Future<Pushes> getMyPushes({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 /// PushUseCase 구현 부분
@@ -19,7 +22,10 @@ class PushUseCaseImpl extends BaseUseCase implements PushUseCase {
   PushUseCaseImpl({required this.tokenRepository, required this.pushRepository});
 
   @override
-  Future<Pushes> getMyPushes({required String accessToken}) async {
+  Future<Pushes> getMyPushes({
+    required String accessToken,
+    required Function(String) onAccessTokenRefresh
+  }) async {
     final f = GetPushes();
     try {
       return await f(
@@ -28,6 +34,7 @@ class PushUseCaseImpl extends BaseUseCase implements PushUseCase {
       );
     } on AccessTokenExpired {
       final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
       try {
         return await f(
             pushRepository: pushRepository,

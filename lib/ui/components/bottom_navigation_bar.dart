@@ -41,9 +41,7 @@ class BottomNavBar extends ConsumerWidget {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            if(index != globalState.currentPage.index) globalViewModel.updateCurrentPageTo(index);
-          },
+          onTap: (index) => globalViewModel.updateCurrentPageTo(index),
           items: [
             BottomNavigationBarItem(
               icon: Image.asset('asset/image/icon_navigation_map_grey.png'),

@@ -31,11 +31,6 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      final viewModel = ref.watch(challengeViewModelProvider.notifier);
-      await viewModel.refreshChallenges();
-      await viewModel.setProfileImages();
-    });
   }
 
   @override
@@ -46,7 +41,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('챌린지', style: TextSize.textSize_bold_16),
-        leading: null,
+        centerTitle: false,
         backgroundColor: AppColor.white,
         elevation: 0,
       ),
@@ -55,6 +50,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
         controller: _refreshController,
         onRefresh: () async {
           await challengeViewModel.refreshChallenges();
+          await challengeViewModel.globalViewModel.init();
           _refreshController.refreshCompleted();
         },
         child: Column(
@@ -62,7 +58,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
             Visibility(
               visible: challengeState.availableChallenges.isNotEmpty,
               child: SizedBox(
-                height: 444,
+                height: 460,
                 child: ListView.builder(
                   padding: AppPadding.padding_25,
                   scrollDirection: Axis.horizontal,
@@ -73,8 +69,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                       children: [
                         ChallengeBlock(
                           challenge: challenge,
-                          // smallProfileImageUrls: challengeState.profileImageUrls.sublist(index*3),
-                          smallProfileImageUrls: challengeState.profileImageUrls,
+                          smallProfileImageUrls: challenge.challengerProfileImages,
                           onPressed: () {
                             challengeViewModel.selectChallenge(challenge);
                             GoRouter.of(context).goNamed(ScreenRoute.challengeInfo);
@@ -89,21 +84,31 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
             ),
             Visibility(
               visible: challengeState.availableChallenges.isEmpty,
-              child: const SizedBox(
+              child: Container(
                 height: 444,
-                child: Text("진행중인 챌린지가 없습니다"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "asset/image/icon_empty.png",
+                      width: 100,
+                    ),
+                    const VerticalSpacer(30),
+                    const Text("현재 진행중인 챌린지가 없어요", style: TextSize.textSize_16),
+                  ],
+                ),
               ),
             ),
-            Container(
-              padding: AppPadding.padding_25,
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
-                  ChallengeVIP()
-                ],
-              ),
-            )
+            // Container(
+            //   padding: AppPadding.padding_25,
+            //   child: const Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
+            //       ChallengeVIP()
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),

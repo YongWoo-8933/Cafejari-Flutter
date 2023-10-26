@@ -6,6 +6,8 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/login_state/login_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginViewModel extends StateNotifier<LoginState> {
@@ -25,19 +27,45 @@ class LoginViewModel extends StateNotifier<LoginState> {
         // 기존 유저
         final loginFinishRes =
             await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
-        globalViewModel.saveLoginResult(
+        globalViewModel.init(
           accessToken: loginFinishRes.accessToken,
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user
         );
+        await FirebaseAnalytics.instance.setUserId(id: loginFinishRes.user.userId.toString());
         return true;
       } else {
         // 가입 유저
-        state = state.copyWith(kakaoAccessToken: loginRes.accessToken, appleAccessToken: "");
+        state = state.copyWith(kakaoAccessToken: loginRes.accessToken, appleIdToken: "", appleServerCode: "");
         return false;
       }
-    } on ErrorWithMessage {
-      // 에러 메시지 출력
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      return null;
+    }
+  }
+
+  Future<bool?> appleLogin({required String idToken, required String code}) async {
+    try {
+      final loginRes = await _userUseCase.appleLogin(idToken: idToken, code: code);
+      if (loginRes.isUserExist) {
+        // 기존 유저
+        final loginFinishRes =
+            await _userUseCase.appleLoginFinish(idToken: idToken, code: code);
+        globalViewModel.init(
+          accessToken: loginFinishRes.accessToken,
+          refreshToken: loginFinishRes.refreshToken,
+          user: loginFinishRes.user
+        );
+        await FirebaseAnalytics.instance.setUserId(id: loginFinishRes.user.userId.toString());
+        return true;
+      } else {
+        // 가입 유저
+        state = state.copyWith(kakaoAccessToken: "", appleIdToken: idToken, appleServerCode: code);
+        return false;
+      }
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
       return null;
     }
   }
@@ -46,23 +74,49 @@ class LoginViewModel extends StateNotifier<LoginState> {
     try {
       final ({String accessToken, String refreshToken, User user}) loginRes =
           await _userUseCase.kakaoLoginFinish(accessToken: state.kakaoAccessToken);
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
       final User makeNewProfileRes = await _userUseCase.makeNewProfile(
         accessToken: loginRes.accessToken,
-        fcmToken: "",
+        fcmToken: fcmToken ?? "",
         nickname: state.nicknameController.text,
         userId: globalViewModel.state.user.userId,
         profileImageId: state.selectedProfileImage.profileImageId,
-        marketingPushEnabled: state.isMarketingAgreed
+        marketingPushEnabled: state.isMarketingAgreed,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
       );
-      globalViewModel.saveLoginResult(
+      globalViewModel.init(
+        accessToken: loginRes.accessToken,
+        refreshToken: loginRes.refreshToken,
+        user: makeNewProfileRes
+      );
+      await FirebaseAnalytics.instance.setUserId(id: makeNewProfileRes.userId.toString());
+      return true;
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+      return false;
+    }
+  }
+
+  Future<bool> registerAsAppleUser() async {
+    try {
+      final ({String accessToken, String refreshToken, User user}) loginRes =
+          await _userUseCase.appleLoginFinish(idToken: state.appleIdToken, code: state.appleServerCode);
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      final User makeNewProfileRes = await _userUseCase.makeNewProfile(
+        accessToken: loginRes.accessToken,
+        fcmToken: fcmToken ?? "",
+        nickname: state.nicknameController.text,
+        userId: globalViewModel.state.user.userId,
+        profileImageId: state.selectedProfileImage.profileImageId,
+        marketingPushEnabled: state.isMarketingAgreed,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      globalViewModel.init(
         accessToken: loginRes.accessToken,
         refreshToken: loginRes.refreshToken,
         user: makeNewProfileRes
       );
       return true;
-    } on RefreshTokenExpired {
-      // 로그아웃 로직
-      return false;
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
       return false;
@@ -75,7 +129,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       int randomIndex = Random().nextInt(state.profileImages.length);
       state = state.copyWith(selectedProfileImage: state.profileImages[randomIndex]);
     } on ErrorWithMessage catch (e) {
-      // 에러 메시지
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
 
@@ -89,7 +143,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       state.nicknameController.text = nickname;
       if(nickname.isNotEmpty) setNicknameErrorMessage("");
     } on ErrorWithMessage catch (e) {
-      // 에러 메시지
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
   }
 

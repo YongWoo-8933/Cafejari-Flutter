@@ -27,7 +27,8 @@ mixin _$LoginState {
   PanelController get bottomSheetController =>
       throw _privateConstructorUsedError;
   String get kakaoAccessToken => throw _privateConstructorUsedError;
-  String get appleAccessToken => throw _privateConstructorUsedError;
+  String get appleIdToken => throw _privateConstructorUsedError;
+  String get appleServerCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -48,7 +49,8 @@ abstract class $LoginStateCopyWith<$Res> {
       bool isMarketingAgreed,
       PanelController bottomSheetController,
       String kakaoAccessToken,
-      String appleAccessToken});
+      String appleIdToken,
+      String appleServerCode});
 }
 
 /// @nodoc
@@ -71,7 +73,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? isMarketingAgreed = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
-    Object? appleAccessToken = null,
+    Object? appleIdToken = null,
+    Object? appleServerCode = null,
   }) {
     return _then(_value.copyWith(
       profileImages: null == profileImages
@@ -102,9 +105,13 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
               as String,
-      appleAccessToken: null == appleAccessToken
-          ? _value.appleAccessToken
-          : appleAccessToken // ignore: cast_nullable_to_non_nullable
+      appleIdToken: null == appleIdToken
+          ? _value.appleIdToken
+          : appleIdToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      appleServerCode: null == appleServerCode
+          ? _value.appleServerCode
+          : appleServerCode // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -126,7 +133,8 @@ abstract class _$$_LoginStateCopyWith<$Res>
       bool isMarketingAgreed,
       PanelController bottomSheetController,
       String kakaoAccessToken,
-      String appleAccessToken});
+      String appleIdToken,
+      String appleServerCode});
 }
 
 /// @nodoc
@@ -147,7 +155,8 @@ class __$$_LoginStateCopyWithImpl<$Res>
     Object? isMarketingAgreed = null,
     Object? bottomSheetController = null,
     Object? kakaoAccessToken = null,
-    Object? appleAccessToken = null,
+    Object? appleIdToken = null,
+    Object? appleServerCode = null,
   }) {
     return _then(_$_LoginState(
       profileImages: null == profileImages
@@ -178,9 +187,13 @@ class __$$_LoginStateCopyWithImpl<$Res>
           ? _value.kakaoAccessToken
           : kakaoAccessToken // ignore: cast_nullable_to_non_nullable
               as String,
-      appleAccessToken: null == appleAccessToken
-          ? _value.appleAccessToken
-          : appleAccessToken // ignore: cast_nullable_to_non_nullable
+      appleIdToken: null == appleIdToken
+          ? _value.appleIdToken
+          : appleIdToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      appleServerCode: null == appleServerCode
+          ? _value.appleServerCode
+          : appleServerCode // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -198,7 +211,8 @@ class _$_LoginState implements _LoginState {
       required this.isMarketingAgreed,
       required this.bottomSheetController,
       required this.kakaoAccessToken,
-      required this.appleAccessToken})
+      required this.appleIdToken,
+      required this.appleServerCode})
       : _profileImages = profileImages;
 
   final List<({String imageUrl, int profileImageId})> _profileImages;
@@ -222,11 +236,13 @@ class _$_LoginState implements _LoginState {
   @override
   final String kakaoAccessToken;
   @override
-  final String appleAccessToken;
+  final String appleIdToken;
+  @override
+  final String appleServerCode;
 
   @override
   String toString() {
-    return 'LoginState(profileImages: $profileImages, selectedProfileImage: $selectedProfileImage, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage, isMarketingAgreed: $isMarketingAgreed, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken, appleAccessToken: $appleAccessToken)';
+    return 'LoginState(profileImages: $profileImages, selectedProfileImage: $selectedProfileImage, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage, isMarketingAgreed: $isMarketingAgreed, bottomSheetController: $bottomSheetController, kakaoAccessToken: $kakaoAccessToken, appleIdToken: $appleIdToken, appleServerCode: $appleServerCode)';
   }
 
   @override
@@ -248,8 +264,10 @@ class _$_LoginState implements _LoginState {
                 other.bottomSheetController == bottomSheetController) &&
             (identical(other.kakaoAccessToken, kakaoAccessToken) ||
                 other.kakaoAccessToken == kakaoAccessToken) &&
-            (identical(other.appleAccessToken, appleAccessToken) ||
-                other.appleAccessToken == appleAccessToken));
+            (identical(other.appleIdToken, appleIdToken) ||
+                other.appleIdToken == appleIdToken) &&
+            (identical(other.appleServerCode, appleServerCode) ||
+                other.appleServerCode == appleServerCode));
   }
 
   @override
@@ -262,7 +280,8 @@ class _$_LoginState implements _LoginState {
       isMarketingAgreed,
       bottomSheetController,
       kakaoAccessToken,
-      appleAccessToken);
+      appleIdToken,
+      appleServerCode);
 
   @JsonKey(ignore: true)
   @override
@@ -284,7 +303,8 @@ abstract class _LoginState implements LoginState {
       required final bool isMarketingAgreed,
       required final PanelController bottomSheetController,
       required final String kakaoAccessToken,
-      required final String appleAccessToken}) = _$_LoginState;
+      required final String appleIdToken,
+      required final String appleServerCode}) = _$_LoginState;
 
   @override
   List<({String imageUrl, int profileImageId})> get profileImages;
@@ -301,7 +321,9 @@ abstract class _LoginState implements LoginState {
   @override
   String get kakaoAccessToken;
   @override
-  String get appleAccessToken;
+  String get appleIdToken;
+  @override
+  String get appleServerCode;
   @override
   @JsonKey(ignore: true)
   _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>

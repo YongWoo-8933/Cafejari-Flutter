@@ -33,6 +33,7 @@ mixin _$User {
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get ageRange => throw _privateConstructorUsedError;
   String? get dateOfBirth => throw _privateConstructorUsedError;
+  CATI get myCATI => throw _privateConstructorUsedError;
   int? get gender => throw _privateConstructorUsedError;
   Grade get grade => throw _privateConstructorUsedError;
   List<Cafe> get favoriteCafes => throw _privateConstructorUsedError;
@@ -64,10 +65,12 @@ abstract class $UserCopyWith<$Res> {
       String? phoneNumber,
       String? ageRange,
       String? dateOfBirth,
+      CATI myCATI,
       int? gender,
       Grade grade,
       List<Cafe> favoriteCafes});
 
+  $CATICopyWith<$Res> get myCATI;
   $GradeCopyWith<$Res> get grade;
 }
 
@@ -101,6 +104,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? phoneNumber = freezed,
     Object? ageRange = freezed,
     Object? dateOfBirth = freezed,
+    Object? myCATI = null,
     Object? gender = freezed,
     Object? grade = null,
     Object? favoriteCafes = null,
@@ -174,6 +178,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as String?,
+      myCATI: null == myCATI
+          ? _value.myCATI
+          : myCATI // ignore: cast_nullable_to_non_nullable
+              as CATI,
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -187,6 +195,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           : favoriteCafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CATICopyWith<$Res> get myCATI {
+    return $CATICopyWith<$Res>(_value.myCATI, (value) {
+      return _then(_value.copyWith(myCATI: value) as $Val);
+    });
   }
 
   @override
@@ -222,10 +238,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? phoneNumber,
       String? ageRange,
       String? dateOfBirth,
+      CATI myCATI,
       int? gender,
       Grade grade,
       List<Cafe> favoriteCafes});
 
+  @override
+  $CATICopyWith<$Res> get myCATI;
   @override
   $GradeCopyWith<$Res> get grade;
 }
@@ -256,6 +275,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? phoneNumber = freezed,
     Object? ageRange = freezed,
     Object? dateOfBirth = freezed,
+    Object? myCATI = null,
     Object? gender = freezed,
     Object? grade = null,
     Object? favoriteCafes = null,
@@ -329,6 +349,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as String?,
+      myCATI: null == myCATI
+          ? _value.myCATI
+          : myCATI // ignore: cast_nullable_to_non_nullable
+              as CATI,
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -366,6 +390,7 @@ class _$_User implements _User {
       required this.phoneNumber,
       required this.ageRange,
       required this.dateOfBirth,
+      required this.myCATI,
       required this.gender,
       required this.grade,
       required final List<Cafe> favoriteCafes})
@@ -406,6 +431,8 @@ class _$_User implements _User {
   @override
   final String? dateOfBirth;
   @override
+  final CATI myCATI;
+  @override
   final int? gender;
   @override
   final Grade grade;
@@ -419,7 +446,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(userId: $userId, profileId: $profileId, point: $point, isAdmin: $isAdmin, isActive: $isActive, isMarketingPushEnabled: $isMarketingPushEnabled, isOccupancyPushEnabled: $isOccupancyPushEnabled, isLogPushEnabled: $isLogPushEnabled, dateJoined: $dateJoined, lastLogin: $lastLogin, nickname: $nickname, fcmToken: $fcmToken, imageUrl: $imageUrl, email: $email, phoneNumber: $phoneNumber, ageRange: $ageRange, dateOfBirth: $dateOfBirth, gender: $gender, grade: $grade, favoriteCafes: $favoriteCafes)';
+    return 'User(userId: $userId, profileId: $profileId, point: $point, isAdmin: $isAdmin, isActive: $isActive, isMarketingPushEnabled: $isMarketingPushEnabled, isOccupancyPushEnabled: $isOccupancyPushEnabled, isLogPushEnabled: $isLogPushEnabled, dateJoined: $dateJoined, lastLogin: $lastLogin, nickname: $nickname, fcmToken: $fcmToken, imageUrl: $imageUrl, email: $email, phoneNumber: $phoneNumber, ageRange: $ageRange, dateOfBirth: $dateOfBirth, myCATI: $myCATI, gender: $gender, grade: $grade, favoriteCafes: $favoriteCafes)';
   }
 
   @override
@@ -457,6 +484,7 @@ class _$_User implements _User {
                 other.ageRange == ageRange) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
+            (identical(other.myCATI, myCATI) || other.myCATI == myCATI) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.grade, grade) || other.grade == grade) &&
             const DeepCollectionEquality()
@@ -483,6 +511,7 @@ class _$_User implements _User {
         phoneNumber,
         ageRange,
         dateOfBirth,
+        myCATI,
         gender,
         grade,
         const DeepCollectionEquality().hash(_favoriteCafes)
@@ -514,6 +543,7 @@ abstract class _User implements User {
       required final String? phoneNumber,
       required final String? ageRange,
       required final String? dateOfBirth,
+      required final CATI myCATI,
       required final int? gender,
       required final Grade grade,
       required final List<Cafe> favoriteCafes}) = _$_User;
@@ -552,6 +582,8 @@ abstract class _User implements User {
   String? get ageRange;
   @override
   String? get dateOfBirth;
+  @override
+  CATI get myCATI;
   @override
   int? get gender;
   @override

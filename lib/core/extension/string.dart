@@ -1,13 +1,7 @@
-import 'package:cafejari_flutter/core/util.dart';
 import 'package:cafejari_flutter/domain/entity/cafe_log/util.dart';
 import 'package:cafejari_flutter/domain/entity/push/util.dart';
 import 'package:html/parser.dart';
 
-/// 해당 string이 "_none"인지 확인해줌
-extension IsNone on String {
-  bool get isNone => this == none;
-  bool get isNotNone => this != none;
-}
 
 /// 해당 string으로부터 CafeLogTheme을 얻어냄
 extension GetCafeTheme on String {

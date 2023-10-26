@@ -30,7 +30,6 @@ class ChallengeRepositoryImpl implements ChallengeRepository {
           appLabel: "challenge",
           endpoint: ""
       );
-      print(response);
       return response.map((dynamic e) => ChallengeResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;

@@ -14,8 +14,9 @@ class CafeResponse {
   final String name, address;
   final double latitude, longitude;
   final bool is_visible, is_closed;
-  final OpeningHourResponse opening_hour;
+  final OpeningHourResponse? opening_hour;
   final BrandResponse? brand;
+  final CATIResponse? cati;
   final List<CafeFloorCafeRepResponse> cafe_floor;
   final List<CafeVIPResponse> cafe_vip;
   final List<CafeImageResponse> cafe_image;
@@ -30,6 +31,7 @@ class CafeResponse {
       required this.is_closed,
       required this.opening_hour,
       required this.brand,
+      required this.cati,
       required this.cafe_floor,
       required this.cafe_vip,
       required this.cafe_image});
@@ -55,7 +57,7 @@ class CafeSearchResponse {
 
 @JsonSerializable()
 class CafeFloorCafeRepResponse {
-  final int id, floor;
+  final int id, floor, point_prediction;
   final String? wall_socket_rate, restroom;
   final bool has_seat;
   final OccupancyRatePredictionResponse? occupancy_rate_prediction;
@@ -64,6 +66,7 @@ class CafeFloorCafeRepResponse {
   CafeFloorCafeRepResponse(
       {required this.id,
         required this.floor,
+        required this.point_prediction,
         required this.wall_socket_rate,
         required this.restroom,
         required this.has_seat,
@@ -132,6 +135,23 @@ class CafeImageResponse {
 
   factory CafeImageResponse.fromJson(Map<String, dynamic> json) =>
       _$CafeImageResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CATIResponse {
+  final double openness;
+  final double coffee;
+  final double workspace;
+  final double acidity;
+
+  CATIResponse({
+    required this.openness,
+    required this.coffee,
+    required this.workspace,
+    required this.acidity,
+  });
+
+  factory CATIResponse.fromJson(Map<String, dynamic> json) => _$CATIResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -251,4 +271,21 @@ class NaverSearchCafeItemResponse {
   });
 
   factory NaverSearchCafeItemResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeItemResponseFromJson(json);
+}
+
+@JsonSerializable()
+class LocationResponse {
+  final String name;
+  final String image;
+  final double latitude;
+  final double longitude;
+
+  LocationResponse({
+    required this.name,
+    required this.image,
+    required this.latitude,
+    required this.longitude,
+  });
+
+  factory LocationResponse.fromJson(Map<String, dynamic> json) => _$LocationResponseFromJson(json);
 }

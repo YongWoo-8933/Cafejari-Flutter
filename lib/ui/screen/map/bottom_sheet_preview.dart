@@ -1,24 +1,24 @@
-import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_slider.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 
 final _dragDyProvider = StateProvider<double>((ref) => 0.0);
-final _isShareLoading = StateProvider<bool>((ref) => false);
 
 class BottomSheetPreview extends ConsumerWidget {
   final double height;
@@ -29,7 +29,6 @@ class BottomSheetPreview extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
     const double edgePadding = 20;
@@ -83,145 +82,75 @@ class BottomSheetPreview extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.only(left: edgePadding, right: boundaryPadding, top: edgePadding),
                         width: deviceSize.width / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "# 대표태그",
-                                  style: TextStyle(
-                                    color: AppColor.grey_700,
-                                    fontSize: 12
-                                  )),
-                                BookmarkButton(
-                                  isBookmarked: globalState.user.favoriteCafes.where((e) => e.id == mapState.selectedCafe.id).isNotEmpty,
-                                  buttonSize: componentHeight,
-                                  onPressed: () => mapViewModel.updateFavoriteCafeList(mapState.selectedCafe.id)
-                                )
-                              ],
-                            ),
-                            const VerticalSpacer(8),
-                            Padding(
-                              padding: const EdgeInsets.only(right: edgePadding),
-                              child: Text(
-                                mapState.selectedCafe.name,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600
+                        child: LayoutBuilder(
+                          builder: (_, constraint) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => showDialog(context: context, builder: (_) => const CafeCATIEditor()),
+                                    child: SizedBox(
+                                      width: constraint.maxWidth - componentHeight - 10,
+                                      child: Text(
+                                      mapState.selectedCafe.catiTagText,
+                                      style: const TextStyle(
+                                        color: AppColor.grey_700,
+                                        fontSize: 12,
+                                        height: 0.95
+                                      )),
+                                    ),
+                                  ),
+                                  const BookmarkButton(buttonSize: componentHeight)
+                                ],
+                              ),
+                              const VerticalSpacer(8),
+                              Padding(
+                                padding: const EdgeInsets.only(right: edgePadding),
+                                child: Text(
+                                  mapState.selectedCafe.name,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: edgePadding + 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    SizedBox(
-                                      height: componentHeight,
-                                      child: ElevatedButton(
-                                        onPressed: () => mapState.bottomSheetOccupancyController.open(),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: AppColor.primary,
-                                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: edgePadding + 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        height: componentHeight,
+                                        child: ElevatedButton(
+                                          onPressed: () => showDialog(context: context, builder: (_) => const OccupancyUpdateDialog()),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: AppColor.primary,
+                                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(18),
+                                            ),
                                           ),
-                                        ),
-                                        child: const Text(
-                                          "혼잡도 등록",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: AppColor.white
+                                          child: const Text(
+                                            "혼잡도 등록",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColor.white
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    ShareButton(
-                                      buttonSize: componentHeight,
-                                      isLoading: ref.watch(_isShareLoading),
-                                      onPressed: () async {
-                                        ref.watch(_isShareLoading.notifier).update((state) => true);
-                                        final urlPrefix = "https://cafejari.page.link";
-                                        final DynamicLinkParameters parameters = DynamicLinkParameters(
-                                          link: Uri.parse("$urlPrefix/map/${mapState.selectedCafe.id}"),
-                                          uriPrefix: urlPrefix,
-                                          androidParameters: AndroidParameters(
-                                            packageName: "kr.co.cafejari.cafejari_flutter"
-                                          )
-                                        );
-                                        final Uri dynamicLink = await FirebaseDynamicLinks.instance.buildLink(parameters);
-                                        print("" + dynamicLink.toString());
-                                        if (await ShareClient.instance.isKakaoTalkSharingAvailable()) {
-                                          try {
-                                            Uri uri = await ShareClient.instance.shareDefault(
-                                              template: LocationTemplate(
-                                                address: mapState.selectedCafe.address,
-                                                content: Content(
-                                                  title: mapState.selectedCafe.name,
-                                                  description: '현재 혼잡도: ${
-                                                    mapState.selectedCafe.recentUpdatedOccupancyRate.isNull ? "정보 없음" :
-                                                      mapState.selectedCafe.recentUpdatedOccupancyRate!.toOccupancyLevel().stringValue
-                                                  }',
-                                                  imageUrl: Uri.parse(
-                                                    mapState.selectedCafe.imageUrls.isEmpty ?
-                                                      "https://cafejariimage.co.kr/cafe/cafe_image/스타벅스_신촌오거리점_KakaoTalk_20230804_120411907.jpg" :
-                                                      mapState.selectedCafe.imageUrls[0]
-                                                  ),
-                                                  link: Link(mobileWebUrl: dynamicLink),
-                                                ),
-                                                buttons: [
-                                                  Button(title: "앱에서 보기", link: Link(mobileWebUrl: dynamicLink))
-                                                ],
-                                                social: Social(likeCount: 286, commentCount: 45, sharedCount: 845),
-                                              )
-                                            );
-                                            await ShareClient.instance.launchKakaoTalk(uri);
-                                            print('카카오톡 공유 완료');
-                                          } catch (error) {
-                                            print('카카오톡 공유 실패 $error');
-                                          }
-                                        } else {
-                                          try {
-                                            Uri shareUrl = await WebSharerClient.instance
-                                                .makeDefaultUrl(template: LocationTemplate(
-                                              address: mapState.selectedCafe.address,
-                                              content: Content(
-                                                title: mapState.selectedCafe.name,
-                                                description: '현재 혼잡도: ${
-                                                  mapState.selectedCafe.recentUpdatedOccupancyRate.isNull ? "정보 없음" :
-                                                  mapState.selectedCafe.recentUpdatedOccupancyRate!.toOccupancyLevel().stringValue
-                                                }',
-                                                imageUrl: Uri.parse(
-                                                  mapState.selectedCafe.imageUrls.isEmpty ?
-                                                  "https://cafejariimage.co.kr/cafe/cafe_image/스타벅스_신촌오거리점_KakaoTalk_20230804_120411907.jpg" :
-                                                  mapState.selectedCafe.imageUrls[0]
-                                                ),
-                                                link: Link(
-                                                  webUrl: Uri.parse('https://developers.kakao.com'),
-                                                  mobileWebUrl: dynamicLink,
-                                                ),
-                                              ),
-                                              social: Social(likeCount: 286, commentCount: 45, sharedCount: 845),
-                                            )
-                                            );
-                                            await launchBrowserTab(shareUrl, popupOpen: true);
-                                          } catch (error) {
-                                            print('카카오톡 공유 실패 $error');
-                                          }
-                                        }
-                                        ref.watch(_isShareLoading.notifier).update((state) => false);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ),
-                          ],
+                                      const ShareButton(buttonSize: componentHeight),
+                                    ],
+                                  ),
+                                )
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       // 오른쪽 파트
@@ -234,8 +163,11 @@ class BottomSheetPreview extends ConsumerWidget {
                         ),
                         child: Column(
                           children: [
-                            _FloorTabRow(width: deviceSize.width - edgePadding - boundaryPadding, height: componentHeight),
-                            const VerticalSpacer(15),
+                            _FloorTabRow(
+                              width: deviceSize.width - edgePadding - boundaryPadding,
+                              height: componentHeight
+                            ),
+                            const VerticalSpacer(10),
                             Visibility(
                               visible: mapState.selectedCafeFloor.recentUpdates.isNotEmpty,
                               child: BottomSheetSlider(width: deviceSize.width / 2 - edgePadding - boundaryPadding)
@@ -245,19 +177,20 @@ class BottomSheetPreview extends ConsumerWidget {
                               child: const Padding(
                                 padding: AppPadding.padding_15,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "아직 혼잡도가 없어요",
                                       style: TextSize.textSize_bold_14,
+                                      textAlign: TextAlign.center,
                                     ),
                                     VerticalSpacer(8),
                                     Text(
-                                      "3초만에 혼잡도 등록하고 포인트를 받아보세요!",
+                                      "3초만에 혼잡도 등록하고\n포인트를 받아보세요!",
                                       style: TextStyle(
                                         color: AppColor.grey_800,
                                         fontSize: 12
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),
@@ -277,9 +210,7 @@ class BottomSheetPreview extends ConsumerWidget {
                                           children: [
                                             Image.asset("asset/image/icon_plug.png", width: 24, height: 24),
                                             const HorizontalSpacer(2),
-                                            const Text("콘센트: ", style: TextSize.textSize_12),
-                                            const HorizontalSpacer(4),
-                                            const Text("테이블 대비", style: TextStyle(color: AppColor.grey_800, fontSize: 12)),
+                                            const Text("콘센트 보급율: ", style: TextSize.textSize_12),
                                             const HorizontalSpacer(4),
                                             Text("${((mapState.selectedCafeFloor.wallSocketRate ?? 0) * 100).toInt()}%", style: TextSize.textSize_bold_12)
                                           ],
@@ -310,7 +241,6 @@ class BottomSheetPreview extends ConsumerWidget {
   }
 }
 
-
 class _FloorTabRow extends ConsumerWidget {
   final double width;
   final double height;
@@ -321,33 +251,40 @@ class _FloorTabRow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
-    final recentFloorIndex = mapState.selectedCafe.cafeFloors.indexWhere((element) {
-      return element.floor == mapState.selectedCafe.recentUpdatedFloor;
-    });
 
     return SizedBox(
         height: height,
         width: width,
-        child: DefaultTabController(
-            initialIndex: recentFloorIndex == -1 ? 0 : recentFloorIndex,
-            length: mapState.selectedCafe.cafeFloors.length,
-            child: Material(
-              color: AppColor.secondaryContainer,
-              child: TabBar(
-                  indicatorColor: AppColor.secondaryContainer,
-                  indicatorPadding: AppPadding.padding_0,
-                  indicatorWeight: 0.0001,
-                  labelColor: AppColor.black,
-                  labelPadding: AppPadding.padding_horizon_15,
-                  unselectedLabelColor: AppColor.grey_400,
-                  labelStyle: TextSize.textSize_bold_14,
-                  isScrollable: true,
-                  onTap: (tappedCafeFloorIndex) {
-                    mapViewModel.selectedCafeFloor(mapState.selectedCafe.cafeFloors[tappedCafeFloorIndex]);
-                  },
-                  tabs: mapState.selectedCafe.cafeFloors.map((e) => Tab(text: "${e.floor}층")).toList()
-              ),
-            )
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ...mapState.selectedCafe.cafeFloors.map((e) {
+                final isSelected = e.floor == mapState.selectedCafeFloor.floor;
+                return Row(
+                  children: [
+                    const HorizontalSpacer(10),
+                    GestureDetector(
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        mapViewModel.selectCafeFloor(e);
+                      },
+                      child: Text(
+                        "${e.floor.toFloor()}층",
+                        style: TextStyle(
+                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w400,
+                            fontSize: 15,
+                            color: isSelected ? AppColor.black : AppColor.grey_500
+                        ),
+                      ),
+                    ),
+                    const HorizontalSpacer(12)
+                  ],
+                );
+              }).toList()
+            ],
+          )
         )
     );
   }

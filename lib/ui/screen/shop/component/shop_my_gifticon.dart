@@ -1,86 +1,193 @@
-import 'package:cafejari_flutter/core/extension/null.dart';
+import 'dart:ffi';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cafejari_flutter/core/di.dart';
+import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
+import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_record_block.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
+import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
+import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
+import 'package:cafejari_flutter/ui/view_model/shop_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ShopMyBrandCon extends StatelessWidget {
+class ShopMyBrandCon extends ConsumerWidget {
+  final Brandcon brandcon;
+  final double sidePadding;
 
-  const ShopMyBrandCon({super.key});
+  const ShopMyBrandCon({super.key, required this.brandcon, required this.sidePadding});
 
   @override
-  Widget build(BuildContext context) {
-    final double blockWidth = MediaQuery.of(context).size.width - 60;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ShopState shopState = ref.watch(shopViewModelProvider);
+    final ShopViewModel shopViewModel = ref.watch(shopViewModelProvider.notifier);
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    const double itemHeight = 120;
+    const double spacing = 20;
+    final Item item = shopState.itemList.firstWhere((e) => e.itemId == brandcon.itemId, orElse: () => Item.empty());
+    final Brand brand = shopState.brandList.firstWhere((e) => e.id == item.brandId, orElse: () => Brand.empty());
 
-    return Container(
-      padding: AppPadding.padding_30,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-          _buildBlockCell('asset/image/testimage.png', "스타벅스", "아이스 아메리카노", "2023-01-01 ~ 2023-01-03", blockWidth),
-          VerticalSpacer(20),
-
-        ],
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            insetPadding: AppPadding.padding_horizon_20,
+            backgroundColor: AppColor.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColor.white,
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const VerticalSpacer(15),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10, right: 10),
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(
+                          CupertinoIcons.xmark,
+                          size: 28,
+                          color: AppColor.primary
+                        ),
+                      ),
+                    ),
+                  ),
+                  CachedNetworkImage(
+                    imageUrl: brandcon.imageUrl,
+                    fit: BoxFit.contain
+                  ),
+                  const VerticalSpacer(20),
+                  ActionButtonPrimary(
+                    buttonWidth: 240,
+                    buttonHeight: 48,
+                    title: "사용완료",
+                    onPressed: () async {
+                      await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: true, context: context);
+                      if (context.mounted) Navigator.of(context).pop();
+                    }
+                  ),
+                  const VerticalSpacer(20)
+                ],
+              ),
+            ),
+          );
+        }
       ),
-    );
-  }
-
-  Container _buildBlockCell(String image, String brand, String title, String period, double width) {
-    return Container(
-      alignment: Alignment.center,
-      width: width,
-      height: 100,
-      child: Row(
-        children: [
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color:AppColor.grey_200,
-                  spreadRadius: 3,
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
+      child: Container(
+        alignment: Alignment.center,
+        width: deviceWidth - sidePadding * 2,
+        height: itemHeight + spacing,
+        color: AppColor.white,
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: itemHeight,
+                      height: itemHeight,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: AppShadow.box,
+                          color: AppColor.white
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CachedNetworkImage(imageUrl: item.largeImageUrl, width: itemHeight, height: itemHeight),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      width: deviceWidth - sidePadding * 2 - itemHeight,
+                      height: itemHeight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(brand.name, style: const TextStyle(color: AppColor.secondary, fontWeight: FontWeight.bold)),
+                              const VerticalSpacer(6),
+                              Text(item.name, maxLines: 2, style: TextSize.textSize_bold_16),
+                            ],
+                          ),
+                          Text(
+                              "만료일자:  ${brandcon.expirationDate.toString().substring(0, 10)}",
+                              style: const TextStyle(color: AppColor.grey_800, fontSize: 12)
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Visibility(
+                  visible: brandcon.isUsed,
+                  child: GestureDetector(
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SquareAlertDialog(
+                          text: "브랜드콘을 사용 가능한 상태로 만들겠어요?",
+                          negativeButtonText: "아니오",
+                          positiveButtonText: "네",
+                          onDismiss: () => Navigator.of(context).pop(),
+                          onNegativeButtonPress: () {},
+                          onPositiveButtonPress: () async {
+                            await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: false, context: context);
+                          }
+                        );
+                      }
+                    ),
+                    onLongPress: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SquareAlertDialog(
+                          text: "사용한 브랜드콘을 삭제 하시겠습니까?",
+                          negativeButtonText: "아니오",
+                          positiveButtonText: "네",
+                          onDismiss: () => Navigator.of(context).pop(),
+                          onNegativeButtonPress: () {},
+                          onPositiveButtonPress: () async => await shopViewModel.deleteBrandcon(brandcon: brandcon, context: context)
+                        );
+                      }
+                    ),
+                    child: Container(
+                      width: deviceWidth - sidePadding * 2,
+                      height: itemHeight,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColor.transparentBlack_500,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: const Text(
+                        "사용이 완료된 브랜드콘 입니다",
+                        style: TextStyle(
+                          color: AppColor.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700
+                        )
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: ClipRRect( // 모서리를 둥글게 하기 위해 ClipRRect 사용
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(image, fit: BoxFit.cover),
-            ),
-          ),
-          HorizontalSpacer(10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(brand, style: TextStyle(color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.bold)),
-                  Text(title,style: TextSize.textSize_bold_16),
-                ],
-              ),
-              Text(period, style: TextSize.textSize_grey_12)
-            ],
-          )
-        ],
+            const VerticalSpacer(spacing)
+          ],
+        ),
       ),
     );
   }

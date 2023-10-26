@@ -16,15 +16,26 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GlobalState {
+  List<Version> get versions => throw _privateConstructorUsedError;
+  bool get isPermissionChecked => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
   bool get isLoggedIn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates =>
+      throw _privateConstructorUsedError;
+  ({int? month, int? total, int? week}) get myRanking =>
+      throw _privateConstructorUsedError;
+  List<Challenger> get myChallengers => throw _privateConstructorUsedError;
   PageType get currentPage => throw _privateConstructorUsedError;
   bool get isSnackBarOpened => throw _privateConstructorUsedError;
   bool get isSnackBarExpanded => throw _privateConstructorUsedError;
   String get snackBarText => throw _privateConstructorUsedError;
   SnackBarType get snackBarType => throw _privateConstructorUsedError;
   Position? get currentDeviceLocation => throw _privateConstructorUsedError;
+  InAppWebViewController? get webViewController =>
+      throw _privateConstructorUsedError;
+  String get webViewTitle => throw _privateConstructorUsedError;
+  Uri get webViewUri => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -38,15 +49,23 @@ abstract class $GlobalStateCopyWith<$Res> {
       _$GlobalStateCopyWithImpl<$Res, GlobalState>;
   @useResult
   $Res call(
-      {String accessToken,
+      {List<Version> versions,
+      bool isPermissionChecked,
+      String accessToken,
       bool isLoggedIn,
       User user,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
+      ({int? month, int? total, int? week}) myRanking,
+      List<Challenger> myChallengers,
       PageType currentPage,
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
       String snackBarText,
       SnackBarType snackBarType,
-      Position? currentDeviceLocation});
+      Position? currentDeviceLocation,
+      InAppWebViewController? webViewController,
+      String webViewTitle,
+      Uri webViewUri});
 
   $UserCopyWith<$Res> get user;
 }
@@ -64,17 +83,33 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? versions = null,
+    Object? isPermissionChecked = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
+    Object? myTodayUpdates = null,
+    Object? myRanking = null,
+    Object? myChallengers = null,
     Object? currentPage = null,
     Object? isSnackBarOpened = null,
     Object? isSnackBarExpanded = null,
     Object? snackBarText = null,
     Object? snackBarType = null,
     Object? currentDeviceLocation = freezed,
+    Object? webViewController = freezed,
+    Object? webViewTitle = null,
+    Object? webViewUri = null,
   }) {
     return _then(_value.copyWith(
+      versions: null == versions
+          ? _value.versions
+          : versions // ignore: cast_nullable_to_non_nullable
+              as List<Version>,
+      isPermissionChecked: null == isPermissionChecked
+          ? _value.isPermissionChecked
+          : isPermissionChecked // ignore: cast_nullable_to_non_nullable
+              as bool,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -87,6 +122,18 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value.myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
+      myRanking: null == myRanking
+          ? _value.myRanking
+          : myRanking // ignore: cast_nullable_to_non_nullable
+              as ({int? month, int? total, int? week}),
+      myChallengers: null == myChallengers
+          ? _value.myChallengers
+          : myChallengers // ignore: cast_nullable_to_non_nullable
+              as List<Challenger>,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -111,6 +158,18 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.currentDeviceLocation
           : currentDeviceLocation // ignore: cast_nullable_to_non_nullable
               as Position?,
+      webViewController: freezed == webViewController
+          ? _value.webViewController
+          : webViewController // ignore: cast_nullable_to_non_nullable
+              as InAppWebViewController?,
+      webViewTitle: null == webViewTitle
+          ? _value.webViewTitle
+          : webViewTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      webViewUri: null == webViewUri
+          ? _value.webViewUri
+          : webViewUri // ignore: cast_nullable_to_non_nullable
+              as Uri,
     ) as $Val);
   }
 
@@ -132,15 +191,23 @@ abstract class _$$_GlobalStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String accessToken,
+      {List<Version> versions,
+      bool isPermissionChecked,
+      String accessToken,
       bool isLoggedIn,
       User user,
+      Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
+      ({int? month, int? total, int? week}) myRanking,
+      List<Challenger> myChallengers,
       PageType currentPage,
       bool isSnackBarOpened,
       bool isSnackBarExpanded,
       String snackBarText,
       SnackBarType snackBarType,
-      Position? currentDeviceLocation});
+      Position? currentDeviceLocation,
+      InAppWebViewController? webViewController,
+      String webViewTitle,
+      Uri webViewUri});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -157,17 +224,33 @@ class __$$_GlobalStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? versions = null,
+    Object? isPermissionChecked = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
+    Object? myTodayUpdates = null,
+    Object? myRanking = null,
+    Object? myChallengers = null,
     Object? currentPage = null,
     Object? isSnackBarOpened = null,
     Object? isSnackBarExpanded = null,
     Object? snackBarText = null,
     Object? snackBarType = null,
     Object? currentDeviceLocation = freezed,
+    Object? webViewController = freezed,
+    Object? webViewTitle = null,
+    Object? webViewUri = null,
   }) {
     return _then(_$_GlobalState(
+      versions: null == versions
+          ? _value._versions
+          : versions // ignore: cast_nullable_to_non_nullable
+              as List<Version>,
+      isPermissionChecked: null == isPermissionChecked
+          ? _value.isPermissionChecked
+          : isPermissionChecked // ignore: cast_nullable_to_non_nullable
+              as bool,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -180,6 +263,18 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      myTodayUpdates: null == myTodayUpdates
+          ? _value._myTodayUpdates
+          : myTodayUpdates // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<OccupancyRateUpdate>>,
+      myRanking: null == myRanking
+          ? _value.myRanking
+          : myRanking // ignore: cast_nullable_to_non_nullable
+              as ({int? month, int? total, int? week}),
+      myChallengers: null == myChallengers
+          ? _value._myChallengers
+          : myChallengers // ignore: cast_nullable_to_non_nullable
+              as List<Challenger>,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -204,6 +299,18 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.currentDeviceLocation
           : currentDeviceLocation // ignore: cast_nullable_to_non_nullable
               as Position?,
+      webViewController: freezed == webViewController
+          ? _value.webViewController
+          : webViewController // ignore: cast_nullable_to_non_nullable
+              as InAppWebViewController?,
+      webViewTitle: null == webViewTitle
+          ? _value.webViewTitle
+          : webViewTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      webViewUri: null == webViewUri
+          ? _value.webViewUri
+          : webViewUri // ignore: cast_nullable_to_non_nullable
+              as Uri,
     ));
   }
 }
@@ -212,22 +319,61 @@ class __$$_GlobalStateCopyWithImpl<$Res>
 
 class _$_GlobalState implements _GlobalState {
   _$_GlobalState(
-      {required this.accessToken,
+      {required final List<Version> versions,
+      required this.isPermissionChecked,
+      required this.accessToken,
       required this.isLoggedIn,
       required this.user,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
+      required this.myRanking,
+      required final List<Challenger> myChallengers,
       required this.currentPage,
       required this.isSnackBarOpened,
       required this.isSnackBarExpanded,
       required this.snackBarText,
       required this.snackBarType,
-      required this.currentDeviceLocation});
+      required this.currentDeviceLocation,
+      required this.webViewController,
+      required this.webViewTitle,
+      required this.webViewUri})
+      : _versions = versions,
+        _myTodayUpdates = myTodayUpdates,
+        _myChallengers = myChallengers;
 
+  final List<Version> _versions;
+  @override
+  List<Version> get versions {
+    if (_versions is EqualUnmodifiableListView) return _versions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_versions);
+  }
+
+  @override
+  final bool isPermissionChecked;
   @override
   final String accessToken;
   @override
   final bool isLoggedIn;
   @override
   final User user;
+  final Map<int, List<OccupancyRateUpdate>> _myTodayUpdates;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates {
+    if (_myTodayUpdates is EqualUnmodifiableMapView) return _myTodayUpdates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_myTodayUpdates);
+  }
+
+  @override
+  final ({int? month, int? total, int? week}) myRanking;
+  final List<Challenger> _myChallengers;
+  @override
+  List<Challenger> get myChallengers {
+    if (_myChallengers is EqualUnmodifiableListView) return _myChallengers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_myChallengers);
+  }
+
   @override
   final PageType currentPage;
   @override
@@ -240,10 +386,16 @@ class _$_GlobalState implements _GlobalState {
   final SnackBarType snackBarType;
   @override
   final Position? currentDeviceLocation;
+  @override
+  final InAppWebViewController? webViewController;
+  @override
+  final String webViewTitle;
+  @override
+  final Uri webViewUri;
 
   @override
   String toString() {
-    return 'GlobalState(accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation)';
+    return 'GlobalState(versions: $versions, isPermissionChecked: $isPermissionChecked, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
   }
 
   @override
@@ -251,11 +403,20 @@ class _$_GlobalState implements _GlobalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GlobalState &&
+            const DeepCollectionEquality().equals(other._versions, _versions) &&
+            (identical(other.isPermissionChecked, isPermissionChecked) ||
+                other.isPermissionChecked == isPermissionChecked) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.isLoggedIn, isLoggedIn) ||
                 other.isLoggedIn == isLoggedIn) &&
             (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality()
+                .equals(other._myTodayUpdates, _myTodayUpdates) &&
+            (identical(other.myRanking, myRanking) ||
+                other.myRanking == myRanking) &&
+            const DeepCollectionEquality()
+                .equals(other._myChallengers, _myChallengers) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             (identical(other.isSnackBarOpened, isSnackBarOpened) ||
@@ -267,21 +428,35 @@ class _$_GlobalState implements _GlobalState {
             (identical(other.snackBarType, snackBarType) ||
                 other.snackBarType == snackBarType) &&
             (identical(other.currentDeviceLocation, currentDeviceLocation) ||
-                other.currentDeviceLocation == currentDeviceLocation));
+                other.currentDeviceLocation == currentDeviceLocation) &&
+            (identical(other.webViewController, webViewController) ||
+                other.webViewController == webViewController) &&
+            (identical(other.webViewTitle, webViewTitle) ||
+                other.webViewTitle == webViewTitle) &&
+            (identical(other.webViewUri, webViewUri) ||
+                other.webViewUri == webViewUri));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_versions),
+      isPermissionChecked,
       accessToken,
       isLoggedIn,
       user,
+      const DeepCollectionEquality().hash(_myTodayUpdates),
+      myRanking,
+      const DeepCollectionEquality().hash(_myChallengers),
       currentPage,
       isSnackBarOpened,
       isSnackBarExpanded,
       snackBarText,
       snackBarType,
-      currentDeviceLocation);
+      currentDeviceLocation,
+      webViewController,
+      webViewTitle,
+      webViewUri);
 
   @JsonKey(ignore: true)
   @override
@@ -292,22 +467,40 @@ class _$_GlobalState implements _GlobalState {
 
 abstract class _GlobalState implements GlobalState {
   factory _GlobalState(
-      {required final String accessToken,
+      {required final List<Version> versions,
+      required final bool isPermissionChecked,
+      required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
+      required final Map<int, List<OccupancyRateUpdate>> myTodayUpdates,
+      required final ({int? month, int? total, int? week}) myRanking,
+      required final List<Challenger> myChallengers,
       required final PageType currentPage,
       required final bool isSnackBarOpened,
       required final bool isSnackBarExpanded,
       required final String snackBarText,
       required final SnackBarType snackBarType,
-      required final Position? currentDeviceLocation}) = _$_GlobalState;
+      required final Position? currentDeviceLocation,
+      required final InAppWebViewController? webViewController,
+      required final String webViewTitle,
+      required final Uri webViewUri}) = _$_GlobalState;
 
+  @override
+  List<Version> get versions;
+  @override
+  bool get isPermissionChecked;
   @override
   String get accessToken;
   @override
   bool get isLoggedIn;
   @override
   User get user;
+  @override
+  Map<int, List<OccupancyRateUpdate>> get myTodayUpdates;
+  @override
+  ({int? month, int? total, int? week}) get myRanking;
+  @override
+  List<Challenger> get myChallengers;
   @override
   PageType get currentPage;
   @override
@@ -320,6 +513,12 @@ abstract class _GlobalState implements GlobalState {
   SnackBarType get snackBarType;
   @override
   Position? get currentDeviceLocation;
+  @override
+  InAppWebViewController? get webViewController;
+  @override
+  String get webViewTitle;
+  @override
+  Uri get webViewUri;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>

@@ -4,7 +4,8 @@ secret.json
 *.env
 firebase_app_id_file.json
 GoogleService-Info.plist
-
+key.jks
+proguard-rules.pro
 
 # Miscellaneous
 *.class

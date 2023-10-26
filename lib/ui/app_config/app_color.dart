@@ -42,18 +42,20 @@ class AppColor {
   static const Color unselectedTextColor = Color(0xFFB7B7B7);
   static const Color primary = Color(0xFF000000);
   static const Color secondary = Color(0xFF785B52);
-  static const Color alert = Color(0xFFFE9E45);
+  // static const Color secondary = Color(0xFF8B4513);
+  static const Color alert = Color(0xFF964b00);
   static const Color background = Color(0xFFF8F8F8);
   static const Color onSecondaryContainer = Color(0xFFF4EDEB);
   static const Color textColorOnContainer = Color(0xFFA1A7AE);
 
   static const Color explanationButton = Color(0xFFCACACA);
   static const Color unselectedButtonColor = Color(0xFFD4D2D2);
-  static const Color occupancyLevel1 = Color(0xFFAAA29B);
-  static const Color occupancyLevel2 = Color(0xFF5A4F4F);
+  static const Color occupancyLevel1 = Color(0xFFB79675);
+  static const Color occupancyLevel2 = Color(0xFF735C53);
   static const Color challengeBlock = Color(0xFFF5F5F5);
   static const Color error = Color(0xFFFF6B68);
   static const Color unselectedTabBarColor = Color(0xFF656565);
+  static const Color myPageDividerGrey = Color(0xFFE0E0E7);
 
 }
 ///Color? primary,

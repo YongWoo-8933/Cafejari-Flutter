@@ -13,14 +13,14 @@ abstract interface class CafeRepository {
       required double longitude,
       required int zoomLevel});
   Future<CafeResponse> retrieveCafe({required int cafeId});
-  Future<List<CafeSearchResponse>> fetchSearchCafe(
-      {required String query});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate(
-      {required String accessToken});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyRecentOccupancyUpdate(
-      {required String accessToken});
-  Future<NaverSearchCafeResponse> fetchNaverSearchResult(
-      {required String query});
+  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query});
+  Future<List<CafeResponse>> fetchRecommendedCafe({
+    required double latitude, required double longitude});
+  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken});
+  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate({required String accessToken});
+  Future<NaverSearchCafeResponse> fetchNaverSearchResult({required String query});
+  Future<List<LocationResponse>> fetchLocation();
+  Future<List<CATIResponse>> fetchCATI({required int cafeId});
 
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser(
       {required String accessToken,
@@ -29,6 +29,13 @@ abstract interface class CafeRepository {
   Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest(
       {required double occupancyRate,
       required int cafeFloorId});
+  Future<CATIResponse> postCATI(
+      {required String accessToken,
+      required int cafeId,
+      required int openness,
+      required int coffee,
+      required int workspace,
+      required int acidity});
 }
 
 /// cafe repository의 구현부
@@ -86,6 +93,22 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
+  Future<List<CafeResponse>> fetchRecommendedCafe({
+    required double latitude, required double longitude}) async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "recommendation/",
+        query: {"latitude": latitude, "longitude": longitude},
+      );
+      return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken}) async {
     try {
       final List<dynamic> response = await apiService.request(
@@ -102,12 +125,12 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<List<OccupancyRateUpdateResponse>> fetchMyRecentOccupancyUpdate({required String accessToken}) async {
+  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate({required String accessToken}) async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
-        endpoint: "occupancy_update_log/recent_update_log/",
+        endpoint: "occupancy_update_log/today_updated_log/",
         accessToken: accessToken);
       return response.map((dynamic e) => OccupancyRateUpdateResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
@@ -138,6 +161,35 @@ class CafeRepositoryImpl implements CafeRepository {
       } else {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
       }
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<LocationResponse>> fetchLocation() async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "location/"
+      );
+      return response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CATIResponse>> fetchCATI({required int cafeId}) async {
+    try {
+      final List<dynamic> response = await apiService.request(
+        method: HttpMethod.get,
+        appLabel: "cafe",
+        endpoint: "cati/",
+        query: {"cafe_id": cafeId}
+      );
+      return response.map((dynamic e) => CATIResponse.fromJson(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     }
@@ -176,6 +228,37 @@ class CafeRepositoryImpl implements CafeRepository {
           body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
       );
       return OccupancyRateUpdateResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CATIResponse> postCATI({
+    required String accessToken,
+    required int cafeId,
+    required int openness,
+    required int coffee,
+    required int workspace,
+    required int acidity
+  }) async {
+    try {
+      final dynamic response = await apiService.request(
+        method: HttpMethod.post,
+        appLabel: "cafe",
+        endpoint: "cati/",
+        accessToken: accessToken,
+        body: {
+          "cafe_id": cafeId,
+          "openness": openness,
+          "coffee": coffee,
+          "workspace": workspace,
+          "acidity": acidity,
+        }
+      );
+      return CATIResponse.fromJson(response);
+    } on TokenExpired {
+      throw AccessTokenExpired();
     } on ErrorWithMessage {
       rethrow;
     }

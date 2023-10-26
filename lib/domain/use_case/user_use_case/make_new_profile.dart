@@ -26,6 +26,8 @@ class MakeNewProfile {
           marketingPushEnabled: marketingPushEnabled
         )
       );
+    } on AccessTokenExpired {
+      rethrow;
     } on ErrorWithMessage {
       rethrow;
     }

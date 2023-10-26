@@ -2,13 +2,13 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
@@ -25,6 +25,7 @@ class SearchPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double bottomNavBarHeight = ref.read(bottomNavBarHeightProvider);
@@ -45,23 +46,21 @@ class SearchPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const VerticalSpacer(50),
+                  const VerticalSpacer(60),
                   Row(
                     children: [
                       IconButton(
                         onPressed: () => mapViewModel.closeSearchPage(),
-                          icon: const Icon(
-                            CupertinoIcons.left_chevron,
-                            color: AppColor.black,
-                          ),
+                        icon: const Icon(
+                          CupertinoIcons.left_chevron,
+                          color: AppColor.black,
+                        ),
                       ),
                       CafeSearchBar(width: deviceWidth - 68, height: 48)
                     ],
                   ),
                   const VerticalSpacer(20),
-                  SizedBox(
-                    height: deviceHeight - bottomNavBarHeight + bottomNavBarCornerRadius - 118,
-                    width: deviceWidth,
+                  Expanded(
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -75,12 +74,7 @@ class SearchPage extends ConsumerWidget {
                                 GestureDetector(
                                   onTap: () async {
                                     mapViewModel.closeSearchPage();
-                                    mapState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
-                                      NCameraPosition(target: searchCafe.latLng, zoom: Zoom.large)
-                                    ));
-                                    mapViewModel.refreshCafes(
-                                      cameraPosition: NCameraPosition(target: searchCafe.latLng, zoom: Zoom.large)
-                                    );
+                                    await mapViewModel.moveToCafeWithRefresh(cafeId: searchCafe.id);
                                   },
                                   child: Container(
                                     width: deviceWidth,
@@ -128,17 +122,30 @@ class SearchPage extends ConsumerWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 35),
+                padding: const EdgeInsets.only(bottom: 60),
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.cafeRegistration),
+                    onPressed: () {
+                      if (globalState.isLoggedIn) {
+                        GoRouter.of(context).goNamed(ScreenRoute.cafeRegistration);
+                      } else {
+                        showDialog(context: context, builder: (_) => SquareAlertDialog(
+                          text: "카페 추가는 로그인 후에 가능합니다. 로그인 페이지로 이동할까요?",
+                          negativeButtonText: "아니오",
+                          positiveButtonText: "네",
+                          onDismiss: () => Navigator.of(context).pop(),
+                          onNegativeButtonPress: () {},
+                          onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login)
+                        ));
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.secondary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        )
+                      backgroundColor: AppColor.secondary,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      )
                     ),
                     child: const Text(
                       " 카페추가 +",

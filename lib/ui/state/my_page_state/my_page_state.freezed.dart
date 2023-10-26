@@ -16,8 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MyPageState {
-  int get counter => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
+  List<({String imageUrl, int profileImageId})> get defaultProfileImages =>
+      throw _privateConstructorUsedError;
+  TextEditingController get userMigrationPhoneNumberController =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyPageStateCopyWith<MyPageState> get copyWith =>
@@ -30,9 +32,9 @@ abstract class $MyPageStateCopyWith<$Res> {
           MyPageState value, $Res Function(MyPageState) then) =
       _$MyPageStateCopyWithImpl<$Res, MyPageState>;
   @useResult
-  $Res call({int counter, User user});
-
-  $UserCopyWith<$Res> get user;
+  $Res call(
+      {List<({String imageUrl, int profileImageId})> defaultProfileImages,
+      TextEditingController userMigrationPhoneNumberController});
 }
 
 /// @nodoc
@@ -48,27 +50,20 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? counter = null,
-    Object? user = null,
+    Object? defaultProfileImages = null,
+    Object? userMigrationPhoneNumberController = null,
   }) {
     return _then(_value.copyWith(
-      counter: null == counter
-          ? _value.counter
-          : counter // ignore: cast_nullable_to_non_nullable
-              as int,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      defaultProfileImages: null == defaultProfileImages
+          ? _value.defaultProfileImages
+          : defaultProfileImages // ignore: cast_nullable_to_non_nullable
+              as List<({String imageUrl, int profileImageId})>,
+      userMigrationPhoneNumberController: null ==
+              userMigrationPhoneNumberController
+          ? _value.userMigrationPhoneNumberController
+          : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -80,10 +75,9 @@ abstract class _$$_MyPageStateCopyWith<$Res>
       __$$_MyPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int counter, User user});
-
-  @override
-  $UserCopyWith<$Res> get user;
+  $Res call(
+      {List<({String imageUrl, int profileImageId})> defaultProfileImages,
+      TextEditingController userMigrationPhoneNumberController});
 }
 
 /// @nodoc
@@ -97,18 +91,19 @@ class __$$_MyPageStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? counter = null,
-    Object? user = null,
+    Object? defaultProfileImages = null,
+    Object? userMigrationPhoneNumberController = null,
   }) {
     return _then(_$_MyPageState(
-      counter: null == counter
-          ? _value.counter
-          : counter // ignore: cast_nullable_to_non_nullable
-              as int,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      defaultProfileImages: null == defaultProfileImages
+          ? _value._defaultProfileImages
+          : defaultProfileImages // ignore: cast_nullable_to_non_nullable
+              as List<({String imageUrl, int profileImageId})>,
+      userMigrationPhoneNumberController: null ==
+              userMigrationPhoneNumberController
+          ? _value.userMigrationPhoneNumberController
+          : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -116,16 +111,27 @@ class __$$_MyPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MyPageState implements _MyPageState {
-  _$_MyPageState({required this.counter, required this.user});
+  _$_MyPageState(
+      {required final List<({String imageUrl, int profileImageId})>
+          defaultProfileImages,
+      required this.userMigrationPhoneNumberController})
+      : _defaultProfileImages = defaultProfileImages;
+
+  final List<({String imageUrl, int profileImageId})> _defaultProfileImages;
+  @override
+  List<({String imageUrl, int profileImageId})> get defaultProfileImages {
+    if (_defaultProfileImages is EqualUnmodifiableListView)
+      return _defaultProfileImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_defaultProfileImages);
+  }
 
   @override
-  final int counter;
-  @override
-  final User user;
+  final TextEditingController userMigrationPhoneNumberController;
 
   @override
   String toString() {
-    return 'MyPageState(counter: $counter, user: $user)';
+    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController)';
   }
 
   @override
@@ -133,12 +139,19 @@ class _$_MyPageState implements _MyPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MyPageState &&
-            (identical(other.counter, counter) || other.counter == counter) &&
-            (identical(other.user, user) || other.user == user));
+            const DeepCollectionEquality()
+                .equals(other._defaultProfileImages, _defaultProfileImages) &&
+            (identical(other.userMigrationPhoneNumberController,
+                    userMigrationPhoneNumberController) ||
+                other.userMigrationPhoneNumberController ==
+                    userMigrationPhoneNumberController));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, counter, user);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_defaultProfileImages),
+      userMigrationPhoneNumberController);
 
   @JsonKey(ignore: true)
   @override
@@ -148,13 +161,16 @@ class _$_MyPageState implements _MyPageState {
 }
 
 abstract class _MyPageState implements MyPageState {
-  factory _MyPageState({required final int counter, required final User user}) =
-      _$_MyPageState;
+  factory _MyPageState(
+      {required final List<({String imageUrl, int profileImageId})>
+          defaultProfileImages,
+      required final TextEditingController
+          userMigrationPhoneNumberController}) = _$_MyPageState;
 
   @override
-  int get counter;
+  List<({String imageUrl, int profileImageId})> get defaultProfileImages;
   @override
-  User get user;
+  TextEditingController get userMigrationPhoneNumberController;
   @override
   @JsonKey(ignore: true)
   _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>

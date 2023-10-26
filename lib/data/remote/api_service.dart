@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:cafejari_flutter/core/exception.dart';
@@ -28,54 +29,58 @@ class APIService {
     if (accessToken.isNotNull) headers["Authorization"] = "Bearer $accessToken";
     final stringQuery = query?.map((key, value) => MapEntry(key, value.toString()));
 
-    Response response = switch(method) {
-      HttpMethod.get => await get(
-        Uri.https(_baseUrl, "/$appLabel/$endpoint", stringQuery),
-        headers: headers,
-      ),
-      HttpMethod.post => await post(
-        Uri.https(_baseUrl, "/$appLabel/$endpoint"),
-        headers: headers,
-        body: json.encode(body)
-      ),
-      HttpMethod.put => await put(
-        Uri.https(_baseUrl, "/$appLabel/$endpoint"),
-        headers: headers,
-        body: json.encode(body)
-      ),
-      HttpMethod.delete => await delete(
-        Uri.https(_baseUrl, "/$appLabel/$endpoint"),
-        headers: headers,
-      )
-    };
-
-    if (response.statusCode < 300) {
-      // 200번대 (성공)
-      return jsonDecode(utf8.decode(response.bodyBytes));
-    } else if (response.statusCode < 500) {
-      // 400, 300번대 에러
-      switch (response.statusCode) {
-        case 400:
-        // validation 에러
-          throw ErrorWithMessage(code: 0, message: "잘못된 요청입니다");
-        case 401:
-        // 토큰 불량 / 만료 에러
-          throw TokenExpired();
-        case 409:
-        // 서비스 로직 에러
-          ConflictErrorResponse errorResponse =
-          ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-          throw ErrorWithMessage(code: errorResponse.error_code, message: errorResponse.error_message);
-        default:
-        // 이외 400번대 에러
-          throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
+    try {
+      Response response = switch(method) {
+        HttpMethod.get => await get(
+          Uri.https(_baseUrl, "/$appLabel/$endpoint", stringQuery),
+          headers: headers,
+        ),
+        HttpMethod.post => await post(
+            Uri.https(_baseUrl, "/$appLabel/$endpoint"),
+            headers: headers,
+            body: json.encode(body)
+        ),
+        HttpMethod.put => await put(
+            Uri.https(_baseUrl, "/$appLabel/$endpoint"),
+            headers: headers,
+            body: json.encode(body)
+        ),
+        HttpMethod.delete => await delete(
+          Uri.https(_baseUrl, "/$appLabel/$endpoint"),
+          headers: headers,
+        )
+      };
+      if (response.statusCode < 300) {
+        // 200번대 (성공)
+        if (response.body.isNotEmpty) return jsonDecode(utf8.decode(response.bodyBytes));
+      } else if (response.statusCode < 500) {
+        // 400, 300번대 에러
+        switch (response.statusCode) {
+          case 400:
+          // validation 에러
+            throw ErrorWithMessage(code: 0, message: "잘못된 요청입니다");
+          case 401:
+          // 토큰 불량 / 만료 에러
+            throw TokenExpired();
+          case 409:
+          // 서비스 로직 에러
+            ConflictErrorResponse errorResponse =
+            ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+            throw ErrorWithMessage(code: errorResponse.error_code, message: errorResponse.error_message);
+          default:
+          // 이외 400번대 에러
+            throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
+        }
+      } else if (response.statusCode < 600) {
+        // 500번대 서버 에러
+        throw ErrorWithMessage(code: 0, message: "내부 서버 에러");
+      } else {
+        // 놓친 에러
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작해보세요");
       }
-    } else if (response.statusCode < 600) {
-      // 500번대 서버 에러
-      throw ErrorWithMessage(code: 0, message: "내부 서버 에러");
-    } else {
-      // 놓친 에러
-      throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작해보세요");
+    } on SocketException {
+      // 인터넷 연결 문제 예외 처리
+      throw ErrorWithMessage(code: 0, message: "에러 발생. 인터넷 연결 상태를 확인하거나 앱을 재시작해보세요");
     }
   }
 }

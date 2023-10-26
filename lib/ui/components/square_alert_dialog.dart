@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 
 class SquareAlertDialog extends AlertDialog {
   final String text, negativeButtonText, positiveButtonText;
-  final VoidCallback onDismiss, onNegativeButtonPressed, onPositiveButtonPressed;
+  final VoidCallback onDismiss, onNegativeButtonPress, onPositiveButtonPress;
 
   SquareAlertDialog({super.key,
     required this.text,
     required this.negativeButtonText,
     required this.positiveButtonText,
     required this.onDismiss,
-    required this.onNegativeButtonPressed,
-    required this.onPositiveButtonPressed,
+    required this.onNegativeButtonPress,
+    required this.onPositiveButtonPress,
   }): super(
     backgroundColor: AppColor.white,
     elevation: 3,
@@ -25,35 +25,32 @@ class SquareAlertDialog extends AlertDialog {
     insetPadding: AppPadding.padding_0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     content: Container(
-      width: 330,
-      height: 170,
-      padding: AppPadding.padding_20,
+      width: 300,
+      padding: const EdgeInsets.only(top: 25, left: 24, right: 24, bottom: 20),
       decoration: BoxDecoration(
         color: AppColor.white,
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 330,
-            height: 60,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              text,
-              style: TextSize.textSize_16,
-              maxLines: 3,
-            ),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 15,
+              height: 1.2,
+            )
           ),
-          const VerticalSpacer(22),
+          const VerticalSpacer(30),
           Row(
             children: [
               SizedBox(
-                width: 140,
+                width: 121,
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    onNegativeButtonPressed();
+                    onNegativeButtonPress();
                     onDismiss();
                   },
                   style: ElevatedButton.styleFrom(
@@ -75,11 +72,11 @@ class SquareAlertDialog extends AlertDialog {
               ),
               const HorizontalSpacer(10),
               ActionButtonPrimary(
-                buttonWidth: 140,
+                buttonWidth: 121,
                 buttonHeight: 48,
                 title: positiveButtonText,
                 onPressed: () {
-                  onPositiveButtonPressed();
+                  onPositiveButtonPress();
                   onDismiss();
                 }
               )

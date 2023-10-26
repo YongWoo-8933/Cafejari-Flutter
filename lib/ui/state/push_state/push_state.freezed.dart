@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PushState {
   List<Push> get pushes => throw _privateConstructorUsedError;
-  List<Push> get typePushes => throw _privateConstructorUsedError;
+  List<List<Push>> get typePushes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PushStateCopyWith<PushState> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $PushStateCopyWith<$Res> {
   factory $PushStateCopyWith(PushState value, $Res Function(PushState) then) =
       _$PushStateCopyWithImpl<$Res, PushState>;
   @useResult
-  $Res call({List<Push> pushes, List<Push> typePushes});
+  $Res call({List<Push> pushes, List<List<Push>> typePushes});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$PushStateCopyWithImpl<$Res, $Val extends PushState>
       typePushes: null == typePushes
           ? _value.typePushes
           : typePushes // ignore: cast_nullable_to_non_nullable
-              as List<Push>,
+              as List<List<Push>>,
     ) as $Val);
   }
 }
@@ -68,7 +68,7 @@ abstract class _$$_PushStateCopyWith<$Res> implements $PushStateCopyWith<$Res> {
       __$$_PushStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Push> pushes, List<Push> typePushes});
+  $Res call({List<Push> pushes, List<List<Push>> typePushes});
 }
 
 /// @nodoc
@@ -93,7 +93,7 @@ class __$$_PushStateCopyWithImpl<$Res>
       typePushes: null == typePushes
           ? _value._typePushes
           : typePushes // ignore: cast_nullable_to_non_nullable
-              as List<Push>,
+              as List<List<Push>>,
     ));
   }
 }
@@ -102,7 +102,8 @@ class __$$_PushStateCopyWithImpl<$Res>
 
 class _$_PushState implements _PushState {
   _$_PushState(
-      {required final List<Push> pushes, required final List<Push> typePushes})
+      {required final List<Push> pushes,
+      required final List<List<Push>> typePushes})
       : _pushes = pushes,
         _typePushes = typePushes;
 
@@ -114,9 +115,9 @@ class _$_PushState implements _PushState {
     return EqualUnmodifiableListView(_pushes);
   }
 
-  final List<Push> _typePushes;
+  final List<List<Push>> _typePushes;
   @override
-  List<Push> get typePushes {
+  List<List<Push>> get typePushes {
     if (_typePushes is EqualUnmodifiableListView) return _typePushes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_typePushes);
@@ -153,12 +154,12 @@ class _$_PushState implements _PushState {
 abstract class _PushState implements PushState {
   factory _PushState(
       {required final List<Push> pushes,
-      required final List<Push> typePushes}) = _$_PushState;
+      required final List<List<Push>> typePushes}) = _$_PushState;
 
   @override
   List<Push> get pushes;
   @override
-  List<Push> get typePushes;
+  List<List<Push>> get typePushes;
   @override
   @JsonKey(ignore: true)
   _$$_PushStateCopyWith<_$_PushState> get copyWith =>

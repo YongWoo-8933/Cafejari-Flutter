@@ -21,6 +21,8 @@ class Cafe with _$Cafe {
     required final String address,
     required final String? brandName,
     required final String? brandImageUrl,
+    required final CATI? cati,
+    required final String catiTagText,
     required final NLatLng latLng,
     required final CafeFloors cafeFloors,
     required final OpeningHour? openingHour,
@@ -39,6 +41,8 @@ class Cafe with _$Cafe {
       address: "",
       brandName: null,
       brandImageUrl: null,
+      cati: null,
+      catiTagText: "",
       latLng: NLocation.sinchon().cameraPosition.target,
       cafeFloors: [],
       openingHour: null,
@@ -54,6 +58,7 @@ class CafeFloor with _$CafeFloor {
   factory CafeFloor(
       {required final int id,
       required final int floor,
+      required final int pointPrediction,
       required final String? restroom,
       required final bool hasSeat,
       required final double? wallSocketRate,
@@ -64,6 +69,7 @@ class CafeFloor with _$CafeFloor {
   factory CafeFloor.empty() => CafeFloor(
       id: 0,
       floor: 1,
+      pointPrediction: 0,
       restroom: null,
       hasSeat: true,
       wallSocketRate: null,
@@ -116,6 +122,22 @@ class OpeningHour with _$OpeningHour {
       sun: "");
 }
 
+/// CATI 모델
+@freezed
+class CATI with _$CATI {
+  factory CATI(
+      {required final int openness,
+        required final int coffee,
+        required final int workspace,
+        required final int acidity}) = _CATI;
+
+  factory CATI.empty() => CATI(
+      openness: 1,
+      coffee: -1,
+      workspace: 1,
+      acidity: -1);
+}
+
 typedef NaverSearchCafes = List<NaverSearchCafe>;
 
 /// 네이버 카페 검색 결과 모델
@@ -133,6 +155,26 @@ class NaverSearchCafe with _$NaverSearchCafe {
     name: "",
     roadAddress: "",
     dongAddress: "",
+    latitude: 37.0,
+    longitude: 127.0
+  );
+}
+
+typedef Locations = List<Location>;
+
+/// 지역 정보 결과 모델
+@freezed
+class Location with _$Location {
+  factory Location(
+      {required final String name,
+        required final String imageUrl,
+        required final double latitude,
+        required final double longitude,
+      }) = _Location;
+
+  factory Location.empty() => Location(
+    name: "",
+    imageUrl: "",
     latitude: 37.0,
     longitude: 127.0
   );

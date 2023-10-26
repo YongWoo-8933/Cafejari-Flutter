@@ -46,6 +46,10 @@ class ProfileResponse {
   final GradeResponse grade;
   final ProfileImageResponse profile_image;
   final List<CafeResponse> favorite_cafe;
+  final int cati_openness;
+  final int cati_coffee;
+  final int cati_workspace;
+  final int cati_acidity;
 
   ProfileResponse({
     required this.id,
@@ -62,6 +66,10 @@ class ProfileResponse {
     required this.occupancy_push_enabled,
     required this.log_push_enabled,
     required this.favorite_cafe,
+    required this.cati_openness,
+    required this.cati_coffee,
+    required this.cati_workspace,
+    required this.cati_acidity,
   });
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => _$ProfileResponseFromJson(json);
@@ -151,13 +159,32 @@ class NicknameResponse {
 class KakaoLoginCallbackResponse {
   final String access_token;
   final bool user_exists;
+  final bool is_inactive;
 
   KakaoLoginCallbackResponse({
     required this.access_token,
-    required this.user_exists
+    required this.user_exists,
+    required this.is_inactive,
   });
 
   factory KakaoLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$KakaoLoginCallbackResponseFromJson(json);
+}
+
+@JsonSerializable()
+class AppleLoginCallbackResponse {
+  final String id_token;
+  final String code;
+  final bool user_exists;
+  final bool is_inactive;
+
+  AppleLoginCallbackResponse({
+    required this.id_token,
+    required this.code,
+    required this.user_exists,
+    required this.is_inactive,
+  });
+
+  factory AppleLoginCallbackResponse.fromJson(Map<String, dynamic> json) => _$AppleLoginCallbackResponseFromJson(json);
 }
 
 @JsonSerializable()

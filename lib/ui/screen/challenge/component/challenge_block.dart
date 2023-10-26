@@ -32,40 +32,34 @@ class ChallengeBlock extends StatelessWidget {
           child: Container(
             color: AppColor.white,
             width: 280,
-            height: 400,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: 280, height: 280),
-                SizedBox(
-                  width: 280,
-                  height: 100,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                    child: SizedBox(
-                      width: 280,
-                      height: 120,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "총 ${challenge.totalPoint}포인트 지급",
-                            style: const TextStyle(
-                                color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                          const VerticalSpacer(4),
-                          Text(
-                            "${challenge.name} (${challenge.challengerUserIds.length}/${challenge.participantLimit})",
-                            style: const TextStyle(
-                                color: AppColor.primary, fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          const VerticalSpacer(8),
-                          ChallengeSmallProfile(
-                            imageUrls: smallProfileImageUrls,
-                            participantCount: challenge.challengerUserIds.length
-                          ),
-                        ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "총 ${challenge.totalPoint}포인트 지급",
+                        style: const TextStyle(
+                            color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.w600),
                       ),
-                    ),
+                      const VerticalSpacer(8),
+                      Text(
+                        "${challenge.name} (${challenge.challengerUserIds.length}/${challenge.participantLimit})",
+                        style: const TextStyle(
+                            color: AppColor.primary, fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                      const VerticalSpacer(8),
+                      ChallengeSmallProfile(
+                        imageUrls: smallProfileImageUrls,
+                        participantCount: challenge.challengerUserIds.length
+                      ),
+                      const VerticalSpacer(4),
+                    ],
                   ),
                 ),
               ],

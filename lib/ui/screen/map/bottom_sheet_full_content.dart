@@ -19,8 +19,6 @@ class BottomSheetFullContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MapState mapState = ref.watch(mapViewModelProvider);
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
 
     return Container(

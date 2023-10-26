@@ -4,11 +4,13 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/privacy_policy.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/service_agreement.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -38,29 +40,45 @@ class AgreementPart extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _AllAgreeButton(
-                onClick: () {
-                  ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
-                  ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
-                  loginViewModel.setMarketingAgreement(true);
+              onClick: () {
+                ref.watch(_isServiceAgreedProvider.notifier).update((state) => true);
+                ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => true);
+                if(ref.watch(_isServiceAgreedProvider)) {
+                  ref.watch(_isServiceExpandedProvider.notifier).update((state) => false);
                 }
+                if(ref.watch(_isPrivacyAgreedProvider)) {
+                  ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => false);
+                }
+                loginViewModel.setMarketingAgreement(true);
+              }
             ),
             const VerticalSpacer(20),
             _AgreementBox(
-                isChecked: ref.watch(_isServiceAgreedProvider),
-                isExpanded: ref.watch(_isServiceExpandedProvider),
-                title: "(필수) 서비스 이용약관 동의",
-                content: serviceAgreementText,
-                onClick: () => ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state),
-                onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
-            ),
-            const VerticalSpacer(20),
-            _AgreementBox(
-                isChecked: ref.watch(_isPrivacyAgreedProvider),
-                isExpanded: ref.watch(_isPrivacyExpandedProvider),
-                title: "(필수) 개인정보 수집 및 이용 동의",
-                content: privacyPolicyText,
-                onClick: () => ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => !state),
-                onArrowClick: () => ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => !state)
+              isChecked: ref.watch(_isServiceAgreedProvider),
+              isExpanded: ref.watch(_isServiceExpandedProvider),
+              title: "(필수) 서비스 이용약관 동의",
+              content: serviceAgreementText,
+              onClick: () {
+                ref.watch(_isServiceAgreedProvider.notifier).update((state) => !state);
+                if(ref.watch(_isServiceAgreedProvider)) {
+                  ref.watch(_isServiceExpandedProvider.notifier).update((state) => false);
+                }
+              },
+              onArrowClick: () => ref.watch(_isServiceExpandedProvider.notifier).update((state) => !state)
+              ),
+              const VerticalSpacer(20),
+              _AgreementBox(
+              isChecked: ref.watch(_isPrivacyAgreedProvider),
+              isExpanded: ref.watch(_isPrivacyExpandedProvider),
+              title: "(필수) 개인정보 수집 및 이용 동의",
+              content: privacyPolicyText,
+              onClick: () {
+                ref.watch(_isPrivacyAgreedProvider.notifier).update((state) => !state);
+                if(ref.watch(_isPrivacyAgreedProvider)) {
+                  ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => false);
+                }
+              },
+              onArrowClick: () => ref.watch(_isPrivacyExpandedProvider.notifier).update((state) => !state)
             ),
             const VerticalSpacer(20),
             _AgreementBox(
@@ -72,27 +90,30 @@ class AgreementPart extends ConsumerWidget {
                 onArrowClick: null
             ),
             const VerticalSpacer(40),
-            _RegistrationButton(
-              enabled: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
-                  loginState.nicknameErrorMessage.isEmpty,
+            ActionButtonPrimary(
+              buttonWidth: double.infinity,
+              buttonHeight: 48,
+              title: "가입하기",
               isLoading: ref.watch(_isRegistrationLoading),
-              onClick: () async {
+              onPressed: ref.watch(_isServiceAgreedProvider) && ref.watch(_isPrivacyAgreedProvider) &&
+                  loginState.nicknameErrorMessage.isEmpty ? () async {
                 bool result = false;
+                ref.watch(_isRegistrationLoading.notifier).update((state) => true);
                 if (loginState.kakaoAccessToken.isNotEmpty) {
-                  ref.watch(_isRegistrationLoading.notifier).update((state) => true);
                   result = await loginViewModel.registerAsKakaoUser();
-                } else if (loginState.appleAccessToken.isNotEmpty) {
-                  // result = await loginViewModel.registerAsKakaoUser();
+                } else if (loginState.appleIdToken.isNotEmpty) {
+                  result = await loginViewModel.registerAsAppleUser();
                 }
                 ref.watch(_isRegistrationLoading.notifier).update((state) => false);
                 switch(result) {
                   case true:
                     loginViewModel.globalViewModel.showSnackBar(content: "가입 완료", type: SnackBarType.complete);
+                    await FirebaseAnalytics.instance.logSignUp(signUpMethod: loginState.kakaoAccessToken.isNotEmpty ? "kakao" : "apple");
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
                   case false:
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.login);
                 }
-              }
+              } : null,
             ),
             const VerticalSpacer(100),
           ],
@@ -249,63 +270,6 @@ class _AgreementBox extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _RegistrationButton extends StatelessWidget {
-  final VoidCallback onClick;
-  final bool enabled;
-  final bool isLoading;
-
-  const _RegistrationButton({
-    super.key,
-    required this.onClick,
-    required this.enabled,
-    required this.isLoading
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: ElevatedButton(
-        onPressed: enabled ? onClick : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-        ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              AnimatedOpacity(
-                opacity: isLoading ? 1.0 : 0.0,
-                duration: AppDuration.animationDefault,
-                child: Center(
-                  child: LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 20)
-                )
-              ),
-              AnimatedOpacity(
-                opacity: isLoading ? 0.0 : 1.0,
-                duration: AppDuration.animationDefault,
-                child: const Text(
-                  "가입하기",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.white
-                  )
-                )
-              )
-            ]
-          ),
-        ),
       ),
     );
   }

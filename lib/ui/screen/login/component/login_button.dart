@@ -12,10 +12,12 @@ class LoginButton extends StatelessWidget {
   final double? buttonHeight;
   final Color textColor;
   final Color backgroundColor;
+  final Color loadingColor;
   final VoidCallback? onPressed;
   final String imagePath;
   final String text;
   final bool isLoading;
+  final String heroTag;
 
   const LoginButton({
     super.key,
@@ -23,10 +25,12 @@ class LoginButton extends StatelessWidget {
     required this.buttonHeight,
     required this.textColor,
     required this.backgroundColor,
+    required this.loadingColor,
     required this.text,
     required this.imagePath,
     required this.isLoading,
-    required this.onPressed
+    required this.onPressed,
+    required this.heroTag
   });
 
   @override
@@ -35,6 +39,7 @@ class LoginButton extends StatelessWidget {
       width: buttonWidth,
       height: buttonHeight,
       child: FloatingActionButton(
+        heroTag: heroTag,
         foregroundColor: textColor,
         backgroundColor: backgroundColor,
         onPressed: onPressed,
@@ -51,7 +56,7 @@ class LoginButton extends StatelessWidget {
               opacity: isLoading ? 1.0 : 0.0,
               duration: AppDuration.animationDefault,
               child: Center(
-                child: LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 20)
+                child: LoadingAnimationWidget.hexagonDots(color: loadingColor, size: 20)
               ),
             ),
             AnimatedOpacity(

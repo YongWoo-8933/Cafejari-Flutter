@@ -14,11 +14,16 @@ CafeResponse _$CafeResponseFromJson(Map<String, dynamic> json) => CafeResponse(
       longitude: (json['longitude'] as num).toDouble(),
       is_visible: json['is_visible'] as bool,
       is_closed: json['is_closed'] as bool,
-      opening_hour: OpeningHourResponse.fromJson(
-          json['opening_hour'] as Map<String, dynamic>),
+      opening_hour: json['opening_hour'] == null
+          ? null
+          : OpeningHourResponse.fromJson(
+              json['opening_hour'] as Map<String, dynamic>),
       brand: json['brand'] == null
           ? null
           : BrandResponse.fromJson(json['brand'] as Map<String, dynamic>),
+      cati: json['cati'] == null
+          ? null
+          : CATIResponse.fromJson(json['cati'] as Map<String, dynamic>),
       cafe_floor: (json['cafe_floor'] as List<dynamic>)
           .map((e) =>
               CafeFloorCafeRepResponse.fromJson(e as Map<String, dynamic>))
@@ -42,6 +47,7 @@ Map<String, dynamic> _$CafeResponseToJson(CafeResponse instance) =>
       'is_closed': instance.is_closed,
       'opening_hour': instance.opening_hour,
       'brand': instance.brand,
+      'cati': instance.cati,
       'cafe_floor': instance.cafe_floor,
       'cafe_vip': instance.cafe_vip,
       'cafe_image': instance.cafe_image,
@@ -70,6 +76,7 @@ CafeFloorCafeRepResponse _$CafeFloorCafeRepResponseFromJson(
     CafeFloorCafeRepResponse(
       id: json['id'] as int,
       floor: json['floor'] as int,
+      point_prediction: json['point_prediction'] as int,
       wall_socket_rate: json['wall_socket_rate'] as String?,
       restroom: json['restroom'] as String?,
       has_seat: json['has_seat'] as bool,
@@ -88,6 +95,7 @@ Map<String, dynamic> _$CafeFloorCafeRepResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'floor': instance.floor,
+      'point_prediction': instance.point_prediction,
       'wall_socket_rate': instance.wall_socket_rate,
       'restroom': instance.restroom,
       'has_seat': instance.has_seat,
@@ -159,6 +167,21 @@ Map<String, dynamic> _$CafeImageResponseToJson(CafeImageResponse instance) =>
       'id': instance.id,
       'image': instance.image,
       'is_visible': instance.is_visible,
+    };
+
+CATIResponse _$CATIResponseFromJson(Map<String, dynamic> json) => CATIResponse(
+      openness: (json['openness'] as num).toDouble(),
+      coffee: (json['coffee'] as num).toDouble(),
+      workspace: (json['workspace'] as num).toDouble(),
+      acidity: (json['acidity'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$CATIResponseToJson(CATIResponse instance) =>
+    <String, dynamic>{
+      'openness': instance.openness,
+      'coffee': instance.coffee,
+      'workspace': instance.workspace,
+      'acidity': instance.acidity,
     };
 
 OpeningHourResponse _$OpeningHourResponseFromJson(Map<String, dynamic> json) =>
@@ -302,4 +325,20 @@ Map<String, dynamic> _$NaverSearchCafeItemResponseToJson(
       'roadAddress': instance.roadAddress,
       'mapx': instance.mapx,
       'mapy': instance.mapy,
+    };
+
+LocationResponse _$LocationResponseFromJson(Map<String, dynamic> json) =>
+    LocationResponse(
+      name: json['name'] as String,
+      image: json['image'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$LocationResponseToJson(LocationResponse instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'image': instance.image,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };
