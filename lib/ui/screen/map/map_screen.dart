@@ -73,8 +73,10 @@ class _NaverMap extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     // map controller를 놓칠 경우 따로 저장해둔 애를 전달해줌
     if(mapState.mapController.isNull && ref.watch(_mapController).isNotNull) {
-      final mapController = ref.watch(_mapController)!;
-      mapViewModel.initMapController(mapController);
+      Future.delayed(Duration.zero, () {
+        final mapController = ref.watch(_mapController)!;
+        mapViewModel.initMapController(mapController);
+      });
     }
 
     return NaverMap(
