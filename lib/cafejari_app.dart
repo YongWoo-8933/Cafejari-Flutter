@@ -147,25 +147,16 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
         sound: true
       );
       if(defaultTargetPlatform == TargetPlatform.android) {
-        // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-        // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        //   if (message.notification.isNotNull) {
-        //     FlutterLocalNotification.showNotification(
-        //         title: message.notification!.title,
-        //         body: message.notification!.body
-        //     );
-        //   }
-        // });
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          if (message.notification.isNotNull) {
+            globalViewModel.init();
+            FlutterLocalNotification.showNotification(
+                title: message.notification!.title,
+                body: message.notification!.body
+            );
+          }
+        });
       }
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        if (message.notification.isNotNull) {
-          globalViewModel.init();
-          FlutterLocalNotification.showNotification(
-            title: message.notification!.title,
-            body: message.notification!.body
-          );
-        }
-      });
     });
   }
 
@@ -299,20 +290,3 @@ _mapLinkFunction({
     await mapViewModel.openBottomSheetPreview();
   }
 }
-
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   FlutterLocalNotification.init();
-//   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-//       alert: true,
-//       badge: true,
-//       sound: true
-//   );
-//   if (message.notification.isNotNull) {
-//     FlutterLocalNotification.showNotification(
-//         title: message.notification!.title,
-//         body: message.notification!.body
-//     );
-//   }
-// }

@@ -404,7 +404,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             fontSize: 12
                           )
                         ),
-                        const VerticalSpacer(20),
+                        const VerticalSpacer(40),
                       ],
                     ),
                   ),

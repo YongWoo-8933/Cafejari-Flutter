@@ -7,7 +7,7 @@ sealed class WebViewRoute {
   WebViewRoute(this.title, this.uri);
 
   factory WebViewRoute.faq() => _FAQ("FAQ", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
-  factory WebViewRoute.guide() => _Guide("가이드", Uri.parse("https://cafejari.notion.site/FAQ-fe06c2a91b12495095b3908f51e1c555?pvs=4"));
+  factory WebViewRoute.guide() => _Guide("가이드", Uri.parse("https://www.notion.so/cafejari/cf3f4cad62174b34acb2be8a88cb90fb?pvs=4"));
   factory WebViewRoute.notification() => _Notification("공지사항", Uri.parse("https://cafejari.notion.site/3ebe53162df04aa79146765424bf5c80?pvs=4"));
   factory WebViewRoute.update() => _Update("업데이트 소식", Uri.parse("https://cafejari.notion.site/a81ea1d045f24d26865b68373e30e15f?pvs=4"));
   factory WebViewRoute.insta() => _Insta("카페자리 인스타", Uri.parse("https://www.instagram.com/cafejari_official/"));

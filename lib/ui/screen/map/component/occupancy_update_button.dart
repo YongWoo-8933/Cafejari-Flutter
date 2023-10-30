@@ -34,7 +34,7 @@ class OccupancyUpdateButton extends ConsumerWidget {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.primary,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(height.isNotNull ? height! / 2 : 30),
           ),
