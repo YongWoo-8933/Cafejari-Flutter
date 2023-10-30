@@ -177,8 +177,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   setIsInstalledFirst(bool value) async => await _userUseCase.setIsInstalledFirstTime(value);
 
-  setIsPermissionChecked(bool value) => state = state.copyWith(isPermissionChecked: value);
-
   setUser(User user) => state = state.copyWith(user: user);
 
   setAccessToken(String accessToken) => state = state.copyWith(accessToken: accessToken);

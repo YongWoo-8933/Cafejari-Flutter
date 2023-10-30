@@ -4,8 +4,10 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -119,34 +121,15 @@ class BottomSheetPreview extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                              Expanded(
+                              const Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: edgePadding + 5),
+                                  padding: EdgeInsets.only(bottom: edgePadding + 5),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      SizedBox(
-                                        height: componentHeight,
-                                        child: ElevatedButton(
-                                          onPressed: () => showDialog(context: context, builder: (_) => const OccupancyUpdateDialog()),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: AppColor.primary,
-                                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(18),
-                                            ),
-                                          ),
-                                          child: const Text(
-                                            "혼잡도 등록",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: AppColor.white
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const ShareButton(buttonSize: componentHeight),
+                                      OccupancyUpdateButton(height: componentHeight, textSize: 12),
+                                      ShareButton(buttonSize: componentHeight),
                                     ],
                                   ),
                                 )

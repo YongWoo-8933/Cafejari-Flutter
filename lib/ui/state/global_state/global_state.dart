@@ -15,7 +15,6 @@ part 'global_state.freezed.dart';
 class GlobalState with _$GlobalState {
   factory GlobalState({
     required final Versions versions,
-    required final bool isPermissionChecked,
     required final String accessToken,
     required final bool isLoggedIn,
     required final User user,
@@ -36,7 +35,6 @@ class GlobalState with _$GlobalState {
 
   factory GlobalState.empty() => GlobalState(
     versions: [],
-    isPermissionChecked: false,
     accessToken: "",
     isLoggedIn: false,
     user: User.empty(),

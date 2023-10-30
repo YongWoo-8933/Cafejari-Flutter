@@ -13,7 +13,7 @@ class CafeResponse {
   final int id;
   final String name, address;
   final double latitude, longitude;
-  final bool is_visible, is_closed;
+  final bool is_visible, is_opened, is_closed;
   final OpeningHourResponse? opening_hour;
   final BrandResponse? brand;
   final CATIResponse? cati;
@@ -28,6 +28,7 @@ class CafeResponse {
       required this.latitude,
       required this.longitude,
       required this.is_visible,
+      required this.is_opened,
       required this.is_closed,
       required this.opening_hour,
       required this.brand,
@@ -231,7 +232,7 @@ class CafeRepResponse {
   final int id;
   final String name, address;
   final double latitude, longitude;
-  final bool is_visible, is_closed;
+  final bool is_visible, is_opened, is_closed;
 
   CafeRepResponse(
       {required this.id,
@@ -240,6 +241,7 @@ class CafeRepResponse {
         required this.latitude,
         required this.longitude,
         required this.is_visible,
+        required this.is_opened,
         required this.is_closed});
 
   factory CafeRepResponse.fromJson(Map<String, dynamic> json) => _$CafeRepResponseFromJson(json);

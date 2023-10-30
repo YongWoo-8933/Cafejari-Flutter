@@ -267,10 +267,7 @@ class MapViewModel extends StateNotifier<MapState> {
     }
   }
 
-  initMapController(NaverMapController mapController) {
-    state = state.copyWith(mapController: mapController);
-    print(state.mapController.isNull);
-  }
+  initMapController(NaverMapController mapController) => state = state.copyWith(mapController: mapController);
 
   updateOccupancySliderValue(value) => state = state.copyWith(occupancySliderValue: value);
 

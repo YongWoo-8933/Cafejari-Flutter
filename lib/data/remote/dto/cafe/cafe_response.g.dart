@@ -13,6 +13,7 @@ CafeResponse _$CafeResponseFromJson(Map<String, dynamic> json) => CafeResponse(
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       is_visible: json['is_visible'] as bool,
+      is_opened: json['is_opened'] as bool,
       is_closed: json['is_closed'] as bool,
       opening_hour: json['opening_hour'] == null
           ? null
@@ -44,6 +45,7 @@ Map<String, dynamic> _$CafeResponseToJson(CafeResponse instance) =>
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'is_visible': instance.is_visible,
+      'is_opened': instance.is_opened,
       'is_closed': instance.is_closed,
       'opening_hour': instance.opening_hour,
       'brand': instance.brand,
@@ -278,6 +280,7 @@ CafeRepResponse _$CafeRepResponseFromJson(Map<String, dynamic> json) =>
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       is_visible: json['is_visible'] as bool,
+      is_opened: json['is_opened'] as bool,
       is_closed: json['is_closed'] as bool,
     );
 
@@ -289,6 +292,7 @@ Map<String, dynamic> _$CafeRepResponseToJson(CafeRepResponse instance) =>
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'is_visible': instance.is_visible,
+      'is_opened': instance.is_opened,
       'is_closed': instance.is_closed,
     };
 

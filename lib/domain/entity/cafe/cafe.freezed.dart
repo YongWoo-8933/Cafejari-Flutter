@@ -21,6 +21,7 @@ mixin _$Cafe {
   double? get recentUpdatedOccupancyRate => throw _privateConstructorUsedError;
   double? get maximumWallSocketRate => throw _privateConstructorUsedError;
   int? get maximumWallSocketFloor => throw _privateConstructorUsedError;
+  bool get isOpened => throw _privateConstructorUsedError;
   bool get isClosed => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $CafeCopyWith<$Res> {
       double? recentUpdatedOccupancyRate,
       double? maximumWallSocketRate,
       int? maximumWallSocketFloor,
+      bool isOpened,
       bool isClosed,
       String name,
       String address,
@@ -84,6 +86,7 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
     Object? recentUpdatedOccupancyRate = freezed,
     Object? maximumWallSocketRate = freezed,
     Object? maximumWallSocketFloor = freezed,
+    Object? isOpened = null,
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
@@ -118,6 +121,10 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
           ? _value.maximumWallSocketFloor
           : maximumWallSocketFloor // ignore: cast_nullable_to_non_nullable
               as int?,
+      isOpened: null == isOpened
+          ? _value.isOpened
+          : isOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
       isClosed: null == isClosed
           ? _value.isClosed
           : isClosed // ignore: cast_nullable_to_non_nullable
@@ -206,6 +213,7 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
       double? recentUpdatedOccupancyRate,
       double? maximumWallSocketRate,
       int? maximumWallSocketFloor,
+      bool isOpened,
       bool isClosed,
       String name,
       String address,
@@ -239,6 +247,7 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? recentUpdatedOccupancyRate = freezed,
     Object? maximumWallSocketRate = freezed,
     Object? maximumWallSocketFloor = freezed,
+    Object? isOpened = null,
     Object? isClosed = null,
     Object? name = null,
     Object? address = null,
@@ -273,6 +282,10 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
           ? _value.maximumWallSocketFloor
           : maximumWallSocketFloor // ignore: cast_nullable_to_non_nullable
               as int?,
+      isOpened: null == isOpened
+          ? _value.isOpened
+          : isOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
       isClosed: null == isClosed
           ? _value.isClosed
           : isClosed // ignore: cast_nullable_to_non_nullable
@@ -334,6 +347,7 @@ class _$_Cafe implements _Cafe {
       required this.recentUpdatedOccupancyRate,
       required this.maximumWallSocketRate,
       required this.maximumWallSocketFloor,
+      required this.isOpened,
       required this.isClosed,
       required this.name,
       required this.address,
@@ -360,6 +374,8 @@ class _$_Cafe implements _Cafe {
   final double? maximumWallSocketRate;
   @override
   final int? maximumWallSocketFloor;
+  @override
+  final bool isOpened;
   @override
   final bool isClosed;
   @override
@@ -404,7 +420,7 @@ class _$_Cafe implements _Cafe {
 
   @override
   String toString() {
-    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, cati: $cati, catiTagText: $catiTagText, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
+    return 'Cafe(id: $id, recentUpdatedFloor: $recentUpdatedFloor, recentUpdatedOccupancyRate: $recentUpdatedOccupancyRate, maximumWallSocketRate: $maximumWallSocketRate, maximumWallSocketFloor: $maximumWallSocketFloor, isOpened: $isOpened, isClosed: $isClosed, name: $name, address: $address, brandName: $brandName, brandImageUrl: $brandImageUrl, cati: $cati, catiTagText: $catiTagText, latLng: $latLng, cafeFloors: $cafeFloors, openingHour: $openingHour, imageUrls: $imageUrls, vips: $vips)';
   }
 
   @override
@@ -423,6 +439,8 @@ class _$_Cafe implements _Cafe {
                 other.maximumWallSocketRate == maximumWallSocketRate) &&
             (identical(other.maximumWallSocketFloor, maximumWallSocketFloor) ||
                 other.maximumWallSocketFloor == maximumWallSocketFloor) &&
+            (identical(other.isOpened, isOpened) ||
+                other.isOpened == isOpened) &&
             (identical(other.isClosed, isClosed) ||
                 other.isClosed == isClosed) &&
             (identical(other.name, name) || other.name == name) &&
@@ -452,6 +470,7 @@ class _$_Cafe implements _Cafe {
       recentUpdatedOccupancyRate,
       maximumWallSocketRate,
       maximumWallSocketFloor,
+      isOpened,
       isClosed,
       name,
       address,
@@ -479,6 +498,7 @@ abstract class _Cafe implements Cafe {
       required final double? recentUpdatedOccupancyRate,
       required final double? maximumWallSocketRate,
       required final int? maximumWallSocketFloor,
+      required final bool isOpened,
       required final bool isClosed,
       required final String name,
       required final String address,
@@ -502,6 +522,8 @@ abstract class _Cafe implements Cafe {
   double? get maximumWallSocketRate;
   @override
   int? get maximumWallSocketFloor;
+  @override
+  bool get isOpened;
   @override
   bool get isClosed;
   @override

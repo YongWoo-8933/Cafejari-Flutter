@@ -15,7 +15,6 @@ import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -95,11 +94,11 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
         globalViewModel.setIsInstalledFirst(false);
-        // showDialog(
-        //   context: context,
-        //   barrierDismissible: false,
-        //   builder: (_) => const OnboardingDialog()
-        // );
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => const OnboardingDialog()
+        );
       } else {
         // 일반 앱 시작
         await globalViewModel.init();

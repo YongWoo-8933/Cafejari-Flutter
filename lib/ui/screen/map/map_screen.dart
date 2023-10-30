@@ -1,12 +1,9 @@
-
 import 'dart:async';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/screen/map/on_map.dart';
 import 'package:cafejari_flutter/ui/screen/map/cafe_search_page.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
-import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -15,6 +12,9 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:geolocator/geolocator.dart';
+
+
+final _mapController = StateProvider<NaverMapController?>((ref) => null);
 
 
 class MapScreen extends ConsumerStatefulWidget {
@@ -31,20 +31,17 @@ class MapScreenState extends ConsumerState<MapScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () async {
-      final mapViewModel = ref.watch(mapViewModelProvider.notifier);
-      final myCafeViewModel = ref.watch(myCafeViewModelProvider.notifier);
-      final mapState = ref.watch(mapViewModelProvider);
-      Position? location = await mapViewModel.globalViewModel.getFirstLocation();
-      myCafeViewModel.initCafeRecommendationData(location: location);
-      if (mapState.shareTempCameraPosition.isNull) {
+      Position? location = await ref.watch(mapViewModelProvider.notifier).globalViewModel.getFirstLocation();
+      ref.watch(myCafeViewModelProvider.notifier).initCafeRecommendationData(location: location);
+      if (ref.watch(mapViewModelProvider).shareTempCameraPosition.isNull) {
         final NCameraPosition cameraPosition = location.isNotNull ?
         NCameraPosition(target: NLatLng(location!.latitude, location.longitude), zoom: Zoom.medium) :
         NLocation.sinchon().cameraPosition;
-        if (mapState.mapController.isNull) {
-          mapViewModel.setInitTempCameraPosition(cameraPosition);
+        if (ref.watch(mapViewModelProvider).mapController.isNull) {
+          ref.watch(mapViewModelProvider.notifier).setInitTempCameraPosition(cameraPosition);
         } else {
-          mapState.mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
-          await mapViewModel.refreshCafes(cameraPosition: cameraPosition);
+          ref.watch(mapViewModelProvider).mapController!.updateCamera(NCameraUpdate.fromCameraPosition(cameraPosition));
+          await ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: cameraPosition);
         }
       }
     });
@@ -74,6 +71,12 @@ class _NaverMap extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final MapState mapState = ref.watch(mapViewModelProvider);
+    // map controller를 놓칠 경우 따로 저장해둔 애를 전달해줌
+    if(mapState.mapController.isNull && ref.watch(_mapController).isNotNull) {
+      final mapController = ref.watch(_mapController)!;
+      mapViewModel.initMapController(mapController);
+    }
+
     return NaverMap(
       options: NaverMapViewOptions(
         initialCameraPosition: NLocation.sinchon().cameraPosition,
@@ -94,6 +97,7 @@ class _NaverMap extends ConsumerWidget {
       onMapReady: (controller) {
         controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
         ref.watch(mapViewModelProvider.notifier).initMapController(controller);
+        ref.watch(_mapController.notifier).update((state) => controller);
         if (ref.watch(mapViewModelProvider).shareTempCameraPosition.isNotNull) {
           controller.updateCamera(NCameraUpdate.fromCameraPosition(ref.watch(mapViewModelProvider).shareTempCameraPosition!));
           ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).shareTempCameraPosition!);
@@ -103,16 +107,11 @@ class _NaverMap extends ConsumerWidget {
           ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).initTempCameraPosition!);
           ref.watch(mapViewModelProvider.notifier).setInitTempCameraPosition(null);
         }
-        ref.watch(mapViewModelProvider.notifier).initMapController(controller);
-        print("=====================================================");
-        print(ref.watch(mapViewModelProvider).mapController.isNull);
-        print("=====================================================");
       },
       onMapTapped: (_, __) {
         mapViewModel.closeBottomSheetPreview();
         mapState.bottomSheetController.close();
         mapViewModel.clearSelectedCafeAndMarker();
-        print(ref.watch(mapViewModelProvider).mapController.isNull);
       },
       onCameraIdle: () async {
         final cameraPosition = await mapState.mapController?.getCameraPosition();
@@ -130,7 +129,7 @@ class _NaverMap extends ConsumerWidget {
         if(!mapState.isRefreshButtonVisible) {
           mapViewModel.setRefreshButtonVisible(true);
           Future.delayed(
-              const Duration(seconds: 4), () => mapViewModel.setRefreshButtonVisible(false));
+            const Duration(seconds: 4), () => mapViewModel.setRefreshButtonVisible(false));
         }
       },
     );

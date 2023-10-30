@@ -9,6 +9,7 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/page_view_dot_indicator.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
@@ -161,18 +162,13 @@ class BottomSheetMainInfo extends ConsumerWidget {
                         address: mapState.selectedCafe.address
                       ),
                       const VerticalSpacer(30),
-                      Row(
+                      const Row(
                         children: [
-                          ActionButtonPrimary(
-                            buttonWidth: 208,
-                            buttonHeight: 48,
-                            title: "혼잡도 등록",
-                            onPressed: () => showDialog(context: context, builder: (_) => const OccupancyUpdateDialog()),
-                          ),
-                          const HorizontalSpacer(10),
-                          const ShareButton(),
-                          const HorizontalSpacer(10),
-                          const BookmarkButton(buttonSize: 48)
+                          OccupancyUpdateButton(width: 208, height: 48),
+                          HorizontalSpacer(10),
+                          ShareButton(),
+                          HorizontalSpacer(10),
+                          BookmarkButton(buttonSize: 48)
                         ],
                       ),
                       const VerticalSpacer(30),
