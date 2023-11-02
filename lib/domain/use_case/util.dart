@@ -136,6 +136,9 @@ Cafe parseCafeFromCafeResponse(CafeResponse cafeResponse) {
     });
   }
 
+  // 카페 층을 오름차순으로 정렬
+  cafeFloors.sort((CafeFloor a, CafeFloor b) => a.floor - b.floor);
+
   // 최종 산출
   return Cafe(
     id: cafeResponse.id,

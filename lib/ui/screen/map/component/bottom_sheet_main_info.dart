@@ -6,11 +6,11 @@ import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
+import 'package:cafejari_flutter/ui/components/occupancy_prediction_description_dialog.dart';
 import 'package:cafejari_flutter/ui/components/page_view_dot_indicator.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
@@ -172,9 +172,24 @@ class BottomSheetMainInfo extends ConsumerWidget {
                         ],
                       ),
                       const VerticalSpacer(30),
-                      const Text(
-                        "층별 정보",
-                        style: TextSize.textSize_bold_16,
+                      Row(
+                        children: [
+                          const Text(
+                            "층별 혼잡도",
+                            style: TextSize.textSize_bold_16,
+                          ),
+                          const HorizontalSpacer(4),
+                          Visibility(
+                            visible: mapState.selectedCafe.cafeFloors.every((e) => e.recentUpdates.isEmpty) &&
+                              mapState.selectedCafe.cafeFloors.any((e) => e.occupancyRatePrediction.isNotNull),
+                            child: QuestionButton(
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (_) => const OccupancyPredictionDescriptionDialog()
+                              )
+                            )
+                          )
+                        ],
                       ),
                       const VerticalSpacer(20),
                       SizedBox(
@@ -194,8 +209,10 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                     children: [
                                       Text("${cafeFloor.floor.toFloor()}층", style: TextSize.textSize_bold_16),
                                       const VerticalSpacer(8),
-                                      cafeFloor.recentUpdates.isNotEmpty ? Image.asset(
-                                        cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().markerImagePath,
+                                      cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ? Image.asset(
+                                        cafeFloor.recentUpdates.isNotEmpty ?
+                                          cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().markerImagePath :
+                                          cafeFloor.occupancyRatePrediction.toOccupancyLevel().markerImagePath,
                                         width: 48,
                                       ) : Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 6),
@@ -206,11 +223,11 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                       ),
                                       const VerticalSpacer(10),
                                       Text(
-                                        cafeFloor.recentUpdates.isNotEmpty
-                                            ? cafeFloor.recentUpdates.first.occupancyRate
-                                            .toOccupancyLevel()
-                                            .stringValue
-                                            : "정보없음",
+                                        cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
+                                          cafeFloor.recentUpdates.isNotEmpty ?
+                                            cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue :
+                                            cafeFloor.occupancyRatePrediction.toOccupancyLevel().stringValue
+                                        : "정보없음",
                                         style: TextSize.textSize_bold_16,
                                       ),
                                       const VerticalSpacer(10),
@@ -219,10 +236,11 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                         children: [
                                           const Text("혼잡도 ", style: TextSize.textSize_grey_12),
                                           Text(
-                                            cafeFloor.recentUpdates.isNotEmpty
-                                                ? " ${(cafeFloor.recentUpdates.first.occupancyRate *
-                                                100).toInt()}%"
-                                                : " 정보없음",
+                                            cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
+                                              cafeFloor.recentUpdates.isNotEmpty ?
+                                                " ${(cafeFloor.recentUpdates.first.occupancyRate * 100).toInt()}%" :
+                                                " ${(cafeFloor.occupancyRatePrediction! * 100).toInt()}%"
+                                            : " 정보없음",
                                             style: TextSize.textSize_bold_12,
                                           ),
                                         ],

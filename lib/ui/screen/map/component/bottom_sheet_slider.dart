@@ -17,7 +17,6 @@ class BottomSheetSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final double occupancyRate = mapState.selectedCafeFloor.recentUpdates.firstOrNull?.occupancyRate ??
       mapState.selectedCafeFloor.occupancyRatePrediction ?? 0.0;
     const double componentWidth = 40;

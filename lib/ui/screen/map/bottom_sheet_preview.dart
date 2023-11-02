@@ -4,20 +4,22 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
+import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
-import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_slider.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
+import 'package:go_router/go_router.dart';
 
 final _dragDyProvider = StateProvider<double>((ref) => 0.0);
 
@@ -30,6 +32,7 @@ class BottomSheetPreview extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final Size deviceSize = MediaQuery.of(context).size;
     const double edgePadding = 20;
@@ -91,17 +94,35 @@ class BottomSheetPreview extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   GestureDetector(
-                                    onTap: () => showDialog(context: context, builder: (_) => const CafeCATIEditor()),
+                                    onTap: () async {
+                                      if(globalState.isLoggedIn) {
+                                        mapViewModel.initCATISliderValue();
+                                        showDialog(context: context, builder: (_) => const CafeCATIEditor());
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => SquareAlertDialog(
+                                            text: "정확한 카페 정보를 위해 CATI평가는 로그인한 유저만 진행할 수 있어요. 로그인 페이지로 이동할까요?",
+                                            negativeButtonText: "아니오",
+                                            positiveButtonText: "예",
+                                            onDismiss: () => Navigator.of(context).pop(),
+                                            onNegativeButtonPress: () {},
+                                            onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                                          )
+                                        );
+                                      }
+                                    },
                                     child: SizedBox(
                                       width: constraint.maxWidth - componentHeight - 10,
                                       child: Text(
-                                      mapState.selectedCafe.catiTagText,
-                                      style: const TextStyle(
-                                        color: AppColor.grey_700,
-                                        fontSize: 12,
-                                        height: 0.95
-                                      )),
-                                    ),
+                                        mapState.selectedCafe.catiTagText,
+                                        style: const TextStyle(
+                                          color: AppColor.grey_700,
+                                          fontSize: 12,
+                                          height: 0.95
+                                        )
+                                      ),
+                                    )
                                   ),
                                   const BookmarkButton(buttonSize: componentHeight)
                                 ],
@@ -154,11 +175,11 @@ class BottomSheetPreview extends ConsumerWidget {
                             ),
                             const VerticalSpacer(10),
                             Visibility(
-                              visible: mapState.selectedCafeFloor.recentUpdates.isNotEmpty,
+                              visible: mapState.selectedCafeFloor.recentUpdates.isNotEmpty || mapState.selectedCafeFloor.occupancyRatePrediction.isNotNull,
                               child: BottomSheetSlider(width: deviceSize.width / 2 - edgePadding - boundaryPadding)
                             ),
                             Visibility(
-                              visible: mapState.selectedCafeFloor.recentUpdates.isEmpty,
+                              visible: mapState.selectedCafeFloor.recentUpdates.isEmpty && mapState.selectedCafeFloor.occupancyRatePrediction.isNull,
                               child: const Padding(
                                 padding: AppPadding.padding_15,
                                 child: Column(

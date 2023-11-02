@@ -126,7 +126,7 @@ class CafeCATIEditor extends ConsumerWidget {
                 SizedBox(
                   width: sliderWidth,
                   child: const Text(
-                    "CATI를 설정해주시면, 다른 사람들이 이 카페에 대해 쉽게 알 수 있어요!",
+                    "CATI를 설정해주시면, 다른 사람들이\n이 카페에 대해 쉽게 알 수 있어요!",
                     style: TextStyle(
                       color: AppColor.grey_600,
                       fontSize: 12
@@ -190,7 +190,7 @@ class CafeCATIEditor extends ConsumerWidget {
                 ActionButtonPrimary(
                   buttonWidth: sliderWidth,
                   buttonHeight: 48,
-                  title: "CARI 등록",
+                  title: "CATI 등록",
                   isLoading: ref.watch(_isLoading),
                   onPressed: () async {
                     ref.watch(_isLoading.notifier).update((ref) => true);
