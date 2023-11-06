@@ -227,33 +227,56 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                           cafeFloor.recentUpdates.isNotEmpty ?
                                             cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue :
                                             cafeFloor.occupancyRatePrediction.toOccupancyLevel().stringValue
-                                        : "정보없음",
+                                        : cafeFloor.hasSeat ? "정보없음" : "좌석 없는 층",
                                         style: TextSize.textSize_bold_16,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Visibility(
+                                        visible: cafeFloor.recentUpdates.isEmpty && cafeFloor.occupancyRatePrediction.isNotNull,
+                                        child: const Column(
+                                          children: [
+                                            VerticalSpacer(2),
+                                            Text(
+                                              "*예상",
+                                              style: TextStyle(
+                                                color: AppColor.grey_500,
+                                                fontSize: 11
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       const VerticalSpacer(10),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Text("혼잡도 ", style: TextSize.textSize_grey_12),
-                                          Text(
-                                            cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
-                                              cafeFloor.recentUpdates.isNotEmpty ?
-                                                " ${(cafeFloor.recentUpdates.first.occupancyRate * 100).toInt()}%" :
-                                                " ${(cafeFloor.occupancyRatePrediction! * 100).toInt()}%"
-                                            : " 정보없음",
-                                            style: TextSize.textSize_bold_12,
-                                          ),
-                                        ],
-                                      ),
-                                      const VerticalSpacer(2),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Text("콘센트보급율 ", style: TextSize.textSize_grey_12),
-                                          Text(cafeFloor.wallSocketRate.isNotNull ? " ${(cafeFloor
-                                              .wallSocketRate! * 100).floor()}%" : " 정보없음",
-                                              style: TextSize.textSize_bold_12)
-                                        ],
+                                      Visibility(
+                                        visible: cafeFloor.hasSeat,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                const Text("혼잡도 ", style: TextSize.textSize_grey_12),
+                                                Text(
+                                                  cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
+                                                    cafeFloor.recentUpdates.isNotEmpty ?
+                                                      " ${(cafeFloor.recentUpdates.first.occupancyRate * 100).toInt()}%" :
+                                                      " ${(cafeFloor.occupancyRatePrediction! * 100).toInt()}%"
+                                                  : " 정보없음",
+                                                  style: TextSize.textSize_bold_12,
+                                                ),
+                                              ],
+                                            ),
+                                            const VerticalSpacer(2),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                const Text("콘센트보급율 ", style: TextSize.textSize_grey_12),
+                                                Text(cafeFloor.wallSocketRate.isNotNull ? " ${(cafeFloor
+                                                    .wallSocketRate! * 100).floor()}%" : " 정보없음",
+                                                    style: TextSize.textSize_bold_12)
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ]
                                   ),

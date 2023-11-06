@@ -104,6 +104,12 @@ class OccupancyUpdateDialog extends ConsumerWidget {
       }
     }
 
+    // 좌석이 없을 경우 포인트 텍스트 및 컬러 설정
+    if(!mapState.selectedCafeFloor.hasSeat) {
+      pointText = "좌석이 없는 층에서는 혼잡도를 등록할 수 없어요";
+      pointTextColor = AppColor.error;
+    }
+
     return Dialog(
       elevation: 0,
       backgroundColor: AppColor.transparent,
@@ -154,9 +160,13 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                   child: ActionButtonPrimary(
                     buttonWidth: 280,
                     buttonHeight: 48,
-                    title: isUpdatePossible ? "등록하기" : "아직 등록할 수 없어요",
+                    title: isUpdatePossible ?
+                      mapState.selectedCafeFloor.hasSeat ?
+                        "등록하기" :
+                        "좌석이 없는 층이에요" :
+                      "아직 등록할 수 없어요",
                     isLoading: ref.watch(_isLoading),
-                    onPressed: !isUpdatePossible ? null : () async {
+                    onPressed: !isUpdatePossible || !mapState.selectedCafeFloor.hasSeat ? null : () async {
                       if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 35)) {
                         if(globalState.isLoggedIn) {
                           ref.watch(_isLoading.notifier).update((state) => true);

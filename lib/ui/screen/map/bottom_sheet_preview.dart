@@ -180,19 +180,21 @@ class BottomSheetPreview extends ConsumerWidget {
                             ),
                             Visibility(
                               visible: mapState.selectedCafeFloor.recentUpdates.isEmpty && mapState.selectedCafeFloor.occupancyRatePrediction.isNull,
-                              child: const Padding(
+                              child: Padding(
                                 padding: AppPadding.padding_15,
                                 child: Column(
                                   children: [
                                     Text(
-                                      "아직 혼잡도가 없어요",
+                                      mapState.selectedCafeFloor.hasSeat ? "아직 혼잡도가 없어요" : "좌석이 없는 층이에요",
                                       style: TextSize.textSize_bold_14,
                                       textAlign: TextAlign.center,
                                     ),
-                                    VerticalSpacer(8),
+                                    const VerticalSpacer(8),
                                     Text(
-                                      "3초만에 혼잡도 등록하고\n포인트를 받아보세요!",
-                                      style: TextStyle(
+                                      mapState.selectedCafeFloor.hasSeat ?
+                                        "3초만에 혼잡도 등록하고\n포인트를 받아보세요!" :
+                                        "다른 층에 있는 좌석을\n이용해 주세요",
+                                      style: const TextStyle(
                                         color: AppColor.grey_800,
                                         fontSize: 12
                                       ),

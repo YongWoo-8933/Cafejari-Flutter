@@ -151,8 +151,8 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           if (message.notification.isNotNull) {
             globalViewModel.init();
             FlutterLocalNotification.showNotification(
-                title: message.notification!.title,
-                body: message.notification!.body
+              title: message.notification!.title,
+              body: message.notification!.body
             );
           }
         });
@@ -169,6 +169,22 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
+    switch(state) {
+      case AppLifecycleState.resumed:
+        Future.delayed(Duration.zero, () async {
+          if(ref.watch(mapViewModelProvider).cafes.isNotEmpty) {
+            await ref.watch(mapViewModelProvider.notifier).refreshCafes();
+          }
+        });
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.hidden:
+        break;
+    }
   }
 
   @override

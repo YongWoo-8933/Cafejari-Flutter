@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
@@ -18,7 +19,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
     List<String> restroomDescriptionList = [];
     for (var floor in mapState.selectedCafe.cafeFloors) {
       if(floor.restroom.isNotNull) {
-        restroomDescriptionList.add("${floor.floor}층: ${floor.restroom}");
+        restroomDescriptionList.add("${floor.floor.toFloor()}층: ${floor.restroom}");
       }
     }
     const double lineSpacing = 6;
