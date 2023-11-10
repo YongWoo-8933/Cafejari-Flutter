@@ -39,13 +39,6 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
 
   selectChallenge(Challenge challenge) => state = state.copyWith(selectedChallenge: challenge);
 
-  setChallenger() {
-    state = state.copyWith(selectedChallenger: globalViewModel.state.myChallengers.firstWhere(
-      (element) => element.challenge.id == state.selectedChallenge.id,
-      orElse: () => Challenger.empty()
-    ));
-  }
-
   participate({required Challenge challenge, required BuildContext context}) async {
     try {
       final Challenge newChallenge = await _challengeUseCase.participateChallenge(

@@ -44,7 +44,7 @@ class ChallengeSmallProfile extends ConsumerWidget {
         ),
         SizedBox(
           child: Text(
-            "+$participantCount명 참가 중",
+            "$participantCount명 참가 중",
             style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

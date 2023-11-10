@@ -1,6 +1,7 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/core/extension/double.dart';
 import 'package:cafejari_flutter/core/extension/int.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
@@ -167,37 +168,40 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                       "아직 등록할 수 없어요",
                     isLoading: ref.watch(_isLoading),
                     onPressed: !isUpdatePossible || !mapState.selectedCafeFloor.hasSeat ? null : () async {
-                      if(await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 35)) {
-                        if(globalState.isLoggedIn) {
-                          ref.watch(_isLoading.notifier).update((state) => true);
-                          if(context.mounted) await mapViewModel.updateOccupancyRate(context: context, isGuest: false);
-                          ref.watch(_isLoading.notifier).update((state) => false);
-                          if(context.mounted) Navigator.of(context).pop();
-                        } else {
-                          if(context.mounted) {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => SquareAlertDialog(
-                                text: "로그인하고 혼잡도를 등록하면 포인트를 받을 수 있어요. 로그인 페이지로 이동할까요?",
-                                negativeButtonText: "그냥 진행",
-                                positiveButtonText: "예",
-                                onDismiss: () => Navigator.of(context).pop(),
-                                onNegativeButtonPress: () async {
-                                  ref.watch(_isLoading.notifier).update((state) => true);
-                                  await mapViewModel.updateOccupancyRate(context: context, isGuest: true);
-                                  ref.watch(_isLoading.notifier).update((state) => false);
-                                  if(context.mounted) Navigator.of(context).pop();
-                                },
-                                onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
-                              )
-                            );
+                      final isNearBy = await mapViewModel.globalViewModel.isNearBy(from: mapState.selectedCafe.latLng, meter: 35);
+                      if(isNearBy.isNotNull) {
+                        if(isNearBy!) {
+                          if(globalState.isLoggedIn) {
+                            ref.watch(_isLoading.notifier).update((state) => true);
+                            if(context.mounted) await mapViewModel.updateOccupancyRate(context: context, isGuest: false);
+                            ref.watch(_isLoading.notifier).update((state) => false);
+                            if(context.mounted) Navigator.of(context).pop();
+                          } else {
+                            if(context.mounted) {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => SquareAlertDialog(
+                                    text: "로그인하고 혼잡도를 등록하면 포인트를 받을 수 있어요. 로그인 페이지로 이동할까요?",
+                                    negativeButtonText: "그냥 진행",
+                                    positiveButtonText: "예",
+                                    onDismiss: () => Navigator.of(context).pop(),
+                                    onNegativeButtonPress: () async {
+                                      ref.watch(_isLoading.notifier).update((state) => true);
+                                      await mapViewModel.updateOccupancyRate(context: context, isGuest: true);
+                                      ref.watch(_isLoading.notifier).update((state) => false);
+                                      if(context.mounted) Navigator.of(context).pop();
+                                    },
+                                    onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
+                                  )
+                              );
+                            }
                           }
+                        } else {
+                          mapViewModel.globalViewModel.showSnackBar(
+                              content: "카페와의 거리가 너무 멉니다. 위치를 재조정 해주세요",
+                              type: SnackBarType.error
+                          );
                         }
-                      } else {
-                        mapViewModel.globalViewModel.showSnackBar(
-                          content: "카페와의 거리가 너무 멉니다. 위치를 재조정 해주세요",
-                          type: SnackBarType.error
-                        );
                       }
                     }
                   ) ,

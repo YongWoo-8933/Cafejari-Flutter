@@ -56,7 +56,6 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
           onPressed: globalState.isLoggedIn ? () {
             if (isParticipated) {
               GoRouter.of(context).goNamed(ScreenRoute.challengeProgress);
-              challengeViewModel.setChallenger();
             } else {
               ref.watch(_isLoading.notifier).update((state) => true);
               challengeViewModel.participate(challenge: challengeState.selectedChallenge, context: context);

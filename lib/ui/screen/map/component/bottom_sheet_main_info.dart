@@ -232,21 +232,22 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                         textAlign: TextAlign.center,
                                       ),
                                       Visibility(
-                                        visible: cafeFloor.recentUpdates.isEmpty && cafeFloor.occupancyRatePrediction.isNotNull,
-                                        child: const Column(
+                                        visible: cafeFloor.occupancyRatePrediction.isNotNull,
+                                        child: Column(
                                           children: [
-                                            VerticalSpacer(2),
+                                            const VerticalSpacer(2),
                                             Text(
-                                              "*예상",
+                                              cafeFloor.recentUpdates.isEmpty ? "*예상" :
+                                              "${cafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs()}분전",
                                               style: TextStyle(
-                                                color: AppColor.grey_500,
+                                                color: AppColor.secondary.withOpacity(0.75),
                                                 fontSize: 11
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      const VerticalSpacer(10),
+                                      const VerticalSpacer(12),
                                       Visibility(
                                         visible: cafeFloor.hasSeat,
                                         child: Column(

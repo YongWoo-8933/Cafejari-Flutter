@@ -9,19 +9,21 @@ import 'package:flutter/material.dart';
 class ChallengeBlock extends StatelessWidget {
   final List<String> smallProfileImageUrls;
   final Challenge challenge;
+  final bool available;
   final VoidCallback? onPressed;
 
   const ChallengeBlock({
     super.key,
     required this.smallProfileImageUrls,
     required this.challenge,
+    required this.available,
     this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: available ? onPressed : () {},
       child: Container(
         decoration: BoxDecoration(
           boxShadow: AppShadow.box,
@@ -32,35 +34,49 @@ class ChallengeBlock extends StatelessWidget {
           child: Container(
             color: AppColor.white,
             width: 280,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Stack(
               children: [
-                CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: 280, height: 280),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "총 ${challenge.totalPoint}포인트 지급",
-                        style: const TextStyle(
-                            color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.w600),
+                Visibility(
+                  visible: !available,
+                  child: Container(
+                    color: AppColor.transparentBlack_700,
+                  )
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: 280, height: 280),
+                    const Divider(height: 1),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "총 ${challenge.totalPoint}포인트 지급",
+                            style: const TextStyle(
+                                color: AppColor.secondary, fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                          const VerticalSpacer(8),
+                          Text(
+                            "${challenge.name} (${challenge.challengerUserIds.length}/${challenge.participantLimit})",
+                            style: const TextStyle(
+                                color: AppColor.primary, fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          const VerticalSpacer(8),
+                          Visibility(
+                            visible: challenge.challengerUserIds.isNotEmpty,
+                            child: ChallengeSmallProfile(
+                              imageUrls: smallProfileImageUrls,
+                              participantCount: challenge.challengerUserIds.length
+                            ),
+                          ),
+                          const VerticalSpacer(4),
+                        ],
                       ),
-                      const VerticalSpacer(8),
-                      Text(
-                        "${challenge.name} (${challenge.challengerUserIds.length}/${challenge.participantLimit})",
-                        style: const TextStyle(
-                            color: AppColor.primary, fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      const VerticalSpacer(8),
-                      ChallengeSmallProfile(
-                        imageUrls: smallProfileImageUrls,
-                        participantCount: challenge.challengerUserIds.length
-                      ),
-                      const VerticalSpacer(4),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

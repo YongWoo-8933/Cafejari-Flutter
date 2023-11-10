@@ -8,12 +8,10 @@ class ChallengeState with _$ChallengeState {
   factory ChallengeState(
       {required final Challenges availableChallenges,
         required final Challenges unavailableChallenges,
-        required final Challenge selectedChallenge,
-        required final Challenger selectedChallenger}) = _ChallengeState;
+        required final Challenge selectedChallenge}) = _ChallengeState;
 
   factory ChallengeState.empty() => ChallengeState(
       availableChallenges: [],
       unavailableChallenges: [],
-      selectedChallenge: Challenge.empty(),
-      selectedChallenger: Challenger.empty());
+      selectedChallenge: Challenge.empty());
 }

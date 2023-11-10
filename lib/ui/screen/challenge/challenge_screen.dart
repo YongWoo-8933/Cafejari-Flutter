@@ -62,14 +62,21 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                 child: ListView.builder(
                   padding: AppPadding.padding_25,
                   scrollDirection: Axis.horizontal,
+                  // itemCount: challengeState.availableChallenges.length + challengeState.unavailableChallenges.length,
                   itemCount: challengeState.availableChallenges.length,
                   itemBuilder: (context, index) {
+                    // final bool available = index + 1 <= challengeState.availableChallenges.length;
+                    const bool available = true;
+                    // final Challenge challenge = available ?
+                    //   challengeState.availableChallenges[index] :
+                    //   challengeState.unavailableChallenges[index - challengeState.availableChallenges.length];
                     final Challenge challenge = challengeState.availableChallenges[index];
                     return Row(
                       children: [
                         ChallengeBlock(
                           challenge: challenge,
                           smallProfileImageUrls: challenge.challengerProfileImages,
+                          available: available,
                           onPressed: () {
                             challengeViewModel.selectChallenge(challenge);
                             GoRouter.of(context).goNamed(ScreenRoute.challengeInfo);

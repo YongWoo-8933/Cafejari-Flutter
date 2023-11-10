@@ -261,15 +261,14 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   void updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
 
-  Future<bool> isNearBy({required NLatLng from, required int meter}) async {
+  Future<bool?> isNearBy({required NLatLng from, required int meter}) async {
     final myLocation = state.currentDeviceLocation ?? await getFirstLocation();
-    return true;
-    // if (myLocation.isNotNull) {
-    //   final myLatLng = NLatLng(myLocation!.latitude, myLocation.longitude);
-    //   return getDistanceToMeter(from, myLatLng) < meter;
-    // } else {
-    //   return false;
-    // }
+    if (myLocation.isNotNull) {
+      final myLatLng = NLatLng(myLocation!.latitude, myLocation.longitude);
+      return getDistanceToMeter(from, myLatLng) < meter;
+    } else {
+      return null;
+    }
   }
 
   initWebViewController(InAppWebViewController controller) => state = state.copyWith(webViewController: controller);

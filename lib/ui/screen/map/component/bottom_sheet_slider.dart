@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/core/extension/double.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -19,6 +20,9 @@ class BottomSheetSlider extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final double occupancyRate = mapState.selectedCafeFloor.recentUpdates.firstOrNull?.occupancyRate ??
       mapState.selectedCafeFloor.occupancyRatePrediction ?? 0.0;
+    final String occupancyRateDescription = mapState.selectedCafeFloor.recentUpdates.isNotEmpty ?
+      "${mapState.selectedCafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs()}분전" :
+      "*예상";
     const double componentWidth = 40;
 
     return SizedBox(
@@ -110,9 +114,20 @@ class BottomSheetSlider extends ConsumerWidget {
                 child: Row(
                   children: [
                     HorizontalSpacer((width - componentWidth) * occupancyRate),
-                    Image.asset(
-                      occupancyRate.toOccupancyLevel().pinImagePath,
-                      width: componentWidth,
+                    Column(
+                      children: [
+                        Image.asset(
+                          occupancyRate.toOccupancyLevel().pinImagePath,
+                          width: componentWidth,
+                        ),
+                        Text(
+                          occupancyRateDescription,
+                          style: TextStyle(
+                            color: AppColor.secondary.withOpacity(0.75),
+                            fontSize: 10
+                          ),
+                        )
+                      ],
                     ),
                   ]
                 ),

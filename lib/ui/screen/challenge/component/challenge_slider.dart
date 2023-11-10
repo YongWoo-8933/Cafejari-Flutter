@@ -48,7 +48,7 @@ class ChallengeSlider extends StatelessWidget {
         Row(
             children: [
               HorizontalSpacer((deviceWidth - 80) * challenger.progressRate + 30),
-              Image.asset('asset/image/cafe_icon_0.png', width: 20)
+              Image.asset('asset/image/challenge_marker.png', width: 24)
             ]
         ),
         const VerticalSpacer(8),
@@ -66,7 +66,7 @@ class ChallengeSlider extends StatelessWidget {
           child: Container(
             width: (deviceWidth - 72) * challenger.progressRate,
             decoration: BoxDecoration(
-              color: AppColor.secondary,
+              color: AppColor.primary,
               borderRadius: BorderRadius.circular(10)
             )
           ),

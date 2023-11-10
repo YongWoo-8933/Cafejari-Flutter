@@ -20,7 +20,6 @@ mixin _$ChallengeState {
   List<Challenge> get unavailableChallenges =>
       throw _privateConstructorUsedError;
   Challenge get selectedChallenge => throw _privateConstructorUsedError;
-  Challenger get selectedChallenger => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChallengeStateCopyWith<ChallengeState> get copyWith =>
@@ -36,11 +35,9 @@ abstract class $ChallengeStateCopyWith<$Res> {
   $Res call(
       {List<Challenge> availableChallenges,
       List<Challenge> unavailableChallenges,
-      Challenge selectedChallenge,
-      Challenger selectedChallenger});
+      Challenge selectedChallenge});
 
   $ChallengeCopyWith<$Res> get selectedChallenge;
-  $ChallengerCopyWith<$Res> get selectedChallenger;
 }
 
 /// @nodoc
@@ -59,7 +56,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
     Object? availableChallenges = null,
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
-    Object? selectedChallenger = null,
   }) {
     return _then(_value.copyWith(
       availableChallenges: null == availableChallenges
@@ -74,10 +70,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
           ? _value.selectedChallenge
           : selectedChallenge // ignore: cast_nullable_to_non_nullable
               as Challenge,
-      selectedChallenger: null == selectedChallenger
-          ? _value.selectedChallenger
-          : selectedChallenger // ignore: cast_nullable_to_non_nullable
-              as Challenger,
     ) as $Val);
   }
 
@@ -86,14 +78,6 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
   $ChallengeCopyWith<$Res> get selectedChallenge {
     return $ChallengeCopyWith<$Res>(_value.selectedChallenge, (value) {
       return _then(_value.copyWith(selectedChallenge: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChallengerCopyWith<$Res> get selectedChallenger {
-    return $ChallengerCopyWith<$Res>(_value.selectedChallenger, (value) {
-      return _then(_value.copyWith(selectedChallenger: value) as $Val);
     });
   }
 }
@@ -109,13 +93,10 @@ abstract class _$$_ChallengeStateCopyWith<$Res>
   $Res call(
       {List<Challenge> availableChallenges,
       List<Challenge> unavailableChallenges,
-      Challenge selectedChallenge,
-      Challenger selectedChallenger});
+      Challenge selectedChallenge});
 
   @override
   $ChallengeCopyWith<$Res> get selectedChallenge;
-  @override
-  $ChallengerCopyWith<$Res> get selectedChallenger;
 }
 
 /// @nodoc
@@ -132,7 +113,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
     Object? availableChallenges = null,
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
-    Object? selectedChallenger = null,
   }) {
     return _then(_$_ChallengeState(
       availableChallenges: null == availableChallenges
@@ -147,10 +127,6 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
           ? _value.selectedChallenge
           : selectedChallenge // ignore: cast_nullable_to_non_nullable
               as Challenge,
-      selectedChallenger: null == selectedChallenger
-          ? _value.selectedChallenger
-          : selectedChallenger // ignore: cast_nullable_to_non_nullable
-              as Challenger,
     ));
   }
 }
@@ -161,8 +137,7 @@ class _$_ChallengeState implements _ChallengeState {
   _$_ChallengeState(
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
-      required this.selectedChallenge,
-      required this.selectedChallenger})
+      required this.selectedChallenge})
       : _availableChallenges = availableChallenges,
         _unavailableChallenges = unavailableChallenges;
 
@@ -186,12 +161,10 @@ class _$_ChallengeState implements _ChallengeState {
 
   @override
   final Challenge selectedChallenge;
-  @override
-  final Challenger selectedChallenger;
 
   @override
   String toString() {
-    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge, selectedChallenger: $selectedChallenger)';
+    return 'ChallengeState(availableChallenges: $availableChallenges, unavailableChallenges: $unavailableChallenges, selectedChallenge: $selectedChallenge)';
   }
 
   @override
@@ -204,9 +177,7 @@ class _$_ChallengeState implements _ChallengeState {
             const DeepCollectionEquality()
                 .equals(other._unavailableChallenges, _unavailableChallenges) &&
             (identical(other.selectedChallenge, selectedChallenge) ||
-                other.selectedChallenge == selectedChallenge) &&
-            (identical(other.selectedChallenger, selectedChallenger) ||
-                other.selectedChallenger == selectedChallenger));
+                other.selectedChallenge == selectedChallenge));
   }
 
   @override
@@ -214,8 +185,7 @@ class _$_ChallengeState implements _ChallengeState {
       runtimeType,
       const DeepCollectionEquality().hash(_availableChallenges),
       const DeepCollectionEquality().hash(_unavailableChallenges),
-      selectedChallenge,
-      selectedChallenger);
+      selectedChallenge);
 
   @JsonKey(ignore: true)
   @override
@@ -228,8 +198,7 @@ abstract class _ChallengeState implements ChallengeState {
   factory _ChallengeState(
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
-      required final Challenge selectedChallenge,
-      required final Challenger selectedChallenger}) = _$_ChallengeState;
+      required final Challenge selectedChallenge}) = _$_ChallengeState;
 
   @override
   List<Challenge> get availableChallenges;
@@ -237,8 +206,6 @@ abstract class _ChallengeState implements ChallengeState {
   List<Challenge> get unavailableChallenges;
   @override
   Challenge get selectedChallenge;
-  @override
-  Challenger get selectedChallenger;
   @override
   @JsonKey(ignore: true)
   _$$_ChallengeStateCopyWith<_$_ChallengeState> get copyWith =>
