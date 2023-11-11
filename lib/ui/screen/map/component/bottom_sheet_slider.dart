@@ -20,9 +20,13 @@ class BottomSheetSlider extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final double occupancyRate = mapState.selectedCafeFloor.recentUpdates.firstOrNull?.occupancyRate ??
       mapState.selectedCafeFloor.occupancyRatePrediction ?? 0.0;
-    final String occupancyRateDescription = mapState.selectedCafeFloor.recentUpdates.isNotEmpty ?
-      "${mapState.selectedCafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs()}분전" :
-      "*예상";
+    String occupancyRateDescription = "";
+    if(mapState.selectedCafeFloor.recentUpdates.isNotEmpty) {
+      final minute = mapState.selectedCafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs();
+      occupancyRateDescription = minute > 60 ? "1시간전" : "$minute분전";
+    } else {
+      occupancyRateDescription = "*예상";
+    }
     const double componentWidth = 40;
 
     return SizedBox(

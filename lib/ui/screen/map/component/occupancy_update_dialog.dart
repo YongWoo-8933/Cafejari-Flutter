@@ -198,7 +198,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                           }
                         } else {
                           mapViewModel.globalViewModel.showSnackBar(
-                              content: "카페와의 거리가 너무 멉니다. 위치를 재조정 해주세요",
+                              content: "카페와의 거리가\n너무 멀어요",
                               type: SnackBarType.error
                           );
                         }

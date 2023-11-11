@@ -200,6 +200,13 @@ class BottomSheetMainInfo extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             final CafeFloor cafeFloor = mapState.selectedCafe.cafeFloors[index];
                             final bool isLast = mapState.selectedCafe.cafeFloors.length - 1 == index;
+                            String occupancyRateDescription = "";
+                            if(cafeFloor.recentUpdates.isNotEmpty) {
+                              final minute = cafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs();
+                              occupancyRateDescription = minute > 60 ? "1시간전" : "$minute분전";
+                            } else {
+                              occupancyRateDescription = "*예상";
+                            }
                             return Row(
                               children: [
                                 Padding(
@@ -232,13 +239,12 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                         textAlign: TextAlign.center,
                                       ),
                                       Visibility(
-                                        visible: cafeFloor.occupancyRatePrediction.isNotNull,
+                                        visible: cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull,
                                         child: Column(
                                           children: [
                                             const VerticalSpacer(2),
                                             Text(
-                                              cafeFloor.recentUpdates.isEmpty ? "*예상" :
-                                              "${cafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs()}분전",
+                                              occupancyRateDescription,
                                               style: TextStyle(
                                                 color: AppColor.secondary.withOpacity(0.75),
                                                 fontSize: 11
@@ -255,7 +261,11 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                const Text("혼잡도 ", style: TextSize.textSize_grey_12),
+                                                Text(
+                                                  cafeFloor.recentUpdates.isEmpty && cafeFloor.occupancyRatePrediction.isNotNull ?
+                                                    "예상혼잡도 " : "혼잡도 ",
+                                                  style: TextSize.textSize_grey_12
+                                                ),
                                                 Text(
                                                   cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
                                                     cafeFloor.recentUpdates.isNotEmpty ?
