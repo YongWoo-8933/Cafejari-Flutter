@@ -31,6 +31,7 @@ class ActionButtonPrimary extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.primary,
+          disabledBackgroundColor: AppColor.grey_300.withOpacity(0.9),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(buttonHeight ?? 0 / 2),
           ),

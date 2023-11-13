@@ -39,7 +39,8 @@ class ChallengeInformation extends StatelessWidget {
             ],
           ),
         ),
-        CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: double.infinity)
+        CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: double.infinity),
+        const VerticalSpacer(200)
       ],
     );
   }
