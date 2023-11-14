@@ -125,7 +125,7 @@ class MyCATIEditor extends ConsumerWidget {
                 ActionButtonPrimary(
                   buttonWidth: sliderWidth,
                   buttonHeight: 48,
-                  title: "CARI 등록",
+                  title: "CATI 등록",
                   isLoading: ref.watch(_isLoading),
                   onPressed: () async {
                     ref.watch(_isLoading.notifier).update((ref) => true);

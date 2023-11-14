@@ -26,6 +26,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final _isEditMode = StateProvider<bool>((ref) => false);
 
@@ -95,7 +96,7 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                       visible: globalState.isLoggedIn,
                       child: SizedBox(
                         width: deviceSize.width,
-                        height: 240,
+                        height: 250,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: sidePadding),
@@ -253,43 +254,73 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                 ),
               ),
             ),
-            Container(
-              width: deviceSize.width,
-              padding: const EdgeInsets.all(sidePadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const VerticalSpacer(10),
-                  const Text("이런 카페는 어때요?", style: TextSize.textSize_bold_16),
-                  const VerticalSpacer(20),
-                  SizedBox(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const VerticalSpacer(30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                  child: Text("이런 카페는 어때요?", style: TextSize.textSize_bold_16),
+                ),
+                const VerticalSpacer(20),
+                Visibility(
+                  visible: myCafeState.isCafeRecommendationLoading,
+                  child: Column(
+                    children: [
+                      const VerticalSpacer(30),
+                      LoadingAnimationWidget.hexagonDots(color: AppColor.black, size: 28),
+                    ],
+                  )
+                ),
+                Visibility(
+                  visible: !myCafeState.isCafeRecommendationLoading,
+                  child: Container(
                     width: deviceSize.width,
                     height: 300,
+                    alignment: myCafeState.recommendedCafes.isEmpty ? Alignment.topCenter : Alignment.center,
+                    padding: EdgeInsets.only(top: myCafeState.recommendedCafes.isEmpty ? 30 : 0),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: myCafeState.recommendedCafes.length,
+                      itemCount: myCafeState.recommendedCafes.length + 1,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       itemBuilder: (context, index) {
-                        final cafe = myCafeState.recommendedCafes[index];
-                        return Row(
-                          children: [
-                            CafeRecommendationCard(
-                              cafe: cafe,
-                              randomImageUrl: mapState.randomCafeImageUrl ?? "",
-                              width: 210,
-                              onTap: () async {
-                                myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
-                                await mapViewModel.moveToCafeWithRefresh(cafeId: cafe.id);
-                              }
+                        if (myCafeState.recommendedCafes.length == index) {
+                          // 마지막 요소
+                          return Container(
+                            height: 300,
+                            alignment: myCafeState.recommendedCafes.isEmpty ? Alignment.topCenter : Alignment.center,
+                            child: IconButton(
+                              onPressed: () async => await myCafeViewModel.initCafeRecommendationData(),
+                              icon: const Icon(
+                                CupertinoIcons.refresh_circled,
+                                size: 36,
+                                color: AppColor.primary,
+                              ),
                             ),
-                            const HorizontalSpacer(20)
-                          ],
-                        );
+                          );
+                        } else {
+                          // 그외 요소
+                          final cafe = myCafeState.recommendedCafes[index];
+                          return Row(
+                            children: [
+                              CafeRecommendationCard(
+                                cafe: cafe,
+                                randomImageUrl: mapState.randomCafeImageUrl ?? "",
+                                width: 210,
+                                onTap: () async {
+                                  myCafeViewModel.globalViewModel.updateCurrentPageTo(0);
+                                  await mapViewModel.moveToCafeWithRefresh(cafeId: cafe.id);
+                                }
+                              ),
+                              const HorizontalSpacer(20)
+                            ],
+                          );
+                        }
                       },
                     ),
-                  ),
-                ],
-              ),
+                  )
+                ),
+              ],
             ),
             const VerticalSpacer(100),
           ],

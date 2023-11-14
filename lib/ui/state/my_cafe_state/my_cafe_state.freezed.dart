@@ -21,6 +21,7 @@ mixin _$MyCafeState {
   int get catiWorkspaceSliderValue => throw _privateConstructorUsedError;
   int get catiAciditySliderValue => throw _privateConstructorUsedError;
   List<Cafe> get recommendedCafes => throw _privateConstructorUsedError;
+  bool get isCafeRecommendationLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyCafeStateCopyWith<MyCafeState> get copyWith =>
@@ -38,7 +39,8 @@ abstract class $MyCafeStateCopyWith<$Res> {
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
       int catiAciditySliderValue,
-      List<Cafe> recommendedCafes});
+      List<Cafe> recommendedCafes,
+      bool isCafeRecommendationLoading});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
     Object? recommendedCafes = null,
+    Object? isCafeRecommendationLoading = null,
   }) {
     return _then(_value.copyWith(
       catiOpennessSliderValue: null == catiOpennessSliderValue
@@ -81,6 +84,10 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
           ? _value.recommendedCafes
           : recommendedCafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      isCafeRecommendationLoading: null == isCafeRecommendationLoading
+          ? _value.isCafeRecommendationLoading
+          : isCafeRecommendationLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -98,7 +105,8 @@ abstract class _$$_MyCafeStateCopyWith<$Res>
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
       int catiAciditySliderValue,
-      List<Cafe> recommendedCafes});
+      List<Cafe> recommendedCafes,
+      bool isCafeRecommendationLoading});
 }
 
 /// @nodoc
@@ -117,6 +125,7 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
     Object? recommendedCafes = null,
+    Object? isCafeRecommendationLoading = null,
   }) {
     return _then(_$_MyCafeState(
       catiOpennessSliderValue: null == catiOpennessSliderValue
@@ -139,6 +148,10 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
           ? _value._recommendedCafes
           : recommendedCafes // ignore: cast_nullable_to_non_nullable
               as List<Cafe>,
+      isCafeRecommendationLoading: null == isCafeRecommendationLoading
+          ? _value.isCafeRecommendationLoading
+          : isCafeRecommendationLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -151,7 +164,8 @@ class _$_MyCafeState implements _MyCafeState {
       required this.catiCoffeeSliderValue,
       required this.catiWorkspaceSliderValue,
       required this.catiAciditySliderValue,
-      required final List<Cafe> recommendedCafes})
+      required final List<Cafe> recommendedCafes,
+      required this.isCafeRecommendationLoading})
       : _recommendedCafes = recommendedCafes;
 
   @override
@@ -172,8 +186,11 @@ class _$_MyCafeState implements _MyCafeState {
   }
 
   @override
+  final bool isCafeRecommendationLoading;
+
+  @override
   String toString() {
-    return 'MyCafeState(catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, recommendedCafes: $recommendedCafes)';
+    return 'MyCafeState(catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, recommendedCafes: $recommendedCafes, isCafeRecommendationLoading: $isCafeRecommendationLoading)';
   }
 
   @override
@@ -192,7 +209,11 @@ class _$_MyCafeState implements _MyCafeState {
             (identical(other.catiAciditySliderValue, catiAciditySliderValue) ||
                 other.catiAciditySliderValue == catiAciditySliderValue) &&
             const DeepCollectionEquality()
-                .equals(other._recommendedCafes, _recommendedCafes));
+                .equals(other._recommendedCafes, _recommendedCafes) &&
+            (identical(other.isCafeRecommendationLoading,
+                    isCafeRecommendationLoading) ||
+                other.isCafeRecommendationLoading ==
+                    isCafeRecommendationLoading));
   }
 
   @override
@@ -202,7 +223,8 @@ class _$_MyCafeState implements _MyCafeState {
       catiCoffeeSliderValue,
       catiWorkspaceSliderValue,
       catiAciditySliderValue,
-      const DeepCollectionEquality().hash(_recommendedCafes));
+      const DeepCollectionEquality().hash(_recommendedCafes),
+      isCafeRecommendationLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -217,7 +239,8 @@ abstract class _MyCafeState implements MyCafeState {
       required final int catiCoffeeSliderValue,
       required final int catiWorkspaceSliderValue,
       required final int catiAciditySliderValue,
-      required final List<Cafe> recommendedCafes}) = _$_MyCafeState;
+      required final List<Cafe> recommendedCafes,
+      required final bool isCafeRecommendationLoading}) = _$_MyCafeState;
 
   @override
   int get catiOpennessSliderValue;
@@ -229,6 +252,8 @@ abstract class _MyCafeState implements MyCafeState {
   int get catiAciditySliderValue;
   @override
   List<Cafe> get recommendedCafes;
+  @override
+  bool get isCafeRecommendationLoading;
   @override
   @JsonKey(ignore: true)
   _$$_MyCafeStateCopyWith<_$_MyCafeState> get copyWith =>

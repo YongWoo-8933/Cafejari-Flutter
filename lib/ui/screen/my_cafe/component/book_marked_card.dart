@@ -89,7 +89,7 @@ class BookMarkedCard extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 32,
+                      height: 40,
                       child: Text(
                         cafe.name,
                         style: TextSize.textSize_bold_14,

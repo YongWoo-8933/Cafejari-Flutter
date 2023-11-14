@@ -34,6 +34,7 @@ class MyCafeViewModel extends StateNotifier<MyCafeState> {
   }
   
   initCafeRecommendationData({Position? location}) async {
+    state = state.copyWith(isCafeRecommendationLoading: true);
     state = state.copyWith(
       recommendedCafes: await _cafeUseCase.getRecommendedCafes(
         latitude: location?.latitude ?? globalViewModel.state.currentDeviceLocation?.latitude ?? NLocation.sinchon().cameraPosition.target.latitude,
@@ -42,6 +43,7 @@ class MyCafeViewModel extends StateNotifier<MyCafeState> {
     );
     _cafeRecommendationGetTimer?.cancel();
     _cafeRecommendationGetTimer = Timer(const Duration(minutes: 1), initCafeRecommendationData);
+    state = state.copyWith(isCafeRecommendationLoading: false);
   }
 
   setCATIOpenness(int value) => state = state.copyWith(catiOpennessSliderValue: value);

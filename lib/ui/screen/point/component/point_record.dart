@@ -1,8 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_record_block.dart';
-import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_small_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +21,7 @@ class PointRecord extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: TextSize.textSize_16),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -51,7 +49,7 @@ class PointRecord extends StatelessWidget {
       alignment: Alignment.center,
       width: width / 3,
       height: 50,
-      child: Text(text, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+      child: Text(text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
     );
   }
 }

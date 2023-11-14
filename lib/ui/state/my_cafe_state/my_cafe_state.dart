@@ -10,7 +10,8 @@ class MyCafeState with _$MyCafeState {
     required final int catiCoffeeSliderValue,
     required final int catiWorkspaceSliderValue,
     required final int catiAciditySliderValue,
-    required final Cafes recommendedCafes
+    required final Cafes recommendedCafes,
+    required final bool isCafeRecommendationLoading
   }) = _MyCafeState;
 
   factory MyCafeState.empty() => MyCafeState(
@@ -19,5 +20,6 @@ class MyCafeState with _$MyCafeState {
     catiWorkspaceSliderValue: CATI.empty().workspace,
     catiAciditySliderValue: CATI.empty().acidity,
     recommendedCafes: [],
+    isCafeRecommendationLoading: false
   );
 }

@@ -148,164 +148,169 @@ class BottomSheetMainInfo extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(cornerRadius)
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: sidePadding),
-              child: Column(
-                children: [
-                  // 카페 이름 + 주소
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CafeNameAddressBlock(
-                        width: deviceSize.width - sidePadding * 2,
-                        name: mapState.selectedCafe.name,
-                        address: mapState.selectedCafe.address
-                      ),
-                      const VerticalSpacer(30),
-                      const Row(
+            Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 카페 이름 + 주소
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                      child: Column(
                         children: [
-                          OccupancyUpdateButton(width: 208, height: 48),
-                          HorizontalSpacer(10),
-                          ShareButton(),
-                          HorizontalSpacer(10),
-                          BookmarkButton(buttonSize: 48)
-                        ],
-                      ),
-                      const VerticalSpacer(30),
-                      Row(
-                        children: [
-                          const Text(
-                            "층별 혼잡도",
-                            style: TextSize.textSize_bold_16,
+                          CafeNameAddressBlock(
+                            width: deviceSize.width - sidePadding * 2,
+                            name: mapState.selectedCafe.name,
+                            address: mapState.selectedCafe.address
                           ),
-                          const HorizontalSpacer(4),
-                          Visibility(
-                            visible: mapState.selectedCafe.cafeFloors.every((e) => e.recentUpdates.isEmpty) &&
-                              mapState.selectedCafe.cafeFloors.any((e) => e.occupancyRatePrediction.isNotNull),
-                            child: QuestionButton(
-                              onPressed: () => showDialog(
-                                context: context,
-                                builder: (_) => const OccupancyPredictionDescriptionDialog()
+                          const VerticalSpacer(30),
+                          const Row(
+                            children: [
+                              OccupancyUpdateButton(width: 208, height: 48),
+                              HorizontalSpacer(10),
+                              ShareButton(),
+                              HorizontalSpacer(10),
+                              BookmarkButton(buttonSize: 48)
+                            ],
+                          ),
+                          const VerticalSpacer(30),
+                          Row(
+                            children: [
+                              const Text(
+                                "층별 혼잡도",
+                                style: TextSize.textSize_bold_16,
+                              ),
+                              const HorizontalSpacer(4),
+                              Visibility(
+                                  visible: mapState.selectedCafe.cafeFloors.every((e) => e.recentUpdates.isEmpty) &&
+                                      mapState.selectedCafe.cafeFloors.any((e) => e.occupancyRatePrediction.isNotNull),
+                                  child: QuestionButton(
+                                      onPressed: () => showDialog(
+                                          context: context,
+                                          builder: (_) => const OccupancyPredictionDescriptionDialog()
+                                      )
+                                  )
                               )
-                            )
+                            ],
                           )
                         ],
                       ),
-                      const VerticalSpacer(20),
-                      SizedBox(
-                        height: 224,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: mapState.selectedCafe.cafeFloors.length,
-                          itemBuilder: (context, index) {
-                            final CafeFloor cafeFloor = mapState.selectedCafe.cafeFloors[index];
-                            final bool isLast = mapState.selectedCafe.cafeFloors.length - 1 == index;
-                            String occupancyRateDescription = "";
-                            if(cafeFloor.recentUpdates.isNotEmpty) {
-                              final minute = cafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs();
-                              occupancyRateDescription = minute > 60 ? "1시간전" : "$minute분전";
-                            } else {
-                              occupancyRateDescription = "*예상";
-                            }
-                            return Row(
-                              children: [
-                                Padding(
-                                  padding: AppPadding.padding_horizon_20,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("${cafeFloor.floor.toFloor()}층", style: TextSize.textSize_bold_16),
-                                      const VerticalSpacer(8),
-                                      cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ? Image.asset(
-                                        cafeFloor.recentUpdates.isNotEmpty ?
-                                          cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().markerImagePath :
-                                          cafeFloor.occupancyRatePrediction.toOccupancyLevel().markerImagePath,
-                                        width: 48,
-                                      ) : Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 6),
-                                        child: Image.asset(
-                                          OccupancyLevel.minus().markerImagePath,
-                                          width: 36,
-                                        ),
-                                      ),
-                                      const VerticalSpacer(10),
-                                      Text(
-                                        cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
-                                          cafeFloor.recentUpdates.isNotEmpty ?
-                                            cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue :
-                                            cafeFloor.occupancyRatePrediction.toOccupancyLevel().stringValue
-                                        : cafeFloor.hasSeat ? "정보없음" : "좌석 없는 층",
-                                        style: TextSize.textSize_bold_16,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Visibility(
-                                        visible: cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull,
-                                        child: Column(
-                                          children: [
-                                            const VerticalSpacer(2),
-                                            Text(
-                                              occupancyRateDescription,
-                                              style: TextStyle(
-                                                color: AppColor.secondary.withOpacity(0.75),
-                                                fontSize: 11
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const VerticalSpacer(12),
-                                      Visibility(
-                                        visible: cafeFloor.hasSeat,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  cafeFloor.recentUpdates.isEmpty && cafeFloor.occupancyRatePrediction.isNotNull ?
-                                                    "예상혼잡도 " : "혼잡도 ",
-                                                  style: TextSize.textSize_grey_12
-                                                ),
-                                                Text(
-                                                  cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
-                                                    cafeFloor.recentUpdates.isNotEmpty ?
-                                                      " ${(cafeFloor.recentUpdates.first.occupancyRate * 100).toInt()}%" :
-                                                      " ${(cafeFloor.occupancyRatePrediction! * 100).toInt()}%"
-                                                  : " 정보없음",
-                                                  style: TextSize.textSize_bold_12,
-                                                ),
-                                              ],
-                                            ),
-                                            const VerticalSpacer(2),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                const Text("콘센트보급율 ", style: TextSize.textSize_grey_12),
-                                                Text(cafeFloor.wallSocketRate.isNotNull ? " ${(cafeFloor
-                                                    .wallSocketRate! * 100).floor()}%" : " 정보없음",
-                                                    style: TextSize.textSize_bold_12)
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ]
-                                  ),
-                                ),
-                                VerticalDivider(
-                                  width: 1,
-                                  color: isLast ? AppColor.transparent : AppColor.grey_200,
-                                  thickness: 1
-                                )
-                              ],
-                            );
+                    ),
+                    const VerticalSpacer(20),
+                    SizedBox(
+                      height: 224,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: mapState.selectedCafe.cafeFloors.length,
+                        padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                        itemBuilder: (context, index) {
+                          final CafeFloor cafeFloor = mapState.selectedCafe.cafeFloors[index];
+                          final bool isLast = mapState.selectedCafe.cafeFloors.length - 1 == index;
+                          String occupancyRateDescription = "";
+                          if(cafeFloor.recentUpdates.isNotEmpty) {
+                            final minute = cafeFloor.recentUpdates.first.update.difference(DateTime.now()).inMinutes.abs();
+                            occupancyRateDescription = minute > 60 ? "1시간전" : "$minute분전";
+                          } else {
+                            occupancyRateDescription = "*예상";
                           }
-                        ),
-                      )
-                    ]
-                  ),
-                ],
-              ),
+                          return Row(
+                            children: [
+                              Padding(
+                                padding: AppPadding.padding_horizon_20,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("${cafeFloor.floor.toFloor()}층", style: TextSize.textSize_bold_16),
+                                    const VerticalSpacer(8),
+                                    cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ? Image.asset(
+                                      cafeFloor.recentUpdates.isNotEmpty ?
+                                        cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().markerImagePath :
+                                        cafeFloor.occupancyRatePrediction.toOccupancyLevel().markerImagePath,
+                                      width: 48,
+                                    ) : Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 6),
+                                      child: Image.asset(
+                                        OccupancyLevel.minus().markerImagePath,
+                                        width: 36,
+                                      ),
+                                    ),
+                                    const VerticalSpacer(10),
+                                    Text(
+                                      cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
+                                        cafeFloor.recentUpdates.isNotEmpty ?
+                                          cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue :
+                                          cafeFloor.occupancyRatePrediction.toOccupancyLevel().stringValue
+                                      : cafeFloor.hasSeat ? "정보없음" : "좌석 없는 층",
+                                      style: TextSize.textSize_bold_16,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Visibility(
+                                      visible: cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull,
+                                      child: Column(
+                                        children: [
+                                          const VerticalSpacer(2),
+                                          Text(
+                                            occupancyRateDescription,
+                                            style: TextStyle(
+                                              color: AppColor.secondary.withOpacity(0.75),
+                                              fontSize: 11
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const VerticalSpacer(12),
+                                    Visibility(
+                                      visible: cafeFloor.hasSeat,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                cafeFloor.recentUpdates.isEmpty && cafeFloor.occupancyRatePrediction.isNotNull ?
+                                                  "예상혼잡도 " : "혼잡도 ",
+                                                style: TextSize.textSize_grey_12
+                                              ),
+                                              Text(
+                                                cafeFloor.recentUpdates.isNotEmpty || cafeFloor.occupancyRatePrediction.isNotNull ?
+                                                  cafeFloor.recentUpdates.isNotEmpty ?
+                                                    " ${(cafeFloor.recentUpdates.first.occupancyRate * 100).toInt()}%" :
+                                                    " ${(cafeFloor.occupancyRatePrediction! * 100).toInt()}%"
+                                                : " 정보없음",
+                                                style: TextSize.textSize_bold_12,
+                                              ),
+                                            ],
+                                          ),
+                                          const VerticalSpacer(2),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Text("콘센트보급율 ", style: TextSize.textSize_grey_12),
+                                              Text(cafeFloor.wallSocketRate.isNotNull ? " ${(cafeFloor
+                                                  .wallSocketRate! * 100).floor()}%" : " 정보없음",
+                                                  style: TextSize.textSize_bold_12)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]
+                                ),
+                              ),
+                              VerticalDivider(
+                                width: 1,
+                                color: isLast ? AppColor.transparent : AppColor.grey_200,
+                                thickness: 1
+                              )
+                            ],
+                          );
+                        }
+                      ),
+                    )
+                  ]
+                ),
+              ],
             ),
           ],
         )

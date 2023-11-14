@@ -198,20 +198,24 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                         visible: globalState.isLoggedIn,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 40, right: sidePadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Text("알림함", style: TextStyle(color: AppColor.white)),
-                              IconButton(
-                                icon: Image.asset(
-                                  width: 24,
-                                  globalState.myPushes.any((e) => !e.isRead) ?
-                                    "asset/image/icon_bell_badge.png" :
-                                    "asset/image/icon_bell.png",
-                                ),
-                                onPressed: () => GoRouter.of(context).goNamed(ScreenRoute.push),
-                              )
-                            ],
+                          child: GestureDetector(
+                            onTap: () => GoRouter.of(context).goNamed(ScreenRoute.push),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Text("알림함", style: TextStyle(color: AppColor.white)),
+                                  const HorizontalSpacer(8),
+                                  Image.asset(
+                                    width: 24,
+                                    globalState.myPushes.any((e) => !e.isRead) ?
+                                      "asset/image/icon_bell_badge.png" :
+                                      "asset/image/icon_bell.png",
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       )
