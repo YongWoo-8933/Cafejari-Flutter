@@ -241,7 +241,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                                           cafeFloor.recentUpdates.first.occupancyRate.toOccupancyLevel().stringValue :
                                           cafeFloor.occupancyRatePrediction.toOccupancyLevel().stringValue
                                       : cafeFloor.hasSeat ? "정보없음" : "좌석 없는 층",
-                                      style: TextSize.textSize_bold_16,
+                                      style: TextSize.textSize_bold_14,
                                       textAlign: TextAlign.center,
                                     ),
                                     Visibility(

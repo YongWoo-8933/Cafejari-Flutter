@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 
-const _occupancyMarkerSize = Size(51.75, 67.5);
-const _noDataMarkerSize = Size(43.2, 48);
+const _occupancyMarkerSize = Size(41.4, 54);
+const _noDataMarkerSize = Size(34.56, 38.4);
 
 /// 혼잡도 레벨 객체. 직접 생성하지 말고 factory 객체를 사용할 것.
 class OccupancyLevel {
@@ -33,14 +33,14 @@ class OccupancyLevel {
   );
 
   factory OccupancyLevel.zero() => OccupancyLevel(
-      "한적",
+      "여유",
       const NOverlayImage.fromAssetImage("asset/image/3.0x/cafe_icon_1.png"),
       _occupancyMarkerSize,
       "asset/image/3.0x/cafe_icon_1.png",
       "asset/image/cafe_reverse_pin_0.png",
       "asset/image/cafe_thumb_icon_0.png",
       AppColor.white,
-      AppColor.black,
+      AppColor.occupancyLevel0,
       "카페가 한적해요"
   );
 
@@ -57,7 +57,7 @@ class OccupancyLevel {
   );
 
   factory OccupancyLevel.two() => OccupancyLevel(
-      "붐빔",
+      "혼잡",
       const NOverlayImage.fromAssetImage("asset/image/3.0x/cafe_icon_3.png"),
       _occupancyMarkerSize,
       "asset/image/3.0x/cafe_icon_3.png",
@@ -69,13 +69,13 @@ class OccupancyLevel {
   );
 
   factory OccupancyLevel.three() => OccupancyLevel(
-      "혼잡",
+      "매우 혼잡",
       const NOverlayImage.fromAssetImage("asset/image/3.0x/cafe_icon_4.png"),
       _occupancyMarkerSize,
       "asset/image/3.0x/cafe_icon_4.png",
       "asset/image/cafe_reverse_pin_3.png",
       "asset/image/cafe_thumb_icon_3.png",
-      AppColor.black,
+      AppColor.occupancyLevel3,
       AppColor.white,
       "카페가 매우 혼잡해요"
   );

@@ -81,62 +81,29 @@ class BottomSheetSlider extends ConsumerWidget {
             ),
           ),
           const VerticalSpacer(5),
-          // 설명 + 핀
-          Stack(
-            children: [
-              // 설명
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: componentWidth,
-                    child: Text(
-                      OccupancyLevel.zero().stringValue,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppColor.grey_500,
-                        fontSize: 10
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: componentWidth,
-                    child: Text(
-                      OccupancyLevel.three().stringValue,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppColor.grey_500,
-                        fontSize: 10
-                      ),
-                    ),
-                  ),
-                ]
-              ),
-              // 핀
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
+          // 핀
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: [
+                HorizontalSpacer((width - componentWidth) * occupancyRate),
+                Column(
                   children: [
-                    HorizontalSpacer((width - componentWidth) * occupancyRate),
-                    Column(
-                      children: [
-                        Image.asset(
-                          occupancyRate.toOccupancyLevel().pinImagePath,
-                          width: componentWidth,
-                        ),
-                        Text(
-                          occupancyRateDescription,
-                          style: TextStyle(
-                            color: AppColor.secondary.withOpacity(0.75),
-                            fontSize: 10
-                          ),
-                        )
-                      ],
+                    Image.asset(
+                      occupancyRate.toOccupancyLevel().pinImagePath,
+                      width: componentWidth,
                     ),
-                  ]
+                    Text(
+                      occupancyRateDescription,
+                      style: TextStyle(
+                        color: AppColor.secondary.withOpacity(0.75),
+                        fontSize: 10
+                      ),
+                    )
+                  ],
                 ),
-              ),
-            ]
+              ]
+            ),
           ),
         ]
       ),

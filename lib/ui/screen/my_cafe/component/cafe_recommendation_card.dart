@@ -54,7 +54,7 @@ class CafeRecommendationCard extends StatelessWidget {
                     Text(cafe.catiTagText, style: TextSize.textSize_grey_12),
                     const VerticalSpacer(8),
                     SizedBox(
-                      height: 36,
+                      height: 42,
                       child: Text(cafe.name, style: TextSize.textSize_bold_16, maxLines: 2)
                     ),
                     const VerticalSpacer(18),
