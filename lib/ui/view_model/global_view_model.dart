@@ -253,11 +253,11 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     _showSnackBarTimer2?.cancel();
     _showSnackBarTimer1 = Timer(AppDuration.animationDefault, () {
       state = state.copyWith(isSnackBarExpanded: true);
-      _showSnackBarTimer2 = Timer(const Duration(milliseconds: 2500), () {
-        state = state.copyWith(isSnackBarOpened: false, isSnackBarExpanded: false);
-      });
+      _showSnackBarTimer2 = Timer(const Duration(milliseconds: 2500), closeSnackBar);
     });
   }
+
+  closeSnackBar() => state = state.copyWith(isSnackBarOpened: false, isSnackBarExpanded: false);
 
   void updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
 

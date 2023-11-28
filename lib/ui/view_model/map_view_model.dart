@@ -208,7 +208,7 @@ class MapViewModel extends StateNotifier<MapState> {
       if (isGuest) {
         globalViewModel.showSnackBar(content: "등록 완료", type: SnackBarType.complete);
       } else {
-        globalViewModel.init(
+        await globalViewModel.init(
           accessToken: globalViewModel.state.accessToken,
           user: globalViewModel.state.user.copyWith(point: globalViewModel.state.user.point + updateResponse.point)
         );

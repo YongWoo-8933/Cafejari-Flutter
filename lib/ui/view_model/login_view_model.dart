@@ -27,7 +27,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         // 기존 유저
         final loginFinishRes =
             await _userUseCase.kakaoLoginFinish(accessToken: loginRes.accessToken);
-        globalViewModel.init(
+        await globalViewModel.init(
           accessToken: loginFinishRes.accessToken,
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user
@@ -52,7 +52,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         // 기존 유저
         final loginFinishRes =
             await _userUseCase.appleLoginFinish(idToken: idToken, code: code);
-        globalViewModel.init(
+        await globalViewModel.init(
           accessToken: loginFinishRes.accessToken,
           refreshToken: loginFinishRes.refreshToken,
           user: loginFinishRes.user
@@ -84,7 +84,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         marketingPushEnabled: state.isMarketingAgreed,
         onAccessTokenRefresh: globalViewModel.setAccessToken
       );
-      globalViewModel.init(
+      await globalViewModel.init(
         accessToken: loginRes.accessToken,
         refreshToken: loginRes.refreshToken,
         user: makeNewProfileRes
@@ -111,7 +111,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
         marketingPushEnabled: state.isMarketingAgreed,
         onAccessTokenRefresh: globalViewModel.setAccessToken
       );
-      globalViewModel.init(
+      await globalViewModel.init(
         accessToken: loginRes.accessToken,
         refreshToken: loginRes.refreshToken,
         user: makeNewProfileRes

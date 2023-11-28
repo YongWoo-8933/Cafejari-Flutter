@@ -53,7 +53,7 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
         availableChallenges: currentAvailableChallenges,
         selectedChallenge: newChallenge
       );
-      globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: globalViewModel.state.user);
+      await globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: globalViewModel.state.user);
       globalViewModel.showSnackBar(content: "참여됨", type: SnackBarType.complete);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);

@@ -116,8 +116,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                     ref.watch(_kakaoLoginLoadingProvider.notifier).update((state) => false);
                     switch(isUserExist) {
                       case true:
-                        if (context.mounted) GoRouter.of(context).pop();
                         loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
+                        if (context.mounted) GoRouter.of(context).pop();
                         await FirebaseAnalytics.instance.logLogin();
                       case false:
                         if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);
@@ -156,8 +156,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           ref.watch(_appleLoginLoadingProvider.notifier).update((state) => false);
                           switch(isUserExist) {
                             case true:
-                              if (context.mounted) GoRouter.of(context).pop();
                               loginViewModel.globalViewModel.showSnackBar(content: "로그인 완료", type: SnackBarType.complete);
+                              if (context.mounted) GoRouter.of(context).pop();
                               await FirebaseAnalytics.instance.logLogin();
                             case false:
                               if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.registration);

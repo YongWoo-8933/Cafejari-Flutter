@@ -31,7 +31,7 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
         profileImageId: profileImageId,
         onAccessTokenRefresh: globalViewModel.setAccessToken
       );
-      globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: updatedUser);
+      await globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: updatedUser);
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {
