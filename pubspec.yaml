@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.2.0+12
 
 environment:
   sdk: '>=3.0.1 <4.0.0'
@@ -31,63 +31,96 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # 아이콘
+  # 아이콘 ok
   cupertino_icons: ^1.0.2
 
-  # firebase
+  # firebase ok
   firebase_core: ^2.13.0
   firebase_analytics: ^10.4.1
   firebase_messaging: ^14.6.1
+  firebase_dynamic_links: ^5.3.5
 
-  # 푸시알림
+  # 푸시알림 ok
   flutter_local_notifications: ^14.1.0
 
-  # router
+  # router ok
   go_router: ^7.0.1
 
-  # 상태 관리
+  # 상태 관리 ok
   flutter_riverpod: ^2.3.6
 
-  # 권한
+  # 권한 ok
   permission_handler: ^10.2.0
 
-  # 로컬 저장소
+  # 비동기 처리 ok
+  async: ^2.11.0
+
+  # 로컬 저장소 ok
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # 통신
+  # 통신 ok
   http: ^0.13.6
 
-  # 빌드
+  # 빌드 ok
   build_runner: ^2.3.3
 
-  # dto / object 관리
+  # dto / object 관리 ok
   json_serializable: ^6.6.2
   freezed: ^2.3.3
 
-  # URL 이동
+  # URL 이동 ok
   url_launcher: ^6.1.10
 
-  # 네이버 지도
-  flutter_naver_map:
-    git:
-      url: https://github.com/note11g/flutter_naver_map.git
-      ref: 1.0.2-dev
+  # 스토어로 이동 ok
+  launch_review: ^3.0.1
 
-  # 웹뷰
-  webview_flutter: ^4.2.0
+  # 네이버 지도 ok
+  flutter_naver_map: ^1.0.2
 
-  # 애니메이션
-  animations: ^2.0.7
+  # 웹뷰 ok
+  flutter_inappwebview: ^5.7.2+3
 
-  # 이미지
+  # swipe refresh ok
+  pull_to_refresh: ^2.0.0
+
+  # 이미지 ok
+  cached_network_image: ^3.2.3
   photo_view: ^0.14.0
 
-  # bottom navigation bar
-  curved_navigation_bar: ^1.0.3
-
-  # bottom sheet
+  # bottom sheet ok
   sliding_up_panel: ^2.0.0+1
+
+  # 카카오 서비스 ok
+  kakao_flutter_sdk_user: ^1.5.0 # 카카오 로그인
+  kakao_flutter_sdk_talk: ^1.5.0 # 카카오톡 메시지, 카카오톡 소셜(프로필 가져오기, 친구 목록 가져오기)
+  kakao_flutter_sdk_share: ^1.5.0 # 카카오톡 공유
+  kakao_flutter_sdk_friend: ^1.5.0 # 카카오톡 소셜(피커: 친구 선택하기)
+
+  # 내 위치 찾기 패키지 ok
+  geolocator: ^9.0.2
+
+  # 슬라이더 ok
+  syncfusion_flutter_sliders: ^22.2.9
+
+  # 보안 키 관리 ok
+  flutter_dotenv: ^5.1.0
+
+  # 로딩 애니메이션 ok
+  loading_animation_widget: ^1.2.0+4
+
+  # 스플래시 화면 check
+  flutter_native_splash: ^2.3.2
+
+  # 점선 border ok
+  dotted_border: ^2.0.0+3
+
+  # html 표현 변환 ok
+  flutter_widget_from_html: ^0.10.3
+  html: ^0.15.4
+
+  # 애플 로그인
+  sign_in_with_apple: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -113,11 +146,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - asset/json/
+    - .env
+    - asset/
     - asset/image/
-    - asset/image/2.0x/
-    - asset/image/3.0x/
-    - asset/image/4.0x/
+    - asset/font/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -151,10 +183,26 @@ flutter:
           weight: 200
         - asset: asset/font/Inter-Thin.ttf
           weight: 100
-    - family: Roboto
+    - family: Suit
       fonts:
-        - asset: asset/font/Roboto-Medium.ttf
+        - asset: asset/font/SUIT-Heavy.ttf
+          weight: 900
+        - asset: asset/font/SUIT-ExtraBold.ttf
+          weight: 800
+        - asset: asset/font/SUIT-Bold.ttf
+          weight: 700
+        - asset: asset/font/SUIT-SemiBold.ttf
+          weight: 600
+        - asset: asset/font/SUIT-Medium.ttf
           weight: 500
+        - asset: asset/font/SUIT-Regular.ttf
+          weight: 400
+        - asset: asset/font/SUIT-Light.ttf
+          weight: 300
+        - asset: asset/font/SUIT-ExtraLight.ttf
+          weight: 200
+        - asset: asset/font/SUIT-Thin.ttf
+          weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

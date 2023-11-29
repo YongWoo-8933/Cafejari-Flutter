@@ -1,122 +1,293 @@
+
+import 'dart:ffi';
+
+import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 
 part 'cafe_response.g.dart';
 
-/// cafe info 관련 DTO
+/// cafe 관련 DTO
 @JsonSerializable()
-class CafeInfoResponse {
-  final int id, total_floor, floor;
-  final String name, city, gu, address, google_place_id;
+class CafeResponse {
+  final int id;
+  final String name, address;
   final double latitude, longitude;
-  final List<CafeInfoCafeResponse> cafe;
-  final List<MoreInfoResponse> more_info;
+  final bool is_visible, is_opened, is_closed;
+  final OpeningHourResponse? opening_hour;
+  final BrandResponse? brand;
+  final CATIResponse? cati;
+  final List<CafeFloorCafeRepResponse> cafe_floor;
+  final List<CafeVIPResponse> cafe_vip;
+  final List<CafeImageResponse> cafe_image;
 
-  CafeInfoResponse(
+  CafeResponse(
       {required this.id,
       required this.name,
-      required this.city,
-      required this.gu,
       required this.address,
-      required this.total_floor,
-      required this.floor,
       required this.latitude,
       required this.longitude,
-      required this.google_place_id,
-      required this.cafe,
-      required this.more_info});
+      required this.is_visible,
+      required this.is_opened,
+      required this.is_closed,
+      required this.opening_hour,
+      required this.brand,
+      required this.cati,
+      required this.cafe_floor,
+      required this.cafe_vip,
+      required this.cafe_image});
 
-  factory CafeInfoResponse.fromJson(Map<String, dynamic> json) => _$CafeInfoResponseFromJson(json);
+  factory CafeResponse.fromJson(Map<String, dynamic> json) => _$CafeResponseFromJson(json);
 }
 
 @JsonSerializable()
-class CafeInfoCafeResponse {
+class CafeSearchResponse {
+  final int id;
+  final String name, address;
+  final double latitude, longitude;
+
+  CafeSearchResponse(
+      {required this.id,
+      required this.name,
+      required this.latitude,
+      required this.longitude,
+      required this.address});
+
+  factory CafeSearchResponse.fromJson(Map<String, dynamic> json) => _$CafeSearchResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CafeFloorCafeRepResponse {
+  final int id, floor, point_prediction;
+  final String? wall_socket_rate, restroom;
+  final bool has_seat;
+  final OccupancyRatePredictionResponse? occupancy_rate_prediction;
+  final List<OccupancyRateUpdateRepResponse> recent_updated_log;
+
+  CafeFloorCafeRepResponse(
+      {required this.id,
+        required this.floor,
+        required this.point_prediction,
+        required this.wall_socket_rate,
+        required this.restroom,
+        required this.has_seat,
+        required this.occupancy_rate_prediction,
+        required this.recent_updated_log});
+
+  factory CafeFloorCafeRepResponse.fromJson(Map<String, dynamic> json) =>
+      _$CafeFloorCafeRepResponseFromJson(json);
+}
+
+@JsonSerializable()
+class OccupancyRateUpdateRepResponse {
+  final int id, point;
+  final String occupancy_rate, update;
+  final PartialUserResponse? user;
+
+  OccupancyRateUpdateRepResponse(
+      {required this.id,
+        required this.point,
+        required this.occupancy_rate,
+        required this.update,
+        required this.user});
+
+  factory OccupancyRateUpdateRepResponse.fromJson(Map<String, dynamic> json) =>
+      _$OccupancyRateUpdateRepResponseFromJson(json);
+}
+
+@JsonSerializable()
+class OccupancyRatePredictionResponse {
+  final int id;
+  final String occupancy_rate, update;
+
+  OccupancyRatePredictionResponse(
+      {required this.id,
+        required this.occupancy_rate,
+        required this.update});
+
+  factory OccupancyRatePredictionResponse.fromJson(Map<String, dynamic> json) =>
+      _$OccupancyRatePredictionResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CafeVIPResponse {
+  final int id, update_count;
+  final PartialUserResponse user;
+
+  CafeVIPResponse(
+      {required this.id,
+      required this.update_count,
+      required this.user});
+
+  factory CafeVIPResponse.fromJson(Map<String, dynamic> json) =>
+      _$CafeVIPResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CafeImageResponse {
+  final int id;
+  final String image;
+  final bool is_visible;
+
+  CafeImageResponse(
+      {required this.id,
+        required this.image,
+        required this.is_visible});
+
+  factory CafeImageResponse.fromJson(Map<String, dynamic> json) =>
+      _$CafeImageResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CATIResponse {
+  final double openness;
+  final double coffee;
+  final double workspace;
+  final double acidity;
+
+  CATIResponse({
+    required this.openness,
+    required this.coffee,
+    required this.workspace,
+    required this.acidity,
+  });
+
+  factory CATIResponse.fromJson(Map<String, dynamic> json) => _$CATIResponseFromJson(json);
+}
+
+@JsonSerializable()
+class OpeningHourResponse {
+  final int id;
+  final String mon, tue, wed, thu, fri, sat, sun;
+
+  OpeningHourResponse(
+      {required this.id,
+        required this.mon,
+        required this.tue,
+        required this.wed,
+        required this.thu,
+        required this.fri,
+        required this.sat,
+        required this.sun});
+
+  factory OpeningHourResponse.fromJson(Map<String, dynamic> json) =>
+      _$OpeningHourResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CafePageResponse {
+  final int count;
+  final String? next, previous;
+  final List<CafeResponse> results;
+
+  CafePageResponse(
+      {required this.count,
+        required this.next,
+        required this.previous,
+        required this.results});
+
+  factory CafePageResponse.fromJson(Map<String, dynamic> json) =>
+      _$CafePageResponseFromJson(json);
+}
+
+@JsonSerializable()
+class OccupancyRateUpdateResponse {
+  final int id, point;
+  final CafeFloorOccupancyRepResponse cafe_floor;
+  final String occupancy_rate, update;
+
+  OccupancyRateUpdateResponse(
+      {required this.id,
+        required this.cafe_floor,
+        required this.point,
+        required this.occupancy_rate,
+        required this.update});
+
+  factory OccupancyRateUpdateResponse.fromJson(Map<String, dynamic> json) =>
+      _$OccupancyRateUpdateResponseFromJson(json);
+}
+
+@JsonSerializable()
+class CafeFloorOccupancyRepResponse {
   final int id, floor;
-  final List<RecentUpdatedLogResponse> recent_updated_log;
-  final String? restroom, wall_socket;
-  final UserResponse? master;
+  final CafeRepResponse cafe;
+  final String? wall_socket_rate, restroom;
+  final bool has_seat;
 
-  CafeInfoCafeResponse(
+  CafeFloorOccupancyRepResponse(
       {required this.id,
-      required this.recent_updated_log,
-      required this.floor,
-      required this.restroom,
-      required this.wall_socket,
-      required this.master});
+        required this.floor,
+        required this.cafe,
+        required this.wall_socket_rate,
+        required this.restroom,
+        required this.has_seat});
 
-  factory CafeInfoCafeResponse.fromJson(Map<String, dynamic> json) =>
-      _$CafeInfoCafeResponseFromJson(json);
+  factory CafeFloorOccupancyRepResponse.fromJson(Map<String, dynamic> json) =>
+      _$CafeFloorOccupancyRepResponseFromJson(json);
+}
+
+
+@JsonSerializable()
+class CafeRepResponse {
+  final int id;
+  final String name, address;
+  final double latitude, longitude;
+  final bool is_visible, is_opened, is_closed;
+
+  CafeRepResponse(
+      {required this.id,
+        required this.name,
+        required this.address,
+        required this.latitude,
+        required this.longitude,
+        required this.is_visible,
+        required this.is_opened,
+        required this.is_closed});
+
+  factory CafeRepResponse.fromJson(Map<String, dynamic> json) => _$CafeRepResponseFromJson(json);
 }
 
 @JsonSerializable()
-class RecentUpdatedLogResponse {
-  final int id;
-  final String update;
-  final CafeInfoDetailLogResponse cafe_detail_log;
+class NaverSearchCafeResponse {
+  final List<NaverSearchCafeItemResponse> items;
 
-  RecentUpdatedLogResponse({
-    required this.id,
-    required this.update,
-    required this.cafe_detail_log,
+  NaverSearchCafeResponse({required this.items});
+
+  factory NaverSearchCafeResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeResponseFromJson(json);
+}
+
+@JsonSerializable()
+class NaverSearchCafeItemResponse {
+  final String title;
+  final String address;
+  final String roadAddress;
+  final String mapx;
+  final String mapy;
+
+  NaverSearchCafeItemResponse({
+    required this.title,
+    required this.address,
+    required this.roadAddress,
+    required this.mapx,
+    required this.mapy,
   });
 
-  factory RecentUpdatedLogResponse.fromJson(Map<String, dynamic> json) =>
-      _$RecentUpdatedLogResponseFromJson(json);
+  factory NaverSearchCafeItemResponse.fromJson(Map<String, dynamic> json) => _$NaverSearchCafeItemResponseFromJson(json);
 }
 
 @JsonSerializable()
-class CafeInfoDetailLogResponse {
-  final int id, crowded;
-  final String update;
-  final CafeInfoCafeLogResponse cafe_log;
+class LocationResponse {
+  final String name;
+  final String image;
+  final double latitude;
+  final double longitude;
 
-  CafeInfoDetailLogResponse({
-    required this.id,
-    required this.crowded,
-    required this.update,
-    required this.cafe_log,
-  });
-
-  factory CafeInfoDetailLogResponse.fromJson(Map<String, dynamic> json) =>
-      _$CafeInfoDetailLogResponseFromJson(json);
-}
-
-@JsonSerializable()
-class CafeInfoCafeLogResponse {
-  final int id, point, update_period;
-  final String start, finish;
-  final bool expired, notified;
-  final UserResponse master;
-
-  CafeInfoCafeLogResponse(
-      {required this.id,
-      required this.start,
-      required this.finish,
-      required this.expired,
-      required this.notified,
-      required this.point,
-      required this.update_period,
-      required this.master});
-
-  factory CafeInfoCafeLogResponse.fromJson(Map<String, dynamic> json) =>
-      _$CafeInfoCafeLogResponseFromJson(json);
-}
-
-@JsonSerializable()
-class MoreInfoResponse {
-  final int id;
-  final String image, event1, event2, event3, notice1, notice2, notice3;
-
-  MoreInfoResponse({
-    required this.id,
+  LocationResponse({
+    required this.name,
     required this.image,
-    required this.event1,
-    required this.event2,
-    required this.event3,
-    required this.notice1,
-    required this.notice2,
-    required this.notice3,
+    required this.latitude,
+    required this.longitude,
   });
 
-  factory MoreInfoResponse.fromJson(Map<String, dynamic> json) => _$MoreInfoResponseFromJson(json);
+  factory LocationResponse.fromJson(Map<String, dynamic> json) => _$LocationResponseFromJson(json);
 }

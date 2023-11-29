@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ShopState {
-  int get mapIndex => throw _privateConstructorUsedError;
-  int get leaderIndex => throw _privateConstructorUsedError;
-  int get profileIndex => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  List<Brand> get brandList => throw _privateConstructorUsedError;
+  List<Item> get itemList => throw _privateConstructorUsedError;
+  List<Brandcon> get myBrandcons => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ShopStateCopyWith<ShopState> get copyWith =>
@@ -30,7 +31,11 @@ abstract class $ShopStateCopyWith<$Res> {
   factory $ShopStateCopyWith(ShopState value, $Res Function(ShopState) then) =
       _$ShopStateCopyWithImpl<$Res, ShopState>;
   @useResult
-  $Res call({int mapIndex, int leaderIndex, int profileIndex});
+  $Res call(
+      {bool isLoading,
+      List<Brand> brandList,
+      List<Item> itemList,
+      List<Brandcon> myBrandcons});
 }
 
 /// @nodoc
@@ -46,23 +51,28 @@ class _$ShopStateCopyWithImpl<$Res, $Val extends ShopState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mapIndex = null,
-    Object? leaderIndex = null,
-    Object? profileIndex = null,
+    Object? isLoading = null,
+    Object? brandList = null,
+    Object? itemList = null,
+    Object? myBrandcons = null,
   }) {
     return _then(_value.copyWith(
-      mapIndex: null == mapIndex
-          ? _value.mapIndex
-          : mapIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      leaderIndex: null == leaderIndex
-          ? _value.leaderIndex
-          : leaderIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileIndex: null == profileIndex
-          ? _value.profileIndex
-          : profileIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      brandList: null == brandList
+          ? _value.brandList
+          : brandList // ignore: cast_nullable_to_non_nullable
+              as List<Brand>,
+      itemList: null == itemList
+          ? _value.itemList
+          : itemList // ignore: cast_nullable_to_non_nullable
+              as List<Item>,
+      myBrandcons: null == myBrandcons
+          ? _value.myBrandcons
+          : myBrandcons // ignore: cast_nullable_to_non_nullable
+              as List<Brandcon>,
     ) as $Val);
   }
 }
@@ -74,7 +84,11 @@ abstract class _$$_ShopStateCopyWith<$Res> implements $ShopStateCopyWith<$Res> {
       __$$_ShopStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int mapIndex, int leaderIndex, int profileIndex});
+  $Res call(
+      {bool isLoading,
+      List<Brand> brandList,
+      List<Item> itemList,
+      List<Brandcon> myBrandcons});
 }
 
 /// @nodoc
@@ -88,23 +102,28 @@ class __$$_ShopStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mapIndex = null,
-    Object? leaderIndex = null,
-    Object? profileIndex = null,
+    Object? isLoading = null,
+    Object? brandList = null,
+    Object? itemList = null,
+    Object? myBrandcons = null,
   }) {
     return _then(_$_ShopState(
-      mapIndex: null == mapIndex
-          ? _value.mapIndex
-          : mapIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      leaderIndex: null == leaderIndex
-          ? _value.leaderIndex
-          : leaderIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileIndex: null == profileIndex
-          ? _value.profileIndex
-          : profileIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      brandList: null == brandList
+          ? _value._brandList
+          : brandList // ignore: cast_nullable_to_non_nullable
+              as List<Brand>,
+      itemList: null == itemList
+          ? _value._itemList
+          : itemList // ignore: cast_nullable_to_non_nullable
+              as List<Item>,
+      myBrandcons: null == myBrandcons
+          ? _value._myBrandcons
+          : myBrandcons // ignore: cast_nullable_to_non_nullable
+              as List<Brandcon>,
     ));
   }
 }
@@ -113,20 +132,43 @@ class __$$_ShopStateCopyWithImpl<$Res>
 
 class _$_ShopState implements _ShopState {
   _$_ShopState(
-      {required this.mapIndex,
-      required this.leaderIndex,
-      required this.profileIndex});
+      {required this.isLoading,
+      required final List<Brand> brandList,
+      required final List<Item> itemList,
+      required final List<Brandcon> myBrandcons})
+      : _brandList = brandList,
+        _itemList = itemList,
+        _myBrandcons = myBrandcons;
 
   @override
-  final int mapIndex;
+  final bool isLoading;
+  final List<Brand> _brandList;
   @override
-  final int leaderIndex;
+  List<Brand> get brandList {
+    if (_brandList is EqualUnmodifiableListView) return _brandList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_brandList);
+  }
+
+  final List<Item> _itemList;
   @override
-  final int profileIndex;
+  List<Item> get itemList {
+    if (_itemList is EqualUnmodifiableListView) return _itemList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_itemList);
+  }
+
+  final List<Brandcon> _myBrandcons;
+  @override
+  List<Brandcon> get myBrandcons {
+    if (_myBrandcons is EqualUnmodifiableListView) return _myBrandcons;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_myBrandcons);
+  }
 
   @override
   String toString() {
-    return 'ShopState(mapIndex: $mapIndex, leaderIndex: $leaderIndex, profileIndex: $profileIndex)';
+    return 'ShopState(isLoading: $isLoading, brandList: $brandList, itemList: $itemList, myBrandcons: $myBrandcons)';
   }
 
   @override
@@ -134,17 +176,22 @@ class _$_ShopState implements _ShopState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ShopState &&
-            (identical(other.mapIndex, mapIndex) ||
-                other.mapIndex == mapIndex) &&
-            (identical(other.leaderIndex, leaderIndex) ||
-                other.leaderIndex == leaderIndex) &&
-            (identical(other.profileIndex, profileIndex) ||
-                other.profileIndex == profileIndex));
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            const DeepCollectionEquality()
+                .equals(other._brandList, _brandList) &&
+            const DeepCollectionEquality().equals(other._itemList, _itemList) &&
+            const DeepCollectionEquality()
+                .equals(other._myBrandcons, _myBrandcons));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, mapIndex, leaderIndex, profileIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      const DeepCollectionEquality().hash(_brandList),
+      const DeepCollectionEquality().hash(_itemList),
+      const DeepCollectionEquality().hash(_myBrandcons));
 
   @JsonKey(ignore: true)
   @override
@@ -155,16 +202,19 @@ class _$_ShopState implements _ShopState {
 
 abstract class _ShopState implements ShopState {
   factory _ShopState(
-      {required final int mapIndex,
-      required final int leaderIndex,
-      required final int profileIndex}) = _$_ShopState;
+      {required final bool isLoading,
+      required final List<Brand> brandList,
+      required final List<Item> itemList,
+      required final List<Brandcon> myBrandcons}) = _$_ShopState;
 
   @override
-  int get mapIndex;
+  bool get isLoading;
   @override
-  int get leaderIndex;
+  List<Brand> get brandList;
   @override
-  int get profileIndex;
+  List<Item> get itemList;
+  @override
+  List<Brandcon> get myBrandcons;
   @override
   @JsonKey(ignore: true)
   _$$_ShopStateCopyWith<_$_ShopState> get copyWith =>

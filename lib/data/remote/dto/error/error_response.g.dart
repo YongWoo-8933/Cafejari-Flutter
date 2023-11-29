@@ -10,14 +10,14 @@ ConflictErrorResponse _$ConflictErrorResponseFromJson(
         Map<String, dynamic> json) =>
     ConflictErrorResponse(
       error_code: json['error_code'] as int,
-      detail: json['detail'] as String?,
+      error_message: json['error_message'] as String,
     );
 
 Map<String, dynamic> _$ConflictErrorResponseToJson(
         ConflictErrorResponse instance) =>
     <String, dynamic>{
       'error_code': instance.error_code,
-      'detail': instance.detail,
+      'error_message': instance.error_message,
     };
 
 ValidationErrorResponse _$ValidationErrorResponseFromJson(
