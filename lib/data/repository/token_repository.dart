@@ -1,19 +1,19 @@
+import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
-import 'package:cafejari_flutter/data/remote/dto/user/token_response.dart';
 
 /// access token, refresh token 관리 저장소
 abstract interface class TokenRepository {
   Future<TokenResponse> fetchAccessToken();
-  putRefreshToken({required String newToken});
+  Future<void> putRefreshToken({required String newToken});
+  Future<String> getRefreshToken();
 }
 
 /// user repository의 구현부
 class TokenRepositoryImpl implements TokenRepository {
   final APIService service;
-  final String appLabel = "user/token";
   final String boxLabel = "local";
   final String refreshTokenKey = "refreshToken";
 
@@ -27,7 +27,7 @@ class TokenRepositoryImpl implements TokenRepository {
       if (refreshToken.isNull) throw RefreshTokenExpired();
       return TokenResponse.fromJson(await service.request(
           method: HttpMethod.post,
-          appLabel: appLabel,
+          appLabel: "user",
           endpoint: "token/refresh/",
           body: {"refresh": refreshToken}));
     } on ErrorWithMessage {
@@ -38,8 +38,14 @@ class TokenRepositoryImpl implements TokenRepository {
   }
 
   @override
-  putRefreshToken({required String newToken}) async {
+  Future<void> putRefreshToken({required String newToken}) async {
     final Box<dynamic> box = await Hive.openBox(boxLabel);
     await box.put(refreshTokenKey, newToken);
+  }
+
+  @override
+  Future<String> getRefreshToken() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(refreshTokenKey);
   }
 }

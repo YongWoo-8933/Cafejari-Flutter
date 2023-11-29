@@ -2,21 +2,25 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/font.dart';
 import 'package:flutter/material.dart';
 
-class Themings {
-  static final TextStyle darkText = TextStyle(
-    color: AppColor.grey_500,
+class Theming {
+  static const TextStyle darkText = TextStyle(
+    color: AppColor.grey_600,
     fontFamily: AppFont.inter,
+    fontWeight: FontWeight.w400
   );
 
-  static final TextStyle lightText = TextStyle(
+  static const TextStyle lightText = TextStyle(
     color: AppColor.black,
     fontFamily: AppFont.inter,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0,
+    fontSize: 14
   );
 
   static final ThemeData darkTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity, // 시각적 밀도 설정(플렛폼에 따라 밀도를 조정)
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue) // 기본 색상 스웨치를 파란색 계열로 설정
-        .copyWith(secondary: Colors.blueAccent, brightness: Brightness.dark),
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey) // 기본 색상 스웨치를 파란색 계열로 설정
+        .copyWith(secondary: Colors.black, brightness: Brightness.dark),
     switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
         if (states.contains(MaterialState.disabled)) {
@@ -64,19 +68,30 @@ class Themings {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColor.crowdedBlue,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       toolbarTextStyle: lightText,
     ),
-    textTheme: TextTheme(
+    primaryTextTheme: const TextTheme(
+      displayLarge: lightText,
+      displayMedium: lightText,
+      displaySmall: lightText,
+      bodyLarge: lightText,
+      bodyMedium: lightText,
+      bodySmall: lightText,
+      labelMedium: lightText,
+      labelLarge: lightText,
+      labelSmall: lightText
+    ),
+    textTheme: const TextTheme(
       bodyLarge: lightText,
       bodyMedium: lightText,
       labelMedium: lightText,
       bodySmall: lightText,
       labelLarge: lightText,
-      labelSmall: lightText,
+      labelSmall: lightText
     ),
-    scaffoldBackgroundColor: AppColor.grey_500,
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
+    scaffoldBackgroundColor: AppColor.grey_600,
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
         .copyWith(background: AppColor.grey_300),
   );
 }
