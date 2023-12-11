@@ -166,7 +166,7 @@ class BottomSheetMoreInfo extends ConsumerWidget {
                       Image.asset("asset/image/icon_square_edit.png", width: 20, height: 20),
                       const HorizontalSpacer(4),
                       const Text(
-                        "매장정보가 잘못됐어요",
+                        "매장정보 제보하기",
                         style: TextSize.textSize_white_14,
                       ),
                     ],
