@@ -1,4 +1,3 @@
-
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'request.freezed.dart';
@@ -6,7 +5,7 @@ part 'request.freezed.dart';
 
 typedef CafeAdditionRequests = List<CafeAdditionRequest>;
 
-/// cafe log 모델
+/// cafe addition request 모델
 @freezed
 class CafeAdditionRequest with _$CafeAdditionRequest {
   factory CafeAdditionRequest({
@@ -39,4 +38,28 @@ class CafeAdditionRequest with _$CafeAdditionRequest {
       answeredAt: DateTime(2022),
       wallSocketRates: [],
       openingHour: null);
+}
+
+
+typedef CafeModificationRequests = List<CafeAdditionRequest>;
+
+/// cafe modification request 모델
+@freezed
+class CafeModificationRequest with _$CafeModificationRequest {
+  factory CafeModificationRequest({
+    required final int id,
+    required final Cafe cafe,
+    required final bool isApproved,
+    required final DateTime requestedAt,
+    required final DateTime answeredAt,
+    required final String? rejectionReason,
+  }) = _CafeModificationRequest;
+
+  factory CafeModificationRequest.empty() => CafeModificationRequest(
+      id: 0,
+      cafe: Cafe.empty(),
+      isApproved: false,
+      requestedAt: DateTime(2022),
+      answeredAt: DateTime(2022),
+      rejectionReason: null);
 }

@@ -4,28 +4,59 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/state/cafe_info_modification_state/cafe_info_modification_state.dart';
+import 'package:cafejari_flutter/ui/state/cafe_registration_state/cafe_registration_state.dart';
+import 'package:cafejari_flutter/ui/util/day_of_week_opening_info.dart';
+import 'package:cafejari_flutter/ui/view_model/cafe_info_modification_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/cafe_registration_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-showOpeningHourDialog(BuildContext context) async {
+enum ShowOpeningHourDialogType { registration, modification }
+
+showOpeningHourDialog({
+  required BuildContext context,
+  required ShowOpeningHourDialogType type
+}) async {
   await showDialog(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
       return Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          final RequestState requestState = ref.watch(requestViewModelProvider);
-          final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+          final CafeRegistrationState registrationState =  ref.watch(cafeRegistrationViewModelProvider);
+          final CafeInfoModificationState modificationState =  ref.watch(cafeInfoModificationViewModelProvider);
+          final CafeRegistrationViewModel registrationViewModel =  ref.watch(cafeRegistrationViewModelProvider.notifier);
+          final CafeInfoModificationViewModel modificationViewModel =  ref.watch(cafeInfoModificationViewModelProvider.notifier);
+          const double componentHeight = 48;
+
+          final List<DayOfWeekOpeningInfo> openingInfos = type == ShowOpeningHourDialogType.registration ?
+            registrationState.openingInfos : modificationState.openingInfos;
+          final List<String> selectedDaysOfWeek = type == ShowOpeningHourDialogType.registration ?
+            registrationState.selectedDaysOfWeek : modificationState.selectedDaysOfWeek;
+          final DayOfWeekOpeningInfo selectedOpeningInfo = type == ShowOpeningHourDialogType.registration ?
+            registrationState.selectedOpeningInfo : modificationState.selectedOpeningInfo;
+
+          final Function(List<String>) pickDay = type == ShowOpeningHourDialogType.registration ?
+            registrationViewModel.pickDay : modificationViewModel.pickDay;
+          final Function(TimeOfDay? timeOfDay) selectOpeningTime = type == ShowOpeningHourDialogType.registration ?
+            registrationViewModel.selectOpeningTime : modificationViewModel.selectOpeningTime;
+          final Function(TimeOfDay? timeOfDay) selectClosingTime = type == ShowOpeningHourDialogType.registration ?
+            registrationViewModel.selectClosingTime : modificationViewModel.selectClosingTime;
+          final Function(bool) selectIsClose = type == ShowOpeningHourDialogType.registration ?
+            registrationViewModel.selectIsClose : modificationViewModel.selectIsClose;
+          final VoidCallback saveSelectedOpeningHourInfo = type == ShowOpeningHourDialogType.registration ?
+            registrationViewModel.saveSelectedOpeningHourInfo : modificationViewModel.saveSelectedOpeningHourInfo;
 
           Widget openingTimeFrame({
+            required bool isClosed,
             required String title,
             required String timeWithPeriod,
             required VoidCallback onTab
           }) {
             return GestureDetector(
-              onTap: onTab,
+              onTap: isClosed ? null : onTab,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
@@ -35,14 +66,24 @@ showOpeningHourDialog(BuildContext context) async {
                   ),
                 ),
                 width: 280,
-                height: 48,
+                height: componentHeight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(title, style: TextSize.textSize_bold_16_w700),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: isClosed ? AppColor.grey_300 : AppColor.primary
+                      )
+                    ),
                     Text(
                       timeWithPeriod,
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: isClosed ? AppColor.grey_300 : AppColor.primary
+                      )
                     ),
                   ],
                 ),
@@ -53,7 +94,7 @@ showOpeningHourDialog(BuildContext context) async {
           return AlertDialog(
             backgroundColor: AppColor.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+              borderRadius: BorderRadius.circular(20.0),
             ),
             insetPadding: AppPadding.padding_0,
             contentPadding: AppPadding.padding_10,
@@ -71,39 +112,40 @@ showOpeningHourDialog(BuildContext context) async {
                   const VerticalSpacer(40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: requestState.openingInfos.map((e) {
+                    children: openingInfos.map((e) {
                       return Row(
                         children: [
                           _DayButton(
                             size: 36,
-                            isClicked: requestState.selectedDaysOfWeek.contains(e.shortText),
+                            isClicked: selectedDaysOfWeek.contains(e.shortText),
                             text: e.shortText,
                             onPress: () {
-                              List<String> newSelectedDays = List.from(requestState.selectedDaysOfWeek);
-                              if (requestState.selectedDaysOfWeek.contains(e.shortText)) {
+                              List<String> newSelectedDays = List.from(selectedDaysOfWeek);
+                              if (selectedDaysOfWeek.contains(e.shortText)) {
                                 newSelectedDays.remove(e.shortText);
                               } else {
                                 newSelectedDays.add(e.shortText);
                               }
-                              requestViewModel.pickDay(newSelectedDays);
+                              pickDay(newSelectedDays);
                             },
                           ),
-                          HorizontalSpacer(requestState.openingInfos.last.shortText == e.shortText ? 0 : 4)
+                          HorizontalSpacer(openingInfos.last.shortText == e.shortText ? 0 : 4)
                         ],
                       );
                     }).toList()
                   ),
                   const VerticalSpacer(20),
                   openingTimeFrame(
+                    isClosed: selectedOpeningInfo.isClose,
                     title: "영업 시작",
-                    timeWithPeriod: requestState.selectedOpeningInfo.getOpeningHourWithPeriod(),
+                    timeWithPeriod: selectedOpeningInfo.getOpeningHourWithPeriod(),
                     onTab: () async {
-                      requestViewModel.selectOpeningTime(
+                      selectOpeningTime(
                         await showTimePicker(
                           initialEntryMode: TimePickerEntryMode.dialOnly,
                           initialTime: TimeOfDay(
-                              hour: requestState.selectedOpeningInfo.openAt.hour,
-                              minute: requestState.selectedOpeningInfo.openAt.minute
+                            hour: selectedOpeningInfo.openAt.hour,
+                            minute: selectedOpeningInfo.openAt.minute
                           ),
                           helpText: "영업 시작 시간 입력(AM/PM 주의)",
                           cancelText: "닫기",
@@ -115,15 +157,16 @@ showOpeningHourDialog(BuildContext context) async {
                   ),
                   const VerticalSpacer(16),
                   openingTimeFrame(
+                    isClosed: selectedOpeningInfo.isClose,
                     title: "영업 종료",
-                    timeWithPeriod: requestState.selectedOpeningInfo.getClosingHourWithPeriod(),
+                    timeWithPeriod: selectedOpeningInfo.getClosingHourWithPeriod(),
                     onTab: () async {
-                      requestViewModel.selectClosingTime(
+                      selectClosingTime(
                         await showTimePicker(
                           initialEntryMode: TimePickerEntryMode.dialOnly,
                           initialTime: TimeOfDay(
-                              hour: requestState.selectedOpeningInfo.closeAt.hour,
-                              minute: requestState.selectedOpeningInfo.closeAt.minute
+                            hour: selectedOpeningInfo.closeAt.hour,
+                            minute: selectedOpeningInfo.closeAt.minute
                           ),
                           helpText: "영업 종료 시간 입력(AM/PM 주의)",
                           cancelText: "닫기",
@@ -132,6 +175,42 @@ showOpeningHourDialog(BuildContext context) async {
                         )
                       );
                     }
+                  ),
+                  const VerticalSpacer(16),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: () => selectIsClose(!selectedOpeningInfo.isClose),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(135, componentHeight),
+                        backgroundColor: selectedOpeningInfo.isClose ? AppColor.secondary : AppColor.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(componentHeight / 2),
+                          side: BorderSide(
+                            color: selectedOpeningInfo.isClose ? AppColor.transparent : AppColor.grey_300,
+                            width: 1,
+                          )
+                        )
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.check_mark_circled,
+                            color: selectedOpeningInfo.isClose ? AppColor.white : AppColor.grey_500,
+                            size: 16,
+                          ),
+                          const HorizontalSpacer(8),
+                          Text(
+                            "정기휴무",
+                            style: TextStyle(
+                              color: selectedOpeningInfo.isClose ? AppColor.white : AppColor.grey_700,
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
                   )
                 ],
               )
@@ -144,7 +223,7 @@ showOpeningHourDialog(BuildContext context) async {
                   children: [
                     SizedBox(
                       width: 135,
-                      height: 48,
+                      height: componentHeight,
                       child: ElevatedButton(
                         onPressed: () => Navigator.of(context).pop(),
                         style: ElevatedButton.styleFrom(
@@ -172,7 +251,7 @@ showOpeningHourDialog(BuildContext context) async {
                       buttonHeight: 48,
                       title: "저장",
                       onPressed: () {
-                        requestViewModel.saveSelectedOpeningHourInfo();
+                        saveSelectedOpeningHourInfo();
                         Navigator.of(context).pop();
                       },
                     ),

@@ -57,6 +57,20 @@ abstract interface class CafeUseCase {
     required String etc,
     required Function(String) onAccessTokenRefresh
   });
+  Future<CafeModificationRequest> requestCafeModification({
+    required String accessToken,
+    required bool isClosed,
+    required int cafeId,
+    required int topFloor,
+    required int bottomFloor,
+    required Function(String) onAccessTokenRefresh,
+    List<double>? wallSocketRateList,
+    List<String>? openingHourList,
+    List<String>? restRoomList,
+    double? latitude,
+    double? longitude,
+    String? etc
+  });
   Future<void> voteCATI({
     required String accessToken,
     required int cafeId,
@@ -322,7 +336,7 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
       try {
         return parseCafeAdditionRequestFromCafeAdditionRequestResponse(
           requestResponse: await requestRepository.postCafeAdditionRequest(
-            accessToken: accessToken,
+            accessToken: newToken,
             cafeName: cafeName,
             dongAddress: dongAddress,
             roadAddress: roadAddress,
@@ -332,6 +346,66 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
             bottomFloor: bottomFloor,
             wallSocketRateList: wallSocketRateList,
             openingHourList: openingHourList,
+            etc: etc
+          )
+        );
+      } on AccessTokenExpired {
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired {
+      rethrow;
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CafeModificationRequest> requestCafeModification({
+    required String accessToken,
+    required bool isClosed,
+    required int cafeId,
+    required int topFloor,
+    required int bottomFloor,
+    required Function(String) onAccessTokenRefresh,
+    List<double>? wallSocketRateList,
+    List<String>? openingHourList,
+    List<String>? restRoomList,
+    double? latitude,
+    double? longitude,
+    String? etc
+  }) async {
+    try {
+      return parseCafeModificationRequestFromCafeModificationRequestResponse(
+        requestResponse: await requestRepository.postCafeModificationRequest(
+          accessToken: accessToken,
+          isClosed: isClosed,
+          cafeId: cafeId,
+          topFloor: topFloor,
+          bottomFloor: bottomFloor,
+          wallSocketRateList: wallSocketRateList,
+          openingHourList: openingHourList,
+          restRoomList: restRoomList,
+          latitude: latitude,
+          longitude: longitude,
+          etc: etc
+        )
+      );
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
+      try {
+        return parseCafeModificationRequestFromCafeModificationRequestResponse(
+          requestResponse: await requestRepository.postCafeModificationRequest(
+            accessToken: newToken,
+            isClosed: isClosed,
+            cafeId: cafeId,
+            topFloor: topFloor,
+            bottomFloor: bottomFloor,
+            wallSocketRateList: wallSocketRateList,
+            openingHourList: openingHourList,
+            restRoomList: restRoomList,
+            latitude: latitude,
+            longitude: longitude,
             etc: etc
           )
         );

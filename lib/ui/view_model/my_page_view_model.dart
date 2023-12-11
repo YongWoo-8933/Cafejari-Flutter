@@ -76,4 +76,49 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
+
+  autoGenerateNickname() async {
+    try {
+      final nickname = await _userUseCase.autoGenerateNickname();
+      state.nicknameController.text = nickname;
+      if(nickname.isNotEmpty) setNicknameErrorMessage("");
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    }
+  }
+
+  validateNickname() async {
+    if (state.nicknameController.text.length < 2) {
+      setNicknameErrorMessage("닉네임은 2자 이상이어야 합니다");
+    } else if (state.nicknameController.text.length > 10) {
+      setNicknameErrorMessage("닉네임은 최대 10자입니다");
+    } else {
+      try {
+        await _userUseCase.validateNickname(nickname: state.nicknameController.text);
+        setNicknameErrorMessage("");
+      } on ErrorWithMessage catch (e) {
+        setNicknameErrorMessage(e.message);
+      }
+    }
+  }
+
+  setNicknameErrorMessage(String message) => state = state.copyWith(nicknameErrorMessage: message);
+
+  updateNickname({required BuildContext context}) async {
+    try {
+      await _userUseCase.validateNickname(nickname: state.nicknameController.text);
+      final User updatedUser = await _userUseCase.updateProfile(
+        accessToken: globalViewModel.state.accessToken,
+        profileId: globalViewModel.state.user.profileId,
+        nickname: state.nicknameController.text,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      await globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: updatedUser);
+      globalViewModel.showSnackBar(content: "닉네임\n변경완료", type: SnackBarType.complete);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
+    }
+  }
 }

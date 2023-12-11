@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileEditButton extends StatelessWidget {
@@ -38,7 +39,7 @@ class ProfileEditButton extends StatelessWidget {
             padding: AppPadding.padding_0
           ),
           child: Icon(
-            Icons.edit,
+            CupertinoIcons.camera_fill,
             size: buttonSize / 2,
             color: AppColor.secondary,
           ),

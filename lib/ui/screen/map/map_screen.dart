@@ -97,30 +97,36 @@ class _NaverMap extends ConsumerWidget {
       ),
       forceGesture: true,
       onMapReady: (controller) {
+        final MapState mapState = ref.watch(mapViewModelProvider);
+        final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
         controller.setLocationTrackingMode(NLocationTrackingMode.noFollow);
-        ref.watch(mapViewModelProvider.notifier).initMapController(controller);
+        mapViewModel.initMapController(controller);
         ref.watch(_mapController.notifier).update((state) => controller);
-        if (ref.watch(mapViewModelProvider).shareTempCameraPosition.isNotNull) {
-          controller.updateCamera(NCameraUpdate.fromCameraPosition(ref.watch(mapViewModelProvider).shareTempCameraPosition!));
-          ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).shareTempCameraPosition!);
-          ref.watch(mapViewModelProvider.notifier).setShareTempCameraPosition(null);
-        } else if(ref.watch(mapViewModelProvider).initTempCameraPosition.isNotNull) {
-          controller.updateCamera(NCameraUpdate.fromCameraPosition(ref.watch(mapViewModelProvider).initTempCameraPosition!));
-          ref.watch(mapViewModelProvider.notifier).refreshCafes(cameraPosition: ref.watch(mapViewModelProvider).initTempCameraPosition!);
-          ref.watch(mapViewModelProvider.notifier).setInitTempCameraPosition(null);
+        if (mapState.shareTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.shareTempCameraPosition!));
+          mapViewModel.refreshCafes(cameraPosition: mapState.shareTempCameraPosition!);
+          mapViewModel.setShareTempCameraPosition(null);
+        } else if(mapState.initTempCameraPosition.isNotNull) {
+          controller.updateCamera(NCameraUpdate.fromCameraPosition(mapState.initTempCameraPosition!));
+          mapViewModel.refreshCafes(cameraPosition: mapState.initTempCameraPosition!);
+          mapViewModel.setInitTempCameraPosition(null);
         }
       },
       onMapTapped: (_, __) {
+        final MapState mapState = ref.watch(mapViewModelProvider);
+        final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
         mapViewModel.closeBottomSheetPreview();
         mapState.bottomSheetController.close();
         mapViewModel.clearSelectedCafeAndMarker();
       },
       onCameraIdle: () async {
+        final MapState mapState = ref.watch(mapViewModelProvider);
+        final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
         final cameraPosition = await mapState.mapController?.getCameraPosition();
         if(cameraPosition.isNotNull) {
           if(mapState.lastCameraLatLng.isNotNull) {
             final distance = mapViewModel.globalViewModel.getDistanceToMeter(cameraPosition!.target, mapState.lastCameraLatLng!);
-            if(distance > 500 && !mapState.isCafeRefreshIndicatorVisible) {
+            if(distance > 700 && !mapState.isCafeRefreshIndicatorVisible) {
               mapViewModel.setLastCameraLatLng(cameraPosition.target);
               mapViewModel.refreshCafes();
             }

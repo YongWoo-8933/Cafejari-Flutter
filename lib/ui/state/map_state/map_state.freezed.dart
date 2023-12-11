@@ -41,6 +41,7 @@ mixin _$MapState {
   int get catiCoffeeSliderValue => throw _privateConstructorUsedError;
   int get catiWorkspaceSliderValue => throw _privateConstructorUsedError;
   int get catiAciditySliderValue => throw _privateConstructorUsedError;
+  DateTime get lastUpdateTime => throw _privateConstructorUsedError;
   bool get isSearchPageVisible => throw _privateConstructorUsedError;
   bool get isSearchPageFadedIn => throw _privateConstructorUsedError;
   bool get isBottomSheetPreviewOpened => throw _privateConstructorUsedError;
@@ -81,6 +82,7 @@ abstract class $MapStateCopyWith<$Res> {
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
       int catiAciditySliderValue,
+      DateTime lastUpdateTime,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
@@ -126,6 +128,7 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
     Object? catiCoffeeSliderValue = null,
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
+    Object? lastUpdateTime = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
@@ -215,6 +218,10 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
           ? _value.catiAciditySliderValue
           : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
               as int,
+      lastUpdateTime: null == lastUpdateTime
+          ? _value.lastUpdateTime
+          : lastUpdateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -291,6 +298,7 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
       int catiCoffeeSliderValue,
       int catiWorkspaceSliderValue,
       int catiAciditySliderValue,
+      DateTime lastUpdateTime,
       bool isSearchPageVisible,
       bool isSearchPageFadedIn,
       bool isBottomSheetPreviewOpened,
@@ -336,6 +344,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? catiCoffeeSliderValue = null,
     Object? catiWorkspaceSliderValue = null,
     Object? catiAciditySliderValue = null,
+    Object? lastUpdateTime = null,
     Object? isSearchPageVisible = null,
     Object? isSearchPageFadedIn = null,
     Object? isBottomSheetPreviewOpened = null,
@@ -425,6 +434,10 @@ class __$$_MapStateCopyWithImpl<$Res>
           ? _value.catiAciditySliderValue
           : catiAciditySliderValue // ignore: cast_nullable_to_non_nullable
               as int,
+      lastUpdateTime: null == lastUpdateTime
+          ? _value.lastUpdateTime
+          : lastUpdateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isSearchPageVisible: null == isSearchPageVisible
           ? _value.isSearchPageVisible
           : isSearchPageVisible // ignore: cast_nullable_to_non_nullable
@@ -481,6 +494,7 @@ class _$_MapState implements _MapState {
       required this.catiCoffeeSliderValue,
       required this.catiWorkspaceSliderValue,
       required this.catiAciditySliderValue,
+      required this.lastUpdateTime,
       required this.isSearchPageVisible,
       required this.isSearchPageFadedIn,
       required this.isBottomSheetPreviewOpened,
@@ -552,6 +566,8 @@ class _$_MapState implements _MapState {
   @override
   final int catiAciditySliderValue;
   @override
+  final DateTime lastUpdateTime;
+  @override
   final bool isSearchPageVisible;
   @override
   final bool isSearchPageFadedIn;
@@ -568,7 +584,7 @@ class _$_MapState implements _MapState {
 
   @override
   String toString() {
-    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, lastCameraLatLng: $lastCameraLatLng, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isCafeRefreshIndicatorVisible: $isCafeRefreshIndicatorVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
+    return 'MapState(bottomSheetController: $bottomSheetController, cafeImagePageController: $cafeImagePageController, currentCafeImagePage: $currentCafeImagePage, cafes: $cafes, locations: $locations, randomCafeImageUrl: $randomCafeImageUrl, selectedCafe: $selectedCafe, selectedCafeFloor: $selectedCafeFloor, lastCameraLatLng: $lastCameraLatLng, selectedMarker: $selectedMarker, mapController: $mapController, initTempCameraPosition: $initTempCameraPosition, shareTempCameraPosition: $shareTempCameraPosition, searchQueryController: $searchQueryController, searchPredictions: $searchPredictions, occupancySliderValue: $occupancySliderValue, catiOpennessSliderValue: $catiOpennessSliderValue, catiCoffeeSliderValue: $catiCoffeeSliderValue, catiWorkspaceSliderValue: $catiWorkspaceSliderValue, catiAciditySliderValue: $catiAciditySliderValue, lastUpdateTime: $lastUpdateTime, isSearchPageVisible: $isSearchPageVisible, isSearchPageFadedIn: $isSearchPageFadedIn, isBottomSheetPreviewOpened: $isBottomSheetPreviewOpened, isBottomSheetPreviewExpanded: $isBottomSheetPreviewExpanded, isBottomSheetFullContentVisible: $isBottomSheetFullContentVisible, isCafeRefreshIndicatorVisible: $isCafeRefreshIndicatorVisible, isRefreshButtonVisible: $isRefreshButtonVisible)';
   }
 
   @override
@@ -615,6 +631,8 @@ class _$_MapState implements _MapState {
                 other.catiWorkspaceSliderValue == catiWorkspaceSliderValue) &&
             (identical(other.catiAciditySliderValue, catiAciditySliderValue) ||
                 other.catiAciditySliderValue == catiAciditySliderValue) &&
+            (identical(other.lastUpdateTime, lastUpdateTime) ||
+                other.lastUpdateTime == lastUpdateTime) &&
             (identical(other.isSearchPageVisible, isSearchPageVisible) ||
                 other.isSearchPageVisible == isSearchPageVisible) &&
             (identical(other.isSearchPageFadedIn, isSearchPageFadedIn) ||
@@ -628,8 +646,7 @@ class _$_MapState implements _MapState {
             (identical(other.isBottomSheetFullContentVisible, isBottomSheetFullContentVisible) ||
                 other.isBottomSheetFullContentVisible ==
                     isBottomSheetFullContentVisible) &&
-            (identical(other.isCafeRefreshIndicatorVisible, isCafeRefreshIndicatorVisible) ||
-                other.isCafeRefreshIndicatorVisible == isCafeRefreshIndicatorVisible) &&
+            (identical(other.isCafeRefreshIndicatorVisible, isCafeRefreshIndicatorVisible) || other.isCafeRefreshIndicatorVisible == isCafeRefreshIndicatorVisible) &&
             (identical(other.isRefreshButtonVisible, isRefreshButtonVisible) || other.isRefreshButtonVisible == isRefreshButtonVisible));
   }
 
@@ -656,6 +673,7 @@ class _$_MapState implements _MapState {
         catiCoffeeSliderValue,
         catiWorkspaceSliderValue,
         catiAciditySliderValue,
+        lastUpdateTime,
         isSearchPageVisible,
         isSearchPageFadedIn,
         isBottomSheetPreviewOpened,
@@ -694,6 +712,7 @@ abstract class _MapState implements MapState {
       required final int catiCoffeeSliderValue,
       required final int catiWorkspaceSliderValue,
       required final int catiAciditySliderValue,
+      required final DateTime lastUpdateTime,
       required final bool isSearchPageVisible,
       required final bool isSearchPageFadedIn,
       required final bool isBottomSheetPreviewOpened,
@@ -742,6 +761,8 @@ abstract class _MapState implements MapState {
   int get catiWorkspaceSliderValue;
   @override
   int get catiAciditySliderValue;
+  @override
+  DateTime get lastUpdateTime;
   @override
   bool get isSearchPageVisible;
   @override

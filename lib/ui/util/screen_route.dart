@@ -15,6 +15,7 @@ class ScreenRoute {
   static const String push = "push_screen";
   static const String leaderboard = "leaderboard_screen";
   static const String cafeRegistration = "cafe_registration_screen";
+  static const String cafeInfoModification = "cafe_info_modification_screen";
   static const String webView = "web_view_screen";
 }
 

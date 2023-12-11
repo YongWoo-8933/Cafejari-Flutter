@@ -4,10 +4,10 @@ import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
+import 'package:cafejari_flutter/ui/state/cafe_registration_state/cafe_registration_state.dart';
 import 'package:cafejari_flutter/ui/util/occupancy_level.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/cafe_registration_view_model.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +20,11 @@ class CafeRegistrationSearchPrediction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+    final CafeRegistrationState state = ref.watch(cafeRegistrationViewModelProvider);
+    final CafeRegistrationViewModel viewModel = ref.watch(cafeRegistrationViewModelProvider.notifier);
 
     return Visibility(
-      visible: requestState.searchQueryController.text.isNotEmpty && requestState.searchCafePredictions.isNotEmpty,
+      visible: state.searchQueryController.text.isNotEmpty && state.searchCafePredictions.isNotEmpty,
       child: Container(
         width: width,
         height: height,
@@ -38,15 +38,15 @@ class CafeRegistrationSearchPrediction extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20),
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            itemCount: requestState.searchCafePredictions.length,
+            itemCount: state.searchCafePredictions.length,
             itemBuilder: (contest, index) {
-              final NaverSearchCafe searchCafe = requestState.searchCafePredictions[index];
-              final bool isLast = requestState.searchCafePredictions.length - 1 == index;
+              final NaverSearchCafe searchCafe = state.searchCafePredictions[index];
+              final bool isLast = state.searchCafePredictions.length - 1 == index;
               return GestureDetector(
                 onTap: () {
-                  requestViewModel.selectSearchCafe(searchCafe);
-                  requestViewModel.clearSearchCafePredictions();
-                  requestState.mapController?.clearOverlays();
+                  viewModel.selectSearchCafe(searchCafe);
+                  viewModel.clearSearchCafePredictions();
+                  state.mapController?.clearOverlays();
                   final marker = NMarker(
                     id: "1",
                     position: NLatLng(searchCafe.latitude, searchCafe.longitude),
@@ -61,8 +61,8 @@ class CafeRegistrationSearchPrediction extends ConsumerWidget {
                     icon: OccupancyLevel.minus().nMarker
                   );
                   marker.setSize(OccupancyLevel.minus().markerSize * 1.2);
-                  requestState.mapController?.addOverlay(marker);
-                  requestState.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
+                  state.mapController?.addOverlay(marker);
+                  state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
                       NCameraPosition(target: NLatLng(searchCafe.latitude, searchCafe.longitude), zoom: Zoom.large)
                   ));
                 },

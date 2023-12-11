@@ -2,8 +2,8 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/state/cafe_registration_state/cafe_registration_state.dart';
+import 'package:cafejari_flutter/ui/view_model/cafe_registration_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ class CafeRegistrationSearchBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+    final CafeRegistrationState state = ref.watch(cafeRegistrationViewModelProvider);
+    final CafeRegistrationViewModel viewModel = ref.watch(cafeRegistrationViewModelProvider.notifier);
 
     return Container(
       width: width,
@@ -27,7 +27,7 @@ class CafeRegistrationSearchBar extends ConsumerWidget {
       ),
       child: TextFormField(
         enabled: true,
-        controller: requestState.searchQueryController,
+        controller: state.searchQueryController,
         keyboardType: TextInputType.text,
         cursorColor: AppColor.primary,
         style: const TextStyle(
@@ -37,7 +37,7 @@ class CafeRegistrationSearchBar extends ConsumerWidget {
         textAlignVertical: TextAlignVertical.center,
         onChanged: (value) {
           if (value.length > 1) {
-            requestViewModel.searchCafe();
+            viewModel.searchCafe();
           }
         },
         enableSuggestions: true,
@@ -56,8 +56,8 @@ class CafeRegistrationSearchBar extends ConsumerWidget {
           prefixIconColor: AppColor.primary,
           suffixIcon: GestureDetector(
             onTap: () {
-              requestState.searchQueryController.text = "";
-              requestViewModel.clearSearchCafePredictions();
+              state.searchQueryController.text = "";
+              viewModel.clearSearchCafePredictions();
             },
             child: const Icon(CupertinoIcons.xmark_circle_fill, color: AppColor.grey_300, size: 24),
           ),

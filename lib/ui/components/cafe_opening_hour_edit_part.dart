@@ -1,23 +1,31 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
+import 'package:cafejari_flutter/ui/components/show_opening_hour_dialog.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/edit_apply_button.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/show_opening_hour_dialog.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/components/buttons/edit_apply_button.dart';
+import 'package:cafejari_flutter/ui/util/day_of_week_opening_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cafejari_flutter/core/di.dart';
 
-class CafeRegistrationOpeningHourPart extends ConsumerWidget {
+class CafeOpeningHourEditPart extends StatelessWidget {
   final double width;
+  final bool isEdited;
+  final List<DayOfWeekOpeningInfo> openingInfos;
+  final ShowOpeningHourDialogType showOpeningHourDialogType;
+  final Function(List<String>) onPickDay;
+  final VoidCallback onEditButtonClick;
 
-  const CafeRegistrationOpeningHourPart({Key? key, required this.width}) : super(key: key);
+  const CafeOpeningHourEditPart({
+    Key? key,
+    required this.width,
+    required this.isEdited,
+    required this.openingInfos,
+    required this.onPickDay,
+    required this.showOpeningHourDialogType,
+    required this.onEditButtonClick
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+  Widget build(BuildContext context) {
 
     return Column(
       children: [
@@ -26,27 +34,27 @@ class CafeRegistrationOpeningHourPart extends ConsumerWidget {
           children: [
             const VerticalSpacer(10),
             _TimeEditButton(
-                text: "모든 영업시간 수정",
-                onPress: () {
-                  requestViewModel.pickDay(["월", "화", "수", "목", "금", "토", "일"]);
-                  showOpeningHourDialog(context);
-                }
+              text: "모든 영업시간 수정",
+              onPress: () {
+                onPickDay(["월", "화", "수", "목", "금", "토", "일"]);
+                showOpeningHourDialog(context: context, type: showOpeningHourDialogType);
+              }
             ),
             const HorizontalSpacer(10),
             _TimeEditButton(
-                text: "월~금 수정",
-                onPress: () {
-                  requestViewModel.pickDay(["월", "화", "수", "목", "금"]);
-                  showOpeningHourDialog(context);
-                }
+              text: "월~금 수정",
+              onPress: () {
+                onPickDay(["월", "화", "수", "목", "금"]);
+                showOpeningHourDialog(context: context, type: showOpeningHourDialogType);
+              }
             ),
             const HorizontalSpacer(10),
             _TimeEditButton(
-                text: "토~일 수정",
-                onPress: () {
-                  requestViewModel.pickDay(["토", "일"]);
-                  showOpeningHourDialog(context);
-                }
+              text: "토~일 수정",
+              onPress: () {
+                onPickDay(["토", "일"]);
+                showOpeningHourDialog(context: context, type: showOpeningHourDialogType);
+              }
             ),
           ],
         ),
@@ -59,7 +67,7 @@ class CafeRegistrationOpeningHourPart extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 30, bottom: 30, left: 30, right: 10),
               child: Column(
-                children: requestState.openingInfos.map((e) {
+                children: openingInfos.map((e) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -72,8 +80,8 @@ class CafeRegistrationOpeningHourPart extends ConsumerWidget {
                           Text(e.getOpeningHourText()),
                           IconButton(
                             onPressed: () {
-                              requestViewModel.pickDay([e.shortText]);
-                              showOpeningHourDialog(context);
+                              onPickDay([e.shortText]);
+                              showOpeningHourDialog(context: context, type: showOpeningHourDialogType);
                             },
                             icon: const Icon(Icons.edit, color: AppColor.secondary, size: 20)
                           ),
@@ -88,9 +96,9 @@ class CafeRegistrationOpeningHourPart extends ConsumerWidget {
         ),
         const VerticalSpacer(40),
         EditApplyButton(
-          isApplied: requestState.isOpeningHourEdited,
+          isApplied: isEdited,
           width: width,
-          onPress: () => requestViewModel.setIsOpeningHourEdited(!requestState.isOpeningHourEdited)
+          onPress: onEditButtonClick
         )
       ],
     );

@@ -1,32 +1,25 @@
-
-
-import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class CafeRegistrationFreePart extends ConsumerWidget {
+class CafeFreeEditPart extends StatelessWidget {
   final double width;
+  final TextEditingController textEditingController;
 
-  const CafeRegistrationFreePart({Key? key, required this.width}) : super(key: key);
+  const CafeFreeEditPart({Key? key, required this.width, required this.textEditingController}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+  Widget build(BuildContext context) {
 
     return Container(
       width: width,
-      height: 360,
+      height: 320,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20)
       ),
       child: TextFormField(
-        controller: requestState.freeQueryController,
+        controller: textEditingController,
         keyboardType: TextInputType.text,
         cursorColor: AppColor.primary,
         maxLines: 10,

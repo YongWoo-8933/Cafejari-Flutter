@@ -398,6 +398,18 @@ CafeAdditionRequest parseCafeAdditionRequestFromCafeAdditionRequestResponse({req
   );
 }
 
+/// CafeModificationRequestResponse로부터 CafeModificationRequest 객체를 뽑아내는 함수
+CafeModificationRequest parseCafeModificationRequestFromCafeModificationRequestResponse({required CafeModificationRequestResponse requestResponse}) {
+  return CafeModificationRequest(
+    id: requestResponse.id,
+    cafe: parseCafeFromCafeRepResponse(cafeRepResponse: requestResponse.cafe),
+    isApproved: requestResponse.is_approved,
+    requestedAt: DateTime.parse(requestResponse.requested_at),
+    answeredAt: DateTime.parse(requestResponse.answered_at),
+    rejectionReason: requestResponse.rejection_reason
+  );
+}
+
 /// PushResponse로부터 Push 객체를 뽑아내는 함수
 Push parsePushFromPushResponse({required PushResponse pushResponse}) {
   return Push(

@@ -2,29 +2,32 @@ import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/component/edit_apply_button.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/components/buttons/edit_apply_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cafejari_flutter/core/di.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/src/theme/slider_theme.dart';
 
-class CafeRegistrationWallSocketPart extends ConsumerWidget {
+
+class CafeWallSocketRateEditPart extends StatelessWidget {
+  final List<({int floor, double rate})> wallSocketRates;
+  final Function(int, double) onWallSocketRateUpdate;
+  final bool isEdited;
+  final VoidCallback onEditButtonClick;
   final double width;
 
-  const CafeRegistrationWallSocketPart({
+  const CafeWallSocketRateEditPart({
     Key? key,
-    required this.width
+    required this.width,
+    required this.wallSocketRates,
+    required this.onWallSocketRateUpdate,
+    required this.isEdited,
+    required this.onEditButtonClick
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+  Widget build(BuildContext context) {
     const horizontalPadding = 20.0;
     const sideTextWidth = 40.0;
 
@@ -40,10 +43,10 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: ListView.builder(
-              itemCount: requestState.wallSocketRates.length,
+              itemCount: wallSocketRates.length,
               padding: const EdgeInsets.symmetric(vertical: 48, horizontal: horizontalPadding),
               itemBuilder: (BuildContext context, int index) {
-                final wallSocketRate = requestState.wallSocketRates[index];
+                final wallSocketRate = wallSocketRates[index];
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -66,7 +69,7 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
                         child: SfSlider(
                           min: 0.0,
                           max: 100.0,
-                          value: requestState.wallSocketRates[index].rate * 100,
+                          value: wallSocketRates[index].rate * 100,
                           stepSize: 5.0,
                           showTicks: false,
                           tooltipTextFormatterCallback: (_, str) => "$str%",
@@ -80,9 +83,7 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
                           ),
                           onChangeStart: (_) => HapticFeedback.lightImpact(),
                           onChangeEnd: (_) => HapticFeedback.lightImpact(),
-                          onChanged: (dynamic value) {
-                            requestViewModel.updateWallSocketRate(index: index, rate: value / 100);
-                          }
+                          onChanged: (dynamic value) => onWallSocketRateUpdate(index, value / 100)
                         )
                       ),
                     ),
@@ -105,9 +106,9 @@ class CafeRegistrationWallSocketPart extends ConsumerWidget {
         ),
         const VerticalSpacer(40),
         EditApplyButton(
-          isApplied: requestState.isWallSocketEdited,
+          isApplied: isEdited,
           width: width,
-          onPress: () => requestViewModel.setIsWallSocketEdited(!requestState.isWallSocketEdited)
+          onPress: onEditButtonClick
         )
       ],
     );

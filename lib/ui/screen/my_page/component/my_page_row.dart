@@ -9,6 +9,7 @@ class MyPageRow extends StatelessWidget {
   final VoidCallback? onPress;
 
   const MyPageRow({
+    super.key,
     required this.text,
     required this.width,
     required this.onPress,
@@ -23,7 +24,7 @@ class MyPageRow extends StatelessWidget {
         children: [
           Container(
             width: width,
-            padding: AppPadding.padding_15,
+            padding: const EdgeInsets.symmetric(vertical: 16),
             color: AppColor.white,
             alignment: Alignment.centerLeft,
             child: Text(text, style: TextSize.textSize_14),

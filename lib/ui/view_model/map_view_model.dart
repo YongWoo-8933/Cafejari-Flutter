@@ -52,8 +52,8 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
-      // 변경 사항 저장 + 로딩 종료
-      state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false);
+      // 변경 사항 저장 + 로딩 종료 + 업데이트 타임 기록
+      state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false, lastUpdateTime: DateTime.now());
 
       // 카페 없으면 문구 띄우기
       if(showNoCafeSnackBar && newCafes.isEmpty) {

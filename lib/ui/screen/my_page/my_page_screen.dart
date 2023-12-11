@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_row.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/nickname_editor_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/point_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/user_migration_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
@@ -181,13 +182,41 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             )
                           ),
                           const VerticalSpacer(20),
-                          Text(
-                            globalState.user.nickname,
-                            style: const TextStyle(
-                              color: AppColor.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600
-                            )
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const HorizontalSpacer(10),
+                                Text(
+                                  globalState.isLoggedIn ? globalState.user.nickname : "",
+                                  style: const TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600
+                                  )
+                                ),
+                                Visibility(
+                                  visible: globalState.isLoggedIn,
+                                  child: Row(
+                                    children: [
+                                      const HorizontalSpacer(8),
+                                      GestureDetector(
+                                        onTap: () => showDialog(
+                                          context: context,
+                                          builder: (context) => const NicknameEditorDialog()
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: AppColor.white,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                )
+                              ],
+                            ),
                           ),
                           const VerticalSpacer(25),
                           PointCard(width: deviceSize.width - sidePadding * 2)
@@ -223,7 +252,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                   ),
                   // 랭킹 부분
                   Container(
-                    padding: const EdgeInsets.all(sidePadding + 10),
+                    padding: const EdgeInsets.all(sidePadding + 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

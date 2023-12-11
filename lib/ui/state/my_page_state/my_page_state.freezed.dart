@@ -20,6 +20,9 @@ mixin _$MyPageState {
       throw _privateConstructorUsedError;
   TextEditingController get userMigrationPhoneNumberController =>
       throw _privateConstructorUsedError;
+  TextEditingController get nicknameController =>
+      throw _privateConstructorUsedError;
+  String get nicknameErrorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyPageStateCopyWith<MyPageState> get copyWith =>
@@ -34,7 +37,9 @@ abstract class $MyPageStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<({String imageUrl, int profileImageId})> defaultProfileImages,
-      TextEditingController userMigrationPhoneNumberController});
+      TextEditingController userMigrationPhoneNumberController,
+      TextEditingController nicknameController,
+      String nicknameErrorMessage});
 }
 
 /// @nodoc
@@ -52,6 +57,8 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
   $Res call({
     Object? defaultProfileImages = null,
     Object? userMigrationPhoneNumberController = null,
+    Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
   }) {
     return _then(_value.copyWith(
       defaultProfileImages: null == defaultProfileImages
@@ -63,6 +70,14 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
           ? _value.userMigrationPhoneNumberController
           : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameController: null == nicknameController
+          ? _value.nicknameController
+          : nicknameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -77,7 +92,9 @@ abstract class _$$_MyPageStateCopyWith<$Res>
   @useResult
   $Res call(
       {List<({String imageUrl, int profileImageId})> defaultProfileImages,
-      TextEditingController userMigrationPhoneNumberController});
+      TextEditingController userMigrationPhoneNumberController,
+      TextEditingController nicknameController,
+      String nicknameErrorMessage});
 }
 
 /// @nodoc
@@ -93,6 +110,8 @@ class __$$_MyPageStateCopyWithImpl<$Res>
   $Res call({
     Object? defaultProfileImages = null,
     Object? userMigrationPhoneNumberController = null,
+    Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
   }) {
     return _then(_$_MyPageState(
       defaultProfileImages: null == defaultProfileImages
@@ -104,6 +123,14 @@ class __$$_MyPageStateCopyWithImpl<$Res>
           ? _value.userMigrationPhoneNumberController
           : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameController: null == nicknameController
+          ? _value.nicknameController
+          : nicknameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -114,7 +141,9 @@ class _$_MyPageState implements _MyPageState {
   _$_MyPageState(
       {required final List<({String imageUrl, int profileImageId})>
           defaultProfileImages,
-      required this.userMigrationPhoneNumberController})
+      required this.userMigrationPhoneNumberController,
+      required this.nicknameController,
+      required this.nicknameErrorMessage})
       : _defaultProfileImages = defaultProfileImages;
 
   final List<({String imageUrl, int profileImageId})> _defaultProfileImages;
@@ -128,10 +157,14 @@ class _$_MyPageState implements _MyPageState {
 
   @override
   final TextEditingController userMigrationPhoneNumberController;
+  @override
+  final TextEditingController nicknameController;
+  @override
+  final String nicknameErrorMessage;
 
   @override
   String toString() {
-    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController)';
+    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage)';
   }
 
   @override
@@ -144,14 +177,20 @@ class _$_MyPageState implements _MyPageState {
             (identical(other.userMigrationPhoneNumberController,
                     userMigrationPhoneNumberController) ||
                 other.userMigrationPhoneNumberController ==
-                    userMigrationPhoneNumberController));
+                    userMigrationPhoneNumberController) &&
+            (identical(other.nicknameController, nicknameController) ||
+                other.nicknameController == nicknameController) &&
+            (identical(other.nicknameErrorMessage, nicknameErrorMessage) ||
+                other.nicknameErrorMessage == nicknameErrorMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_defaultProfileImages),
-      userMigrationPhoneNumberController);
+      userMigrationPhoneNumberController,
+      nicknameController,
+      nicknameErrorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -164,13 +203,18 @@ abstract class _MyPageState implements MyPageState {
   factory _MyPageState(
       {required final List<({String imageUrl, int profileImageId})>
           defaultProfileImages,
-      required final TextEditingController
-          userMigrationPhoneNumberController}) = _$_MyPageState;
+      required final TextEditingController userMigrationPhoneNumberController,
+      required final TextEditingController nicknameController,
+      required final String nicknameErrorMessage}) = _$_MyPageState;
 
   @override
   List<({String imageUrl, int profileImageId})> get defaultProfileImages;
   @override
   TextEditingController get userMigrationPhoneNumberController;
+  @override
+  TextEditingController get nicknameController;
+  @override
+  String get nicknameErrorMessage;
   @override
   @JsonKey(ignore: true)
   _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>

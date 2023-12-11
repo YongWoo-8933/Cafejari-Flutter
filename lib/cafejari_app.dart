@@ -15,6 +15,7 @@ import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -172,7 +173,8 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
     switch(state) {
       case AppLifecycleState.resumed:
         Future.delayed(Duration.zero, () async {
-          if(ref.watch(mapViewModelProvider).cafes.isNotEmpty) {
+          final timeDifferenceInSeconds = ref.watch(mapViewModelProvider).lastUpdateTime.difference(DateTime.now()).inSeconds;
+          if(ref.watch(mapViewModelProvider).cafes.isNotEmpty && timeDifferenceInSeconds.abs() > 90) {
             await ref.watch(mapViewModelProvider.notifier).refreshCafes();
           }
         });

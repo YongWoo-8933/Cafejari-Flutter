@@ -1,14 +1,10 @@
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/int.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
-import 'package:cafejari_flutter/domain/entity/user/user.dart';
 import 'package:cafejari_flutter/domain/use_case/cafe_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
-import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
+import 'package:cafejari_flutter/ui/state/cafe_registration_state/cafe_registration_state.dart';
 import 'package:cafejari_flutter/ui/util/day_of_week_opening_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -16,16 +12,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:go_router/go_router.dart';
 
-class RequestViewModel extends StateNotifier<RequestState> {
+class CafeRegistrationViewModel extends StateNotifier<CafeRegistrationState> {
   final CafeUseCase _cafeUseCase;
   final GlobalViewModel globalViewModel;
 
-  RequestViewModel({
+  CafeRegistrationViewModel({
     required CafeUseCase cafeUseCase,
     required this.globalViewModel,
-  }) : _cafeUseCase = cafeUseCase, super(RequestState.empty());
+  }) : _cafeUseCase = cafeUseCase, super(CafeRegistrationState.empty());
 
-  clearViewModel() => state = RequestState.empty();
+  clearViewModel() => state = CafeRegistrationState.empty();
 
   initMapController(NaverMapController controller) => state = state.copyWith(mapController: controller);
 
@@ -77,6 +73,12 @@ class RequestViewModel extends StateNotifier<RequestState> {
     }
   }
 
+  selectIsClose(bool isClosed) {
+    state = state.copyWith(
+      selectedOpeningInfo: state.selectedOpeningInfo.copyWith(isClose: isClosed)
+    );
+  }
+
   saveSelectedOpeningHourInfo() {
     for (var shortText in state.selectedDaysOfWeek) {
       for (var openingInfo in state.openingInfos) {
@@ -121,7 +123,11 @@ class RequestViewModel extends StateNotifier<RequestState> {
         bottomFloor: state.selectedMinFloor,
         wallSocketRateList: state.isWallSocketEdited ? wallSocketRateList.map((e) => e.rate).toList() : [],
         openingHourList: state.isOpeningHourEdited ? state.openingInfos.map((e) {
-          return "${e.openAt.hour.toTwoDigitMinute()}:${e.openAt.minute.toTwoDigitMinute()} ~ ${e.closeAt.hour.toTwoDigitMinute()}:${e.closeAt.minute.toTwoDigitMinute()}";
+          if (e.isClose) {
+            return "정기휴무 (매주 ${e.fullText})";
+          } else {
+            return "${e.openAt.hour.toTwoDigitMinute()}:${e.openAt.minute.toTwoDigitMinute()} ~ ${e.closeAt.hour.toTwoDigitMinute()}:${e.closeAt.minute.toTwoDigitMinute()}";
+          }
         }).toList() : [],
         etc: state.freeQueryController.text,
         onAccessTokenRefresh: globalViewModel.setAccessToken

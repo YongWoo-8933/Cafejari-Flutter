@@ -1,5 +1,6 @@
 import 'package:cafejari_flutter/cafejari_app.dart';
 import 'package:cafejari_flutter/ui/screen/app_permission_screen/app_permission_screen.dart';
+import 'package:cafejari_flutter/ui/screen/cafe_info_modification/cafe_info_modification_screen.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_info_screen.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_progress_screen.dart';
@@ -70,6 +71,11 @@ final GoRouter appRouter = GoRouter(
           path: "cafe_registration",
           name: ScreenRoute.cafeRegistration,
           builder: (_, __) => const CafeRegistrationScreen(),
+        ),
+        GoRoute(
+          path: "cafe_info_modification",
+          name: ScreenRoute.cafeInfoModification,
+          builder: (_, __) => const CafeInfoModificationScreen(),
         ),
         GoRoute(
           path: "web_view_screen",

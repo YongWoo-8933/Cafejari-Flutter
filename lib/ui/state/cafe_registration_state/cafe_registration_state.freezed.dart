@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'request_state.dart';
+part of 'cafe_registration_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$RequestState {
+mixin _$CafeRegistrationState {
   NaverSearchCafe get selectedSearchCafe => throw _privateConstructorUsedError;
   NaverMapController? get mapController => throw _privateConstructorUsedError;
   TextEditingController get searchQueryController =>
@@ -39,15 +39,15 @@ mixin _$RequestState {
   OpeningHour get clickedDay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RequestStateCopyWith<RequestState> get copyWith =>
+  $CafeRegistrationStateCopyWith<CafeRegistrationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RequestStateCopyWith<$Res> {
-  factory $RequestStateCopyWith(
-          RequestState value, $Res Function(RequestState) then) =
-      _$RequestStateCopyWithImpl<$Res, RequestState>;
+abstract class $CafeRegistrationStateCopyWith<$Res> {
+  factory $CafeRegistrationStateCopyWith(CafeRegistrationState value,
+          $Res Function(CafeRegistrationState) then) =
+      _$CafeRegistrationStateCopyWithImpl<$Res, CafeRegistrationState>;
   @useResult
   $Res call(
       {NaverSearchCafe selectedSearchCafe,
@@ -72,9 +72,10 @@ abstract class $RequestStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
-    implements $RequestStateCopyWith<$Res> {
-  _$RequestStateCopyWithImpl(this._value, this._then);
+class _$CafeRegistrationStateCopyWithImpl<$Res,
+        $Val extends CafeRegistrationState>
+    implements $CafeRegistrationStateCopyWith<$Res> {
+  _$CafeRegistrationStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -190,11 +191,11 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
 }
 
 /// @nodoc
-abstract class _$$_RequestStateCopyWith<$Res>
-    implements $RequestStateCopyWith<$Res> {
-  factory _$$_RequestStateCopyWith(
-          _$_RequestState value, $Res Function(_$_RequestState) then) =
-      __$$_RequestStateCopyWithImpl<$Res>;
+abstract class _$$_CafeRegistrationStateCopyWith<$Res>
+    implements $CafeRegistrationStateCopyWith<$Res> {
+  factory _$$_CafeRegistrationStateCopyWith(_$_CafeRegistrationState value,
+          $Res Function(_$_CafeRegistrationState) then) =
+      __$$_CafeRegistrationStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -223,11 +224,11 @@ abstract class _$$_RequestStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RequestStateCopyWithImpl<$Res>
-    extends _$RequestStateCopyWithImpl<$Res, _$_RequestState>
-    implements _$$_RequestStateCopyWith<$Res> {
-  __$$_RequestStateCopyWithImpl(
-      _$_RequestState _value, $Res Function(_$_RequestState) _then)
+class __$$_CafeRegistrationStateCopyWithImpl<$Res>
+    extends _$CafeRegistrationStateCopyWithImpl<$Res, _$_CafeRegistrationState>
+    implements _$$_CafeRegistrationStateCopyWith<$Res> {
+  __$$_CafeRegistrationStateCopyWithImpl(_$_CafeRegistrationState _value,
+      $Res Function(_$_CafeRegistrationState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -249,7 +250,7 @@ class __$$_RequestStateCopyWithImpl<$Res>
     Object? openingHour = null,
     Object? clickedDay = null,
   }) {
-    return _then(_$_RequestState(
+    return _then(_$_CafeRegistrationState(
       selectedSearchCafe: null == selectedSearchCafe
           ? _value.selectedSearchCafe
           : selectedSearchCafe // ignore: cast_nullable_to_non_nullable
@@ -316,8 +317,8 @@ class __$$_RequestStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RequestState implements _RequestState {
-  _$_RequestState(
+class _$_CafeRegistrationState implements _CafeRegistrationState {
+  _$_CafeRegistrationState(
       {required this.selectedSearchCafe,
       required this.mapController,
       required this.searchQueryController,
@@ -397,14 +398,14 @@ class _$_RequestState implements _RequestState {
 
   @override
   String toString() {
-    return 'RequestState(selectedSearchCafe: $selectedSearchCafe, mapController: $mapController, searchQueryController: $searchQueryController, freeQueryController: $freeQueryController, searchCafePredictions: $searchCafePredictions, selectedMaxFloor: $selectedMaxFloor, selectedMinFloor: $selectedMinFloor, wallSocketRates: $wallSocketRates, isWallSocketEdited: $isWallSocketEdited, openingInfos: $openingInfos, isOpeningHourEdited: $isOpeningHourEdited, selectedDaysOfWeek: $selectedDaysOfWeek, selectedOpeningInfo: $selectedOpeningInfo, openingHour: $openingHour, clickedDay: $clickedDay)';
+    return 'CafeRegistrationState(selectedSearchCafe: $selectedSearchCafe, mapController: $mapController, searchQueryController: $searchQueryController, freeQueryController: $freeQueryController, searchCafePredictions: $searchCafePredictions, selectedMaxFloor: $selectedMaxFloor, selectedMinFloor: $selectedMinFloor, wallSocketRates: $wallSocketRates, isWallSocketEdited: $isWallSocketEdited, openingInfos: $openingInfos, isOpeningHourEdited: $isOpeningHourEdited, selectedDaysOfWeek: $selectedDaysOfWeek, selectedOpeningInfo: $selectedOpeningInfo, openingHour: $openingHour, clickedDay: $clickedDay)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RequestState &&
+            other is _$_CafeRegistrationState &&
             (identical(other.selectedSearchCafe, selectedSearchCafe) ||
                 other.selectedSearchCafe == selectedSearchCafe) &&
             (identical(other.mapController, mapController) ||
@@ -459,12 +460,13 @@ class _$_RequestState implements _RequestState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RequestStateCopyWith<_$_RequestState> get copyWith =>
-      __$$_RequestStateCopyWithImpl<_$_RequestState>(this, _$identity);
+  _$$_CafeRegistrationStateCopyWith<_$_CafeRegistrationState> get copyWith =>
+      __$$_CafeRegistrationStateCopyWithImpl<_$_CafeRegistrationState>(
+          this, _$identity);
 }
 
-abstract class _RequestState implements RequestState {
-  factory _RequestState(
+abstract class _CafeRegistrationState implements CafeRegistrationState {
+  factory _CafeRegistrationState(
       {required final NaverSearchCafe selectedSearchCafe,
       required final NaverMapController? mapController,
       required final TextEditingController searchQueryController,
@@ -479,7 +481,7 @@ abstract class _RequestState implements RequestState {
       required final List<String> selectedDaysOfWeek,
       required final DayOfWeekOpeningInfo selectedOpeningInfo,
       required final OpeningHour openingHour,
-      required final OpeningHour clickedDay}) = _$_RequestState;
+      required final OpeningHour clickedDay}) = _$_CafeRegistrationState;
 
   @override
   NaverSearchCafe get selectedSearchCafe;
@@ -513,6 +515,6 @@ abstract class _RequestState implements RequestState {
   OpeningHour get clickedDay;
   @override
   @JsonKey(ignore: true)
-  _$$_RequestStateCopyWith<_$_RequestState> get copyWith =>
+  _$$_CafeRegistrationStateCopyWith<_$_CafeRegistrationState> get copyWith =>
       throw _privateConstructorUsedError;
 }

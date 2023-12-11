@@ -28,6 +28,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAnalytics.instance.logAppOpen();
 
+  // Firebase analytics 사용설정
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+
   // 알림 init
   FlutterLocalNotification.init();
 

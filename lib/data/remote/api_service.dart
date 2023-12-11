@@ -64,8 +64,7 @@ class APIService {
             throw TokenExpired();
           case 409:
           // 서비스 로직 에러
-            ConflictErrorResponse errorResponse =
-            ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+            ConflictErrorResponse errorResponse = ConflictErrorResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
             throw ErrorWithMessage(code: errorResponse.error_code, message: errorResponse.error_message);
           default:
           // 이외 400번대 에러

@@ -3,13 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'request_response.g.dart';
 
+
 @JsonSerializable()
 class CafeAdditionRequestResponse {
   final int id;
   final CafeRepResponse cafe;
   final bool is_approved, is_notified;
   final String requested_at, answered_at;
-  final String? rejection_reason;
+  final String? rejection_reason, etc;
 
   CafeAdditionRequestResponse(
       {required this.id,
@@ -18,9 +19,34 @@ class CafeAdditionRequestResponse {
         required this.is_notified,
         required this.requested_at,
         required this.answered_at,
-        required this.rejection_reason});
+        required this.rejection_reason,
+        required this.etc});
 
   factory CafeAdditionRequestResponse.fromJson(Map<String, dynamic> json) => _$CafeAdditionRequestResponseFromJson(json);
+}
+
+
+@JsonSerializable()
+class CafeModificationRequestResponse {
+  final int id;
+  final CafeRepResponse cafe;
+  final CafeRepResponse suggested_cafe;
+  final bool is_approved, is_notified;
+  final String requested_at, answered_at;
+  final String? rejection_reason, etc;
+
+  CafeModificationRequestResponse(
+      {required this.id,
+        required this.cafe,
+        required this.suggested_cafe,
+        required this.is_approved,
+        required this.is_notified,
+        required this.requested_at,
+        required this.answered_at,
+        required this.rejection_reason,
+        required this.etc});
+
+  factory CafeModificationRequestResponse.fromJson(Map<String, dynamic> json) => _$CafeModificationRequestResponseFromJson(json);
 }
 
 @JsonSerializable()

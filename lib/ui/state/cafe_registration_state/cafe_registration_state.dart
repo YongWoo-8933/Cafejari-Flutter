@@ -5,11 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'request_state.freezed.dart';
+part 'cafe_registration_state.freezed.dart';
 
 @freezed
-class RequestState with _$RequestState {
-  factory RequestState(
+class CafeRegistrationState with _$CafeRegistrationState {
+  factory CafeRegistrationState(
       {required NaverSearchCafe selectedSearchCafe,
         required final NaverMapController? mapController,
         required final TextEditingController searchQueryController,
@@ -25,9 +25,9 @@ class RequestState with _$RequestState {
         required final DayOfWeekOpeningInfo selectedOpeningInfo,
         required final OpeningHour openingHour,
         required final OpeningHour clickedDay
-      }) = _RequestState;
+      }) = _CafeRegistrationState;
 
-  factory RequestState.empty() => RequestState(
+  factory CafeRegistrationState.empty() => CafeRegistrationState(
     selectedSearchCafe: NaverSearchCafe(
       name: "추가할 카페를 찾아보세요",
       roadAddress: "",

@@ -1,18 +1,18 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
+import 'package:cafejari_flutter/ui/components/show_opening_hour_dialog.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_free_part.dart';
+import 'package:cafejari_flutter/ui/components/cafe_free_edit_part.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/cafe_registration_search_bar.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_floor_part.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_opening_hour_part.dart';
-import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_wallsocket_part.dart';
+import 'package:cafejari_flutter/ui/components/cafe_floor_edit_part.dart';
+import 'package:cafejari_flutter/ui/components/cafe_opening_hour_edit_part.dart';
+import 'package:cafejari_flutter/ui/components/cafe_wallsocket_rate_edit_part.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/component/cafe_registration_search_prediction.dart';
-import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
+import 'package:cafejari_flutter/ui/state/cafe_registration_state/cafe_registration_state.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
-import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/cafe_registration_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -43,14 +43,14 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
       ref.watch(_isWallSocketPartExpandedProvider.notifier).update((state) => false);
       ref.watch(_isOpeningHourPartExpanded.notifier).update((state) => false);
       ref.watch(_isFreePartExpanded.notifier).update((state) => false);
-      ref.watch(requestViewModelProvider.notifier).clearViewModel();
+      ref.watch(cafeRegistrationViewModelProvider.notifier).clearViewModel();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final RequestState requestState = ref.watch(requestViewModelProvider);
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+    final CafeRegistrationState state = ref.watch(cafeRegistrationViewModelProvider);
+    final CafeRegistrationViewModel viewModel = ref.watch(cafeRegistrationViewModelProvider.notifier);
     final double deviceWidth = MediaQuery.of(context).size.width;
     const greyAreaWidth = 280.0;
     const mapHeight = 240.0;
@@ -84,14 +84,20 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
               children: [
                 CafeNameAddressBlock(
                   width: deviceWidth - sidePadding * 2,
-                  name: requestState.selectedSearchCafe.name,
-                  address: requestState.selectedSearchCafe.roadAddress,
+                  name: state.selectedSearchCafe.name,
+                  address: state.selectedSearchCafe.roadAddress,
                   nameTextSize: 18,
                 ),
                 const VerticalSpacer(30),
                 _divider(),
                 const VerticalSpacer(40),
-                const CafeRegistrationFloorPart(greyAreaWidth: greyAreaWidth),
+                CafeFloorEditPart(
+                  greyAreaWidth: greyAreaWidth,
+                  selectedMaxFloor: state.selectedMaxFloor,
+                  selectedMinFloor: state.selectedMinFloor,
+                  onSelectMaxFloor: viewModel.selectMaxFloor,
+                  onSelectMinFloor: viewModel.selectMinFloor
+                ),
                 const VerticalSpacer(40),
                 _divider(),
                 _expansionTile(
@@ -103,7 +109,13 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                       ref.watch(_isWallSocketPartExpandedProvider.notifier).update((
                           state) => expanded);
                     },
-                    child: const CafeRegistrationWallSocketPart(width: greyAreaWidth)
+                    child: CafeWallSocketRateEditPart(
+                      width: greyAreaWidth, 
+                      wallSocketRates: state.wallSocketRates, 
+                      onWallSocketRateUpdate: (index, rate) => viewModel.updateWallSocketRate(index: index, rate: rate),
+                      isEdited: state.isWallSocketEdited, 
+                      onEditButtonClick: () => viewModel.setIsWallSocketEdited(!state.isWallSocketEdited)
+                    )
                 ),
                 _divider(),
                 _expansionTile(
@@ -115,7 +127,14 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                       ref.watch(_isOpeningHourPartExpanded.notifier).update((
                           state) => expanded);
                     },
-                    child: const CafeRegistrationOpeningHourPart(width: greyAreaWidth)
+                    child: CafeOpeningHourEditPart(
+                      width: greyAreaWidth,
+                      isEdited: state.isOpeningHourEdited,
+                      openingInfos: state.openingInfos,
+                      onPickDay: viewModel.pickDay,
+                      showOpeningHourDialogType: ShowOpeningHourDialogType.registration,
+                      onEditButtonClick: () => viewModel.setIsOpeningHourEdited(!state.isOpeningHourEdited)
+                    )
                 ),
                 _divider(),
                 _expansionTile(
@@ -126,14 +145,17 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                     onExpansionChanged: (bool expanded) {
                       ref.watch(_isFreePartExpanded.notifier).update((state) => expanded);
                     },
-                    child: const CafeRegistrationFreePart(width: greyAreaWidth)
+                    child: CafeFreeEditPart(
+                      width: greyAreaWidth,
+                      textEditingController: state.freeQueryController,
+                    )
                 ),
                 const VerticalSpacer(80),
                 ActionButtonPrimary(
                   buttonWidth: greyAreaWidth,
                   buttonHeight: 48,
                   title: "등록 요청",
-                  onPressed: () async => await requestViewModel.requestCafeRegistration(context: context),
+                  onPressed: () async => await viewModel.requestCafeRegistration(context: context),
                 ),
                 const VerticalSpacer(60),
               ],
@@ -148,7 +170,7 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
     return const Divider(
       height: 1,
       thickness: 1,
-      color: AppColor.grey_400,
+      color: AppColor.grey_300,
     );
   }
 
@@ -212,7 +234,7 @@ class _NaverMap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final RequestViewModel requestViewModel = ref.watch(requestViewModelProvider.notifier);
+    final CafeRegistrationViewModel requestViewModel = ref.watch(cafeRegistrationViewModelProvider.notifier);
     final double deviceWidth = MediaQuery.of(context).size.width;
 
     return SizedBox(

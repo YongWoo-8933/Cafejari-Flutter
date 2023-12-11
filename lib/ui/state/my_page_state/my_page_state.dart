@@ -1,6 +1,3 @@
-
-import 'package:cafejari_flutter/domain/entity/user/user.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,8 +8,15 @@ class MyPageState with _$MyPageState {
 
   factory MyPageState({
     required final List<({int profileImageId, String imageUrl})> defaultProfileImages,
-    required final TextEditingController userMigrationPhoneNumberController
+    required final TextEditingController userMigrationPhoneNumberController,
+    required final TextEditingController nicknameController,
+    required final String nicknameErrorMessage
   }) = _MyPageState;
 
-  factory MyPageState.empty() => MyPageState(defaultProfileImages: [], userMigrationPhoneNumberController: TextEditingController());
+  factory MyPageState.empty() => MyPageState(
+    defaultProfileImages: [],
+    userMigrationPhoneNumberController: TextEditingController(),
+      nicknameController: TextEditingController(),
+      nicknameErrorMessage: ""
+  );
 }
