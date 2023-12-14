@@ -48,8 +48,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 13
-        versionName "1.3.0"
+        versionCode 14
+        versionName "1.3.1"
         // local noti
         multiDexEnabled true
         // manifest 환경변수 설정
