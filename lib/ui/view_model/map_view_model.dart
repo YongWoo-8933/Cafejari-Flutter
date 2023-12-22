@@ -107,7 +107,12 @@ class MapViewModel extends StateNotifier<MapState> {
   searchCafe() async {
     try {
       state = state.copyWith(
-          searchPredictions: await _cafeUseCase.getSearchCafes(query: state.searchQueryController.text));
+        searchPredictions: await _cafeUseCase.getSearchCafes(
+          query: state.searchQueryController.text,
+          latitude: globalViewModel.state.currentDeviceLocation?.latitude,
+          longitude: globalViewModel.state.currentDeviceLocation?.longitude
+        )
+      );
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }

@@ -18,7 +18,7 @@ import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 abstract interface class CafeUseCase {
   Future<Cafes> getMapCafes({required NCameraPosition cameraPosition});
   Future<Cafe> getCafe({required int cafeId});
-  Future<Cafes> getSearchCafes({required String query});
+  Future<Cafes> getSearchCafes({required String query, double? latitude, double? longitude});
   Future<OccupancyRateUpdates> getMyOccupancyUpdates({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
@@ -116,9 +116,9 @@ class CafeUseCaseImpl extends BaseUseCase implements CafeUseCase {
   }
 
   @override
-  Future<Cafes> getSearchCafes({required String query}) async {
+  Future<Cafes> getSearchCafes({required String query, double? latitude, double? longitude}) async {
     try {
-      List<CafeSearchResponse> cafeSearchResponseList = await cafeRepository.fetchSearchCafe(query: query);
+      List<CafeSearchResponse> cafeSearchResponseList = await cafeRepository.fetchSearchCafe(query: query, latitude: latitude, longitude: longitude);
       return cafeSearchResponseList.map((cafeSearchResponse) {
         return Cafe.empty().copyWith(
           id: cafeSearchResponse.id,

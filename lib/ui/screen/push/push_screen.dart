@@ -115,39 +115,57 @@ class PushScreenState extends ConsumerState<PushScreen> {
         Visibility(
           visible: !ref.watch(_isLoading) && pushes.isNotEmpty,
           child: ListView.builder(
-            itemCount: pushes.length,
+            itemCount: pushes.length + 1,
             itemBuilder: (context, index) {
-              final push = pushes[index];
-
-              // 현재의 push와 이전의 push를 비교하여 날짜가 변경되었는지 확인
-              final bool isDateChanged =
-                  index == 0 || push.pushedAt.day != pushes[index - 1].pushedAt.day;
-
-              return Column(
-                children: [
-                  if (isDateChanged) // 날짜가 변경되었을 때만 표시
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(height: 0.5, width: 120, color: AppColor.grey_500),
-                          Text("   ${pushes[index].pushedAt.year}."
-                              "${pushes[index].pushedAt.month.toString().padLeft(2, '0')}."
-                              "${pushes[index].pushedAt.day.toString().padLeft(2, '0')}   ",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.grey_500,
-                                ),
-                              ),
-                          Container(height: 0.5, width: 120, color: AppColor.grey_500),
-                        ],
+              if (index == 0) {
+                return const Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    VerticalSpacer(20),
+                    Text(
+                      "2달 이상 경과된 알림은 자동으로 삭제됩니다",
+                      style: TextStyle(
+                        color: AppColor.grey_400,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12
                       ),
                     ),
-                  PushBlock(push: push), // PushBlock 표시
-                ],
-              );
+                    VerticalSpacer(15),
+                  ],
+                );
+              } else {
+                final push = pushes[index - 1];
+
+                // 현재의 push와 이전의 push를 비교하여 날짜가 변경되었는지 확인
+                final bool isDateChanged =
+                    index == 1 || push.pushedAt.day != pushes[index - 2].pushedAt.day;
+
+                return Column(
+                  children: [
+                    if (isDateChanged) // 날짜가 변경되었을 때만 표시
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(height: 0.5, width: 120, color: AppColor.grey_500),
+                            Text("   ${push.pushedAt.year}."
+                                "${push.pushedAt.month.toString().padLeft(2, '0')}."
+                                "${push.pushedAt.day.toString().padLeft(2, '0')}   ",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: AppColor.grey_500,
+                              ),
+                            ),
+                            Container(height: 0.5, width: 120, color: AppColor.grey_500),
+                          ],
+                        ),
+                      ),
+                    PushBlock(push: push), // PushBlock 표시
+                  ],
+                );
+              }
             },
           ),
         ),
