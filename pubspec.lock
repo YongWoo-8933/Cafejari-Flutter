@@ -482,10 +482,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_naver_map
-      sha256: "2f12d6fe0b9a41c9bce994eed0e5547840e0ba211e67b604a6e70ce160a54d6b"
+      sha256: "2d2f3bf4afcdefa5acdd71df3a9701aec73036867851590caf83582170ba3fae"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.0+1"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -988,10 +988,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider
-      sha256: "909b84830485dbcd0308edf6f7368bc8fd76afa26a270420f34cabea2a6467a0"
+      sha256: a1aa8aaa2542a6bc57e381f132af822420216c80d4781f7aa085ca3229208aaa
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   path_provider_android:
     dependency: transitive
     description:

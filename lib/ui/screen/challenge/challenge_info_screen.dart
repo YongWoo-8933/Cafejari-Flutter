@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_informa
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
+import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +45,16 @@ class ChallengeInfoScreenState extends ConsumerState<ChallengeInfoScreen> {
       ),
       backgroundColor: AppColor.white,
       body: SingleChildScrollView(
-        child: ChallengeInformation(challenge: challengeState.selectedChallenge),
+        child: ChallengeInformation(
+          challenge: challengeState.selectedChallenge,
+          onChallengeClick: () => challengeViewModel.globalViewModel.navigateToWebView(
+            route: WebViewRoute.custom(
+              title: challengeState.selectedChallenge.name,
+              url: challengeState.selectedChallenge.url
+            ),
+            context: context
+          ),
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(16.0),

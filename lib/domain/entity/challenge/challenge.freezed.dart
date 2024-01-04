@@ -23,6 +23,7 @@ mixin _$Challenge {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
   DateTime get startAt => throw _privateConstructorUsedError;
   DateTime get finishAt => throw _privateConstructorUsedError;
   bool get available => throw _privateConstructorUsedError;
@@ -50,6 +51,7 @@ abstract class $ChallengeCopyWith<$Res> {
       String name,
       String description,
       String imageUrl,
+      String url,
       DateTime startAt,
       DateTime finishAt,
       bool available,
@@ -78,6 +80,7 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
     Object? name = null,
     Object? description = null,
     Object? imageUrl = null,
+    Object? url = null,
     Object? startAt = null,
     Object? finishAt = null,
     Object? available = null,
@@ -113,6 +116,10 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       startAt: null == startAt
           ? _value.startAt
@@ -157,6 +164,7 @@ abstract class _$$_ChallengeCopyWith<$Res> implements $ChallengeCopyWith<$Res> {
       String name,
       String description,
       String imageUrl,
+      String url,
       DateTime startAt,
       DateTime finishAt,
       bool available,
@@ -183,6 +191,7 @@ class __$$_ChallengeCopyWithImpl<$Res>
     Object? name = null,
     Object? description = null,
     Object? imageUrl = null,
+    Object? url = null,
     Object? startAt = null,
     Object? finishAt = null,
     Object? available = null,
@@ -218,6 +227,10 @@ class __$$_ChallengeCopyWithImpl<$Res>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       startAt: null == startAt
           ? _value.startAt
@@ -258,6 +271,7 @@ class _$_Challenge implements _Challenge {
       required this.name,
       required this.description,
       required this.imageUrl,
+      required this.url,
       required this.startAt,
       required this.finishAt,
       required this.available,
@@ -282,6 +296,8 @@ class _$_Challenge implements _Challenge {
   final String description;
   @override
   final String imageUrl;
+  @override
+  final String url;
   @override
   final DateTime startAt;
   @override
@@ -317,7 +333,7 @@ class _$_Challenge implements _Challenge {
 
   @override
   String toString() {
-    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengerProfileImages: $challengerProfileImages, challengeMilestones: $challengeMilestones)';
+    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, url: $url, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengerProfileImages: $challengerProfileImages, challengeMilestones: $challengeMilestones)';
   }
 
   @override
@@ -336,6 +352,7 @@ class _$_Challenge implements _Challenge {
                 other.description == description) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.finishAt, finishAt) ||
                 other.finishAt == finishAt) &&
@@ -359,6 +376,7 @@ class _$_Challenge implements _Challenge {
       name,
       description,
       imageUrl,
+      url,
       startAt,
       finishAt,
       available,
@@ -382,6 +400,7 @@ abstract class _Challenge implements Challenge {
           required final String name,
           required final String description,
           required final String imageUrl,
+          required final String url,
           required final DateTime startAt,
           required final DateTime finishAt,
           required final bool available,
@@ -404,6 +423,8 @@ abstract class _Challenge implements Challenge {
   String get description;
   @override
   String get imageUrl;
+  @override
+  String get url;
   @override
   DateTime get startAt;
   @override

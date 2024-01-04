@@ -352,6 +352,7 @@ Challenge parseChallengeFromChallengeResponse({
     name: challengeResponse.name,
     description: challengeResponse.description,
     imageUrl: challengeResponse.image,
+    url: challengeResponse.url ?? "",
     startAt: DateTime.parse(challengeResponse.start),
     finishAt: DateTime.parse(challengeResponse.finish),
     available: challengeResponse.available,

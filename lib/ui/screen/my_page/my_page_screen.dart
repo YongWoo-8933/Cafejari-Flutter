@@ -297,24 +297,24 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                           text: "사용 가이드 북 보기",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.guide(),
-                              context: context
+                            route: WebViewRoute.guide(),
+                            context: context
                           )
                         ),
                         MyPageRow(
                           text: "공지사항",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.notification(),
-                              context: context
+                            route: WebViewRoute.notification(),
+                            context: context
                           )
                         ),
                         MyPageRow(
                           text: "업데이트 소식",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.update(),
-                              context: context
+                            route: WebViewRoute.update(),
+                            context: context
                           )
                         ),
                         const VerticalSpacer(40),

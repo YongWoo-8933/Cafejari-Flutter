@@ -6,12 +6,15 @@ import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChallengeInformation extends StatelessWidget {
   final Challenge challenge;
+  final VoidCallback onChallengeClick;
 
   const ChallengeInformation({super.key,
     required this.challenge,
+    required this.onChallengeClick,
   });
 
   @override
@@ -39,7 +42,10 @@ class ChallengeInformation extends StatelessWidget {
             ],
           ),
         ),
-        CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: double.infinity),
+        GestureDetector(
+          onTap: () async => challenge.url.isEmpty ? null : onChallengeClick(),
+          child: CustomCachedNetworkImage(imageUrl: challenge.imageUrl, width: double.infinity)
+        ),
         const VerticalSpacer(200)
       ],
     );
