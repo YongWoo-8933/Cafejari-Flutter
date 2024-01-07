@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.3.3+17
+version: 1.4.0+17
 
 environment:
   sdk: '>=3.0.1 <4.0.0'
@@ -32,25 +32,25 @@ dependencies:
     sdk: flutter
 
   # 아이콘 ok
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.6
 
   # firebase ok
-  firebase_core: ^2.13.0
-  firebase_analytics: ^10.4.1
-  firebase_messaging: ^14.6.1
-  firebase_dynamic_links: ^5.3.5
+  firebase_core: ^2.24.2
+  firebase_analytics: ^10.8.0
+  firebase_messaging: ^14.7.10
+  firebase_dynamic_links: ^5.4.8
 
   # 푸시알림 ok
-  flutter_local_notifications: ^14.1.0
+  flutter_local_notifications: ^16.3.0
 
   # router ok
-  go_router: ^7.0.1
+  go_router: ^13.0.1
 
   # 상태 관리 ok
-  flutter_riverpod: ^2.3.6
+  flutter_riverpod: ^2.4.9
 
   # 권한 ok
-  permission_handler: ^10.2.0
+  permission_handler: ^11.1.0
 
   # 비동기 처리 ok
   async: ^2.11.0
@@ -60,48 +60,48 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # 통신 ok
-  http: ^0.13.6
+  http: ^1.1.2
 
   # 빌드 ok
-  build_runner: ^2.3.3
+  build_runner: ^2.4.7
 
   # dto / object 관리 ok
-  json_serializable: ^6.6.2
-  freezed: ^2.3.3
+  json_serializable: ^6.7.1
+  freezed: ^2.4.6
 
   # URL 이동 ok
-  url_launcher: ^6.1.10
+  url_launcher: ^6.2.2
 
   # 스토어로 이동 ok
   launch_review: ^3.0.1
 
   # 네이버 지도 ok
-  flutter_naver_map: ^1.1.0+1
+  flutter_naver_map: ^1.1.1
 
   # 웹뷰 ok
-  flutter_inappwebview: ^5.7.2+3
+  flutter_inappwebview: ^6.0.0
 
   # swipe refresh ok
   pull_to_refresh: ^2.0.0
 
   # 이미지 ok
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.1
   photo_view: ^0.14.0
 
   # bottom sheet ok
   sliding_up_panel: ^2.0.0+1
 
   # 카카오 서비스 ok
-  kakao_flutter_sdk_user: ^1.5.0 # 카카오 로그인
-  kakao_flutter_sdk_talk: ^1.5.0 # 카카오톡 메시지, 카카오톡 소셜(프로필 가져오기, 친구 목록 가져오기)
-  kakao_flutter_sdk_share: ^1.5.0 # 카카오톡 공유
-  kakao_flutter_sdk_friend: ^1.5.0 # 카카오톡 소셜(피커: 친구 선택하기)
+  kakao_flutter_sdk_user: ^1.8.0 # 카카오 로그인
+  kakao_flutter_sdk_talk: ^1.8.0 # 카카오톡 메시지, 카카오톡 소셜(프로필 가져오기, 친구 목록 가져오기)
+  kakao_flutter_sdk_share: ^1.8.0 # 카카오톡 공유
+  kakao_flutter_sdk_friend: ^1.8.0 # 카카오톡 소셜(피커: 친구 선택하기)
 
   # 내 위치 찾기 패키지 ok
-  geolocator: ^9.0.2
+  geolocator: ^10.1.0
 
   # 슬라이더 ok
-  syncfusion_flutter_sliders: ^22.2.9
+  syncfusion_flutter_sliders: ^24.1.44
 
   # 보안 키 관리 ok
   flutter_dotenv: ^5.1.0
@@ -110,13 +110,13 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
 
   # 스플래시 화면 check
-  flutter_native_splash: ^2.3.2
+  flutter_native_splash: ^2.3.9
 
   # 점선 border ok
-  dotted_border: ^2.0.0+3
+  dotted_border: ^2.1.0
 
   # html 표현 변환 ok
-  flutter_widget_from_html: ^0.10.3
+  flutter_widget_from_html: ^0.14.10+1
   html: ^0.15.4
 
   # 애플 로그인

@@ -1,5 +1,3 @@
-
-import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -7,8 +5,6 @@ import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cafe_vip.d
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_main_info.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_more_info.dart';
-import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 

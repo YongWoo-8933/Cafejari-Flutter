@@ -1,12 +1,6 @@
-import 'package:cafejari_flutter/core/extension/null.dart';
-import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
-import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class AddCard extends StatelessWidget {
   final double width;
@@ -26,12 +20,12 @@ class AddCard extends StatelessWidget {
       strokeWidth: 3.0,
       color: AppColor.grey_300,
       borderType: BorderType.RRect,
-      dashPattern: [10.0, 10.0],
+      dashPattern: const [10.0, 10.0],
       radius: const Radius.circular(30),
       child: SizedBox(
         width: width,
         height: height,
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(

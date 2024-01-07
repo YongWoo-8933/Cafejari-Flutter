@@ -76,31 +76,25 @@ class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
                 children: [
                   InAppWebView(
                     key: webViewKey,
-                    initialUrlRequest: URLRequest(url: globalState.webViewUri),
-                    initialOptions: InAppWebViewGroupOptions(
-                      crossPlatform: InAppWebViewOptions(
-                        javaScriptCanOpenWindowsAutomatically: true,
-                        javaScriptEnabled: true,
-                        useOnDownloadStart: true,
-                        useOnLoadResource: true,
-                        useShouldOverrideUrlLoading: true,
-                        mediaPlaybackRequiresUserGesture: true,
-                        allowFileAccessFromFileURLs: true,
-                        allowUniversalAccessFromFileURLs: true,
-                        verticalScrollBarEnabled: true
-                      ),
-                      android: AndroidInAppWebViewOptions(
-                        useHybridComposition: true,
-                        allowContentAccess: true,
-                        builtInZoomControls: true,
-                        thirdPartyCookiesEnabled: true,
-                        allowFileAccess: true,
-                        supportMultipleWindows: true
-                      ),
-                      ios: IOSInAppWebViewOptions(
-                        allowsInlineMediaPlayback: true,
-                        allowsBackForwardNavigationGestures: true,
-                      ),
+                    initialUrlRequest: URLRequest(url: WebUri.uri(globalState.webViewUri)),
+                    initialSettings: InAppWebViewSettings(
+                      javaScriptCanOpenWindowsAutomatically: true,
+                      javaScriptEnabled: true,
+                      useOnDownloadStart: true,
+                      useOnLoadResource: true,
+                      useShouldOverrideUrlLoading: true,
+                      mediaPlaybackRequiresUserGesture: true,
+                      allowFileAccessFromFileURLs: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      verticalScrollBarEnabled: true,
+                      useHybridComposition: true,
+                      allowContentAccess: true,
+                      builtInZoomControls: true,
+                      thirdPartyCookiesEnabled: true,
+                      allowFileAccess: true,
+                      supportMultipleWindows: true,
+                      allowsInlineMediaPlayback: true,
+                      allowsBackForwardNavigationGestures: true,
                     ),
                     pullToRefreshController: pullToRefreshController,
                     onLoadStart: (InAppWebViewController controller, uri) {
@@ -112,12 +106,6 @@ class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
                     onProgressChanged: (controller, progress) {
                       if (progress == 100) {pullToRefreshController.endRefreshing();}
                       setState(() {this.progress = progress / 100;});
-                    },
-                    androidOnPermissionRequest: (controller, origin, resources) async {
-                      return PermissionRequestResponse(
-                        resources: resources,
-                        action: PermissionRequestResponseAction.GRANT
-                      );
                     },
                     onWebViewCreated: (InAppWebViewController controller) {
                       globalViewModel.initWebViewController(controller);

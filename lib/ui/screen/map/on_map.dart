@@ -1,8 +1,6 @@
 import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/location_dialog.dart';

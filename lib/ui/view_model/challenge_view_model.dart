@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';

@@ -15,7 +15,6 @@ import 'package:cafejari_flutter/ui/screen/my_page/my_page_screen.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -52,7 +51,7 @@ class CafejariApp extends ConsumerWidget {
           MaterialApp.router(
             theme: Theming.lightTheme,
             routerConfig: appRouter,
-            debugShowCheckedModeBanner: false
+            debugShowCheckedModeBanner: false,
           ),
           CustomSnackBar(
             isVisible: globalState.isSnackBarOpened,
@@ -198,22 +197,19 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
     const double bottomSheetPreviewHeight = 268;
     const double bottomSheetPreviewCornerRadius = 20;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (result) async {
         if (globalState.currentPage.index != 0) {
           mapViewModel.globalViewModel.updateCurrentPageTo(0);
-          return false;
         } else if(mapState.isSearchPageVisible) {
           mapViewModel.closeSearchPage();
-          return false;
         } else if(mapState.bottomSheetController.isPanelOpen) {
           mapState.bottomSheetController.close();
-          return false;
         } else if(mapState.isBottomSheetPreviewOpened) {
           await mapViewModel.closeBottomSheetPreview();
-          return false;
         } else {
-          return await showDialog<bool>(
+          await showDialog<bool>(
             context: context,
             builder: (context) => SquareAlertDialog(
               text: "앱을 종료하시겠습니까?",
@@ -223,7 +219,7 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
               onNegativeButtonPress: () => SystemNavigator.pop(),
               onPositiveButtonPress: () {},
             )
-          ) ?? false;
+          );
         }
       },
       child: DefaultTextStyle(

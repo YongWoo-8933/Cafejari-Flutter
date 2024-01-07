@@ -1,9 +1,6 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/app_config/app_config_response.dart';
-import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 /// app_config application api와 통신하는 저장소
 abstract interface class AppConfigRepository {

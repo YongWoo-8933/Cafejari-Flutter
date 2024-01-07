@@ -1,6 +1,3 @@
-
-import 'dart:math';
-
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/data/repository/challenge_repository.dart';

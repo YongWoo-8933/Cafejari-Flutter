@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';

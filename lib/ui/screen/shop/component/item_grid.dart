@@ -1,18 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/app_shadow.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/item_dialog.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/shop_state/shop_state.dart';
 import 'package:cafejari_flutter/ui/view_model/shop_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -31,11 +25,9 @@ class ItemGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ShopViewModel shopViewModel = ref.watch(shopViewModelProvider.notifier);
     final ShopState shopState = ref.watch(shopViewModelProvider);
-    final GlobalState globalState = ref.watch(globalViewModelProvider);
     const double itemMinimumWidth = 180;
     final refreshController = RefreshController();
     final Items selectedItems = shopState.itemList.where((element) => element.brandId == brand.id).toList();
-    const double dialogWidth = 240;
 
     return SmartRefresher(
       controller: refreshController,
