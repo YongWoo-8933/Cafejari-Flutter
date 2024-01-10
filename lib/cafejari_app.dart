@@ -20,7 +20,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
@@ -103,9 +102,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
         // 일반 앱 시작
         await globalViewModel.init();
       }
-
-      // splash 화면 종료
-      FlutterNativeSplash.remove();
 
       // 지도 관련 deep link 로직 처리
       Future.delayed(const Duration(seconds: 1), () async {

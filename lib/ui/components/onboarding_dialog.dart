@@ -152,7 +152,7 @@ class _Page extends StatelessWidget {
         const VerticalSpacer(8),
         Text(introduction, style: const TextStyle(fontSize: 13), textAlign: TextAlign.center),
         const VerticalSpacer(12),
-        Image.asset(imagePath, height: 400),
+        Image.asset(imagePath, height: 390),
       ],
     );
   }
