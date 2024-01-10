@@ -34,13 +34,13 @@ class RegistrationScreenState extends ConsumerState<RegistrationScreen> {
     final loginState = ref.watch(loginViewModelProvider);
     final LoginViewModel loginViewModel = ref.watch(loginViewModelProvider.notifier);
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) async {
         if(loginState.bottomSheetController.isPanelOpen) {
           loginState.bottomSheetController.close();
-          return false;
         } else {
-          return true;
+          GoRouter.of(context).pop();
         }
       },
       child: GestureDetector(
