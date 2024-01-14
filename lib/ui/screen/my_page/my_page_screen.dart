@@ -120,7 +120,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                                             profileImageId: myPageState.defaultProfileImages[index].profileImageId,
                                             context: context
                                           );
-                                          Navigator.of(context).pop();
+                                          Navigator.pop(context);
                                         }
                                       ),
                                     ),

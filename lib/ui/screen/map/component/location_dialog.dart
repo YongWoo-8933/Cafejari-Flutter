@@ -33,7 +33,7 @@ class LocationDialog extends StatelessWidget {
             return LayoutBuilder(
               builder: (_, constraint) => GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                   onLocationPress(location);
                 },
                 child: Container(

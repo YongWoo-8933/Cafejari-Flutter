@@ -48,8 +48,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 20
-        versionName "1.4.3"
+        versionCode 21
+        versionName "1.4.4"
         // local noti
         multiDexEnabled true
         // manifest 환경변수 설정
@@ -84,5 +84,6 @@ dependencies {
     implementation 'androidx.window:window-java:1.0.0'
     implementation platform("com.google.firebase:firebase-bom:32.7.0")
     implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation "androidx.activity:activity:1.9.0-alpha01"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }

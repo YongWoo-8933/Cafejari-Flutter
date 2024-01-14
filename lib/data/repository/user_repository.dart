@@ -9,6 +9,8 @@ abstract class UserRepository {
   // LOCAL
   Future<bool> getIsInstalledFirstTime();
   putIsInstalledFirstTime(bool isInstalled);
+  Future<bool> getIsReviewSubmitted();
+  putIsReviewSubmitted(bool isSubmitted);
   // GET
   Future<List<GradeResponse>> fetchGrade();
   Future<NicknameResponse> validateNickname({required String nickname});
@@ -56,6 +58,7 @@ class UserRepositoryImpl implements UserRepository {
   APIService apiService;
   final String boxLabel = "local";
   final String isInstalledFirstTimeKey = "isInstalledFirstTime";
+  final String isIsReviewSubmittedKey = "IsReviewSubmitted";
 
   UserRepositoryImpl(this.apiService);
 
@@ -70,6 +73,18 @@ class UserRepositoryImpl implements UserRepository {
   putIsInstalledFirstTime(bool isInstalled) async {
     final Box<dynamic> box = await Hive.openBox(boxLabel);
     await box.put(isInstalledFirstTimeKey, isInstalled);
+  }
+
+  @override
+  Future<bool> getIsReviewSubmitted() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(isIsReviewSubmittedKey) ?? false;
+  }
+
+  @override
+  putIsReviewSubmitted(bool isSubmitted) async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    await box.put(isIsReviewSubmittedKey, isSubmitted);
   }
 
   // GET

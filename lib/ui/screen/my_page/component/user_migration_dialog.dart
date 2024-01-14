@@ -99,7 +99,7 @@ class UserMigrationDialog extends ConsumerWidget {
                 ref.watch(_isLoading.notifier).update((state) => true);
                 myPageViewModel.userMigrate(context: context);
                 ref.watch(_isLoading.notifier).update((state) => false);
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               } : null
             )
           ],

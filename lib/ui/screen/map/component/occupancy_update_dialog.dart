@@ -175,7 +175,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                             ref.watch(_isLoading.notifier).update((state) => true);
                             if(context.mounted) await mapViewModel.updateOccupancyRate(context: context, isGuest: false);
                             ref.watch(_isLoading.notifier).update((state) => false);
-                            if(context.mounted) Navigator.of(context).pop();
+                            if(context.mounted) Navigator.pop(context);
                           } else {
                             if(context.mounted) {
                               await showDialog(
@@ -189,7 +189,7 @@ class OccupancyUpdateDialog extends ConsumerWidget {
                                       ref.watch(_isLoading.notifier).update((state) => true);
                                       await mapViewModel.updateOccupancyRate(context: context, isGuest: true);
                                       ref.watch(_isLoading.notifier).update((state) => false);
-                                      if(context.mounted) Navigator.of(context).pop();
+                                      if(context.mounted) Navigator.pop(context);
                                     },
                                     onPositiveButtonPress: () => GoRouter.of(context).goNamed(ScreenRoute.login),
                                   )

@@ -5,6 +5,7 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
 import 'package:cafejari_flutter/ui/components/onboarding_dialog.dart';
+import 'package:cafejari_flutter/ui/components/review_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
@@ -26,6 +27,7 @@ import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'ui/state/map_state/map_state.dart';
@@ -89,6 +91,7 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       await mapViewModel.getRandomCafeImageUrl();
       await challengeViewModel.refreshChallenges();
       await myPageViewModel.getDefaultProfileImages();
+      if (context.mounted) await globalViewModel.startAppFeedbackTimer(context: context);
 
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
@@ -204,18 +207,23 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           mapState.bottomSheetController.close();
         } else if(mapState.isBottomSheetPreviewOpened) {
           await mapViewModel.closeBottomSheetPreview();
+        } else if(!await mapViewModel.globalViewModel.getIsReviewSubmitted() && context.mounted) {
+          await mapViewModel.globalViewModel.showAppFeedbackDialog(context: context);
         } else {
-          await showDialog<bool>(
-            context: context,
-            builder: (context) => SquareAlertDialog(
-              text: "앱을 종료하시겠습니까?",
-              negativeButtonText: "예",
-              positiveButtonText: "아니오",
-              onDismiss: () => Navigator.of(context).pop(),
-              onNegativeButtonPress: () => SystemNavigator.pop(),
-              onPositiveButtonPress: () {},
-            )
-          );
+          if(context.mounted) {
+            await showDialog<bool>(
+              context: context,
+              builder: (context) =>
+                SquareAlertDialog(
+                  text: "앱을 종료하시겠습니까?",
+                  negativeButtonText: "예",
+                  positiveButtonText: "아니오",
+                  onDismiss: () => Navigator.of(context).pop(),
+                  onNegativeButtonPress: () => SystemNavigator.pop(),
+                  onPositiveButtonPress: () {},
+                )
+            );
+          }
         }
       },
       child: DefaultTextStyle(

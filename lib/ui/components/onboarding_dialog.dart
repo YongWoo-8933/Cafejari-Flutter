@@ -83,7 +83,7 @@ class OnboardingDialog extends ConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 0) {
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                             if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(
@@ -105,7 +105,7 @@ class OnboardingDialog extends ConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 3) {
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                             if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(

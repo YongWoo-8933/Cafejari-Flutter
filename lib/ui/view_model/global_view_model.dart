@@ -15,6 +15,7 @@ import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/components/review_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,6 +29,7 @@ import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -42,6 +44,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   final PushUseCase _pushUseCase;
   Timer? _showSnackBarTimer1;
   Timer? _showSnackBarTimer2;
+  Timer? _appFeedbackTimer;
 
   GlobalViewModel(
     this._appConfigUseCase,
@@ -52,7 +55,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     this._challengeUseCase,
     this._pushUseCase,
     this._showSnackBarTimer1,
-    this._showSnackBarTimer2
+    this._showSnackBarTimer2,
   ) : super(GlobalState.empty());
 
   checkVersion({required BuildContext context}) async {
@@ -173,9 +176,61 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
+  startAppFeedbackTimer({required BuildContext context}) async {
+    if (await getIsReviewSubmitted()) {
+      _appFeedbackTimer?.cancel();
+    } else if(_appFeedbackTimer.isNull) {
+      _appFeedbackTimer = Timer(const Duration(seconds: 150), () async {
+        await startAppFeedbackTimer(context: context);
+      });
+    } else if(context.mounted) {
+      _appFeedbackTimer?.cancel();
+      if (!GoRouter.of(context).canPop()) {
+        showAppFeedbackDialog(context: context);
+        _appFeedbackTimer = Timer(const Duration(seconds: 100), () async {
+          await startAppFeedbackTimer(context: context);
+        });
+      } else {
+        _appFeedbackTimer = Timer(const Duration(seconds: 10), () async {
+          await startAppFeedbackTimer(context: context);
+        });
+      }
+    }
+  }
+
+  showAppFeedbackDialog({required BuildContext context}) async {
+    if(context.mounted) {
+      final InAppReview inAppReview = InAppReview.instance;
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => SquareAlertDialog(
+          text: "잠깐! 앱을 간단히 평가해주세요. 카페자리의 사용성은 어떤가요?",
+          negativeButtonText: "별로에요",
+          positiveButtonText: "쓸만해요",
+          onDismiss: () {},
+          onXButtonPress: () => Navigator.pop(context),
+          onNegativeButtonPress: () async {
+            Navigator.pop(context);
+            await showDialog(context: context, builder: (_) => const ReviewDialog());
+          },
+          onPositiveButtonPress: () async {
+            if (await inAppReview.isAvailable()) await inAppReview.requestReview();
+            setIsReviewSubmitted(true);
+            if (context.mounted) Navigator.pop(context);
+          },
+        )
+      );
+    }
+  }
+
   Future<bool> getIsInstalledFirst() async => await _userUseCase.getIsInstalledFirstTime();
 
   setIsInstalledFirst(bool value) async => await _userUseCase.setIsInstalledFirstTime(value);
+
+  Future<bool> getIsReviewSubmitted() async => await _userUseCase.getIsReviewSubmitted();
+
+  setIsReviewSubmitted(bool value) async => await _userUseCase.setIsReviewSubmitted(value);
 
   setUser(User user) => state = state.copyWith(user: user);
 
@@ -259,7 +314,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
 
   closeSnackBar() => state = state.copyWith(isSnackBarOpened: false, isSnackBarExpanded: false);
 
-  void updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
+  updateCurrentPageTo(int index) => state = state.copyWith(currentPage: PageType.values[index]);
 
   Future<bool?> isNearBy({required NLatLng from, required int meter}) async {
     final myLocation = state.currentDeviceLocation ?? await getFirstLocation();
@@ -304,6 +359,31 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
       state = state.copyWith(
         myPushes: state.myPushes.map((e) => e.id == readPush.id ? readPush : e).toList()
       );
+    } on ErrorWithMessage catch(e) {
+      showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) expireRefreshToken(context: context);
+    }
+  }
+
+  submitAppFeedback({required AppInconvenienceReason reason, required BuildContext context}) async {
+    try {
+      String feedback = "";
+      switch(reason) {
+        case AppInconvenienceReason.appUse: feedback = "앱 사용성";
+        case AppInconvenienceReason.etc: feedback = "기타";
+        case AppInconvenienceReason.noCafe: feedback = "카페 없음";
+        case AppInconvenienceReason.noNeed: feedback = "정보 필요 없음";
+        case AppInconvenienceReason.noUse: feedback = "카페 잘 안감";
+        case AppInconvenienceReason.occupancyRate: feedback = "혼잡도 문제";
+        default: feedback = "";
+      }
+      await _userUseCase.appFeedback(
+        accessToken: state.isLoggedIn ? state.accessToken : null,
+        feedback: feedback,
+        onAccessTokenRefresh: setAccessToken
+      );
+      showSnackBar(content: "제출됨", type: SnackBarType.complete);
     } on ErrorWithMessage catch(e) {
       showSnackBar(content: e.message, type: SnackBarType.error);
     } on RefreshTokenExpired {

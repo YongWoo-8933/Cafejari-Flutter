@@ -71,7 +71,7 @@ class ShopMyBrandCon extends ConsumerWidget {
                     title: "사용완료",
                     onPressed: () async {
                       await shopViewModel.updateBrandconIsUsed(brandcon: brandcon, isUsed: true, context: context);
-                      if (context.mounted) Navigator.of(context).pop();
+                      if (context.mounted) Navigator.pop(context);
                     }
                   ),
                   const VerticalSpacer(20)

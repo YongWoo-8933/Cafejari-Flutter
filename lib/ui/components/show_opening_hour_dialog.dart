@@ -252,7 +252,7 @@ showOpeningHourDialog({
                       title: "저장",
                       onPressed: () {
                         saveSelectedOpeningHourInfo();
-                        Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                     ),
                   ],

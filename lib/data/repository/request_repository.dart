@@ -37,6 +37,7 @@ abstract interface class RequestRepository {
   });
   Future<void> postUserWithdrawalRequest({required String accessToken, required String reason});
   Future<UserMigrationRequestResponse> postUserMigrationRequest({required String accessToken, required String phoneNumber});
+  Future<void> postAppFeedback({String? accessToken, required String feedback});
 }
 
 
@@ -173,6 +174,23 @@ class RequestRepositoryImpl implements RequestRepository {
         body: {"phone_number": phoneNumber}
       );
       return UserMigrationRequestResponse.fromJson(response);
+    } on ErrorWithMessage {
+      rethrow;
+    } on TokenExpired {
+      throw AccessTokenExpired();
+    }
+  }
+
+  @override
+  Future<void> postAppFeedback({String? accessToken, required String feedback}) async {
+    try {
+      await service.request(
+        method: HttpMethod.post,
+        appLabel: "request",
+        endpoint: accessToken.isNull ? "app_feedback/guest_feedback/" : "app_feedback/user_feedback/",
+        accessToken: accessToken,
+        body: {"feedback": feedback}
+      );
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

@@ -129,9 +129,7 @@ class MapViewModel extends StateNotifier<MapState> {
     });
   }
 
-  openSearchPage() {
-    state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
-  }
+  openSearchPage() => state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
 
   closeSearchPage() async {
     state = state.copyWith(isSearchPageFadedIn: false);
@@ -378,7 +376,7 @@ class MapViewModel extends StateNotifier<MapState> {
 
   _showPointAnimation({required BuildContext context, required int point}) {
     showDialog(context: context, builder: (context) {
-      Future.delayed(const Duration(seconds: 4), () {if(context.mounted) Navigator.of(context).pop();});
+      Future.delayed(const Duration(seconds: 4), () {if(context.mounted) Navigator.pop(context);});
       return Dialog(
         insetPadding: AppPadding.padding_0,
         backgroundColor: AppColor.transparent,

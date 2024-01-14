@@ -68,7 +68,7 @@ class NicknameEditorDialogState extends ConsumerState<NicknameEditorDialog> {
                 ref.watch(_isLoading.notifier).update((state) => true);
                 await myPageViewModel.updateNickname(context: context);
                 ref.watch(_isLoading.notifier).update((state) => false);
-                if(context.mounted) Navigator.of(context).pop();
+                if(context.mounted) Navigator.pop(context);
               } : null,
             )
           ],
