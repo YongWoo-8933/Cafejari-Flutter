@@ -205,7 +205,7 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
         context: context,
         barrierDismissible: false,
         builder: (context) => SquareAlertDialog(
-          text: "잠깐! 앱을 간단히 평가해주세요. 카페자리의 사용성은 어떤가요?",
+          text: "잠깐💡 앱을 평가해주세요! 카페자리가 \n카페 이용에 도움이 되셨나요?",
           negativeButtonText: "별로에요",
           positiveButtonText: "쓸만해요",
           onDismiss: () {},
