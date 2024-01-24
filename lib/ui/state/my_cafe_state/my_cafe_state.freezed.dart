@@ -93,11 +93,11 @@ class _$MyCafeStateCopyWithImpl<$Res, $Val extends MyCafeState>
 }
 
 /// @nodoc
-abstract class _$$_MyCafeStateCopyWith<$Res>
+abstract class _$$MyCafeStateImplCopyWith<$Res>
     implements $MyCafeStateCopyWith<$Res> {
-  factory _$$_MyCafeStateCopyWith(
-          _$_MyCafeState value, $Res Function(_$_MyCafeState) then) =
-      __$$_MyCafeStateCopyWithImpl<$Res>;
+  factory _$$MyCafeStateImplCopyWith(
+          _$MyCafeStateImpl value, $Res Function(_$MyCafeStateImpl) then) =
+      __$$MyCafeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -110,11 +110,11 @@ abstract class _$$_MyCafeStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MyCafeStateCopyWithImpl<$Res>
-    extends _$MyCafeStateCopyWithImpl<$Res, _$_MyCafeState>
-    implements _$$_MyCafeStateCopyWith<$Res> {
-  __$$_MyCafeStateCopyWithImpl(
-      _$_MyCafeState _value, $Res Function(_$_MyCafeState) _then)
+class __$$MyCafeStateImplCopyWithImpl<$Res>
+    extends _$MyCafeStateCopyWithImpl<$Res, _$MyCafeStateImpl>
+    implements _$$MyCafeStateImplCopyWith<$Res> {
+  __$$MyCafeStateImplCopyWithImpl(
+      _$MyCafeStateImpl _value, $Res Function(_$MyCafeStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +127,7 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
     Object? recommendedCafes = null,
     Object? isCafeRecommendationLoading = null,
   }) {
-    return _then(_$_MyCafeState(
+    return _then(_$MyCafeStateImpl(
       catiOpennessSliderValue: null == catiOpennessSliderValue
           ? _value.catiOpennessSliderValue
           : catiOpennessSliderValue // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class __$$_MyCafeStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MyCafeState implements _MyCafeState {
-  _$_MyCafeState(
+class _$MyCafeStateImpl implements _MyCafeState {
+  _$MyCafeStateImpl(
       {required this.catiOpennessSliderValue,
       required this.catiCoffeeSliderValue,
       required this.catiWorkspaceSliderValue,
@@ -194,10 +194,10 @@ class _$_MyCafeState implements _MyCafeState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MyCafeState &&
+            other is _$MyCafeStateImpl &&
             (identical(
                     other.catiOpennessSliderValue, catiOpennessSliderValue) ||
                 other.catiOpennessSliderValue == catiOpennessSliderValue) &&
@@ -229,8 +229,8 @@ class _$_MyCafeState implements _MyCafeState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MyCafeStateCopyWith<_$_MyCafeState> get copyWith =>
-      __$$_MyCafeStateCopyWithImpl<_$_MyCafeState>(this, _$identity);
+  _$$MyCafeStateImplCopyWith<_$MyCafeStateImpl> get copyWith =>
+      __$$MyCafeStateImplCopyWithImpl<_$MyCafeStateImpl>(this, _$identity);
 }
 
 abstract class _MyCafeState implements MyCafeState {
@@ -240,7 +240,7 @@ abstract class _MyCafeState implements MyCafeState {
       required final int catiWorkspaceSliderValue,
       required final int catiAciditySliderValue,
       required final List<Cafe> recommendedCafes,
-      required final bool isCafeRecommendationLoading}) = _$_MyCafeState;
+      required final bool isCafeRecommendationLoading}) = _$MyCafeStateImpl;
 
   @override
   int get catiOpennessSliderValue;
@@ -256,6 +256,6 @@ abstract class _MyCafeState implements MyCafeState {
   bool get isCafeRecommendationLoading;
   @override
   @JsonKey(ignore: true)
-  _$$_MyCafeStateCopyWith<_$_MyCafeState> get copyWith =>
+  _$$MyCafeStateImplCopyWith<_$MyCafeStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

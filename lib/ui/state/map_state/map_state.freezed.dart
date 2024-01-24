@@ -271,10 +271,11 @@ class _$MapStateCopyWithImpl<$Res, $Val extends MapState>
 }
 
 /// @nodoc
-abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
-  factory _$$_MapStateCopyWith(
-          _$_MapState value, $Res Function(_$_MapState) then) =
-      __$$_MapStateCopyWithImpl<$Res>;
+abstract class _$$MapStateImplCopyWith<$Res>
+    implements $MapStateCopyWith<$Res> {
+  factory _$$MapStateImplCopyWith(
+          _$MapStateImpl value, $Res Function(_$MapStateImpl) then) =
+      __$$MapStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -314,11 +315,11 @@ abstract class _$$_MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MapStateCopyWithImpl<$Res>
-    extends _$MapStateCopyWithImpl<$Res, _$_MapState>
-    implements _$$_MapStateCopyWith<$Res> {
-  __$$_MapStateCopyWithImpl(
-      _$_MapState _value, $Res Function(_$_MapState) _then)
+class __$$MapStateImplCopyWithImpl<$Res>
+    extends _$MapStateCopyWithImpl<$Res, _$MapStateImpl>
+    implements _$$MapStateImplCopyWith<$Res> {
+  __$$MapStateImplCopyWithImpl(
+      _$MapStateImpl _value, $Res Function(_$MapStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -353,7 +354,7 @@ class __$$_MapStateCopyWithImpl<$Res>
     Object? isCafeRefreshIndicatorVisible = null,
     Object? isRefreshButtonVisible = null,
   }) {
-    return _then(_$_MapState(
+    return _then(_$MapStateImpl(
       bottomSheetController: null == bottomSheetController
           ? _value.bottomSheetController
           : bottomSheetController // ignore: cast_nullable_to_non_nullable
@@ -472,8 +473,8 @@ class __$$_MapStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MapState implements _MapState {
-  _$_MapState(
+class _$MapStateImpl implements _MapState {
+  _$MapStateImpl(
       {required this.bottomSheetController,
       required this.cafeImagePageController,
       required this.currentCafeImagePage,
@@ -588,10 +589,10 @@ class _$_MapState implements _MapState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MapState &&
+            other is _$MapStateImpl &&
             (identical(other.bottomSheetController, bottomSheetController) ||
                 other.bottomSheetController == bottomSheetController) &&
             (identical(other.cafeImagePageController, cafeImagePageController) ||
@@ -686,8 +687,8 @@ class _$_MapState implements _MapState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MapStateCopyWith<_$_MapState> get copyWith =>
-      __$$_MapStateCopyWithImpl<_$_MapState>(this, _$identity);
+  _$$MapStateImplCopyWith<_$MapStateImpl> get copyWith =>
+      __$$MapStateImplCopyWithImpl<_$MapStateImpl>(this, _$identity);
 }
 
 abstract class _MapState implements MapState {
@@ -719,7 +720,7 @@ abstract class _MapState implements MapState {
       required final bool isBottomSheetPreviewExpanded,
       required final bool isBottomSheetFullContentVisible,
       required final bool isCafeRefreshIndicatorVisible,
-      required final bool isRefreshButtonVisible}) = _$_MapState;
+      required final bool isRefreshButtonVisible}) = _$MapStateImpl;
 
   @override
   PanelController get bottomSheetController;
@@ -779,6 +780,6 @@ abstract class _MapState implements MapState {
   bool get isRefreshButtonVisible;
   @override
   @JsonKey(ignore: true)
-  _$$_MapStateCopyWith<_$_MapState> get copyWith =>
+  _$$MapStateImplCopyWith<_$MapStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

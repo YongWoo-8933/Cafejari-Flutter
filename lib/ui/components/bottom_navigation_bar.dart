@@ -39,7 +39,12 @@ class BottomNavBar extends ConsumerWidget {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
-          onTap: (index) => globalViewModel.updateCurrentPageTo(index),
+          onTap: (index) async {
+            globalViewModel.updateCurrentPageTo(index);
+            if(index==2 && globalState.isChallengeBadgeVisible) {
+              globalViewModel.setChallengeBadgeVisible(false);
+            }
+          },
           items: [
             BottomNavigationBarItem(
               icon: Image.asset('asset/image/icon_navigation_map_grey.png'),
@@ -52,12 +57,14 @@ class BottomNavBar extends ConsumerWidget {
               label: "내카페"
             ),
             BottomNavigationBarItem(
-              icon: Image.asset('asset/image/icon_medal_grey.png'),
+              icon: Image.asset(globalState.isChallengeBadgeVisible ?
+                'asset/image/icon_medal_badge.png' : 'asset/image/icon_medal_grey.png'),
               activeIcon: Image.asset('asset/image/icon_medal.png'),
               label: "챌린지"
             ),
             BottomNavigationBarItem(
-              icon: Image.asset('asset/image/icon_user_grey.png'),
+              icon: Image.asset(globalState.myPushes.any((e) => !e.isRead) ?
+                'asset/image/icon_user_badge.png' : 'asset/image/icon_user_grey.png'),
               activeIcon: Image.asset('asset/image/icon_user.png'),
               label: "MY"
             )

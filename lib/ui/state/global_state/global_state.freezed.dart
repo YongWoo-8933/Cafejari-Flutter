@@ -36,6 +36,8 @@ mixin _$GlobalState {
       throw _privateConstructorUsedError;
   String get webViewTitle => throw _privateConstructorUsedError;
   Uri get webViewUri => throw _privateConstructorUsedError;
+  bool get isChallengeBadgeVisible => throw _privateConstructorUsedError;
+  bool get isFlagButtonBadgeVisible => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -65,7 +67,9 @@ abstract class $GlobalStateCopyWith<$Res> {
       Position? currentDeviceLocation,
       InAppWebViewController? webViewController,
       String webViewTitle,
-      Uri webViewUri});
+      Uri webViewUri,
+      bool isChallengeBadgeVisible,
+      bool isFlagButtonBadgeVisible});
 
   $UserCopyWith<$Res> get user;
 }
@@ -100,6 +104,8 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
     Object? webViewController = freezed,
     Object? webViewTitle = null,
     Object? webViewUri = null,
+    Object? isChallengeBadgeVisible = null,
+    Object? isFlagButtonBadgeVisible = null,
   }) {
     return _then(_value.copyWith(
       versions: null == versions
@@ -170,6 +176,14 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.webViewUri
           : webViewUri // ignore: cast_nullable_to_non_nullable
               as Uri,
+      isChallengeBadgeVisible: null == isChallengeBadgeVisible
+          ? _value.isChallengeBadgeVisible
+          : isChallengeBadgeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFlagButtonBadgeVisible: null == isFlagButtonBadgeVisible
+          ? _value.isFlagButtonBadgeVisible
+          : isFlagButtonBadgeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -183,11 +197,11 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
 }
 
 /// @nodoc
-abstract class _$$_GlobalStateCopyWith<$Res>
+abstract class _$$GlobalStateImplCopyWith<$Res>
     implements $GlobalStateCopyWith<$Res> {
-  factory _$$_GlobalStateCopyWith(
-          _$_GlobalState value, $Res Function(_$_GlobalState) then) =
-      __$$_GlobalStateCopyWithImpl<$Res>;
+  factory _$$GlobalStateImplCopyWith(
+          _$GlobalStateImpl value, $Res Function(_$GlobalStateImpl) then) =
+      __$$GlobalStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -207,18 +221,20 @@ abstract class _$$_GlobalStateCopyWith<$Res>
       Position? currentDeviceLocation,
       InAppWebViewController? webViewController,
       String webViewTitle,
-      Uri webViewUri});
+      Uri webViewUri,
+      bool isChallengeBadgeVisible,
+      bool isFlagButtonBadgeVisible});
 
   @override
   $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class __$$_GlobalStateCopyWithImpl<$Res>
-    extends _$GlobalStateCopyWithImpl<$Res, _$_GlobalState>
-    implements _$$_GlobalStateCopyWith<$Res> {
-  __$$_GlobalStateCopyWithImpl(
-      _$_GlobalState _value, $Res Function(_$_GlobalState) _then)
+class __$$GlobalStateImplCopyWithImpl<$Res>
+    extends _$GlobalStateCopyWithImpl<$Res, _$GlobalStateImpl>
+    implements _$$GlobalStateImplCopyWith<$Res> {
+  __$$GlobalStateImplCopyWithImpl(
+      _$GlobalStateImpl _value, $Res Function(_$GlobalStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -241,8 +257,10 @@ class __$$_GlobalStateCopyWithImpl<$Res>
     Object? webViewController = freezed,
     Object? webViewTitle = null,
     Object? webViewUri = null,
+    Object? isChallengeBadgeVisible = null,
+    Object? isFlagButtonBadgeVisible = null,
   }) {
-    return _then(_$_GlobalState(
+    return _then(_$GlobalStateImpl(
       versions: null == versions
           ? _value._versions
           : versions // ignore: cast_nullable_to_non_nullable
@@ -311,14 +329,22 @@ class __$$_GlobalStateCopyWithImpl<$Res>
           ? _value.webViewUri
           : webViewUri // ignore: cast_nullable_to_non_nullable
               as Uri,
+      isChallengeBadgeVisible: null == isChallengeBadgeVisible
+          ? _value.isChallengeBadgeVisible
+          : isChallengeBadgeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFlagButtonBadgeVisible: null == isFlagButtonBadgeVisible
+          ? _value.isFlagButtonBadgeVisible
+          : isFlagButtonBadgeVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_GlobalState implements _GlobalState {
-  _$_GlobalState(
+class _$GlobalStateImpl implements _GlobalState {
+  _$GlobalStateImpl(
       {required final List<Version> versions,
       required this.accessToken,
       required this.isLoggedIn,
@@ -335,7 +361,9 @@ class _$_GlobalState implements _GlobalState {
       required this.currentDeviceLocation,
       required this.webViewController,
       required this.webViewTitle,
-      required this.webViewUri})
+      required this.webViewUri,
+      required this.isChallengeBadgeVisible,
+      required this.isFlagButtonBadgeVisible})
       : _versions = versions,
         _myTodayUpdates = myTodayUpdates,
         _myChallengers = myChallengers,
@@ -399,17 +427,21 @@ class _$_GlobalState implements _GlobalState {
   final String webViewTitle;
   @override
   final Uri webViewUri;
+  @override
+  final bool isChallengeBadgeVisible;
+  @override
+  final bool isFlagButtonBadgeVisible;
 
   @override
   String toString() {
-    return 'GlobalState(versions: $versions, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, myPushes: $myPushes, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri)';
+    return 'GlobalState(versions: $versions, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, myPushes: $myPushes, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri, isChallengeBadgeVisible: $isChallengeBadgeVisible, isFlagButtonBadgeVisible: $isFlagButtonBadgeVisible)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GlobalState &&
+            other is _$GlobalStateImpl &&
             const DeepCollectionEquality().equals(other._versions, _versions) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
@@ -440,35 +472,44 @@ class _$_GlobalState implements _GlobalState {
             (identical(other.webViewTitle, webViewTitle) ||
                 other.webViewTitle == webViewTitle) &&
             (identical(other.webViewUri, webViewUri) ||
-                other.webViewUri == webViewUri));
+                other.webViewUri == webViewUri) &&
+            (identical(
+                    other.isChallengeBadgeVisible, isChallengeBadgeVisible) ||
+                other.isChallengeBadgeVisible == isChallengeBadgeVisible) &&
+            (identical(
+                    other.isFlagButtonBadgeVisible, isFlagButtonBadgeVisible) ||
+                other.isFlagButtonBadgeVisible == isFlagButtonBadgeVisible));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_versions),
-      accessToken,
-      isLoggedIn,
-      user,
-      const DeepCollectionEquality().hash(_myTodayUpdates),
-      myRanking,
-      const DeepCollectionEquality().hash(_myChallengers),
-      const DeepCollectionEquality().hash(_myPushes),
-      currentPage,
-      isSnackBarOpened,
-      isSnackBarExpanded,
-      snackBarText,
-      snackBarType,
-      currentDeviceLocation,
-      webViewController,
-      webViewTitle,
-      webViewUri);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(_versions),
+        accessToken,
+        isLoggedIn,
+        user,
+        const DeepCollectionEquality().hash(_myTodayUpdates),
+        myRanking,
+        const DeepCollectionEquality().hash(_myChallengers),
+        const DeepCollectionEquality().hash(_myPushes),
+        currentPage,
+        isSnackBarOpened,
+        isSnackBarExpanded,
+        snackBarText,
+        snackBarType,
+        currentDeviceLocation,
+        webViewController,
+        webViewTitle,
+        webViewUri,
+        isChallengeBadgeVisible,
+        isFlagButtonBadgeVisible
+      ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>
-      __$$_GlobalStateCopyWithImpl<_$_GlobalState>(this, _$identity);
+  _$$GlobalStateImplCopyWith<_$GlobalStateImpl> get copyWith =>
+      __$$GlobalStateImplCopyWithImpl<_$GlobalStateImpl>(this, _$identity);
 }
 
 abstract class _GlobalState implements GlobalState {
@@ -489,7 +530,9 @@ abstract class _GlobalState implements GlobalState {
       required final Position? currentDeviceLocation,
       required final InAppWebViewController? webViewController,
       required final String webViewTitle,
-      required final Uri webViewUri}) = _$_GlobalState;
+      required final Uri webViewUri,
+      required final bool isChallengeBadgeVisible,
+      required final bool isFlagButtonBadgeVisible}) = _$GlobalStateImpl;
 
   @override
   List<Version> get versions;
@@ -526,7 +569,11 @@ abstract class _GlobalState implements GlobalState {
   @override
   Uri get webViewUri;
   @override
+  bool get isChallengeBadgeVisible;
+  @override
+  bool get isFlagButtonBadgeVisible;
+  @override
   @JsonKey(ignore: true)
-  _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>
+  _$$GlobalStateImplCopyWith<_$GlobalStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

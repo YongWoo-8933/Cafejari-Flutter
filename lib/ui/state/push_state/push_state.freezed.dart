@@ -62,21 +62,22 @@ class _$PushStateCopyWithImpl<$Res, $Val extends PushState>
 }
 
 /// @nodoc
-abstract class _$$_PushStateCopyWith<$Res> implements $PushStateCopyWith<$Res> {
-  factory _$$_PushStateCopyWith(
-          _$_PushState value, $Res Function(_$_PushState) then) =
-      __$$_PushStateCopyWithImpl<$Res>;
+abstract class _$$PushStateImplCopyWith<$Res>
+    implements $PushStateCopyWith<$Res> {
+  factory _$$PushStateImplCopyWith(
+          _$PushStateImpl value, $Res Function(_$PushStateImpl) then) =
+      __$$PushStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Push> pushes, List<List<Push>> typePushes});
 }
 
 /// @nodoc
-class __$$_PushStateCopyWithImpl<$Res>
-    extends _$PushStateCopyWithImpl<$Res, _$_PushState>
-    implements _$$_PushStateCopyWith<$Res> {
-  __$$_PushStateCopyWithImpl(
-      _$_PushState _value, $Res Function(_$_PushState) _then)
+class __$$PushStateImplCopyWithImpl<$Res>
+    extends _$PushStateCopyWithImpl<$Res, _$PushStateImpl>
+    implements _$$PushStateImplCopyWith<$Res> {
+  __$$PushStateImplCopyWithImpl(
+      _$PushStateImpl _value, $Res Function(_$PushStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +86,7 @@ class __$$_PushStateCopyWithImpl<$Res>
     Object? pushes = null,
     Object? typePushes = null,
   }) {
-    return _then(_$_PushState(
+    return _then(_$PushStateImpl(
       pushes: null == pushes
           ? _value._pushes
           : pushes // ignore: cast_nullable_to_non_nullable
@@ -100,8 +101,8 @@ class __$$_PushStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PushState implements _PushState {
-  _$_PushState(
+class _$PushStateImpl implements _PushState {
+  _$PushStateImpl(
       {required final List<Push> pushes,
       required final List<List<Push>> typePushes})
       : _pushes = pushes,
@@ -129,10 +130,10 @@ class _$_PushState implements _PushState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushState &&
+            other is _$PushStateImpl &&
             const DeepCollectionEquality().equals(other._pushes, _pushes) &&
             const DeepCollectionEquality()
                 .equals(other._typePushes, _typePushes));
@@ -147,14 +148,14 @@ class _$_PushState implements _PushState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushStateCopyWith<_$_PushState> get copyWith =>
-      __$$_PushStateCopyWithImpl<_$_PushState>(this, _$identity);
+  _$$PushStateImplCopyWith<_$PushStateImpl> get copyWith =>
+      __$$PushStateImplCopyWithImpl<_$PushStateImpl>(this, _$identity);
 }
 
 abstract class _PushState implements PushState {
   factory _PushState(
       {required final List<Push> pushes,
-      required final List<List<Push>> typePushes}) = _$_PushState;
+      required final List<List<Push>> typePushes}) = _$PushStateImpl;
 
   @override
   List<Push> get pushes;
@@ -162,6 +163,6 @@ abstract class _PushState implements PushState {
   List<List<Push>> get typePushes;
   @override
   @JsonKey(ignore: true)
-  _$$_PushStateCopyWith<_$_PushState> get copyWith =>
+  _$$PushStateImplCopyWith<_$PushStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -83,11 +83,11 @@ class _$ChallengeStateCopyWithImpl<$Res, $Val extends ChallengeState>
 }
 
 /// @nodoc
-abstract class _$$_ChallengeStateCopyWith<$Res>
+abstract class _$$ChallengeStateImplCopyWith<$Res>
     implements $ChallengeStateCopyWith<$Res> {
-  factory _$$_ChallengeStateCopyWith(
-          _$_ChallengeState value, $Res Function(_$_ChallengeState) then) =
-      __$$_ChallengeStateCopyWithImpl<$Res>;
+  factory _$$ChallengeStateImplCopyWith(_$ChallengeStateImpl value,
+          $Res Function(_$ChallengeStateImpl) then) =
+      __$$ChallengeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -100,11 +100,11 @@ abstract class _$$_ChallengeStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ChallengeStateCopyWithImpl<$Res>
-    extends _$ChallengeStateCopyWithImpl<$Res, _$_ChallengeState>
-    implements _$$_ChallengeStateCopyWith<$Res> {
-  __$$_ChallengeStateCopyWithImpl(
-      _$_ChallengeState _value, $Res Function(_$_ChallengeState) _then)
+class __$$ChallengeStateImplCopyWithImpl<$Res>
+    extends _$ChallengeStateCopyWithImpl<$Res, _$ChallengeStateImpl>
+    implements _$$ChallengeStateImplCopyWith<$Res> {
+  __$$ChallengeStateImplCopyWithImpl(
+      _$ChallengeStateImpl _value, $Res Function(_$ChallengeStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +114,7 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
     Object? unavailableChallenges = null,
     Object? selectedChallenge = null,
   }) {
-    return _then(_$_ChallengeState(
+    return _then(_$ChallengeStateImpl(
       availableChallenges: null == availableChallenges
           ? _value._availableChallenges
           : availableChallenges // ignore: cast_nullable_to_non_nullable
@@ -133,8 +133,8 @@ class __$$_ChallengeStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChallengeState implements _ChallengeState {
-  _$_ChallengeState(
+class _$ChallengeStateImpl implements _ChallengeState {
+  _$ChallengeStateImpl(
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
       required this.selectedChallenge})
@@ -168,10 +168,10 @@ class _$_ChallengeState implements _ChallengeState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChallengeState &&
+            other is _$ChallengeStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._availableChallenges, _availableChallenges) &&
             const DeepCollectionEquality()
@@ -190,15 +190,16 @@ class _$_ChallengeState implements _ChallengeState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChallengeStateCopyWith<_$_ChallengeState> get copyWith =>
-      __$$_ChallengeStateCopyWithImpl<_$_ChallengeState>(this, _$identity);
+  _$$ChallengeStateImplCopyWith<_$ChallengeStateImpl> get copyWith =>
+      __$$ChallengeStateImplCopyWithImpl<_$ChallengeStateImpl>(
+          this, _$identity);
 }
 
 abstract class _ChallengeState implements ChallengeState {
   factory _ChallengeState(
       {required final List<Challenge> availableChallenges,
       required final List<Challenge> unavailableChallenges,
-      required final Challenge selectedChallenge}) = _$_ChallengeState;
+      required final Challenge selectedChallenge}) = _$ChallengeStateImpl;
 
   @override
   List<Challenge> get availableChallenges;
@@ -208,6 +209,6 @@ abstract class _ChallengeState implements ChallengeState {
   Challenge get selectedChallenge;
   @override
   @JsonKey(ignore: true)
-  _$$_ChallengeStateCopyWith<_$_ChallengeState> get copyWith =>
+  _$$ChallengeStateImplCopyWith<_$ChallengeStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

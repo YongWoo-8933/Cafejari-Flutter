@@ -9,10 +9,6 @@ import 'package:cafejari_flutter/domain/use_case/user_use_case/make_new_profile.
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class UserUseCase {
-  Future<bool> getIsInstalledFirstTime();
-  setIsInstalledFirstTime(bool isInstalled);
-  Future<bool> getIsReviewSubmitted();
-  setIsReviewSubmitted(bool isSubmitted);
   putRefreshToken(String token);
   Future<({bool isUserExist, String accessToken})> kakaoLogin({required String accessToken});
   Future<({String accessToken, String refreshToken, User user})> kakaoLoginFinish({required String accessToken});
@@ -83,17 +79,6 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
 
   UserUseCaseImpl({required this.tokenRepository, required this.userRepository, required this.requestRepository});
 
-  @override
-  Future<bool> getIsInstalledFirstTime() async => await userRepository.getIsInstalledFirstTime();
-
-  @override
-  setIsInstalledFirstTime(bool isInstalled) async => await userRepository.putIsInstalledFirstTime(isInstalled);
-
-  @override
-  Future<bool> getIsReviewSubmitted() async => await userRepository.getIsReviewSubmitted();
-
-  @override
-  setIsReviewSubmitted(bool isSubmitted) async => await userRepository.putIsReviewSubmitted(isSubmitted);
 
   @override
   putRefreshToken(String token) async => await tokenRepository.putRefreshToken(newToken: token);

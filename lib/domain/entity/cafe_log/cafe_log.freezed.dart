@@ -152,10 +152,10 @@ class _$CafeLogCopyWithImpl<$Res, $Val extends CafeLog>
 }
 
 /// @nodoc
-abstract class _$$_CafeLogCopyWith<$Res> implements $CafeLogCopyWith<$Res> {
-  factory _$$_CafeLogCopyWith(
-          _$_CafeLog value, $Res Function(_$_CafeLog) then) =
-      __$$_CafeLogCopyWithImpl<$Res>;
+abstract class _$$CafeLogImplCopyWith<$Res> implements $CafeLogCopyWith<$Res> {
+  factory _$$CafeLogImplCopyWith(
+          _$CafeLogImpl value, $Res Function(_$CafeLogImpl) then) =
+      __$$CafeLogImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -179,10 +179,11 @@ abstract class _$$_CafeLogCopyWith<$Res> implements $CafeLogCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CafeLogCopyWithImpl<$Res>
-    extends _$CafeLogCopyWithImpl<$Res, _$_CafeLog>
-    implements _$$_CafeLogCopyWith<$Res> {
-  __$$_CafeLogCopyWithImpl(_$_CafeLog _value, $Res Function(_$_CafeLog) _then)
+class __$$CafeLogImplCopyWithImpl<$Res>
+    extends _$CafeLogCopyWithImpl<$Res, _$CafeLogImpl>
+    implements _$$CafeLogImplCopyWith<$Res> {
+  __$$CafeLogImplCopyWithImpl(
+      _$CafeLogImpl _value, $Res Function(_$CafeLogImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -201,7 +202,7 @@ class __$$_CafeLogCopyWithImpl<$Res>
     Object? reportUserIds = null,
     Object? imageUrls = null,
   }) {
-    return _then(_$_CafeLog(
+    return _then(_$CafeLogImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -256,8 +257,8 @@ class __$$_CafeLogCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeLog implements _CafeLog {
-  _$_CafeLog(
+class _$CafeLogImpl implements _CafeLog {
+  _$CafeLogImpl(
       {required this.id,
       required this.isVisible,
       required this.isPrivate,
@@ -322,10 +323,10 @@ class _$_CafeLog implements _CafeLog {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeLog &&
+            other is _$CafeLogImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.isVisible, isVisible) ||
                 other.isVisible == isVisible) &&
@@ -366,8 +367,8 @@ class _$_CafeLog implements _CafeLog {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeLogCopyWith<_$_CafeLog> get copyWith =>
-      __$$_CafeLogCopyWithImpl<_$_CafeLog>(this, _$identity);
+  _$$CafeLogImplCopyWith<_$CafeLogImpl> get copyWith =>
+      __$$CafeLogImplCopyWithImpl<_$CafeLogImpl>(this, _$identity);
 }
 
 abstract class _CafeLog implements CafeLog {
@@ -383,7 +384,7 @@ abstract class _CafeLog implements CafeLog {
       required final Cafe cafe,
       required final List<int> likeUserIds,
       required final List<int> reportUserIds,
-      required final List<String> imageUrls}) = _$_CafeLog;
+      required final List<String> imageUrls}) = _$CafeLogImpl;
 
   @override
   int get id;
@@ -411,7 +412,7 @@ abstract class _CafeLog implements CafeLog {
   List<String> get imageUrls;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeLogCopyWith<_$_CafeLog> get copyWith =>
+  _$$CafeLogImplCopyWith<_$CafeLogImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -469,21 +470,22 @@ class _$SnapshotCopyWithImpl<$Res, $Val extends Snapshot>
 }
 
 /// @nodoc
-abstract class _$$_SnapshotCopyWith<$Res> implements $SnapshotCopyWith<$Res> {
-  factory _$$_SnapshotCopyWith(
-          _$_Snapshot value, $Res Function(_$_Snapshot) then) =
-      __$$_SnapshotCopyWithImpl<$Res>;
+abstract class _$$SnapshotImplCopyWith<$Res>
+    implements $SnapshotCopyWith<$Res> {
+  factory _$$SnapshotImplCopyWith(
+          _$SnapshotImpl value, $Res Function(_$SnapshotImpl) then) =
+      __$$SnapshotImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String imageUrl, CafeLogTheme theme});
 }
 
 /// @nodoc
-class __$$_SnapshotCopyWithImpl<$Res>
-    extends _$SnapshotCopyWithImpl<$Res, _$_Snapshot>
-    implements _$$_SnapshotCopyWith<$Res> {
-  __$$_SnapshotCopyWithImpl(
-      _$_Snapshot _value, $Res Function(_$_Snapshot) _then)
+class __$$SnapshotImplCopyWithImpl<$Res>
+    extends _$SnapshotCopyWithImpl<$Res, _$SnapshotImpl>
+    implements _$$SnapshotImplCopyWith<$Res> {
+  __$$SnapshotImplCopyWithImpl(
+      _$SnapshotImpl _value, $Res Function(_$SnapshotImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -493,7 +495,7 @@ class __$$_SnapshotCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? theme = null,
   }) {
-    return _then(_$_Snapshot(
+    return _then(_$SnapshotImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -512,8 +514,9 @@ class __$$_SnapshotCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Snapshot implements _Snapshot {
-  _$_Snapshot({required this.id, required this.imageUrl, required this.theme});
+class _$SnapshotImpl implements _Snapshot {
+  _$SnapshotImpl(
+      {required this.id, required this.imageUrl, required this.theme});
 
   @override
   final int id;
@@ -528,10 +531,10 @@ class _$_Snapshot implements _Snapshot {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Snapshot &&
+            other is _$SnapshotImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
@@ -544,15 +547,15 @@ class _$_Snapshot implements _Snapshot {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SnapshotCopyWith<_$_Snapshot> get copyWith =>
-      __$$_SnapshotCopyWithImpl<_$_Snapshot>(this, _$identity);
+  _$$SnapshotImplCopyWith<_$SnapshotImpl> get copyWith =>
+      __$$SnapshotImplCopyWithImpl<_$SnapshotImpl>(this, _$identity);
 }
 
 abstract class _Snapshot implements Snapshot {
   factory _Snapshot(
       {required final int id,
       required final String imageUrl,
-      required final CafeLogTheme theme}) = _$_Snapshot;
+      required final CafeLogTheme theme}) = _$SnapshotImpl;
 
   @override
   int get id;
@@ -562,6 +565,6 @@ abstract class _Snapshot implements Snapshot {
   CafeLogTheme get theme;
   @override
   @JsonKey(ignore: true)
-  _$$_SnapshotCopyWith<_$_Snapshot> get copyWith =>
+  _$$SnapshotImplCopyWith<_$SnapshotImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -79,11 +79,11 @@ class _$PaginationCopyWithImpl<T, $Res, $Val extends Pagination<T>>
 }
 
 /// @nodoc
-abstract class _$$_PaginationCopyWith<T, $Res>
+abstract class _$$PaginationImplCopyWith<T, $Res>
     implements $PaginationCopyWith<T, $Res> {
-  factory _$$_PaginationCopyWith(
-          _$_Pagination<T> value, $Res Function(_$_Pagination<T>) then) =
-      __$$_PaginationCopyWithImpl<T, $Res>;
+  factory _$$PaginationImplCopyWith(
+          _$PaginationImpl<T> value, $Res Function(_$PaginationImpl<T>) then) =
+      __$$PaginationImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_PaginationCopyWith<T, $Res>
 }
 
 /// @nodoc
-class __$$_PaginationCopyWithImpl<T, $Res>
-    extends _$PaginationCopyWithImpl<T, $Res, _$_Pagination<T>>
-    implements _$$_PaginationCopyWith<T, $Res> {
-  __$$_PaginationCopyWithImpl(
-      _$_Pagination<T> _value, $Res Function(_$_Pagination<T>) _then)
+class __$$PaginationImplCopyWithImpl<T, $Res>
+    extends _$PaginationCopyWithImpl<T, $Res, _$PaginationImpl<T>>
+    implements _$$PaginationImplCopyWith<T, $Res> {
+  __$$PaginationImplCopyWithImpl(
+      _$PaginationImpl<T> _value, $Res Function(_$PaginationImpl<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_PaginationCopyWithImpl<T, $Res>
     Object? previousPageUrl = freezed,
     Object? results = null,
   }) {
-    return _then(_$_Pagination<T>(
+    return _then(_$PaginationImpl<T>(
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -132,8 +132,8 @@ class __$$_PaginationCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$_Pagination<T> implements _Pagination<T> {
-  _$_Pagination(
+class _$PaginationImpl<T> implements _Pagination<T> {
+  _$PaginationImpl(
       {required this.count,
       required this.nextPageUrl,
       required this.previousPageUrl,
@@ -160,10 +160,10 @@ class _$_Pagination<T> implements _Pagination<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Pagination<T> &&
+            other is _$PaginationImpl<T> &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.nextPageUrl, nextPageUrl) ||
                 other.nextPageUrl == nextPageUrl) &&
@@ -179,8 +179,8 @@ class _$_Pagination<T> implements _Pagination<T> {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PaginationCopyWith<T, _$_Pagination<T>> get copyWith =>
-      __$$_PaginationCopyWithImpl<T, _$_Pagination<T>>(this, _$identity);
+  _$$PaginationImplCopyWith<T, _$PaginationImpl<T>> get copyWith =>
+      __$$PaginationImplCopyWithImpl<T, _$PaginationImpl<T>>(this, _$identity);
 }
 
 abstract class _Pagination<T> implements Pagination<T> {
@@ -188,7 +188,7 @@ abstract class _Pagination<T> implements Pagination<T> {
       {required final int count,
       required final String? nextPageUrl,
       required final String? previousPageUrl,
-      required final List<T> results}) = _$_Pagination<T>;
+      required final List<T> results}) = _$PaginationImpl<T>;
 
   @override
   int get count;
@@ -200,6 +200,6 @@ abstract class _Pagination<T> implements Pagination<T> {
   List<T> get results;
   @override
   @JsonKey(ignore: true)
-  _$$_PaginationCopyWith<T, _$_Pagination<T>> get copyWith =>
+  _$$PaginationImplCopyWith<T, _$PaginationImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -4,6 +4,7 @@ import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/cafe_search_bar.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/location_dialog.dart';
+import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
@@ -20,6 +21,7 @@ class OnMap extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final MapState mapState = ref.watch(mapViewModelProvider);
+    final GlobalState globalState = ref.watch(globalViewModelProvider);
     final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Stack(
@@ -41,36 +43,56 @@ class OnMap extends ConsumerWidget {
                 SizedBox(
                   width: 48,
                   height: 48,
-                  child: FloatingActionButton(
-                    heroTag: "location_button",
-                    onPressed: () {
-                      if (mapState.locations.isNotEmpty) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => LocationDialog(
-                            locations: mapState.locations,
-                            onLocationPress: (location) {
-                              final cameraPosition = NCameraPosition(
-                                target: NLatLng(location.latitude, location.longitude),
-                                zoom: Zoom.medium
-                              );
-                              mapState.mapController?.updateCamera(
-                                NCameraUpdate.fromCameraPosition(cameraPosition)
-                              );
-                              mapViewModel.setLastCameraLatLng(cameraPosition.target);
-                              mapViewModel.refreshCafes(cameraPosition: cameraPosition);
-                            }
-                          )
-                        );
-                      }
-                    },
-                    backgroundColor: AppColor.primary,
-                    shape: const CircleBorder(),
-                    child: const Icon(
-                      CupertinoIcons.flag,
-                      color: AppColor.white,
-                      size: 20,
-                    )
+                  child: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "location_button",
+                        backgroundColor: AppColor.primary,
+                        shape: const CircleBorder(),
+                        child: const Icon(
+                          CupertinoIcons.flag,
+                          color: AppColor.white,
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          if (globalState.isFlagButtonBadgeVisible) {
+                            mapViewModel.globalViewModel.setIsFlagButtonTapped(true);
+                            mapViewModel.globalViewModel.setFlagButtonBadgeVisible(false);
+                          }
+                          if (mapState.locations.isNotEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => LocationDialog(
+                                locations: mapState.locations,
+                                onLocationPress: (location) {
+                                  final cameraPosition = NCameraPosition(
+                                    target: NLatLng(location.latitude, location.longitude),
+                                    zoom: Zoom.medium
+                                  );
+                                  mapState.mapController?.updateCamera(
+                                    NCameraUpdate.fromCameraPosition(cameraPosition)
+                                  );
+                                  mapViewModel.setLastCameraLatLng(cameraPosition.target);
+                                  mapViewModel.refreshCafes(cameraPosition: cameraPosition);
+                                }
+                              )
+                            );
+                          }
+                        }
+                      ),
+                      Visibility(
+                        visible: globalState.isFlagButtonBadgeVisible,
+                        child: Container(
+                          width: 12,
+                          height: 12,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColor.notificationRed,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],

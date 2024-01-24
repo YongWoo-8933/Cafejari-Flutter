@@ -67,18 +67,21 @@ class _$BrandCopyWithImpl<$Res, $Val extends Brand>
 }
 
 /// @nodoc
-abstract class _$$_BrandCopyWith<$Res> implements $BrandCopyWith<$Res> {
-  factory _$$_BrandCopyWith(_$_Brand value, $Res Function(_$_Brand) then) =
-      __$$_BrandCopyWithImpl<$Res>;
+abstract class _$$BrandImplCopyWith<$Res> implements $BrandCopyWith<$Res> {
+  factory _$$BrandImplCopyWith(
+          _$BrandImpl value, $Res Function(_$BrandImpl) then) =
+      __$$BrandImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, String imageUrl});
 }
 
 /// @nodoc
-class __$$_BrandCopyWithImpl<$Res> extends _$BrandCopyWithImpl<$Res, _$_Brand>
-    implements _$$_BrandCopyWith<$Res> {
-  __$$_BrandCopyWithImpl(_$_Brand _value, $Res Function(_$_Brand) _then)
+class __$$BrandImplCopyWithImpl<$Res>
+    extends _$BrandCopyWithImpl<$Res, _$BrandImpl>
+    implements _$$BrandImplCopyWith<$Res> {
+  __$$BrandImplCopyWithImpl(
+      _$BrandImpl _value, $Res Function(_$BrandImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +91,7 @@ class __$$_BrandCopyWithImpl<$Res> extends _$BrandCopyWithImpl<$Res, _$_Brand>
     Object? name = null,
     Object? imageUrl = null,
   }) {
-    return _then(_$_Brand(
+    return _then(_$BrandImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -107,8 +110,8 @@ class __$$_BrandCopyWithImpl<$Res> extends _$BrandCopyWithImpl<$Res, _$_Brand>
 
 /// @nodoc
 
-class _$_Brand implements _Brand {
-  _$_Brand({required this.id, required this.name, required this.imageUrl});
+class _$BrandImpl implements _Brand {
+  _$BrandImpl({required this.id, required this.name, required this.imageUrl});
 
   @override
   final int id;
@@ -123,10 +126,10 @@ class _$_Brand implements _Brand {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Brand &&
+            other is _$BrandImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -139,15 +142,15 @@ class _$_Brand implements _Brand {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BrandCopyWith<_$_Brand> get copyWith =>
-      __$$_BrandCopyWithImpl<_$_Brand>(this, _$identity);
+  _$$BrandImplCopyWith<_$BrandImpl> get copyWith =>
+      __$$BrandImplCopyWithImpl<_$BrandImpl>(this, _$identity);
 }
 
 abstract class _Brand implements Brand {
   factory _Brand(
       {required final int id,
       required final String name,
-      required final String imageUrl}) = _$_Brand;
+      required final String imageUrl}) = _$BrandImpl;
 
   @override
   int get id;
@@ -157,7 +160,7 @@ abstract class _Brand implements Brand {
   String get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_BrandCopyWith<_$_Brand> get copyWith =>
+  _$$BrandImplCopyWith<_$BrandImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -252,9 +255,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
 }
 
 /// @nodoc
-abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
-  factory _$$_ItemCopyWith(_$_Item value, $Res Function(_$_Item) then) =
-      __$$_ItemCopyWithImpl<$Res>;
+abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
+  factory _$$ItemImplCopyWith(
+          _$ItemImpl value, $Res Function(_$ItemImpl) then) =
+      __$$ItemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -269,9 +273,10 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
-    implements _$$_ItemCopyWith<$Res> {
-  __$$_ItemCopyWithImpl(_$_Item _value, $Res Function(_$_Item) _then)
+class __$$ItemImplCopyWithImpl<$Res>
+    extends _$ItemCopyWithImpl<$Res, _$ItemImpl>
+    implements _$$ItemImplCopyWith<$Res> {
+  __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -286,7 +291,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? smallImageUrl = null,
     Object? largeImageUrl = null,
   }) {
-    return _then(_$_Item(
+    return _then(_$ItemImpl(
       itemId: null == itemId
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
@@ -325,8 +330,8 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
 
 /// @nodoc
 
-class _$_Item implements _Item {
-  _$_Item(
+class _$ItemImpl implements _Item {
+  _$ItemImpl(
       {required this.itemId,
       required this.brandId,
       required this.price,
@@ -359,10 +364,10 @@ class _$_Item implements _Item {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Item &&
+            other is _$ItemImpl &&
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
             (identical(other.brandId, brandId) || other.brandId == brandId) &&
             (identical(other.price, price) || other.price == price) &&
@@ -384,8 +389,8 @@ class _$_Item implements _Item {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemCopyWith<_$_Item> get copyWith =>
-      __$$_ItemCopyWithImpl<_$_Item>(this, _$identity);
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      __$$ItemImplCopyWithImpl<_$ItemImpl>(this, _$identity);
 }
 
 abstract class _Item implements Item {
@@ -397,7 +402,7 @@ abstract class _Item implements Item {
       required final String name,
       required final String description,
       required final String smallImageUrl,
-      required final String largeImageUrl}) = _$_Item;
+      required final String largeImageUrl}) = _$ItemImpl;
 
   @override
   int get itemId;
@@ -417,7 +422,8 @@ abstract class _Item implements Item {
   String get largeImageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemCopyWith<_$_Item> get copyWith => throw _privateConstructorUsedError;
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -491,10 +497,11 @@ class _$BrandconCopyWithImpl<$Res, $Val extends Brandcon>
 }
 
 /// @nodoc
-abstract class _$$_BrandconCopyWith<$Res> implements $BrandconCopyWith<$Res> {
-  factory _$$_BrandconCopyWith(
-          _$_Brandcon value, $Res Function(_$_Brandcon) then) =
-      __$$_BrandconCopyWithImpl<$Res>;
+abstract class _$$BrandconImplCopyWith<$Res>
+    implements $BrandconCopyWith<$Res> {
+  factory _$$BrandconImplCopyWith(
+          _$BrandconImpl value, $Res Function(_$BrandconImpl) then) =
+      __$$BrandconImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -506,11 +513,11 @@ abstract class _$$_BrandconCopyWith<$Res> implements $BrandconCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BrandconCopyWithImpl<$Res>
-    extends _$BrandconCopyWithImpl<$Res, _$_Brandcon>
-    implements _$$_BrandconCopyWith<$Res> {
-  __$$_BrandconCopyWithImpl(
-      _$_Brandcon _value, $Res Function(_$_Brandcon) _then)
+class __$$BrandconImplCopyWithImpl<$Res>
+    extends _$BrandconCopyWithImpl<$Res, _$BrandconImpl>
+    implements _$$BrandconImplCopyWith<$Res> {
+  __$$BrandconImplCopyWithImpl(
+      _$BrandconImpl _value, $Res Function(_$BrandconImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -522,7 +529,7 @@ class __$$_BrandconCopyWithImpl<$Res>
     Object? expirationDate = null,
     Object? isUsed = null,
   }) {
-    return _then(_$_Brandcon(
+    return _then(_$BrandconImpl(
       brandconId: null == brandconId
           ? _value.brandconId
           : brandconId // ignore: cast_nullable_to_non_nullable
@@ -549,8 +556,8 @@ class __$$_BrandconCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Brandcon implements _Brandcon {
-  _$_Brandcon(
+class _$BrandconImpl implements _Brandcon {
+  _$BrandconImpl(
       {required this.brandconId,
       required this.itemId,
       required this.imageUrl,
@@ -574,10 +581,10 @@ class _$_Brandcon implements _Brandcon {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Brandcon &&
+            other is _$BrandconImpl &&
             (identical(other.brandconId, brandconId) ||
                 other.brandconId == brandconId) &&
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
@@ -595,8 +602,8 @@ class _$_Brandcon implements _Brandcon {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BrandconCopyWith<_$_Brandcon> get copyWith =>
-      __$$_BrandconCopyWithImpl<_$_Brandcon>(this, _$identity);
+  _$$BrandconImplCopyWith<_$BrandconImpl> get copyWith =>
+      __$$BrandconImplCopyWithImpl<_$BrandconImpl>(this, _$identity);
 }
 
 abstract class _Brandcon implements Brandcon {
@@ -605,7 +612,7 @@ abstract class _Brandcon implements Brandcon {
       required final int itemId,
       required final String imageUrl,
       required final DateTime expirationDate,
-      required final bool isUsed}) = _$_Brandcon;
+      required final bool isUsed}) = _$BrandconImpl;
 
   @override
   int get brandconId;
@@ -619,7 +626,7 @@ abstract class _Brandcon implements Brandcon {
   bool get isUsed;
   @override
   @JsonKey(ignore: true)
-  _$$_BrandconCopyWith<_$_Brandcon> get copyWith =>
+  _$$BrandconImplCopyWith<_$BrandconImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -682,19 +689,21 @@ class _$CouponCopyWithImpl<$Res, $Val extends Coupon>
 }
 
 /// @nodoc
-abstract class _$$_CouponCopyWith<$Res> implements $CouponCopyWith<$Res> {
-  factory _$$_CouponCopyWith(_$_Coupon value, $Res Function(_$_Coupon) then) =
-      __$$_CouponCopyWithImpl<$Res>;
+abstract class _$$CouponImplCopyWith<$Res> implements $CouponCopyWith<$Res> {
+  factory _$$CouponImplCopyWith(
+          _$CouponImpl value, $Res Function(_$CouponImpl) then) =
+      __$$CouponImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, String description, String imageUrl});
 }
 
 /// @nodoc
-class __$$_CouponCopyWithImpl<$Res>
-    extends _$CouponCopyWithImpl<$Res, _$_Coupon>
-    implements _$$_CouponCopyWith<$Res> {
-  __$$_CouponCopyWithImpl(_$_Coupon _value, $Res Function(_$_Coupon) _then)
+class __$$CouponImplCopyWithImpl<$Res>
+    extends _$CouponCopyWithImpl<$Res, _$CouponImpl>
+    implements _$$CouponImplCopyWith<$Res> {
+  __$$CouponImplCopyWithImpl(
+      _$CouponImpl _value, $Res Function(_$CouponImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -705,7 +714,7 @@ class __$$_CouponCopyWithImpl<$Res>
     Object? description = null,
     Object? imageUrl = null,
   }) {
-    return _then(_$_Coupon(
+    return _then(_$CouponImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -728,8 +737,8 @@ class __$$_CouponCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Coupon implements _Coupon {
-  _$_Coupon(
+class _$CouponImpl implements _Coupon {
+  _$CouponImpl(
       {required this.id,
       required this.name,
       required this.description,
@@ -750,10 +759,10 @@ class _$_Coupon implements _Coupon {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Coupon &&
+            other is _$CouponImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -768,8 +777,8 @@ class _$_Coupon implements _Coupon {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CouponCopyWith<_$_Coupon> get copyWith =>
-      __$$_CouponCopyWithImpl<_$_Coupon>(this, _$identity);
+  _$$CouponImplCopyWith<_$CouponImpl> get copyWith =>
+      __$$CouponImplCopyWithImpl<_$CouponImpl>(this, _$identity);
 }
 
 abstract class _Coupon implements Coupon {
@@ -777,7 +786,7 @@ abstract class _Coupon implements Coupon {
       {required final int id,
       required final String name,
       required final String description,
-      required final String imageUrl}) = _$_Coupon;
+      required final String imageUrl}) = _$CouponImpl;
 
   @override
   int get id;
@@ -789,7 +798,7 @@ abstract class _Coupon implements Coupon {
   String get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_CouponCopyWith<_$_Coupon> get copyWith =>
+  _$$CouponImplCopyWith<_$CouponImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -879,11 +888,11 @@ class _$UserCouponCopyWithImpl<$Res, $Val extends UserCoupon>
 }
 
 /// @nodoc
-abstract class _$$_UserCouponCopyWith<$Res>
+abstract class _$$UserCouponImplCopyWith<$Res>
     implements $UserCouponCopyWith<$Res> {
-  factory _$$_UserCouponCopyWith(
-          _$_UserCoupon value, $Res Function(_$_UserCoupon) then) =
-      __$$_UserCouponCopyWithImpl<$Res>;
+  factory _$$UserCouponImplCopyWith(
+          _$UserCouponImpl value, $Res Function(_$UserCouponImpl) then) =
+      __$$UserCouponImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -897,11 +906,11 @@ abstract class _$$_UserCouponCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserCouponCopyWithImpl<$Res>
-    extends _$UserCouponCopyWithImpl<$Res, _$_UserCoupon>
-    implements _$$_UserCouponCopyWith<$Res> {
-  __$$_UserCouponCopyWithImpl(
-      _$_UserCoupon _value, $Res Function(_$_UserCoupon) _then)
+class __$$UserCouponImplCopyWithImpl<$Res>
+    extends _$UserCouponCopyWithImpl<$Res, _$UserCouponImpl>
+    implements _$$UserCouponImplCopyWith<$Res> {
+  __$$UserCouponImplCopyWithImpl(
+      _$UserCouponImpl _value, $Res Function(_$UserCouponImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -915,7 +924,7 @@ class __$$_UserCouponCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? expirationPeriod = null,
   }) {
-    return _then(_$_UserCoupon(
+    return _then(_$UserCouponImpl(
       userCouponId: null == userCouponId
           ? _value.userCouponId
           : userCouponId // ignore: cast_nullable_to_non_nullable
@@ -950,8 +959,8 @@ class __$$_UserCouponCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserCoupon implements _UserCoupon {
-  _$_UserCoupon(
+class _$UserCouponImpl implements _UserCoupon {
+  _$UserCouponImpl(
       {required this.userCouponId,
       required this.couponId,
       required this.isUsed,
@@ -981,10 +990,10 @@ class _$_UserCoupon implements _UserCoupon {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserCoupon &&
+            other is _$UserCouponImpl &&
             (identical(other.userCouponId, userCouponId) ||
                 other.userCouponId == userCouponId) &&
             (identical(other.couponId, couponId) ||
@@ -1006,8 +1015,8 @@ class _$_UserCoupon implements _UserCoupon {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCouponCopyWith<_$_UserCoupon> get copyWith =>
-      __$$_UserCouponCopyWithImpl<_$_UserCoupon>(this, _$identity);
+  _$$UserCouponImplCopyWith<_$UserCouponImpl> get copyWith =>
+      __$$UserCouponImplCopyWithImpl<_$UserCouponImpl>(this, _$identity);
 }
 
 abstract class _UserCoupon implements UserCoupon {
@@ -1018,7 +1027,7 @@ abstract class _UserCoupon implements UserCoupon {
       required final String name,
       required final String description,
       required final String imageUrl,
-      required final DateTime expirationPeriod}) = _$_UserCoupon;
+      required final DateTime expirationPeriod}) = _$UserCouponImpl;
 
   @override
   int get userCouponId;
@@ -1036,6 +1045,6 @@ abstract class _UserCoupon implements UserCoupon {
   DateTime get expirationPeriod;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCouponCopyWith<_$_UserCoupon> get copyWith =>
+  _$$UserCouponImplCopyWith<_$UserCouponImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

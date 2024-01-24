@@ -83,11 +83,11 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
 }
 
 /// @nodoc
-abstract class _$$_MyPageStateCopyWith<$Res>
+abstract class _$$MyPageStateImplCopyWith<$Res>
     implements $MyPageStateCopyWith<$Res> {
-  factory _$$_MyPageStateCopyWith(
-          _$_MyPageState value, $Res Function(_$_MyPageState) then) =
-      __$$_MyPageStateCopyWithImpl<$Res>;
+  factory _$$MyPageStateImplCopyWith(
+          _$MyPageStateImpl value, $Res Function(_$MyPageStateImpl) then) =
+      __$$MyPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -98,11 +98,11 @@ abstract class _$$_MyPageStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MyPageStateCopyWithImpl<$Res>
-    extends _$MyPageStateCopyWithImpl<$Res, _$_MyPageState>
-    implements _$$_MyPageStateCopyWith<$Res> {
-  __$$_MyPageStateCopyWithImpl(
-      _$_MyPageState _value, $Res Function(_$_MyPageState) _then)
+class __$$MyPageStateImplCopyWithImpl<$Res>
+    extends _$MyPageStateCopyWithImpl<$Res, _$MyPageStateImpl>
+    implements _$$MyPageStateImplCopyWith<$Res> {
+  __$$MyPageStateImplCopyWithImpl(
+      _$MyPageStateImpl _value, $Res Function(_$MyPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -113,7 +113,7 @@ class __$$_MyPageStateCopyWithImpl<$Res>
     Object? nicknameController = null,
     Object? nicknameErrorMessage = null,
   }) {
-    return _then(_$_MyPageState(
+    return _then(_$MyPageStateImpl(
       defaultProfileImages: null == defaultProfileImages
           ? _value._defaultProfileImages
           : defaultProfileImages // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,8 @@ class __$$_MyPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MyPageState implements _MyPageState {
-  _$_MyPageState(
+class _$MyPageStateImpl implements _MyPageState {
+  _$MyPageStateImpl(
       {required final List<({String imageUrl, int profileImageId})>
           defaultProfileImages,
       required this.userMigrationPhoneNumberController,
@@ -168,10 +168,10 @@ class _$_MyPageState implements _MyPageState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MyPageState &&
+            other is _$MyPageStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._defaultProfileImages, _defaultProfileImages) &&
             (identical(other.userMigrationPhoneNumberController,
@@ -195,8 +195,8 @@ class _$_MyPageState implements _MyPageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>
-      __$$_MyPageStateCopyWithImpl<_$_MyPageState>(this, _$identity);
+  _$$MyPageStateImplCopyWith<_$MyPageStateImpl> get copyWith =>
+      __$$MyPageStateImplCopyWithImpl<_$MyPageStateImpl>(this, _$identity);
 }
 
 abstract class _MyPageState implements MyPageState {
@@ -205,7 +205,7 @@ abstract class _MyPageState implements MyPageState {
           defaultProfileImages,
       required final TextEditingController userMigrationPhoneNumberController,
       required final TextEditingController nicknameController,
-      required final String nicknameErrorMessage}) = _$_MyPageState;
+      required final String nicknameErrorMessage}) = _$MyPageStateImpl;
 
   @override
   List<({String imageUrl, int profileImageId})> get defaultProfileImages;
@@ -217,6 +217,6 @@ abstract class _MyPageState implements MyPageState {
   String get nicknameErrorMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>
+  _$$MyPageStateImplCopyWith<_$MyPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

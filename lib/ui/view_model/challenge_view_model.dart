@@ -19,6 +19,13 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
   refreshChallenges() async {
     try {
       final Challenges challenges = await _challengeUseCase.getChallenges();
+      challenges.sort((a, b) => b.id.compareTo(a.id));
+      final int lastViewedChallengeId = await _challengeUseCase.getLastViewedChallengeId();
+      final int recentChallengeId = challenges.firstOrNull?.id ?? 0;
+      if(recentChallengeId > lastViewedChallengeId) {
+        await _challengeUseCase.setLastViewedChallengeId(recentChallengeId);
+        globalViewModel.setChallengeBadgeVisible(true);
+      }
       final DateTime now = DateTime.now();
       final availableChallenges = challenges.where((element) {
         return now.compareTo(element.startAt) > 0 && now.compareTo(element.finishAt) < 0
@@ -58,4 +65,8 @@ class ChallengeViewModel extends StateNotifier<ChallengeState> {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
+
+  getLastViewedChallengeId() async => await _challengeUseCase.getLastViewedChallengeId();
+
+  setLastViewedChallengeId(int id) async => await _challengeUseCase.setLastViewedChallengeId(id);
 }

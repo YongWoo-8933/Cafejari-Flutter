@@ -90,11 +90,9 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
         ) {
           // 필수 업데이트
           if (context.mounted) {
-            showDialog(context: context, barrierDismissible: false, builder: (_) => WillPopScope(
-              onWillPop: () async {
-                SystemNavigator.pop();
-                return false;
-              },
+            showDialog(context: context, barrierDismissible: false, builder: (_) => PopScope(
+              canPop: false,
+              onPopInvoked: (result) => SystemNavigator.pop(),
               child: SquareAlertDialog(
                 text: "필수 업데이트가 있습니다. 앱의 원활한 사용을 위해 업데이트 후 진행해주세요",
                 negativeButtonText: "나중에",
@@ -224,13 +222,21 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
-  Future<bool> getIsInstalledFirst() async => await _userUseCase.getIsInstalledFirstTime();
+  Future<bool> getIsInstalledFirst() async => await _appConfigUseCase.getIsInstalledFirstTime();
 
-  setIsInstalledFirst(bool value) async => await _userUseCase.setIsInstalledFirstTime(value);
+  setIsInstalledFirst(bool value) async => await _appConfigUseCase.setIsInstalledFirstTime(value);
 
-  Future<bool> getIsReviewSubmitted() async => await _userUseCase.getIsReviewSubmitted();
+  Future<bool> getIsReviewSubmitted() async => await _appConfigUseCase.getIsReviewSubmitted();
 
-  setIsReviewSubmitted(bool value) async => await _userUseCase.setIsReviewSubmitted(value);
+  setIsReviewSubmitted(bool value) async => await _appConfigUseCase.setIsReviewSubmitted(value);
+
+  setChallengeBadgeVisible(bool value) => state = state.copyWith(isChallengeBadgeVisible: value);
+
+  setFlagButtonBadgeVisible(bool value) => state = state.copyWith(isFlagButtonBadgeVisible: value);
+
+  Future<bool> getIsFlagButtonTapped() async => await _appConfigUseCase.getIsFlagButtonTapped();
+
+  setIsFlagButtonTapped(bool value) async => await _appConfigUseCase.setIsFlagButtonTapped(value);
 
   setUser(User user) => state = state.copyWith(user: user);
 

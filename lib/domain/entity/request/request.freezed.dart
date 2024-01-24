@@ -156,11 +156,11 @@ class _$CafeAdditionRequestCopyWithImpl<$Res, $Val extends CafeAdditionRequest>
 }
 
 /// @nodoc
-abstract class _$$_CafeAdditionRequestCopyWith<$Res>
+abstract class _$$CafeAdditionRequestImplCopyWith<$Res>
     implements $CafeAdditionRequestCopyWith<$Res> {
-  factory _$$_CafeAdditionRequestCopyWith(_$_CafeAdditionRequest value,
-          $Res Function(_$_CafeAdditionRequest) then) =
-      __$$_CafeAdditionRequestCopyWithImpl<$Res>;
+  factory _$$CafeAdditionRequestImplCopyWith(_$CafeAdditionRequestImpl value,
+          $Res Function(_$CafeAdditionRequestImpl) then) =
+      __$$CafeAdditionRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -183,11 +183,11 @@ abstract class _$$_CafeAdditionRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CafeAdditionRequestCopyWithImpl<$Res>
-    extends _$CafeAdditionRequestCopyWithImpl<$Res, _$_CafeAdditionRequest>
-    implements _$$_CafeAdditionRequestCopyWith<$Res> {
-  __$$_CafeAdditionRequestCopyWithImpl(_$_CafeAdditionRequest _value,
-      $Res Function(_$_CafeAdditionRequest) _then)
+class __$$CafeAdditionRequestImplCopyWithImpl<$Res>
+    extends _$CafeAdditionRequestCopyWithImpl<$Res, _$CafeAdditionRequestImpl>
+    implements _$$CafeAdditionRequestImplCopyWith<$Res> {
+  __$$CafeAdditionRequestImplCopyWithImpl(_$CafeAdditionRequestImpl _value,
+      $Res Function(_$CafeAdditionRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -207,7 +207,7 @@ class __$$_CafeAdditionRequestCopyWithImpl<$Res>
     Object? wallSocketRates = null,
     Object? openingHour = freezed,
   }) {
-    return _then(_$_CafeAdditionRequest(
+    return _then(_$CafeAdditionRequestImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -266,8 +266,8 @@ class __$$_CafeAdditionRequestCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeAdditionRequest implements _CafeAdditionRequest {
-  _$_CafeAdditionRequest(
+class _$CafeAdditionRequestImpl implements _CafeAdditionRequest {
+  _$CafeAdditionRequestImpl(
       {required this.id,
       required this.topFloor,
       required this.bottomFloor,
@@ -322,10 +322,10 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeAdditionRequest &&
+            other is _$CafeAdditionRequestImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.topFloor, topFloor) ||
                 other.topFloor == topFloor) &&
@@ -372,8 +372,8 @@ class _$_CafeAdditionRequest implements _CafeAdditionRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeAdditionRequestCopyWith<_$_CafeAdditionRequest> get copyWith =>
-      __$$_CafeAdditionRequestCopyWithImpl<_$_CafeAdditionRequest>(
+  _$$CafeAdditionRequestImplCopyWith<_$CafeAdditionRequestImpl> get copyWith =>
+      __$$CafeAdditionRequestImplCopyWithImpl<_$CafeAdditionRequestImpl>(
           this, _$identity);
 }
 
@@ -391,7 +391,7 @@ abstract class _CafeAdditionRequest implements CafeAdditionRequest {
       required final DateTime requestedAt,
       required final DateTime answeredAt,
       required final List<double> wallSocketRates,
-      required final OpeningHour? openingHour}) = _$_CafeAdditionRequest;
+      required final OpeningHour? openingHour}) = _$CafeAdditionRequestImpl;
 
   @override
   int get id;
@@ -421,7 +421,7 @@ abstract class _CafeAdditionRequest implements CafeAdditionRequest {
   OpeningHour? get openingHour;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeAdditionRequestCopyWith<_$_CafeAdditionRequest> get copyWith =>
+  _$$CafeAdditionRequestImplCopyWith<_$CafeAdditionRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -515,11 +515,12 @@ class _$CafeModificationRequestCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CafeModificationRequestCopyWith<$Res>
+abstract class _$$CafeModificationRequestImplCopyWith<$Res>
     implements $CafeModificationRequestCopyWith<$Res> {
-  factory _$$_CafeModificationRequestCopyWith(_$_CafeModificationRequest value,
-          $Res Function(_$_CafeModificationRequest) then) =
-      __$$_CafeModificationRequestCopyWithImpl<$Res>;
+  factory _$$CafeModificationRequestImplCopyWith(
+          _$CafeModificationRequestImpl value,
+          $Res Function(_$CafeModificationRequestImpl) then) =
+      __$$CafeModificationRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -535,12 +536,13 @@ abstract class _$$_CafeModificationRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CafeModificationRequestCopyWithImpl<$Res>
+class __$$CafeModificationRequestImplCopyWithImpl<$Res>
     extends _$CafeModificationRequestCopyWithImpl<$Res,
-        _$_CafeModificationRequest>
-    implements _$$_CafeModificationRequestCopyWith<$Res> {
-  __$$_CafeModificationRequestCopyWithImpl(_$_CafeModificationRequest _value,
-      $Res Function(_$_CafeModificationRequest) _then)
+        _$CafeModificationRequestImpl>
+    implements _$$CafeModificationRequestImplCopyWith<$Res> {
+  __$$CafeModificationRequestImplCopyWithImpl(
+      _$CafeModificationRequestImpl _value,
+      $Res Function(_$CafeModificationRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -553,7 +555,7 @@ class __$$_CafeModificationRequestCopyWithImpl<$Res>
     Object? answeredAt = null,
     Object? rejectionReason = freezed,
   }) {
-    return _then(_$_CafeModificationRequest(
+    return _then(_$CafeModificationRequestImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -584,8 +586,8 @@ class __$$_CafeModificationRequestCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeModificationRequest implements _CafeModificationRequest {
-  _$_CafeModificationRequest(
+class _$CafeModificationRequestImpl implements _CafeModificationRequest {
+  _$CafeModificationRequestImpl(
       {required this.id,
       required this.cafe,
       required this.isApproved,
@@ -612,10 +614,10 @@ class _$_CafeModificationRequest implements _CafeModificationRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeModificationRequest &&
+            other is _$CafeModificationRequestImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cafe, cafe) || other.cafe == cafe) &&
             (identical(other.isApproved, isApproved) ||
@@ -635,10 +637,9 @@ class _$_CafeModificationRequest implements _CafeModificationRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeModificationRequestCopyWith<_$_CafeModificationRequest>
-      get copyWith =>
-          __$$_CafeModificationRequestCopyWithImpl<_$_CafeModificationRequest>(
-              this, _$identity);
+  _$$CafeModificationRequestImplCopyWith<_$CafeModificationRequestImpl>
+      get copyWith => __$$CafeModificationRequestImplCopyWithImpl<
+          _$CafeModificationRequestImpl>(this, _$identity);
 }
 
 abstract class _CafeModificationRequest implements CafeModificationRequest {
@@ -648,7 +649,7 @@ abstract class _CafeModificationRequest implements CafeModificationRequest {
       required final bool isApproved,
       required final DateTime requestedAt,
       required final DateTime answeredAt,
-      required final String? rejectionReason}) = _$_CafeModificationRequest;
+      required final String? rejectionReason}) = _$CafeModificationRequestImpl;
 
   @override
   int get id;
@@ -664,6 +665,6 @@ abstract class _CafeModificationRequest implements CafeModificationRequest {
   String? get rejectionReason;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeModificationRequestCopyWith<_$_CafeModificationRequest>
+  _$$CafeModificationRequestImplCopyWith<_$CafeModificationRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -92,6 +92,7 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       await challengeViewModel.refreshChallenges();
       await myPageViewModel.getDefaultProfileImages();
       if (context.mounted) await globalViewModel.startAppFeedbackTimer(context: context);
+      if (!await globalViewModel.getIsFlagButtonTapped()) globalViewModel.setFlagButtonBadgeVisible(true);
 
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자

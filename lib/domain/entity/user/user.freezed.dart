@@ -215,9 +215,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
-      __$$_UserCopyWithImpl<$Res>;
+abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$UserImplCopyWith(
+          _$UserImpl value, $Res Function(_$UserImpl) then) =
+      __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -250,9 +251,10 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
-    implements _$$_UserCopyWith<$Res> {
-  __$$_UserCopyWithImpl(_$_User _value, $Res Function(_$_User) _then)
+class __$$UserImplCopyWithImpl<$Res>
+    extends _$UserCopyWithImpl<$Res, _$UserImpl>
+    implements _$$UserImplCopyWith<$Res> {
+  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -280,7 +282,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? grade = null,
     Object? favoriteCafes = null,
   }) {
-    return _then(_$_User(
+    return _then(_$UserImpl(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -371,8 +373,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 
 /// @nodoc
 
-class _$_User implements _User {
-  _$_User(
+class _$UserImpl implements _User {
+  _$UserImpl(
       {required this.userId,
       required this.profileId,
       required this.point,
@@ -450,10 +452,10 @@ class _$_User implements _User {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_User &&
+            other is _$UserImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.profileId, profileId) ||
                 other.profileId == profileId) &&
@@ -520,8 +522,8 @@ class _$_User implements _User {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCopyWith<_$_User> get copyWith =>
-      __$$_UserCopyWithImpl<_$_User>(this, _$identity);
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
 }
 
 abstract class _User implements User {
@@ -546,7 +548,7 @@ abstract class _User implements User {
       required final CATI myCATI,
       required final int? gender,
       required final Grade grade,
-      required final List<Cafe> favoriteCafes}) = _$_User;
+      required final List<Cafe> favoriteCafes}) = _$UserImpl;
 
   @override
   int get userId;
@@ -592,7 +594,8 @@ abstract class _User implements User {
   List<Cafe> get favoriteCafes;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -691,11 +694,11 @@ class _$PartialUserCopyWithImpl<$Res, $Val extends PartialUser>
 }
 
 /// @nodoc
-abstract class _$$_PartialUserCopyWith<$Res>
+abstract class _$$PartialUserImplCopyWith<$Res>
     implements $PartialUserCopyWith<$Res> {
-  factory _$$_PartialUserCopyWith(
-          _$_PartialUser value, $Res Function(_$_PartialUser) then) =
-      __$$_PartialUserCopyWithImpl<$Res>;
+  factory _$$PartialUserImplCopyWith(
+          _$PartialUserImpl value, $Res Function(_$PartialUserImpl) then) =
+      __$$PartialUserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -712,11 +715,11 @@ abstract class _$$_PartialUserCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PartialUserCopyWithImpl<$Res>
-    extends _$PartialUserCopyWithImpl<$Res, _$_PartialUser>
-    implements _$$_PartialUserCopyWith<$Res> {
-  __$$_PartialUserCopyWithImpl(
-      _$_PartialUser _value, $Res Function(_$_PartialUser) _then)
+class __$$PartialUserImplCopyWithImpl<$Res>
+    extends _$PartialUserCopyWithImpl<$Res, _$PartialUserImpl>
+    implements _$$PartialUserImplCopyWith<$Res> {
+  __$$PartialUserImplCopyWithImpl(
+      _$PartialUserImpl _value, $Res Function(_$PartialUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -730,7 +733,7 @@ class __$$_PartialUserCopyWithImpl<$Res>
     Object? nickname = null,
     Object? grade = null,
   }) {
-    return _then(_$_PartialUser(
+    return _then(_$PartialUserImpl(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -765,8 +768,8 @@ class __$$_PartialUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PartialUser implements _PartialUser {
-  _$_PartialUser(
+class _$PartialUserImpl implements _PartialUser {
+  _$PartialUserImpl(
       {required this.userId,
       required this.profileId,
       required this.updateCount,
@@ -796,10 +799,10 @@ class _$_PartialUser implements _PartialUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PartialUser &&
+            other is _$PartialUserImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.profileId, profileId) ||
                 other.profileId == profileId) &&
@@ -821,8 +824,8 @@ class _$_PartialUser implements _PartialUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PartialUserCopyWith<_$_PartialUser> get copyWith =>
-      __$$_PartialUserCopyWithImpl<_$_PartialUser>(this, _$identity);
+  _$$PartialUserImplCopyWith<_$PartialUserImpl> get copyWith =>
+      __$$PartialUserImplCopyWithImpl<_$PartialUserImpl>(this, _$identity);
 }
 
 abstract class _PartialUser implements PartialUser {
@@ -833,7 +836,7 @@ abstract class _PartialUser implements PartialUser {
       required final DateTime dateJoined,
       required final String imageUrl,
       required final String nickname,
-      required final Grade grade}) = _$_PartialUser;
+      required final Grade grade}) = _$PartialUserImpl;
 
   @override
   int get userId;
@@ -851,7 +854,7 @@ abstract class _PartialUser implements PartialUser {
   Grade get grade;
   @override
   @JsonKey(ignore: true)
-  _$$_PartialUserCopyWith<_$_PartialUser> get copyWith =>
+  _$$PartialUserImplCopyWith<_$PartialUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -946,9 +949,10 @@ class _$GradeCopyWithImpl<$Res, $Val extends Grade>
 }
 
 /// @nodoc
-abstract class _$$_GradeCopyWith<$Res> implements $GradeCopyWith<$Res> {
-  factory _$$_GradeCopyWith(_$_Grade value, $Res Function(_$_Grade) then) =
-      __$$_GradeCopyWithImpl<$Res>;
+abstract class _$$GradeImplCopyWith<$Res> implements $GradeCopyWith<$Res> {
+  factory _$$GradeImplCopyWith(
+          _$GradeImpl value, $Res Function(_$GradeImpl) then) =
+      __$$GradeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -963,9 +967,11 @@ abstract class _$$_GradeCopyWith<$Res> implements $GradeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res, _$_Grade>
-    implements _$$_GradeCopyWith<$Res> {
-  __$$_GradeCopyWithImpl(_$_Grade _value, $Res Function(_$_Grade) _then)
+class __$$GradeImplCopyWithImpl<$Res>
+    extends _$GradeCopyWithImpl<$Res, _$GradeImpl>
+    implements _$$GradeImplCopyWith<$Res> {
+  __$$GradeImplCopyWithImpl(
+      _$GradeImpl _value, $Res Function(_$GradeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -980,7 +986,7 @@ class __$$_GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res, _$_Grade>
     Object? imageUrl = null,
     Object? description = null,
   }) {
-    return _then(_$_Grade(
+    return _then(_$GradeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1019,8 +1025,8 @@ class __$$_GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res, _$_Grade>
 
 /// @nodoc
 
-class _$_Grade implements _Grade {
-  _$_Grade(
+class _$GradeImpl implements _Grade {
+  _$GradeImpl(
       {required this.id,
       required this.step,
       required this.updateCountRequirement,
@@ -1053,10 +1059,10 @@ class _$_Grade implements _Grade {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Grade &&
+            other is _$GradeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.updateCountRequirement, updateCountRequirement) ||
@@ -1088,8 +1094,8 @@ class _$_Grade implements _Grade {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GradeCopyWith<_$_Grade> get copyWith =>
-      __$$_GradeCopyWithImpl<_$_Grade>(this, _$identity);
+  _$$GradeImplCopyWith<_$GradeImpl> get copyWith =>
+      __$$GradeImplCopyWithImpl<_$GradeImpl>(this, _$identity);
 }
 
 abstract class _Grade implements Grade {
@@ -1101,7 +1107,7 @@ abstract class _Grade implements Grade {
       required final int stackRestrictionPerDay,
       required final String name,
       required final String imageUrl,
-      required final String description}) = _$_Grade;
+      required final String description}) = _$GradeImpl;
 
   @override
   int get id;
@@ -1121,6 +1127,6 @@ abstract class _Grade implements Grade {
   String get description;
   @override
   @JsonKey(ignore: true)
-  _$$_GradeCopyWith<_$_Grade> get copyWith =>
+  _$$GradeImplCopyWith<_$GradeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

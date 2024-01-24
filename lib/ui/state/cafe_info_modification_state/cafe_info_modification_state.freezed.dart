@@ -258,12 +258,12 @@ class _$CafeInfoModificationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CafeInfoModificationStateCopyWith<$Res>
+abstract class _$$CafeInfoModificationStateImplCopyWith<$Res>
     implements $CafeInfoModificationStateCopyWith<$Res> {
-  factory _$$_CafeInfoModificationStateCopyWith(
-          _$_CafeInfoModificationState value,
-          $Res Function(_$_CafeInfoModificationState) then) =
-      __$$_CafeInfoModificationStateCopyWithImpl<$Res>;
+  factory _$$CafeInfoModificationStateImplCopyWith(
+          _$CafeInfoModificationStateImpl value,
+          $Res Function(_$CafeInfoModificationStateImpl) then) =
+      __$$CafeInfoModificationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -301,13 +301,13 @@ abstract class _$$_CafeInfoModificationStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CafeInfoModificationStateCopyWithImpl<$Res>
+class __$$CafeInfoModificationStateImplCopyWithImpl<$Res>
     extends _$CafeInfoModificationStateCopyWithImpl<$Res,
-        _$_CafeInfoModificationState>
-    implements _$$_CafeInfoModificationStateCopyWith<$Res> {
-  __$$_CafeInfoModificationStateCopyWithImpl(
-      _$_CafeInfoModificationState _value,
-      $Res Function(_$_CafeInfoModificationState) _then)
+        _$CafeInfoModificationStateImpl>
+    implements _$$CafeInfoModificationStateImplCopyWith<$Res> {
+  __$$CafeInfoModificationStateImplCopyWithImpl(
+      _$CafeInfoModificationStateImpl _value,
+      $Res Function(_$CafeInfoModificationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -340,7 +340,7 @@ class __$$_CafeInfoModificationStateCopyWithImpl<$Res>
     Object? clickedDay = null,
     Object? restroomInfos = null,
   }) {
-    return _then(_$_CafeInfoModificationState(
+    return _then(_$CafeInfoModificationStateImpl(
       mapController: freezed == mapController
           ? _value.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
@@ -451,8 +451,8 @@ class __$$_CafeInfoModificationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeInfoModificationState implements _CafeInfoModificationState {
-  _$_CafeInfoModificationState(
+class _$CafeInfoModificationStateImpl implements _CafeInfoModificationState {
+  _$CafeInfoModificationStateImpl(
       {required this.mapController,
       required this.freeQueryController,
       required this.isCoordinateEdited,
@@ -567,10 +567,10 @@ class _$_CafeInfoModificationState implements _CafeInfoModificationState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeInfoModificationState &&
+            other is _$CafeInfoModificationStateImpl &&
             (identical(other.mapController, mapController) ||
                 other.mapController == mapController) &&
             (identical(other.freeQueryController, freeQueryController) ||
@@ -659,9 +659,9 @@ class _$_CafeInfoModificationState implements _CafeInfoModificationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeInfoModificationStateCopyWith<_$_CafeInfoModificationState>
-      get copyWith => __$$_CafeInfoModificationStateCopyWithImpl<
-          _$_CafeInfoModificationState>(this, _$identity);
+  _$$CafeInfoModificationStateImplCopyWith<_$CafeInfoModificationStateImpl>
+      get copyWith => __$$CafeInfoModificationStateImplCopyWithImpl<
+          _$CafeInfoModificationStateImpl>(this, _$identity);
 }
 
 abstract class _CafeInfoModificationState implements CafeInfoModificationState {
@@ -692,7 +692,7 @@ abstract class _CafeInfoModificationState implements CafeInfoModificationState {
           required final OpeningHour openingHour,
           required final OpeningHour clickedDay,
           required final List<({int floor, String text})> restroomInfos}) =
-      _$_CafeInfoModificationState;
+      _$CafeInfoModificationStateImpl;
 
   @override
   NaverMapController? get mapController;
@@ -748,6 +748,6 @@ abstract class _CafeInfoModificationState implements CafeInfoModificationState {
   List<({int floor, String text})> get restroomInfos;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeInfoModificationStateCopyWith<_$_CafeInfoModificationState>
+  _$$CafeInfoModificationStateImplCopyWith<_$CafeInfoModificationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -202,9 +202,10 @@ class _$CafeCopyWithImpl<$Res, $Val extends Cafe>
 }
 
 /// @nodoc
-abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
-  factory _$$_CafeCopyWith(_$_Cafe value, $Res Function(_$_Cafe) then) =
-      __$$_CafeCopyWithImpl<$Res>;
+abstract class _$$CafeImplCopyWith<$Res> implements $CafeCopyWith<$Res> {
+  factory _$$CafeImplCopyWith(
+          _$CafeImpl value, $Res Function(_$CafeImpl) then) =
+      __$$CafeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -234,9 +235,10 @@ abstract class _$$_CafeCopyWith<$Res> implements $CafeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
-    implements _$$_CafeCopyWith<$Res> {
-  __$$_CafeCopyWithImpl(_$_Cafe _value, $Res Function(_$_Cafe) _then)
+class __$$CafeImplCopyWithImpl<$Res>
+    extends _$CafeCopyWithImpl<$Res, _$CafeImpl>
+    implements _$$CafeImplCopyWith<$Res> {
+  __$$CafeImplCopyWithImpl(_$CafeImpl _value, $Res Function(_$CafeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -261,7 +263,7 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
     Object? imageUrls = null,
     Object? vips = null,
   }) {
-    return _then(_$_Cafe(
+    return _then(_$CafeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -340,8 +342,8 @@ class __$$_CafeCopyWithImpl<$Res> extends _$CafeCopyWithImpl<$Res, _$_Cafe>
 
 /// @nodoc
 
-class _$_Cafe implements _Cafe {
-  _$_Cafe(
+class _$CafeImpl implements _Cafe {
+  _$CafeImpl(
       {required this.id,
       required this.recentUpdatedFloor,
       required this.recentUpdatedOccupancyRate,
@@ -424,10 +426,10 @@ class _$_Cafe implements _Cafe {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Cafe &&
+            other is _$CafeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.recentUpdatedFloor, recentUpdatedFloor) ||
                 other.recentUpdatedFloor == recentUpdatedFloor) &&
@@ -487,8 +489,8 @@ class _$_Cafe implements _Cafe {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeCopyWith<_$_Cafe> get copyWith =>
-      __$$_CafeCopyWithImpl<_$_Cafe>(this, _$identity);
+  _$$CafeImplCopyWith<_$CafeImpl> get copyWith =>
+      __$$CafeImplCopyWithImpl<_$CafeImpl>(this, _$identity);
 }
 
 abstract class _Cafe implements Cafe {
@@ -510,7 +512,7 @@ abstract class _Cafe implements Cafe {
       required final List<CafeFloor> cafeFloors,
       required final OpeningHour? openingHour,
       required final List<String> imageUrls,
-      required final List<PartialUser> vips}) = _$_Cafe;
+      required final List<PartialUser> vips}) = _$CafeImpl;
 
   @override
   int get id;
@@ -550,7 +552,8 @@ abstract class _Cafe implements Cafe {
   List<PartialUser> get vips;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeCopyWith<_$_Cafe> get copyWith => throw _privateConstructorUsedError;
+  _$$CafeImplCopyWith<_$CafeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -663,10 +666,11 @@ class _$CafeFloorCopyWithImpl<$Res, $Val extends CafeFloor>
 }
 
 /// @nodoc
-abstract class _$$_CafeFloorCopyWith<$Res> implements $CafeFloorCopyWith<$Res> {
-  factory _$$_CafeFloorCopyWith(
-          _$_CafeFloor value, $Res Function(_$_CafeFloor) then) =
-      __$$_CafeFloorCopyWithImpl<$Res>;
+abstract class _$$CafeFloorImplCopyWith<$Res>
+    implements $CafeFloorCopyWith<$Res> {
+  factory _$$CafeFloorImplCopyWith(
+          _$CafeFloorImpl value, $Res Function(_$CafeFloorImpl) then) =
+      __$$CafeFloorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -685,11 +689,11 @@ abstract class _$$_CafeFloorCopyWith<$Res> implements $CafeFloorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CafeFloorCopyWithImpl<$Res>
-    extends _$CafeFloorCopyWithImpl<$Res, _$_CafeFloor>
-    implements _$$_CafeFloorCopyWith<$Res> {
-  __$$_CafeFloorCopyWithImpl(
-      _$_CafeFloor _value, $Res Function(_$_CafeFloor) _then)
+class __$$CafeFloorImplCopyWithImpl<$Res>
+    extends _$CafeFloorCopyWithImpl<$Res, _$CafeFloorImpl>
+    implements _$$CafeFloorImplCopyWith<$Res> {
+  __$$CafeFloorImplCopyWithImpl(
+      _$CafeFloorImpl _value, $Res Function(_$CafeFloorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -705,7 +709,7 @@ class __$$_CafeFloorCopyWithImpl<$Res>
     Object? cafe = null,
     Object? recentUpdates = null,
   }) {
-    return _then(_$_CafeFloor(
+    return _then(_$CafeFloorImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -748,8 +752,8 @@ class __$$_CafeFloorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeFloor implements _CafeFloor {
-  _$_CafeFloor(
+class _$CafeFloorImpl implements _CafeFloor {
+  _$CafeFloorImpl(
       {required this.id,
       required this.floor,
       required this.pointPrediction,
@@ -791,10 +795,10 @@ class _$_CafeFloor implements _CafeFloor {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeFloor &&
+            other is _$CafeFloorImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.floor, floor) || other.floor == floor) &&
             (identical(other.pointPrediction, pointPrediction) ||
@@ -828,21 +832,22 @@ class _$_CafeFloor implements _CafeFloor {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeFloorCopyWith<_$_CafeFloor> get copyWith =>
-      __$$_CafeFloorCopyWithImpl<_$_CafeFloor>(this, _$identity);
+  _$$CafeFloorImplCopyWith<_$CafeFloorImpl> get copyWith =>
+      __$$CafeFloorImplCopyWithImpl<_$CafeFloorImpl>(this, _$identity);
 }
 
 abstract class _CafeFloor implements CafeFloor {
   factory _CafeFloor(
-      {required final int id,
-      required final int floor,
-      required final int pointPrediction,
-      required final String? restroom,
-      required final bool hasSeat,
-      required final double? wallSocketRate,
-      required final double? occupancyRatePrediction,
-      required final Cafe cafe,
-      required final List<OccupancyRateUpdate> recentUpdates}) = _$_CafeFloor;
+          {required final int id,
+          required final int floor,
+          required final int pointPrediction,
+          required final String? restroom,
+          required final bool hasSeat,
+          required final double? wallSocketRate,
+          required final double? occupancyRatePrediction,
+          required final Cafe cafe,
+          required final List<OccupancyRateUpdate> recentUpdates}) =
+      _$CafeFloorImpl;
 
   @override
   int get id;
@@ -864,7 +869,7 @@ abstract class _CafeFloor implements CafeFloor {
   List<OccupancyRateUpdate> get recentUpdates;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeFloorCopyWith<_$_CafeFloor> get copyWith =>
+  _$$CafeFloorImplCopyWith<_$CafeFloorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -970,11 +975,11 @@ class _$OccupancyRateUpdateCopyWithImpl<$Res, $Val extends OccupancyRateUpdate>
 }
 
 /// @nodoc
-abstract class _$$_OccupancyRateUpdateCopyWith<$Res>
+abstract class _$$OccupancyRateUpdateImplCopyWith<$Res>
     implements $OccupancyRateUpdateCopyWith<$Res> {
-  factory _$$_OccupancyRateUpdateCopyWith(_$_OccupancyRateUpdate value,
-          $Res Function(_$_OccupancyRateUpdate) then) =
-      __$$_OccupancyRateUpdateCopyWithImpl<$Res>;
+  factory _$$OccupancyRateUpdateImplCopyWith(_$OccupancyRateUpdateImpl value,
+          $Res Function(_$OccupancyRateUpdateImpl) then) =
+      __$$OccupancyRateUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -992,11 +997,11 @@ abstract class _$$_OccupancyRateUpdateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OccupancyRateUpdateCopyWithImpl<$Res>
-    extends _$OccupancyRateUpdateCopyWithImpl<$Res, _$_OccupancyRateUpdate>
-    implements _$$_OccupancyRateUpdateCopyWith<$Res> {
-  __$$_OccupancyRateUpdateCopyWithImpl(_$_OccupancyRateUpdate _value,
-      $Res Function(_$_OccupancyRateUpdate) _then)
+class __$$OccupancyRateUpdateImplCopyWithImpl<$Res>
+    extends _$OccupancyRateUpdateCopyWithImpl<$Res, _$OccupancyRateUpdateImpl>
+    implements _$$OccupancyRateUpdateImplCopyWith<$Res> {
+  __$$OccupancyRateUpdateImplCopyWithImpl(_$OccupancyRateUpdateImpl _value,
+      $Res Function(_$OccupancyRateUpdateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1009,7 +1014,7 @@ class __$$_OccupancyRateUpdateCopyWithImpl<$Res>
     Object? cafeFloor = null,
     Object? user = freezed,
   }) {
-    return _then(_$_OccupancyRateUpdate(
+    return _then(_$OccupancyRateUpdateImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1040,8 +1045,8 @@ class __$$_OccupancyRateUpdateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OccupancyRateUpdate implements _OccupancyRateUpdate {
-  _$_OccupancyRateUpdate(
+class _$OccupancyRateUpdateImpl implements _OccupancyRateUpdate {
+  _$OccupancyRateUpdateImpl(
       {required this.id,
       required this.point,
       required this.occupancyRate,
@@ -1068,10 +1073,10 @@ class _$_OccupancyRateUpdate implements _OccupancyRateUpdate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OccupancyRateUpdate &&
+            other is _$OccupancyRateUpdateImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.point, point) || other.point == point) &&
             (identical(other.occupancyRate, occupancyRate) ||
@@ -1089,8 +1094,8 @@ class _$_OccupancyRateUpdate implements _OccupancyRateUpdate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OccupancyRateUpdateCopyWith<_$_OccupancyRateUpdate> get copyWith =>
-      __$$_OccupancyRateUpdateCopyWithImpl<_$_OccupancyRateUpdate>(
+  _$$OccupancyRateUpdateImplCopyWith<_$OccupancyRateUpdateImpl> get copyWith =>
+      __$$OccupancyRateUpdateImplCopyWithImpl<_$OccupancyRateUpdateImpl>(
           this, _$identity);
 }
 
@@ -1101,7 +1106,7 @@ abstract class _OccupancyRateUpdate implements OccupancyRateUpdate {
       required final double occupancyRate,
       required final DateTime update,
       required final CafeFloor cafeFloor,
-      required final PartialUser? user}) = _$_OccupancyRateUpdate;
+      required final PartialUser? user}) = _$OccupancyRateUpdateImpl;
 
   @override
   int get id;
@@ -1117,7 +1122,7 @@ abstract class _OccupancyRateUpdate implements OccupancyRateUpdate {
   PartialUser? get user;
   @override
   @JsonKey(ignore: true)
-  _$$_OccupancyRateUpdateCopyWith<_$_OccupancyRateUpdate> get copyWith =>
+  _$$OccupancyRateUpdateImplCopyWith<_$OccupancyRateUpdateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1207,11 +1212,11 @@ class _$OpeningHourCopyWithImpl<$Res, $Val extends OpeningHour>
 }
 
 /// @nodoc
-abstract class _$$_OpeningHourCopyWith<$Res>
+abstract class _$$OpeningHourImplCopyWith<$Res>
     implements $OpeningHourCopyWith<$Res> {
-  factory _$$_OpeningHourCopyWith(
-          _$_OpeningHour value, $Res Function(_$_OpeningHour) then) =
-      __$$_OpeningHourCopyWithImpl<$Res>;
+  factory _$$OpeningHourImplCopyWith(
+          _$OpeningHourImpl value, $Res Function(_$OpeningHourImpl) then) =
+      __$$OpeningHourImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1225,11 +1230,11 @@ abstract class _$$_OpeningHourCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OpeningHourCopyWithImpl<$Res>
-    extends _$OpeningHourCopyWithImpl<$Res, _$_OpeningHour>
-    implements _$$_OpeningHourCopyWith<$Res> {
-  __$$_OpeningHourCopyWithImpl(
-      _$_OpeningHour _value, $Res Function(_$_OpeningHour) _then)
+class __$$OpeningHourImplCopyWithImpl<$Res>
+    extends _$OpeningHourCopyWithImpl<$Res, _$OpeningHourImpl>
+    implements _$$OpeningHourImplCopyWith<$Res> {
+  __$$OpeningHourImplCopyWithImpl(
+      _$OpeningHourImpl _value, $Res Function(_$OpeningHourImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1243,7 +1248,7 @@ class __$$_OpeningHourCopyWithImpl<$Res>
     Object? sat = null,
     Object? sun = null,
   }) {
-    return _then(_$_OpeningHour(
+    return _then(_$OpeningHourImpl(
       mon: null == mon
           ? _value.mon
           : mon // ignore: cast_nullable_to_non_nullable
@@ -1278,8 +1283,8 @@ class __$$_OpeningHourCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OpeningHour implements _OpeningHour {
-  _$_OpeningHour(
+class _$OpeningHourImpl implements _OpeningHour {
+  _$OpeningHourImpl(
       {required this.mon,
       required this.tue,
       required this.wed,
@@ -1309,10 +1314,10 @@ class _$_OpeningHour implements _OpeningHour {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OpeningHour &&
+            other is _$OpeningHourImpl &&
             (identical(other.mon, mon) || other.mon == mon) &&
             (identical(other.tue, tue) || other.tue == tue) &&
             (identical(other.wed, wed) || other.wed == wed) &&
@@ -1329,8 +1334,8 @@ class _$_OpeningHour implements _OpeningHour {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OpeningHourCopyWith<_$_OpeningHour> get copyWith =>
-      __$$_OpeningHourCopyWithImpl<_$_OpeningHour>(this, _$identity);
+  _$$OpeningHourImplCopyWith<_$OpeningHourImpl> get copyWith =>
+      __$$OpeningHourImplCopyWithImpl<_$OpeningHourImpl>(this, _$identity);
 }
 
 abstract class _OpeningHour implements OpeningHour {
@@ -1341,7 +1346,7 @@ abstract class _OpeningHour implements OpeningHour {
       required final String thu,
       required final String fri,
       required final String sat,
-      required final String sun}) = _$_OpeningHour;
+      required final String sun}) = _$OpeningHourImpl;
 
   @override
   String get mon;
@@ -1359,7 +1364,7 @@ abstract class _OpeningHour implements OpeningHour {
   String get sun;
   @override
   @JsonKey(ignore: true)
-  _$$_OpeningHourCopyWith<_$_OpeningHour> get copyWith =>
+  _$$OpeningHourImplCopyWith<_$OpeningHourImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1422,18 +1427,20 @@ class _$CATICopyWithImpl<$Res, $Val extends CATI>
 }
 
 /// @nodoc
-abstract class _$$_CATICopyWith<$Res> implements $CATICopyWith<$Res> {
-  factory _$$_CATICopyWith(_$_CATI value, $Res Function(_$_CATI) then) =
-      __$$_CATICopyWithImpl<$Res>;
+abstract class _$$CATIImplCopyWith<$Res> implements $CATICopyWith<$Res> {
+  factory _$$CATIImplCopyWith(
+          _$CATIImpl value, $Res Function(_$CATIImpl) then) =
+      __$$CATIImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int openness, int coffee, int workspace, int acidity});
 }
 
 /// @nodoc
-class __$$_CATICopyWithImpl<$Res> extends _$CATICopyWithImpl<$Res, _$_CATI>
-    implements _$$_CATICopyWith<$Res> {
-  __$$_CATICopyWithImpl(_$_CATI _value, $Res Function(_$_CATI) _then)
+class __$$CATIImplCopyWithImpl<$Res>
+    extends _$CATICopyWithImpl<$Res, _$CATIImpl>
+    implements _$$CATIImplCopyWith<$Res> {
+  __$$CATIImplCopyWithImpl(_$CATIImpl _value, $Res Function(_$CATIImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1444,7 +1451,7 @@ class __$$_CATICopyWithImpl<$Res> extends _$CATICopyWithImpl<$Res, _$_CATI>
     Object? workspace = null,
     Object? acidity = null,
   }) {
-    return _then(_$_CATI(
+    return _then(_$CATIImpl(
       openness: null == openness
           ? _value.openness
           : openness // ignore: cast_nullable_to_non_nullable
@@ -1467,8 +1474,8 @@ class __$$_CATICopyWithImpl<$Res> extends _$CATICopyWithImpl<$Res, _$_CATI>
 
 /// @nodoc
 
-class _$_CATI implements _CATI {
-  _$_CATI(
+class _$CATIImpl implements _CATI {
+  _$CATIImpl(
       {required this.openness,
       required this.coffee,
       required this.workspace,
@@ -1489,10 +1496,10 @@ class _$_CATI implements _CATI {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CATI &&
+            other is _$CATIImpl &&
             (identical(other.openness, openness) ||
                 other.openness == openness) &&
             (identical(other.coffee, coffee) || other.coffee == coffee) &&
@@ -1508,8 +1515,8 @@ class _$_CATI implements _CATI {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CATICopyWith<_$_CATI> get copyWith =>
-      __$$_CATICopyWithImpl<_$_CATI>(this, _$identity);
+  _$$CATIImplCopyWith<_$CATIImpl> get copyWith =>
+      __$$CATIImplCopyWithImpl<_$CATIImpl>(this, _$identity);
 }
 
 abstract class _CATI implements CATI {
@@ -1517,7 +1524,7 @@ abstract class _CATI implements CATI {
       {required final int openness,
       required final int coffee,
       required final int workspace,
-      required final int acidity}) = _$_CATI;
+      required final int acidity}) = _$CATIImpl;
 
   @override
   int get openness;
@@ -1529,7 +1536,8 @@ abstract class _CATI implements CATI {
   int get acidity;
   @override
   @JsonKey(ignore: true)
-  _$$_CATICopyWith<_$_CATI> get copyWith => throw _privateConstructorUsedError;
+  _$$CATIImplCopyWith<_$CATIImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1604,11 +1612,11 @@ class _$NaverSearchCafeCopyWithImpl<$Res, $Val extends NaverSearchCafe>
 }
 
 /// @nodoc
-abstract class _$$_NaverSearchCafeCopyWith<$Res>
+abstract class _$$NaverSearchCafeImplCopyWith<$Res>
     implements $NaverSearchCafeCopyWith<$Res> {
-  factory _$$_NaverSearchCafeCopyWith(
-          _$_NaverSearchCafe value, $Res Function(_$_NaverSearchCafe) then) =
-      __$$_NaverSearchCafeCopyWithImpl<$Res>;
+  factory _$$NaverSearchCafeImplCopyWith(_$NaverSearchCafeImpl value,
+          $Res Function(_$NaverSearchCafeImpl) then) =
+      __$$NaverSearchCafeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1620,11 +1628,11 @@ abstract class _$$_NaverSearchCafeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NaverSearchCafeCopyWithImpl<$Res>
-    extends _$NaverSearchCafeCopyWithImpl<$Res, _$_NaverSearchCafe>
-    implements _$$_NaverSearchCafeCopyWith<$Res> {
-  __$$_NaverSearchCafeCopyWithImpl(
-      _$_NaverSearchCafe _value, $Res Function(_$_NaverSearchCafe) _then)
+class __$$NaverSearchCafeImplCopyWithImpl<$Res>
+    extends _$NaverSearchCafeCopyWithImpl<$Res, _$NaverSearchCafeImpl>
+    implements _$$NaverSearchCafeImplCopyWith<$Res> {
+  __$$NaverSearchCafeImplCopyWithImpl(
+      _$NaverSearchCafeImpl _value, $Res Function(_$NaverSearchCafeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1636,7 +1644,7 @@ class __$$_NaverSearchCafeCopyWithImpl<$Res>
     Object? latitude = null,
     Object? longitude = null,
   }) {
-    return _then(_$_NaverSearchCafe(
+    return _then(_$NaverSearchCafeImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -1663,8 +1671,8 @@ class __$$_NaverSearchCafeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NaverSearchCafe implements _NaverSearchCafe {
-  _$_NaverSearchCafe(
+class _$NaverSearchCafeImpl implements _NaverSearchCafe {
+  _$NaverSearchCafeImpl(
       {required this.name,
       required this.roadAddress,
       required this.dongAddress,
@@ -1688,10 +1696,10 @@ class _$_NaverSearchCafe implements _NaverSearchCafe {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NaverSearchCafe &&
+            other is _$NaverSearchCafeImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.roadAddress, roadAddress) ||
                 other.roadAddress == roadAddress) &&
@@ -1710,8 +1718,9 @@ class _$_NaverSearchCafe implements _NaverSearchCafe {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NaverSearchCafeCopyWith<_$_NaverSearchCafe> get copyWith =>
-      __$$_NaverSearchCafeCopyWithImpl<_$_NaverSearchCafe>(this, _$identity);
+  _$$NaverSearchCafeImplCopyWith<_$NaverSearchCafeImpl> get copyWith =>
+      __$$NaverSearchCafeImplCopyWithImpl<_$NaverSearchCafeImpl>(
+          this, _$identity);
 }
 
 abstract class _NaverSearchCafe implements NaverSearchCafe {
@@ -1720,7 +1729,7 @@ abstract class _NaverSearchCafe implements NaverSearchCafe {
       required final String roadAddress,
       required final String dongAddress,
       required final double latitude,
-      required final double longitude}) = _$_NaverSearchCafe;
+      required final double longitude}) = _$NaverSearchCafeImpl;
 
   @override
   String get name;
@@ -1734,7 +1743,7 @@ abstract class _NaverSearchCafe implements NaverSearchCafe {
   double get longitude;
   @override
   @JsonKey(ignore: true)
-  _$$_NaverSearchCafeCopyWith<_$_NaverSearchCafe> get copyWith =>
+  _$$NaverSearchCafeImplCopyWith<_$NaverSearchCafeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1798,21 +1807,22 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
 }
 
 /// @nodoc
-abstract class _$$_LocationCopyWith<$Res> implements $LocationCopyWith<$Res> {
-  factory _$$_LocationCopyWith(
-          _$_Location value, $Res Function(_$_Location) then) =
-      __$$_LocationCopyWithImpl<$Res>;
+abstract class _$$LocationImplCopyWith<$Res>
+    implements $LocationCopyWith<$Res> {
+  factory _$$LocationImplCopyWith(
+          _$LocationImpl value, $Res Function(_$LocationImpl) then) =
+      __$$LocationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String imageUrl, double latitude, double longitude});
 }
 
 /// @nodoc
-class __$$_LocationCopyWithImpl<$Res>
-    extends _$LocationCopyWithImpl<$Res, _$_Location>
-    implements _$$_LocationCopyWith<$Res> {
-  __$$_LocationCopyWithImpl(
-      _$_Location _value, $Res Function(_$_Location) _then)
+class __$$LocationImplCopyWithImpl<$Res>
+    extends _$LocationCopyWithImpl<$Res, _$LocationImpl>
+    implements _$$LocationImplCopyWith<$Res> {
+  __$$LocationImplCopyWithImpl(
+      _$LocationImpl _value, $Res Function(_$LocationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1823,7 +1833,7 @@ class __$$_LocationCopyWithImpl<$Res>
     Object? latitude = null,
     Object? longitude = null,
   }) {
-    return _then(_$_Location(
+    return _then(_$LocationImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -1846,8 +1856,8 @@ class __$$_LocationCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Location implements _Location {
-  _$_Location(
+class _$LocationImpl implements _Location {
+  _$LocationImpl(
       {required this.name,
       required this.imageUrl,
       required this.latitude,
@@ -1868,10 +1878,10 @@ class _$_Location implements _Location {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Location &&
+            other is _$LocationImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
@@ -1888,8 +1898,8 @@ class _$_Location implements _Location {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LocationCopyWith<_$_Location> get copyWith =>
-      __$$_LocationCopyWithImpl<_$_Location>(this, _$identity);
+  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
+      __$$LocationImplCopyWithImpl<_$LocationImpl>(this, _$identity);
 }
 
 abstract class _Location implements Location {
@@ -1897,7 +1907,7 @@ abstract class _Location implements Location {
       {required final String name,
       required final String imageUrl,
       required final double latitude,
-      required final double longitude}) = _$_Location;
+      required final double longitude}) = _$LocationImpl;
 
   @override
   String get name;
@@ -1909,6 +1919,6 @@ abstract class _Location implements Location {
   double get longitude;
   @override
   @JsonKey(ignore: true)
-  _$$_LocationCopyWith<_$_Location> get copyWith =>
+  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

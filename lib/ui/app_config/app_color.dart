@@ -4,8 +4,8 @@ class AppColor {
   static const Color crowdedBlue = Color(0xFF0656f7);
   static const Color crowdedGreen = Color(0xFF8fe968);
   static const Color crowdedYellow = Color(0xFFffea56);
-  static const Color crowdedOrange = Color(0xFFfd9018);
-  static const Color crowdedRed = Color(0xFFf33203);
+  static const Color notificationOrange = Color(0xFFFE9E45);
+  static const Color notificationRed = Color(0xFFf33203);
 
   static const Color grey_0 = Color(0xFFFAFAFA);
   static const Color grey_100 = Color(0xFFF4F4F4);

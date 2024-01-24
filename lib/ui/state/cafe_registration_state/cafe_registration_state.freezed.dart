@@ -191,11 +191,12 @@ class _$CafeRegistrationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CafeRegistrationStateCopyWith<$Res>
+abstract class _$$CafeRegistrationStateImplCopyWith<$Res>
     implements $CafeRegistrationStateCopyWith<$Res> {
-  factory _$$_CafeRegistrationStateCopyWith(_$_CafeRegistrationState value,
-          $Res Function(_$_CafeRegistrationState) then) =
-      __$$_CafeRegistrationStateCopyWithImpl<$Res>;
+  factory _$$CafeRegistrationStateImplCopyWith(
+          _$CafeRegistrationStateImpl value,
+          $Res Function(_$CafeRegistrationStateImpl) then) =
+      __$$CafeRegistrationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -224,11 +225,12 @@ abstract class _$$_CafeRegistrationStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CafeRegistrationStateCopyWithImpl<$Res>
-    extends _$CafeRegistrationStateCopyWithImpl<$Res, _$_CafeRegistrationState>
-    implements _$$_CafeRegistrationStateCopyWith<$Res> {
-  __$$_CafeRegistrationStateCopyWithImpl(_$_CafeRegistrationState _value,
-      $Res Function(_$_CafeRegistrationState) _then)
+class __$$CafeRegistrationStateImplCopyWithImpl<$Res>
+    extends _$CafeRegistrationStateCopyWithImpl<$Res,
+        _$CafeRegistrationStateImpl>
+    implements _$$CafeRegistrationStateImplCopyWith<$Res> {
+  __$$CafeRegistrationStateImplCopyWithImpl(_$CafeRegistrationStateImpl _value,
+      $Res Function(_$CafeRegistrationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -250,7 +252,7 @@ class __$$_CafeRegistrationStateCopyWithImpl<$Res>
     Object? openingHour = null,
     Object? clickedDay = null,
   }) {
-    return _then(_$_CafeRegistrationState(
+    return _then(_$CafeRegistrationStateImpl(
       selectedSearchCafe: null == selectedSearchCafe
           ? _value.selectedSearchCafe
           : selectedSearchCafe // ignore: cast_nullable_to_non_nullable
@@ -317,8 +319,8 @@ class __$$_CafeRegistrationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CafeRegistrationState implements _CafeRegistrationState {
-  _$_CafeRegistrationState(
+class _$CafeRegistrationStateImpl implements _CafeRegistrationState {
+  _$CafeRegistrationStateImpl(
       {required this.selectedSearchCafe,
       required this.mapController,
       required this.searchQueryController,
@@ -402,10 +404,10 @@ class _$_CafeRegistrationState implements _CafeRegistrationState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CafeRegistrationState &&
+            other is _$CafeRegistrationStateImpl &&
             (identical(other.selectedSearchCafe, selectedSearchCafe) ||
                 other.selectedSearchCafe == selectedSearchCafe) &&
             (identical(other.mapController, mapController) ||
@@ -460,9 +462,9 @@ class _$_CafeRegistrationState implements _CafeRegistrationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CafeRegistrationStateCopyWith<_$_CafeRegistrationState> get copyWith =>
-      __$$_CafeRegistrationStateCopyWithImpl<_$_CafeRegistrationState>(
-          this, _$identity);
+  _$$CafeRegistrationStateImplCopyWith<_$CafeRegistrationStateImpl>
+      get copyWith => __$$CafeRegistrationStateImplCopyWithImpl<
+          _$CafeRegistrationStateImpl>(this, _$identity);
 }
 
 abstract class _CafeRegistrationState implements CafeRegistrationState {
@@ -481,7 +483,7 @@ abstract class _CafeRegistrationState implements CafeRegistrationState {
       required final List<String> selectedDaysOfWeek,
       required final DayOfWeekOpeningInfo selectedOpeningInfo,
       required final OpeningHour openingHour,
-      required final OpeningHour clickedDay}) = _$_CafeRegistrationState;
+      required final OpeningHour clickedDay}) = _$CafeRegistrationStateImpl;
 
   @override
   NaverSearchCafe get selectedSearchCafe;
@@ -515,6 +517,6 @@ abstract class _CafeRegistrationState implements CafeRegistrationState {
   OpeningHour get clickedDay;
   @override
   @JsonKey(ignore: true)
-  _$$_CafeRegistrationStateCopyWith<_$_CafeRegistrationState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CafeRegistrationStateImplCopyWith<_$CafeRegistrationStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

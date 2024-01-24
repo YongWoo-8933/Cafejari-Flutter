@@ -91,9 +91,10 @@ class _$PushCopyWithImpl<$Res, $Val extends Push>
 }
 
 /// @nodoc
-abstract class _$$_PushCopyWith<$Res> implements $PushCopyWith<$Res> {
-  factory _$$_PushCopyWith(_$_Push value, $Res Function(_$_Push) then) =
-      __$$_PushCopyWithImpl<$Res>;
+abstract class _$$PushImplCopyWith<$Res> implements $PushCopyWith<$Res> {
+  factory _$$PushImplCopyWith(
+          _$PushImpl value, $Res Function(_$PushImpl) then) =
+      __$$PushImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -106,9 +107,10 @@ abstract class _$$_PushCopyWith<$Res> implements $PushCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PushCopyWithImpl<$Res> extends _$PushCopyWithImpl<$Res, _$_Push>
-    implements _$$_PushCopyWith<$Res> {
-  __$$_PushCopyWithImpl(_$_Push _value, $Res Function(_$_Push) _then)
+class __$$PushImplCopyWithImpl<$Res>
+    extends _$PushCopyWithImpl<$Res, _$PushImpl>
+    implements _$$PushImplCopyWith<$Res> {
+  __$$PushImplCopyWithImpl(_$PushImpl _value, $Res Function(_$PushImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +123,7 @@ class __$$_PushCopyWithImpl<$Res> extends _$PushCopyWithImpl<$Res, _$_Push>
     Object? isRead = null,
     Object? type = null,
   }) {
-    return _then(_$_Push(
+    return _then(_$PushImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -152,8 +154,8 @@ class __$$_PushCopyWithImpl<$Res> extends _$PushCopyWithImpl<$Res, _$_Push>
 
 /// @nodoc
 
-class _$_Push implements _Push {
-  _$_Push(
+class _$PushImpl implements _Push {
+  _$PushImpl(
       {required this.id,
       required this.title,
       required this.body,
@@ -180,10 +182,10 @@ class _$_Push implements _Push {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Push &&
+            other is _$PushImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body) &&
@@ -200,8 +202,8 @@ class _$_Push implements _Push {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushCopyWith<_$_Push> get copyWith =>
-      __$$_PushCopyWithImpl<_$_Push>(this, _$identity);
+  _$$PushImplCopyWith<_$PushImpl> get copyWith =>
+      __$$PushImplCopyWithImpl<_$PushImpl>(this, _$identity);
 }
 
 abstract class _Push implements Push {
@@ -211,7 +213,7 @@ abstract class _Push implements Push {
       required final String body,
       required final DateTime pushedAt,
       required final bool isRead,
-      required final PushType type}) = _$_Push;
+      required final PushType type}) = _$PushImpl;
 
   @override
   int get id;
@@ -227,5 +229,6 @@ abstract class _Push implements Push {
   PushType get type;
   @override
   @JsonKey(ignore: true)
-  _$$_PushCopyWith<_$_Push> get copyWith => throw _privateConstructorUsedError;
+  _$$PushImplCopyWith<_$PushImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
