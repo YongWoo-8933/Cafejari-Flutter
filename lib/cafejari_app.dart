@@ -5,7 +5,6 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
 import 'package:cafejari_flutter/ui/components/onboarding_dialog.dart';
-import 'package:cafejari_flutter/ui/components/review_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
@@ -27,7 +26,6 @@ import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/components/bottom_navigation_bar.dart';
 import 'package:go_router/go_router.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'ui/state/map_state/map_state.dart';
@@ -157,6 +155,22 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           }
         });
       }
+      RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+      if (initialMessage.isNotNull) {
+        final String? bottomTabIndex = initialMessage!.data['bottom_tab_index'];
+        if (bottomTabIndex.isNotNull) {
+          globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+        }
+      }
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        if (message.notification.isNotNull) {
+          globalViewModel.init();
+          final String? bottomTabIndex = message.data['bottom_tab_index'];
+          if (bottomTabIndex.isNotNull) {
+            globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+          }
+        }
+      });
     });
   }
 

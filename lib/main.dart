@@ -29,14 +29,14 @@ void main() async {
   await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
   FirebaseAnalytics.instance.logAppOpen();
 
-  // 알림 init
-  FlutterLocalNotification.init();
-
   // Naver map init
   await NaverMapSdk.instance.initialize(clientId: dotenv.env['NAVER_MAP_CLIENT_ID']);
 
   // Kakao init
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
+
+  // 알림 init
+  FlutterLocalNotification.init();
 
   // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
