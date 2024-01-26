@@ -84,14 +84,51 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
 
+      // 알림 설정
+      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true
+      );
+      if(defaultTargetPlatform == TargetPlatform.android) {
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          if (message.notification.isNotNull) {
+            globalViewModel.init();
+            FlutterLocalNotification.showNotification(
+                title: message.notification!.title,
+                body: message.notification!.body
+            );
+          }
+        });
+      }
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        if (message.notification.isNotNull) {
+          globalViewModel.init();
+          final String? bottomTabIndex = message.data['bottom_tab_index'];
+          if (bottomTabIndex.isNotNull) {
+            globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+          }
+        }
+      });
+
+      // 챌린지 로딩 후 알림 진입 유저 처리
+      await challengeViewModel.refreshChallenges();
+      RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+      if (initialMessage.isNotNull) {
+        final String? bottomTabIndex = initialMessage!.data['bottom_tab_index'];
+        if (bottomTabIndex.isNotNull) {
+          globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+        }
+      }
+
       // 기본 서버 정보 로딩
       await mapViewModel.refreshLocations();
       await mapViewModel.getRandomCafeImageUrl();
-      await challengeViewModel.refreshChallenges();
       await myPageViewModel.getDefaultProfileImages();
+
+      // 로컬 init
       if (context.mounted) await globalViewModel.startAppFeedbackTimer(context: context);
       if (!await globalViewModel.getIsFlagButtonTapped()) globalViewModel.setFlagButtonBadgeVisible(true);
-
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
         globalViewModel.setIsInstalledFirst(false);
@@ -101,12 +138,12 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           builder: (_) => const OnboardingDialog()
         );
       } else {
-        // 일반 앱 시작
+        // 일반 사용자
         await globalViewModel.init();
       }
 
-      // 지도 관련 deep link 로직 처리
-      Future.delayed(const Duration(seconds: 1), () async {
+      // deep link 진입 유저 처리
+      Future.delayed(const Duration(milliseconds: 500), () async {
         final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
         final Uri? deepLink = data?.link;
         if (deepLink.isNotNull && context.mounted) {
@@ -135,40 +172,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
             globalViewModel: globalViewModel,
             link: deepLink
           );
-        }
-      });
-
-      // 알림 설정
-      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true
-      );
-      if(defaultTargetPlatform == TargetPlatform.android) {
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          if (message.notification.isNotNull) {
-            globalViewModel.init();
-            FlutterLocalNotification.showNotification(
-              title: message.notification!.title,
-              body: message.notification!.body
-            );
-          }
-        });
-      }
-      RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-      if (initialMessage.isNotNull) {
-        final String? bottomTabIndex = initialMessage!.data['bottom_tab_index'];
-        if (bottomTabIndex.isNotNull) {
-          globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
-        }
-      }
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        if (message.notification.isNotNull) {
-          globalViewModel.init();
-          final String? bottomTabIndex = message.data['bottom_tab_index'];
-          if (bottomTabIndex.isNotNull) {
-            globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
-          }
         }
       });
     });
