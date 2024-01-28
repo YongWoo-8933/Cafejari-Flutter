@@ -40,4 +40,6 @@ void main() async {
 
   // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
+
+  // 테스트
 }
