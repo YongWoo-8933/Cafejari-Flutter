@@ -40,7 +40,6 @@ abstract interface class RequestRepository {
   Future<void> postAppFeedback({String? accessToken, required String feedback});
 }
 
-
 /// request repository의 구현부
 class RequestRepositoryImpl implements RequestRepository {
   final APIService service;

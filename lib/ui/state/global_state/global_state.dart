@@ -32,7 +32,7 @@ class GlobalState with _$GlobalState {
     required final String webViewTitle,
     required final Uri webViewUri,
     required final bool isChallengeBadgeVisible,
-    required final bool isFlagButtonBadgeVisible,
+    required final bool isFlagButtonBadgeVisible
   }) = _GlobalState;
 
   factory GlobalState.empty() => GlobalState(

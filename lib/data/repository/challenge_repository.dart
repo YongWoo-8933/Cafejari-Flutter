@@ -1,4 +1,3 @@
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';

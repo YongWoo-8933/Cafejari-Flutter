@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'request_response.g.dart';
 
-
 @JsonSerializable()
 class CafeAdditionRequestResponse {
   final int id;

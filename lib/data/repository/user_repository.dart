@@ -2,9 +2,13 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// user application api와 통신하는 저장소
 abstract class UserRepository {
+  // LOCAL
+  Future<bool> getIsInstalledFirstTime();
+  putIsInstalledFirstTime(bool isInstalled);
   // GET
   Future<List<GradeResponse>> fetchGrade();
   Future<NicknameResponse> validateNickname({required String nickname});
@@ -52,6 +56,22 @@ class UserRepositoryImpl implements UserRepository {
   APIService apiService;
 
   UserRepositoryImpl(this.apiService);
+
+  final String boxLabel = "local";
+  final String isInstalledFirstTimeKey = "isInstalledFirstTime";
+
+  // LOCAL
+  @override
+  Future<bool> getIsInstalledFirstTime() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(isInstalledFirstTimeKey) ?? true;
+  }
+
+  @override
+  putIsInstalledFirstTime(bool isInstalled) async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    await box.put(isInstalledFirstTimeKey, isInstalled);
+  }
 
   // GET
   @override

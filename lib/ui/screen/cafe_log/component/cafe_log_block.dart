@@ -12,7 +12,6 @@ class CafeLogBlock extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Stack(
       children: [
         Container(

@@ -89,7 +89,7 @@ class CafeRepositoryImpl implements CafeRepository {
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "search/",
-        query: queryMap,
+        query: queryMap
       );
       return response.map((dynamic e) => CafeSearchResponse.fromJson(e)).toList();
     } on ErrorWithMessage {

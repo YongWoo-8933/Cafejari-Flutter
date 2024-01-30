@@ -22,6 +22,7 @@ import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
 import 'package:cafejari_flutter/ui/state/push_state/push_state.dart';
 import 'package:cafejari_flutter/ui/view_model/cafe_info_modification_view_model.dart';
+import 'package:cafejari_flutter/ui/state/request_state/request_state.dart';
 import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/login_view_model.dart';
@@ -29,6 +30,7 @@ import 'package:cafejari_flutter/ui/view_model/my_cafe_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/my_page_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/push_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/cafe_registration_view_model.dart';
+import 'package:cafejari_flutter/ui/view_model/request_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/repository/cafe_repository.dart';
@@ -236,6 +238,12 @@ final cafeInfoModificationViewModelProvider = StateNotifierProvider<CafeInfoModi
   final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
   final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
   return CafeInfoModificationViewModel(cafeUseCase: cafeUseCase, globalViewModel: globalViewModel);
+});
+
+final requestViewModelProvider = StateNotifierProvider<RequestViewModel, RequestState>((ref) {
+  final CafeUseCase cafeUseCase = ref.watch(cafeUseCaseProvider);
+  final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+  return RequestViewModel(cafeUseCase: cafeUseCase, globalViewModel: globalViewModel);
 });
 
 

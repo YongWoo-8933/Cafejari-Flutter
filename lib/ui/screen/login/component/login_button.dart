@@ -1,8 +1,7 @@
+import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-import '../../../app_config/duration.dart';
 
 class LoginButton extends StatelessWidget {
   final double? buttonWidth;

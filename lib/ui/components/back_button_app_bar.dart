@@ -4,7 +4,6 @@ import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class BackButtonAppBar extends AppBar {
   final String? backButtonText;
   final VoidCallback? onBack;

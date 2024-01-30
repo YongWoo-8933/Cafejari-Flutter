@@ -114,7 +114,6 @@ dependencies:
 
   # html 표현 변환 ok
   flutter_widget_from_html: ^0.14.10+1
-  html: ^0.15.4
 
   # 애플 로그인
   sign_in_with_apple: ^5.0.0
