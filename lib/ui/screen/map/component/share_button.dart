@@ -68,14 +68,10 @@ class ShareButton extends ConsumerWidget {
               );
             }
           } else {
-            try {
-              Uri shareUrl = await WebSharerClient.instance.makeDefaultUrl(template: template);
-              await launchBrowserTab(shareUrl, popupOpen: true);
-            } catch (error) {
-              mapViewModel.globalViewModel.showSnackBar(
-                  content: "취소됨", type: SnackBarType.error
-              );
-            }
+            mapViewModel.globalViewModel.showSnackBar(
+              content: "현재는 카카오 공유 기능만을 제공중입니다. 카카오톡 앱을 먼저 설치해주세요",
+              type: SnackBarType.error
+            );
           }
           ref.watch(_isLoading.notifier).update((state) => false);
         },

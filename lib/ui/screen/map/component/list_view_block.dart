@@ -1,20 +1,14 @@
-import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
-import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 
 class ListViewBlock extends ConsumerWidget {
   const ListViewBlock({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MapState mapState = ref.watch(mapViewModelProvider);
-    final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
 
     return Stack(children: [
       Container(

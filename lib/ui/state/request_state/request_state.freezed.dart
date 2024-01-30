@@ -190,11 +190,11 @@ class _$RequestStateCopyWithImpl<$Res, $Val extends RequestState>
 }
 
 /// @nodoc
-abstract class _$$_RequestStateCopyWith<$Res>
+abstract class _$$RequestStateImplCopyWith<$Res>
     implements $RequestStateCopyWith<$Res> {
-  factory _$$_RequestStateCopyWith(
-          _$_RequestState value, $Res Function(_$_RequestState) then) =
-      __$$_RequestStateCopyWithImpl<$Res>;
+  factory _$$RequestStateImplCopyWith(
+          _$RequestStateImpl value, $Res Function(_$RequestStateImpl) then) =
+      __$$RequestStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -223,11 +223,11 @@ abstract class _$$_RequestStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RequestStateCopyWithImpl<$Res>
-    extends _$RequestStateCopyWithImpl<$Res, _$_RequestState>
-    implements _$$_RequestStateCopyWith<$Res> {
-  __$$_RequestStateCopyWithImpl(
-      _$_RequestState _value, $Res Function(_$_RequestState) _then)
+class __$$RequestStateImplCopyWithImpl<$Res>
+    extends _$RequestStateCopyWithImpl<$Res, _$RequestStateImpl>
+    implements _$$RequestStateImplCopyWith<$Res> {
+  __$$RequestStateImplCopyWithImpl(
+      _$RequestStateImpl _value, $Res Function(_$RequestStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -249,7 +249,7 @@ class __$$_RequestStateCopyWithImpl<$Res>
     Object? openingHour = null,
     Object? clickedDay = null,
   }) {
-    return _then(_$_RequestState(
+    return _then(_$RequestStateImpl(
       selectedSearchCafe: null == selectedSearchCafe
           ? _value.selectedSearchCafe
           : selectedSearchCafe // ignore: cast_nullable_to_non_nullable
@@ -316,8 +316,8 @@ class __$$_RequestStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RequestState implements _RequestState {
-  _$_RequestState(
+class _$RequestStateImpl implements _RequestState {
+  _$RequestStateImpl(
       {required this.selectedSearchCafe,
       required this.mapController,
       required this.searchQueryController,
@@ -401,10 +401,10 @@ class _$_RequestState implements _RequestState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RequestState &&
+            other is _$RequestStateImpl &&
             (identical(other.selectedSearchCafe, selectedSearchCafe) ||
                 other.selectedSearchCafe == selectedSearchCafe) &&
             (identical(other.mapController, mapController) ||
@@ -459,8 +459,8 @@ class _$_RequestState implements _RequestState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RequestStateCopyWith<_$_RequestState> get copyWith =>
-      __$$_RequestStateCopyWithImpl<_$_RequestState>(this, _$identity);
+  _$$RequestStateImplCopyWith<_$RequestStateImpl> get copyWith =>
+      __$$RequestStateImplCopyWithImpl<_$RequestStateImpl>(this, _$identity);
 }
 
 abstract class _RequestState implements RequestState {
@@ -479,7 +479,7 @@ abstract class _RequestState implements RequestState {
       required final List<String> selectedDaysOfWeek,
       required final DayOfWeekOpeningInfo selectedOpeningInfo,
       required final OpeningHour openingHour,
-      required final OpeningHour clickedDay}) = _$_RequestState;
+      required final OpeningHour clickedDay}) = _$RequestStateImpl;
 
   @override
   NaverSearchCafe get selectedSearchCafe;
@@ -513,6 +513,6 @@ abstract class _RequestState implements RequestState {
   OpeningHour get clickedDay;
   @override
   @JsonKey(ignore: true)
-  _$$_RequestStateCopyWith<_$_RequestState> get copyWith =>
+  _$$RequestStateImplCopyWith<_$RequestStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

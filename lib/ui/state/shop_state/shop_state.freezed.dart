@@ -78,10 +78,11 @@ class _$ShopStateCopyWithImpl<$Res, $Val extends ShopState>
 }
 
 /// @nodoc
-abstract class _$$_ShopStateCopyWith<$Res> implements $ShopStateCopyWith<$Res> {
-  factory _$$_ShopStateCopyWith(
-          _$_ShopState value, $Res Function(_$_ShopState) then) =
-      __$$_ShopStateCopyWithImpl<$Res>;
+abstract class _$$ShopStateImplCopyWith<$Res>
+    implements $ShopStateCopyWith<$Res> {
+  factory _$$ShopStateImplCopyWith(
+          _$ShopStateImpl value, $Res Function(_$ShopStateImpl) then) =
+      __$$ShopStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -92,11 +93,11 @@ abstract class _$$_ShopStateCopyWith<$Res> implements $ShopStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ShopStateCopyWithImpl<$Res>
-    extends _$ShopStateCopyWithImpl<$Res, _$_ShopState>
-    implements _$$_ShopStateCopyWith<$Res> {
-  __$$_ShopStateCopyWithImpl(
-      _$_ShopState _value, $Res Function(_$_ShopState) _then)
+class __$$ShopStateImplCopyWithImpl<$Res>
+    extends _$ShopStateCopyWithImpl<$Res, _$ShopStateImpl>
+    implements _$$ShopStateImplCopyWith<$Res> {
+  __$$ShopStateImplCopyWithImpl(
+      _$ShopStateImpl _value, $Res Function(_$ShopStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +108,7 @@ class __$$_ShopStateCopyWithImpl<$Res>
     Object? itemList = null,
     Object? myBrandcons = null,
   }) {
-    return _then(_$_ShopState(
+    return _then(_$ShopStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -130,8 +131,8 @@ class __$$_ShopStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ShopState implements _ShopState {
-  _$_ShopState(
+class _$ShopStateImpl implements _ShopState {
+  _$ShopStateImpl(
       {required this.isLoading,
       required final List<Brand> brandList,
       required final List<Item> itemList,
@@ -172,10 +173,10 @@ class _$_ShopState implements _ShopState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ShopState &&
+            other is _$ShopStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             const DeepCollectionEquality()
@@ -196,8 +197,8 @@ class _$_ShopState implements _ShopState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ShopStateCopyWith<_$_ShopState> get copyWith =>
-      __$$_ShopStateCopyWithImpl<_$_ShopState>(this, _$identity);
+  _$$ShopStateImplCopyWith<_$ShopStateImpl> get copyWith =>
+      __$$ShopStateImplCopyWithImpl<_$ShopStateImpl>(this, _$identity);
 }
 
 abstract class _ShopState implements ShopState {
@@ -205,7 +206,7 @@ abstract class _ShopState implements ShopState {
       {required final bool isLoading,
       required final List<Brand> brandList,
       required final List<Item> itemList,
-      required final List<Brandcon> myBrandcons}) = _$_ShopState;
+      required final List<Brandcon> myBrandcons}) = _$ShopStateImpl;
 
   @override
   bool get isLoading;
@@ -217,6 +218,6 @@ abstract class _ShopState implements ShopState {
   List<Brandcon> get myBrandcons;
   @override
   @JsonKey(ignore: true)
-  _$$_ShopStateCopyWith<_$_ShopState> get copyWith =>
+  _$$ShopStateImplCopyWith<_$ShopStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

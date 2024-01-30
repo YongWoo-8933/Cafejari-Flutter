@@ -72,11 +72,11 @@ class _$LeaderboardStateCopyWithImpl<$Res, $Val extends LeaderboardState>
 }
 
 /// @nodoc
-abstract class _$$_LeaderboardStateCopyWith<$Res>
+abstract class _$$LeaderboardStateImplCopyWith<$Res>
     implements $LeaderboardStateCopyWith<$Res> {
-  factory _$$_LeaderboardStateCopyWith(
-          _$_LeaderboardState value, $Res Function(_$_LeaderboardState) then) =
-      __$$_LeaderboardStateCopyWithImpl<$Res>;
+  factory _$$LeaderboardStateImplCopyWith(_$LeaderboardStateImpl value,
+          $Res Function(_$LeaderboardStateImpl) then) =
+      __$$LeaderboardStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -86,11 +86,11 @@ abstract class _$$_LeaderboardStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LeaderboardStateCopyWithImpl<$Res>
-    extends _$LeaderboardStateCopyWithImpl<$Res, _$_LeaderboardState>
-    implements _$$_LeaderboardStateCopyWith<$Res> {
-  __$$_LeaderboardStateCopyWithImpl(
-      _$_LeaderboardState _value, $Res Function(_$_LeaderboardState) _then)
+class __$$LeaderboardStateImplCopyWithImpl<$Res>
+    extends _$LeaderboardStateCopyWithImpl<$Res, _$LeaderboardStateImpl>
+    implements _$$LeaderboardStateImplCopyWith<$Res> {
+  __$$LeaderboardStateImplCopyWithImpl(_$LeaderboardStateImpl _value,
+      $Res Function(_$LeaderboardStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -100,7 +100,7 @@ class __$$_LeaderboardStateCopyWithImpl<$Res>
     Object? weekRankers = null,
     Object? totalRankers = null,
   }) {
-    return _then(_$_LeaderboardState(
+    return _then(_$LeaderboardStateImpl(
       monthRankers: null == monthRankers
           ? _value._monthRankers
           : monthRankers // ignore: cast_nullable_to_non_nullable
@@ -119,8 +119,8 @@ class __$$_LeaderboardStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LeaderboardState implements _LeaderboardState {
-  _$_LeaderboardState(
+class _$LeaderboardStateImpl implements _LeaderboardState {
+  _$LeaderboardStateImpl(
       {required final List<PartialUser> monthRankers,
       required final List<PartialUser> weekRankers,
       required final List<PartialUser> totalRankers})
@@ -158,10 +158,10 @@ class _$_LeaderboardState implements _LeaderboardState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LeaderboardState &&
+            other is _$LeaderboardStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._monthRankers, _monthRankers) &&
             const DeepCollectionEquality()
@@ -180,15 +180,16 @@ class _$_LeaderboardState implements _LeaderboardState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeaderboardStateCopyWith<_$_LeaderboardState> get copyWith =>
-      __$$_LeaderboardStateCopyWithImpl<_$_LeaderboardState>(this, _$identity);
+  _$$LeaderboardStateImplCopyWith<_$LeaderboardStateImpl> get copyWith =>
+      __$$LeaderboardStateImplCopyWithImpl<_$LeaderboardStateImpl>(
+          this, _$identity);
 }
 
 abstract class _LeaderboardState implements LeaderboardState {
   factory _LeaderboardState(
       {required final List<PartialUser> monthRankers,
       required final List<PartialUser> weekRankers,
-      required final List<PartialUser> totalRankers}) = _$_LeaderboardState;
+      required final List<PartialUser> totalRankers}) = _$LeaderboardStateImpl;
 
   @override
   List<PartialUser> get monthRankers;
@@ -198,6 +199,6 @@ abstract class _LeaderboardState implements LeaderboardState {
   List<PartialUser> get totalRankers;
   @override
   @JsonKey(ignore: true)
-  _$$_LeaderboardStateCopyWith<_$_LeaderboardState> get copyWith =>
+  _$$LeaderboardStateImplCopyWith<_$LeaderboardStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

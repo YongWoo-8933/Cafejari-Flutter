@@ -67,6 +67,11 @@ abstract class UserUseCase {
     required String phoneNumber,
     required Function(String) onAccessTokenRefresh
   });
+  Future<void> appFeedback({
+    String? accessToken,
+    required String feedback,
+    required Function(String) onAccessTokenRefresh
+  });
 }
 
 class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
@@ -382,6 +387,29 @@ class UserUseCaseImpl extends BaseUseCase implements UserUseCase {
       onAccessTokenRefresh(newToken);
       try {
         await requestRepository.postUserMigrationRequest(accessToken: accessToken, phoneNumber: replacedPhoneNumber);
+      } on AccessTokenExpired{
+        throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
+      }
+    } on RefreshTokenExpired{
+      rethrow;
+    } on ErrorWithMessage{
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> appFeedback({
+    String? accessToken,
+    required String feedback,
+    required Function(String) onAccessTokenRefresh
+  }) async {
+    try {
+      await requestRepository.postAppFeedback(accessToken: accessToken, feedback: feedback);
+    } on AccessTokenExpired {
+      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      onAccessTokenRefresh(newToken);
+      try {
+        await requestRepository.postAppFeedback(accessToken: newToken, feedback: feedback);
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }

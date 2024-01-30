@@ -352,6 +352,7 @@ Challenge parseChallengeFromChallengeResponse({
     name: challengeResponse.name,
     description: challengeResponse.description,
     imageUrl: challengeResponse.image,
+    url: challengeResponse.url ?? "",
     startAt: DateTime.parse(challengeResponse.start),
     finishAt: DateTime.parse(challengeResponse.finish),
     available: challengeResponse.available,
@@ -395,6 +396,18 @@ CafeAdditionRequest parseCafeAdditionRequestFromCafeAdditionRequestResponse({req
     answeredAt: DateTime.parse(requestResponse.answered_at),
     wallSocketRates: [],
     openingHour: null
+  );
+}
+
+/// CafeModificationRequestResponse로부터 CafeModificationRequest 객체를 뽑아내는 함수
+CafeModificationRequest parseCafeModificationRequestFromCafeModificationRequestResponse({required CafeModificationRequestResponse requestResponse}) {
+  return CafeModificationRequest(
+    id: requestResponse.id,
+    cafe: parseCafeFromCafeRepResponse(cafeRepResponse: requestResponse.cafe),
+    isApproved: requestResponse.is_approved,
+    requestedAt: DateTime.parse(requestResponse.requested_at),
+    answeredAt: DateTime.parse(requestResponse.answered_at),
+    rejectionReason: requestResponse.rejection_reason
   );
 }
 

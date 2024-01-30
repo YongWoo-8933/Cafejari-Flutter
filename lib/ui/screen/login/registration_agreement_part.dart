@@ -1,8 +1,6 @@
-
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
@@ -15,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final _isServiceAgreedProvider = StateProvider<bool>((ref) => false);
 final _isPrivacyAgreedProvider = StateProvider<bool>((ref) => false);

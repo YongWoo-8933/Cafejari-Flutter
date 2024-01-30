@@ -1,10 +1,13 @@
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// challenge application api와 통신하는 저장소
 abstract class ChallengeRepository {
+  // LOCAL
+  Future<int> getLastViewedChallengeId();
+  putLastViewedChallengeId(int id);
   // GET
   Future<List<ChallengeResponse>> fetchChallenges();
   Future<List<ChallengerResponse>> fetchMyChallengers({required String accessToken});
@@ -18,8 +21,23 @@ abstract class ChallengeRepository {
 /// challenge repository의 구현부
 class ChallengeRepositoryImpl implements ChallengeRepository {
   APIService apiService;
+  final String boxLabel = "local";
+  final String lastViewedChallengeIdKey = "lastViewedChallengeIdKey";
 
   ChallengeRepositoryImpl(this.apiService);
+
+  // LOCAL
+  @override
+  Future<int> getLastViewedChallengeId() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(lastViewedChallengeIdKey) ?? 0;
+  }
+
+  @override
+  putLastViewedChallengeId(int id) async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    await box.put(lastViewedChallengeIdKey, id);
+  }
 
   // GET
   @override

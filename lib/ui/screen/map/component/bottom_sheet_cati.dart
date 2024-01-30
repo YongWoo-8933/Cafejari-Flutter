@@ -196,7 +196,7 @@ class CafeCATIEditor extends ConsumerWidget {
                     ref.watch(_isLoading.notifier).update((ref) => true);
                     await mapViewModel.voteCATI(context: context);
                     ref.watch(_isLoading.notifier).update((ref) => false);
-                    if(context.mounted) Navigator.of(context).pop();
+                    if(context.mounted) Navigator.pop(context);
                   }
                 )
               ],

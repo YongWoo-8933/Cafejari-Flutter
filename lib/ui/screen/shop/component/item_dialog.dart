@@ -106,7 +106,7 @@ class ItemDialog extends ConsumerWidget {
                   ref.watch(_isBuyLoading.notifier).update((state) => true);
                   await shopViewModel.buyBrandcon(item: item, context: context);
                   ref.watch(_isBuyLoading.notifier).update((state) => false);
-                  if (context.mounted) Navigator.of(context).pop();
+                  if (context.mounted) Navigator.pop(context);
                 }
             ),
             const VerticalSpacer(15)

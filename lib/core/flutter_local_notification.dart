@@ -1,3 +1,4 @@
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// 알림을 보내 주는 class
@@ -41,12 +42,12 @@ class FlutterLocalNotification {
   /// 알림 권한 요청(추후 다른 클래스에서 관리)
   static requestNotificationPermission() {
     _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+      .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
   }
 
   /// 알림을 보여줌

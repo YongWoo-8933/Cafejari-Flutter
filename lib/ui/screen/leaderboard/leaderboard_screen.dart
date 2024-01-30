@@ -1,4 +1,3 @@
-
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/domain/entity/user/user.dart';
@@ -7,14 +6,10 @@ import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
-import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_my_ranking.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_ranking_block.dart';
 import 'package:cafejari_flutter/ui/screen/leaderboard/component/leaderboard_top_ranker_block.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/leaderboard_state/leaderboard_state.dart';
-import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
-import 'package:cafejari_flutter/ui/view_model/leaderboard_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -44,7 +39,6 @@ class LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Widget build(BuildContext context) {
     final LeaderboardState leaderboardState = ref.watch(leaderboardViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
-    final LeaderboardViewModel leaderboardViewModel = ref.watch(leaderboardViewModelProvider.notifier);
 
     return Scaffold(
       appBar: BackButtonAppBar(

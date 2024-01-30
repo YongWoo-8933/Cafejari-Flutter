@@ -20,6 +20,9 @@ mixin _$MyPageState {
       throw _privateConstructorUsedError;
   TextEditingController get userMigrationPhoneNumberController =>
       throw _privateConstructorUsedError;
+  TextEditingController get nicknameController =>
+      throw _privateConstructorUsedError;
+  String get nicknameErrorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyPageStateCopyWith<MyPageState> get copyWith =>
@@ -34,7 +37,9 @@ abstract class $MyPageStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<({String imageUrl, int profileImageId})> defaultProfileImages,
-      TextEditingController userMigrationPhoneNumberController});
+      TextEditingController userMigrationPhoneNumberController,
+      TextEditingController nicknameController,
+      String nicknameErrorMessage});
 }
 
 /// @nodoc
@@ -52,6 +57,8 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
   $Res call({
     Object? defaultProfileImages = null,
     Object? userMigrationPhoneNumberController = null,
+    Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
   }) {
     return _then(_value.copyWith(
       defaultProfileImages: null == defaultProfileImages
@@ -63,29 +70,39 @@ class _$MyPageStateCopyWithImpl<$Res, $Val extends MyPageState>
           ? _value.userMigrationPhoneNumberController
           : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameController: null == nicknameController
+          ? _value.nicknameController
+          : nicknameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_MyPageStateCopyWith<$Res>
+abstract class _$$MyPageStateImplCopyWith<$Res>
     implements $MyPageStateCopyWith<$Res> {
-  factory _$$_MyPageStateCopyWith(
-          _$_MyPageState value, $Res Function(_$_MyPageState) then) =
-      __$$_MyPageStateCopyWithImpl<$Res>;
+  factory _$$MyPageStateImplCopyWith(
+          _$MyPageStateImpl value, $Res Function(_$MyPageStateImpl) then) =
+      __$$MyPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {List<({String imageUrl, int profileImageId})> defaultProfileImages,
-      TextEditingController userMigrationPhoneNumberController});
+      TextEditingController userMigrationPhoneNumberController,
+      TextEditingController nicknameController,
+      String nicknameErrorMessage});
 }
 
 /// @nodoc
-class __$$_MyPageStateCopyWithImpl<$Res>
-    extends _$MyPageStateCopyWithImpl<$Res, _$_MyPageState>
-    implements _$$_MyPageStateCopyWith<$Res> {
-  __$$_MyPageStateCopyWithImpl(
-      _$_MyPageState _value, $Res Function(_$_MyPageState) _then)
+class __$$MyPageStateImplCopyWithImpl<$Res>
+    extends _$MyPageStateCopyWithImpl<$Res, _$MyPageStateImpl>
+    implements _$$MyPageStateImplCopyWith<$Res> {
+  __$$MyPageStateImplCopyWithImpl(
+      _$MyPageStateImpl _value, $Res Function(_$MyPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,8 +110,10 @@ class __$$_MyPageStateCopyWithImpl<$Res>
   $Res call({
     Object? defaultProfileImages = null,
     Object? userMigrationPhoneNumberController = null,
+    Object? nicknameController = null,
+    Object? nicknameErrorMessage = null,
   }) {
-    return _then(_$_MyPageState(
+    return _then(_$MyPageStateImpl(
       defaultProfileImages: null == defaultProfileImages
           ? _value._defaultProfileImages
           : defaultProfileImages // ignore: cast_nullable_to_non_nullable
@@ -104,17 +123,27 @@ class __$$_MyPageStateCopyWithImpl<$Res>
           ? _value.userMigrationPhoneNumberController
           : userMigrationPhoneNumberController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      nicknameController: null == nicknameController
+          ? _value.nicknameController
+          : nicknameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      nicknameErrorMessage: null == nicknameErrorMessage
+          ? _value.nicknameErrorMessage
+          : nicknameErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_MyPageState implements _MyPageState {
-  _$_MyPageState(
+class _$MyPageStateImpl implements _MyPageState {
+  _$MyPageStateImpl(
       {required final List<({String imageUrl, int profileImageId})>
           defaultProfileImages,
-      required this.userMigrationPhoneNumberController})
+      required this.userMigrationPhoneNumberController,
+      required this.nicknameController,
+      required this.nicknameErrorMessage})
       : _defaultProfileImages = defaultProfileImages;
 
   final List<({String imageUrl, int profileImageId})> _defaultProfileImages;
@@ -128,51 +157,66 @@ class _$_MyPageState implements _MyPageState {
 
   @override
   final TextEditingController userMigrationPhoneNumberController;
+  @override
+  final TextEditingController nicknameController;
+  @override
+  final String nicknameErrorMessage;
 
   @override
   String toString() {
-    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController)';
+    return 'MyPageState(defaultProfileImages: $defaultProfileImages, userMigrationPhoneNumberController: $userMigrationPhoneNumberController, nicknameController: $nicknameController, nicknameErrorMessage: $nicknameErrorMessage)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MyPageState &&
+            other is _$MyPageStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._defaultProfileImages, _defaultProfileImages) &&
             (identical(other.userMigrationPhoneNumberController,
                     userMigrationPhoneNumberController) ||
                 other.userMigrationPhoneNumberController ==
-                    userMigrationPhoneNumberController));
+                    userMigrationPhoneNumberController) &&
+            (identical(other.nicknameController, nicknameController) ||
+                other.nicknameController == nicknameController) &&
+            (identical(other.nicknameErrorMessage, nicknameErrorMessage) ||
+                other.nicknameErrorMessage == nicknameErrorMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_defaultProfileImages),
-      userMigrationPhoneNumberController);
+      userMigrationPhoneNumberController,
+      nicknameController,
+      nicknameErrorMessage);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>
-      __$$_MyPageStateCopyWithImpl<_$_MyPageState>(this, _$identity);
+  _$$MyPageStateImplCopyWith<_$MyPageStateImpl> get copyWith =>
+      __$$MyPageStateImplCopyWithImpl<_$MyPageStateImpl>(this, _$identity);
 }
 
 abstract class _MyPageState implements MyPageState {
   factory _MyPageState(
       {required final List<({String imageUrl, int profileImageId})>
           defaultProfileImages,
-      required final TextEditingController
-          userMigrationPhoneNumberController}) = _$_MyPageState;
+      required final TextEditingController userMigrationPhoneNumberController,
+      required final TextEditingController nicknameController,
+      required final String nicknameErrorMessage}) = _$MyPageStateImpl;
 
   @override
   List<({String imageUrl, int profileImageId})> get defaultProfileImages;
   @override
   TextEditingController get userMigrationPhoneNumberController;
   @override
+  TextEditingController get nicknameController;
+  @override
+  String get nicknameErrorMessage;
+  @override
   @JsonKey(ignore: true)
-  _$$_MyPageStateCopyWith<_$_MyPageState> get copyWith =>
+  _$$MyPageStateImplCopyWith<_$MyPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

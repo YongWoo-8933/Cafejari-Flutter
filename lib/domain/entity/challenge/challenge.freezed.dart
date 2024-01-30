@@ -23,6 +23,7 @@ mixin _$Challenge {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
   DateTime get startAt => throw _privateConstructorUsedError;
   DateTime get finishAt => throw _privateConstructorUsedError;
   bool get available => throw _privateConstructorUsedError;
@@ -50,6 +51,7 @@ abstract class $ChallengeCopyWith<$Res> {
       String name,
       String description,
       String imageUrl,
+      String url,
       DateTime startAt,
       DateTime finishAt,
       bool available,
@@ -78,6 +80,7 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
     Object? name = null,
     Object? description = null,
     Object? imageUrl = null,
+    Object? url = null,
     Object? startAt = null,
     Object? finishAt = null,
     Object? available = null,
@@ -114,6 +117,10 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
       startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
@@ -143,10 +150,11 @@ class _$ChallengeCopyWithImpl<$Res, $Val extends Challenge>
 }
 
 /// @nodoc
-abstract class _$$_ChallengeCopyWith<$Res> implements $ChallengeCopyWith<$Res> {
-  factory _$$_ChallengeCopyWith(
-          _$_Challenge value, $Res Function(_$_Challenge) then) =
-      __$$_ChallengeCopyWithImpl<$Res>;
+abstract class _$$ChallengeImplCopyWith<$Res>
+    implements $ChallengeCopyWith<$Res> {
+  factory _$$ChallengeImplCopyWith(
+          _$ChallengeImpl value, $Res Function(_$ChallengeImpl) then) =
+      __$$ChallengeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -157,6 +165,7 @@ abstract class _$$_ChallengeCopyWith<$Res> implements $ChallengeCopyWith<$Res> {
       String name,
       String description,
       String imageUrl,
+      String url,
       DateTime startAt,
       DateTime finishAt,
       bool available,
@@ -166,11 +175,11 @@ abstract class _$$_ChallengeCopyWith<$Res> implements $ChallengeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ChallengeCopyWithImpl<$Res>
-    extends _$ChallengeCopyWithImpl<$Res, _$_Challenge>
-    implements _$$_ChallengeCopyWith<$Res> {
-  __$$_ChallengeCopyWithImpl(
-      _$_Challenge _value, $Res Function(_$_Challenge) _then)
+class __$$ChallengeImplCopyWithImpl<$Res>
+    extends _$ChallengeCopyWithImpl<$Res, _$ChallengeImpl>
+    implements _$$ChallengeImplCopyWith<$Res> {
+  __$$ChallengeImplCopyWithImpl(
+      _$ChallengeImpl _value, $Res Function(_$ChallengeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -183,6 +192,7 @@ class __$$_ChallengeCopyWithImpl<$Res>
     Object? name = null,
     Object? description = null,
     Object? imageUrl = null,
+    Object? url = null,
     Object? startAt = null,
     Object? finishAt = null,
     Object? available = null,
@@ -190,7 +200,7 @@ class __$$_ChallengeCopyWithImpl<$Res>
     Object? challengerProfileImages = null,
     Object? challengeMilestones = null,
   }) {
-    return _then(_$_Challenge(
+    return _then(_$ChallengeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -218,6 +228,10 @@ class __$$_ChallengeCopyWithImpl<$Res>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       startAt: null == startAt
           ? _value.startAt
@@ -249,8 +263,8 @@ class __$$_ChallengeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Challenge implements _Challenge {
-  _$_Challenge(
+class _$ChallengeImpl implements _Challenge {
+  _$ChallengeImpl(
       {required this.id,
       required this.participantLimit,
       required this.goal,
@@ -258,6 +272,7 @@ class _$_Challenge implements _Challenge {
       required this.name,
       required this.description,
       required this.imageUrl,
+      required this.url,
       required this.startAt,
       required this.finishAt,
       required this.available,
@@ -282,6 +297,8 @@ class _$_Challenge implements _Challenge {
   final String description;
   @override
   final String imageUrl;
+  @override
+  final String url;
   @override
   final DateTime startAt;
   @override
@@ -317,14 +334,14 @@ class _$_Challenge implements _Challenge {
 
   @override
   String toString() {
-    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengerProfileImages: $challengerProfileImages, challengeMilestones: $challengeMilestones)';
+    return 'Challenge(id: $id, participantLimit: $participantLimit, goal: $goal, totalPoint: $totalPoint, name: $name, description: $description, imageUrl: $imageUrl, url: $url, startAt: $startAt, finishAt: $finishAt, available: $available, challengerUserIds: $challengerUserIds, challengerProfileImages: $challengerProfileImages, challengeMilestones: $challengeMilestones)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Challenge &&
+            other is _$ChallengeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.participantLimit, participantLimit) ||
                 other.participantLimit == participantLimit) &&
@@ -336,6 +353,7 @@ class _$_Challenge implements _Challenge {
                 other.description == description) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.finishAt, finishAt) ||
                 other.finishAt == finishAt) &&
@@ -359,6 +377,7 @@ class _$_Challenge implements _Challenge {
       name,
       description,
       imageUrl,
+      url,
       startAt,
       finishAt,
       available,
@@ -369,8 +388,8 @@ class _$_Challenge implements _Challenge {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChallengeCopyWith<_$_Challenge> get copyWith =>
-      __$$_ChallengeCopyWithImpl<_$_Challenge>(this, _$identity);
+  _$$ChallengeImplCopyWith<_$ChallengeImpl> get copyWith =>
+      __$$ChallengeImplCopyWithImpl<_$ChallengeImpl>(this, _$identity);
 }
 
 abstract class _Challenge implements Challenge {
@@ -382,13 +401,14 @@ abstract class _Challenge implements Challenge {
           required final String name,
           required final String description,
           required final String imageUrl,
+          required final String url,
           required final DateTime startAt,
           required final DateTime finishAt,
           required final bool available,
           required final List<int> challengerUserIds,
           required final List<String> challengerProfileImages,
           required final List<ChallengeMilestone> challengeMilestones}) =
-      _$_Challenge;
+      _$ChallengeImpl;
 
   @override
   int get id;
@@ -405,6 +425,8 @@ abstract class _Challenge implements Challenge {
   @override
   String get imageUrl;
   @override
+  String get url;
+  @override
   DateTime get startAt;
   @override
   DateTime get finishAt;
@@ -418,7 +440,7 @@ abstract class _Challenge implements Challenge {
   List<ChallengeMilestone> get challengeMilestones;
   @override
   @JsonKey(ignore: true)
-  _$$_ChallengeCopyWith<_$_Challenge> get copyWith =>
+  _$$ChallengeImplCopyWith<_$ChallengeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -490,11 +512,11 @@ class _$ChallengeMilestoneCopyWithImpl<$Res, $Val extends ChallengeMilestone>
 }
 
 /// @nodoc
-abstract class _$$_ChallengeMilestoneCopyWith<$Res>
+abstract class _$$ChallengeMilestoneImplCopyWith<$Res>
     implements $ChallengeMilestoneCopyWith<$Res> {
-  factory _$$_ChallengeMilestoneCopyWith(_$_ChallengeMilestone value,
-          $Res Function(_$_ChallengeMilestone) then) =
-      __$$_ChallengeMilestoneCopyWithImpl<$Res>;
+  factory _$$ChallengeMilestoneImplCopyWith(_$ChallengeMilestoneImpl value,
+          $Res Function(_$ChallengeMilestoneImpl) then) =
+      __$$ChallengeMilestoneImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -502,11 +524,11 @@ abstract class _$$_ChallengeMilestoneCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ChallengeMilestoneCopyWithImpl<$Res>
-    extends _$ChallengeMilestoneCopyWithImpl<$Res, _$_ChallengeMilestone>
-    implements _$$_ChallengeMilestoneCopyWith<$Res> {
-  __$$_ChallengeMilestoneCopyWithImpl(
-      _$_ChallengeMilestone _value, $Res Function(_$_ChallengeMilestone) _then)
+class __$$ChallengeMilestoneImplCopyWithImpl<$Res>
+    extends _$ChallengeMilestoneCopyWithImpl<$Res, _$ChallengeMilestoneImpl>
+    implements _$$ChallengeMilestoneImplCopyWith<$Res> {
+  __$$ChallengeMilestoneImplCopyWithImpl(_$ChallengeMilestoneImpl _value,
+      $Res Function(_$ChallengeMilestoneImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -518,7 +540,7 @@ class __$$_ChallengeMilestoneCopyWithImpl<$Res>
     Object? progressRate = null,
     Object? description = null,
   }) {
-    return _then(_$_ChallengeMilestone(
+    return _then(_$ChallengeMilestoneImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -545,8 +567,8 @@ class __$$_ChallengeMilestoneCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChallengeMilestone implements _ChallengeMilestone {
-  _$_ChallengeMilestone(
+class _$ChallengeMilestoneImpl implements _ChallengeMilestone {
+  _$ChallengeMilestoneImpl(
       {required this.id,
       required this.point,
       required this.count,
@@ -570,10 +592,10 @@ class _$_ChallengeMilestone implements _ChallengeMilestone {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChallengeMilestone &&
+            other is _$ChallengeMilestoneImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.point, point) || other.point == point) &&
             (identical(other.count, count) || other.count == count) &&
@@ -590,8 +612,8 @@ class _$_ChallengeMilestone implements _ChallengeMilestone {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChallengeMilestoneCopyWith<_$_ChallengeMilestone> get copyWith =>
-      __$$_ChallengeMilestoneCopyWithImpl<_$_ChallengeMilestone>(
+  _$$ChallengeMilestoneImplCopyWith<_$ChallengeMilestoneImpl> get copyWith =>
+      __$$ChallengeMilestoneImplCopyWithImpl<_$ChallengeMilestoneImpl>(
           this, _$identity);
 }
 
@@ -601,7 +623,7 @@ abstract class _ChallengeMilestone implements ChallengeMilestone {
       required final int point,
       required final int count,
       required final double progressRate,
-      required final String description}) = _$_ChallengeMilestone;
+      required final String description}) = _$ChallengeMilestoneImpl;
 
   @override
   int get id;
@@ -615,7 +637,7 @@ abstract class _ChallengeMilestone implements ChallengeMilestone {
   String get description;
   @override
   @JsonKey(ignore: true)
-  _$$_ChallengeMilestoneCopyWith<_$_ChallengeMilestone> get copyWith =>
+  _$$ChallengeMilestoneImplCopyWith<_$ChallengeMilestoneImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -701,11 +723,11 @@ class _$ChallengerCopyWithImpl<$Res, $Val extends Challenger>
 }
 
 /// @nodoc
-abstract class _$$_ChallengerCopyWith<$Res>
+abstract class _$$ChallengerImplCopyWith<$Res>
     implements $ChallengerCopyWith<$Res> {
-  factory _$$_ChallengerCopyWith(
-          _$_Challenger value, $Res Function(_$_Challenger) then) =
-      __$$_ChallengerCopyWithImpl<$Res>;
+  factory _$$ChallengerImplCopyWith(
+          _$ChallengerImpl value, $Res Function(_$ChallengerImpl) then) =
+      __$$ChallengerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -720,11 +742,11 @@ abstract class _$$_ChallengerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ChallengerCopyWithImpl<$Res>
-    extends _$ChallengerCopyWithImpl<$Res, _$_Challenger>
-    implements _$$_ChallengerCopyWith<$Res> {
-  __$$_ChallengerCopyWithImpl(
-      _$_Challenger _value, $Res Function(_$_Challenger) _then)
+class __$$ChallengerImplCopyWithImpl<$Res>
+    extends _$ChallengerCopyWithImpl<$Res, _$ChallengerImpl>
+    implements _$$ChallengerImplCopyWith<$Res> {
+  __$$ChallengerImplCopyWithImpl(
+      _$ChallengerImpl _value, $Res Function(_$ChallengerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -736,7 +758,7 @@ class __$$_ChallengerCopyWithImpl<$Res>
     Object? challenge = null,
     Object? points = null,
   }) {
-    return _then(_$_Challenger(
+    return _then(_$ChallengerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -763,8 +785,8 @@ class __$$_ChallengerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Challenger implements _Challenger {
-  _$_Challenger(
+class _$ChallengerImpl implements _Challenger {
+  _$ChallengerImpl(
       {required this.id,
       required this.count,
       required this.progressRate,
@@ -794,10 +816,10 @@ class _$_Challenger implements _Challenger {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Challenger &&
+            other is _$ChallengerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.progressRate, progressRate) ||
@@ -814,8 +836,8 @@ class _$_Challenger implements _Challenger {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChallengerCopyWith<_$_Challenger> get copyWith =>
-      __$$_ChallengerCopyWithImpl<_$_Challenger>(this, _$identity);
+  _$$ChallengerImplCopyWith<_$ChallengerImpl> get copyWith =>
+      __$$ChallengerImplCopyWithImpl<_$ChallengerImpl>(this, _$identity);
 }
 
 abstract class _Challenger implements Challenger {
@@ -824,7 +846,7 @@ abstract class _Challenger implements Challenger {
       required final int count,
       required final double progressRate,
       required final Challenge challenge,
-      required final List<ChallengePoint> points}) = _$_Challenger;
+      required final List<ChallengePoint> points}) = _$ChallengerImpl;
 
   @override
   int get id;
@@ -838,7 +860,7 @@ abstract class _Challenger implements Challenger {
   List<ChallengePoint> get points;
   @override
   @JsonKey(ignore: true)
-  _$$_ChallengerCopyWith<_$_Challenger> get copyWith =>
+  _$$ChallengerImplCopyWith<_$ChallengerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -903,22 +925,22 @@ class _$ChallengePointCopyWithImpl<$Res, $Val extends ChallengePoint>
 }
 
 /// @nodoc
-abstract class _$$_ChallengePointCopyWith<$Res>
+abstract class _$$ChallengePointImplCopyWith<$Res>
     implements $ChallengePointCopyWith<$Res> {
-  factory _$$_ChallengePointCopyWith(
-          _$_ChallengePoint value, $Res Function(_$_ChallengePoint) then) =
-      __$$_ChallengePointCopyWithImpl<$Res>;
+  factory _$$ChallengePointImplCopyWith(_$ChallengePointImpl value,
+          $Res Function(_$ChallengePointImpl) then) =
+      __$$ChallengePointImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, int point, String description, DateTime rewardedAt});
 }
 
 /// @nodoc
-class __$$_ChallengePointCopyWithImpl<$Res>
-    extends _$ChallengePointCopyWithImpl<$Res, _$_ChallengePoint>
-    implements _$$_ChallengePointCopyWith<$Res> {
-  __$$_ChallengePointCopyWithImpl(
-      _$_ChallengePoint _value, $Res Function(_$_ChallengePoint) _then)
+class __$$ChallengePointImplCopyWithImpl<$Res>
+    extends _$ChallengePointCopyWithImpl<$Res, _$ChallengePointImpl>
+    implements _$$ChallengePointImplCopyWith<$Res> {
+  __$$ChallengePointImplCopyWithImpl(
+      _$ChallengePointImpl _value, $Res Function(_$ChallengePointImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -929,7 +951,7 @@ class __$$_ChallengePointCopyWithImpl<$Res>
     Object? description = null,
     Object? rewardedAt = null,
   }) {
-    return _then(_$_ChallengePoint(
+    return _then(_$ChallengePointImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -952,8 +974,8 @@ class __$$_ChallengePointCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChallengePoint implements _ChallengePoint {
-  _$_ChallengePoint(
+class _$ChallengePointImpl implements _ChallengePoint {
+  _$ChallengePointImpl(
       {required this.id,
       required this.point,
       required this.description,
@@ -974,10 +996,10 @@ class _$_ChallengePoint implements _ChallengePoint {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChallengePoint &&
+            other is _$ChallengePointImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.point, point) || other.point == point) &&
             (identical(other.description, description) ||
@@ -993,8 +1015,9 @@ class _$_ChallengePoint implements _ChallengePoint {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChallengePointCopyWith<_$_ChallengePoint> get copyWith =>
-      __$$_ChallengePointCopyWithImpl<_$_ChallengePoint>(this, _$identity);
+  _$$ChallengePointImplCopyWith<_$ChallengePointImpl> get copyWith =>
+      __$$ChallengePointImplCopyWithImpl<_$ChallengePointImpl>(
+          this, _$identity);
 }
 
 abstract class _ChallengePoint implements ChallengePoint {
@@ -1002,7 +1025,7 @@ abstract class _ChallengePoint implements ChallengePoint {
       {required final int id,
       required final int point,
       required final String description,
-      required final DateTime rewardedAt}) = _$_ChallengePoint;
+      required final DateTime rewardedAt}) = _$ChallengePointImpl;
 
   @override
   int get id;
@@ -1014,6 +1037,6 @@ abstract class _ChallengePoint implements ChallengePoint {
   DateTime get rewardedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_ChallengePointCopyWith<_$_ChallengePoint> get copyWith =>
+  _$$ChallengePointImplCopyWith<_$ChallengePointImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

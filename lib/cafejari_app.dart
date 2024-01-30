@@ -20,7 +20,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/screen/map/map_screen.dart';
@@ -51,7 +50,7 @@ class CafejariApp extends ConsumerWidget {
           MaterialApp.router(
             theme: Theming.lightTheme,
             routerConfig: appRouter,
-            debugShowCheckedModeBanner: false
+            debugShowCheckedModeBanner: false,
           ),
           CustomSnackBar(
             isVisible: globalState.isSnackBarOpened,
@@ -85,12 +84,51 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       final challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
       final myPageViewModel = ref.watch(myPageViewModelProvider.notifier);
 
+      // 알림 설정
+      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true
+      );
+      if(defaultTargetPlatform == TargetPlatform.android) {
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          if (message.notification.isNotNull) {
+            globalViewModel.init();
+            FlutterLocalNotification.showNotification(
+                title: message.notification!.title,
+                body: message.notification!.body
+            );
+          }
+        });
+      }
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        if (message.notification.isNotNull) {
+          globalViewModel.init();
+          final String? bottomTabIndex = message.data['bottom_tab_index'];
+          if (bottomTabIndex.isNotNull) {
+            globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+          }
+        }
+      });
+
+      // 챌린지 로딩 후 알림 진입 유저 처리
+      await challengeViewModel.refreshChallenges();
+      RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+      if (initialMessage.isNotNull) {
+        final String? bottomTabIndex = initialMessage!.data['bottom_tab_index'];
+        if (bottomTabIndex.isNotNull) {
+          globalViewModel.updateCurrentPageTo(int.parse(bottomTabIndex!));
+        }
+      }
+
       // 기본 서버 정보 로딩
       await mapViewModel.refreshLocations();
       await mapViewModel.getRandomCafeImageUrl();
-      await challengeViewModel.refreshChallenges();
       await myPageViewModel.getDefaultProfileImages();
 
+      // 로컬 init
+      if (context.mounted) await globalViewModel.startAppFeedbackTimer(context: context);
+      if (!await globalViewModel.getIsFlagButtonTapped()) globalViewModel.setFlagButtonBadgeVisible(true);
       if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
         // 앱 첫 사용자
         globalViewModel.setIsInstalledFirst(false);
@@ -100,15 +138,12 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           builder: (_) => const OnboardingDialog()
         );
       } else {
-        // 일반 앱 시작
+        // 일반 사용자
         await globalViewModel.init();
       }
 
-      // splash 화면 종료
-      FlutterNativeSplash.remove();
-
-      // 지도 관련 deep link 로직 처리
-      Future.delayed(const Duration(seconds: 1), () async {
+      // deep link 진입 유저 처리
+      Future.delayed(const Duration(milliseconds: 500), () async {
         final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
         final Uri? deepLink = data?.link;
         if (deepLink.isNotNull && context.mounted) {
@@ -139,24 +174,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           );
         }
       });
-
-      // 알림 설정
-      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true
-      );
-      if(defaultTargetPlatform == TargetPlatform.android) {
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          if (message.notification.isNotNull) {
-            globalViewModel.init();
-            FlutterLocalNotification.showNotification(
-              title: message.notification!.title,
-              body: message.notification!.body
-            );
-          }
-        });
-      }
     });
   }
 
@@ -172,7 +189,8 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
     switch(state) {
       case AppLifecycleState.resumed:
         Future.delayed(Duration.zero, () async {
-          if(ref.watch(mapViewModelProvider).cafes.isNotEmpty) {
+          final timeDifferenceInSeconds = ref.watch(mapViewModelProvider).lastUpdateTime.difference(DateTime.now()).inSeconds;
+          if(ref.watch(mapViewModelProvider).cafes.isNotEmpty && timeDifferenceInSeconds.abs() > 90) {
             await ref.watch(mapViewModelProvider.notifier).refreshCafes();
           }
         });
@@ -196,32 +214,34 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
     const double bottomSheetPreviewHeight = 268;
     const double bottomSheetPreviewCornerRadius = 20;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (result) async {
         if (globalState.currentPage.index != 0) {
           mapViewModel.globalViewModel.updateCurrentPageTo(0);
-          return false;
         } else if(mapState.isSearchPageVisible) {
           mapViewModel.closeSearchPage();
-          return false;
         } else if(mapState.bottomSheetController.isPanelOpen) {
           mapState.bottomSheetController.close();
-          return false;
         } else if(mapState.isBottomSheetPreviewOpened) {
           await mapViewModel.closeBottomSheetPreview();
-          return false;
+        } else if(!await mapViewModel.globalViewModel.getIsReviewSubmitted() && context.mounted) {
+          await mapViewModel.globalViewModel.showAppFeedbackDialog(context: context);
         } else {
-          return await showDialog<bool>(
-            context: context,
-            builder: (context) => SquareAlertDialog(
-              text: "앱을 종료하시겠습니까?",
-              negativeButtonText: "예",
-              positiveButtonText: "아니오",
-              onDismiss: () => Navigator.of(context).pop(),
-              onNegativeButtonPress: () => SystemNavigator.pop(),
-              onPositiveButtonPress: () {},
-            )
-          ) ?? false;
+          if(context.mounted) {
+            await showDialog<bool>(
+              context: context,
+              builder: (context) =>
+                SquareAlertDialog(
+                  text: "앱을 종료하시겠습니까?",
+                  negativeButtonText: "예",
+                  positiveButtonText: "아니오",
+                  onDismiss: () => Navigator.of(context).pop(),
+                  onNegativeButtonPress: () => SystemNavigator.pop(),
+                  onPositiveButtonPress: () {},
+                )
+            );
+          }
         }
       },
       child: DefaultTextStyle(

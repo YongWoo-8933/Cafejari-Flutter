@@ -1,20 +1,13 @@
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
-import 'package:cafejari_flutter/ui/app_config/size.dart';
-import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cafejari_flutter/core/di.dart';
-import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
-import 'package:hive/hive.dart';
 
 class ChallengeVIP extends ConsumerWidget {
   const ChallengeVIP({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final MapState mapState = ref.watch(mapViewModelProvider);
     final double imageWidth = (MediaQuery.of(context).size.width-60) / 8;
 
     // 이미지들의 리스트를 정의합니다.

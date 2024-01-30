@@ -16,6 +16,7 @@ CafeAdditionRequestResponse _$CafeAdditionRequestResponseFromJson(
       requested_at: json['requested_at'] as String,
       answered_at: json['answered_at'] as String,
       rejection_reason: json['rejection_reason'] as String?,
+      etc: json['etc'] as String?,
     );
 
 Map<String, dynamic> _$CafeAdditionRequestResponseToJson(
@@ -28,6 +29,36 @@ Map<String, dynamic> _$CafeAdditionRequestResponseToJson(
       'requested_at': instance.requested_at,
       'answered_at': instance.answered_at,
       'rejection_reason': instance.rejection_reason,
+      'etc': instance.etc,
+    };
+
+CafeModificationRequestResponse _$CafeModificationRequestResponseFromJson(
+        Map<String, dynamic> json) =>
+    CafeModificationRequestResponse(
+      id: json['id'] as int,
+      cafe: CafeRepResponse.fromJson(json['cafe'] as Map<String, dynamic>),
+      suggested_cafe: CafeRepResponse.fromJson(
+          json['suggested_cafe'] as Map<String, dynamic>),
+      is_approved: json['is_approved'] as bool,
+      is_notified: json['is_notified'] as bool,
+      requested_at: json['requested_at'] as String,
+      answered_at: json['answered_at'] as String,
+      rejection_reason: json['rejection_reason'] as String?,
+      etc: json['etc'] as String?,
+    );
+
+Map<String, dynamic> _$CafeModificationRequestResponseToJson(
+        CafeModificationRequestResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'cafe': instance.cafe,
+      'suggested_cafe': instance.suggested_cafe,
+      'is_approved': instance.is_approved,
+      'is_notified': instance.is_notified,
+      'requested_at': instance.requested_at,
+      'answered_at': instance.answered_at,
+      'rejection_reason': instance.rejection_reason,
+      'etc': instance.etc,
     };
 
 UserMigrationRequestResponse _$UserMigrationRequestResponseFromJson(

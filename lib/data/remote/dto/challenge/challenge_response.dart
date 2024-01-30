@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 
@@ -8,6 +7,7 @@ part 'challenge_response.g.dart';
 class ChallengeResponse {
   final int id, participant_limit, goal;
   final String name, description, start, finish, image;
+  final String? url;
   final bool available;
   final List<int> challenger;
   final List<ChallengeMilestoneResponse> challenge_milestone;
@@ -17,6 +17,7 @@ class ChallengeResponse {
         required this.participant_limit,
         required this.goal,
         required this.name,
+        required this.url,
         required this.description,
         required this.start,
         required this.finish,

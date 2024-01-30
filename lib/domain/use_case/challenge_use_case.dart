@@ -10,6 +10,9 @@ import 'package:cafejari_flutter/domain/use_case/challenge_use_case/get_my_chall
 import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 abstract class ChallengeUseCase {
+  Future<int> getLastViewedChallengeId();
+  setLastViewedChallengeId(int id);
+
   Future<Challenges> getChallenges();
   Future<Challengers> getMyChallengers({
     required String accessToken,
@@ -32,6 +35,12 @@ class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
     required this.challengeRepository,
     required this.userRepository
   });
+
+  @override
+  Future<int> getLastViewedChallengeId() async => await challengeRepository.getLastViewedChallengeId();
+
+  @override
+  setLastViewedChallengeId(int id) async => await challengeRepository.putLastViewedChallengeId(id);
 
   @override
   Future<Challenges> getChallenges() async {

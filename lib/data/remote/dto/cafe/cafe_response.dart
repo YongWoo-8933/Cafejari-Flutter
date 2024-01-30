@@ -1,6 +1,3 @@
-
-import 'dart:ffi';
-
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';

@@ -5,6 +5,13 @@ import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
 import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
 
 abstract class AppConfigUseCase {
+  Future<bool> getIsInstalledFirstTime();
+  setIsInstalledFirstTime(bool isInstalled);
+  Future<bool> getIsReviewSubmitted();
+  setIsReviewSubmitted(bool isSubmitted);
+  Future<bool> getIsFlagButtonTapped();
+  setIsFlagButtonTapped(bool isTapped);
+
   Future<Versions> getAppVersions();
 }
 
@@ -12,6 +19,24 @@ class AppConfigUseCaseImpl extends BaseUseCase implements AppConfigUseCase {
   final AppConfigRepository appConfigRepository;
 
   AppConfigUseCaseImpl(this.appConfigRepository);
+
+  @override
+  Future<bool> getIsInstalledFirstTime() async => await appConfigRepository.getIsInstalledFirstTime();
+
+  @override
+  setIsInstalledFirstTime(bool isInstalled) async => await appConfigRepository.putIsInstalledFirstTime(isInstalled);
+
+  @override
+  Future<bool> getIsReviewSubmitted() async => await appConfigRepository.getIsReviewSubmitted();
+
+  @override
+  setIsReviewSubmitted(bool isSubmitted) async => await appConfigRepository.putIsReviewSubmitted(isSubmitted);
+
+  @override
+  Future<bool> getIsFlagButtonTapped() async => await appConfigRepository.getIsFlagButtonTapped();
+
+  @override
+  setIsFlagButtonTapped(bool isTapped) async => await appConfigRepository.putIsFlagButtonTapped(isTapped);
 
   @override
   Future<Versions> getAppVersions() async {

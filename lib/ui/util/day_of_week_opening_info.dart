@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class DayOfWeekOpeningInfo {
@@ -40,20 +39,35 @@ class DayOfWeekOpeningInfo {
   );
 
   String getOpeningHourText() {
-    final openMinuteString = openAt.minute < 10 ? "0${openAt.minute}" : openAt.minute.toString();
-    final closeMinuteString = closeAt.minute < 10 ? "0${closeAt.minute}" : closeAt.minute.toString();
-    return "${openAt.hour}:$openMinuteString ~ ${closeAt.hour}:$closeMinuteString";
+    if(isClose) {
+      return "정기휴무";
+    } else {
+      final openMinuteString = openAt.minute < 10 ? "0${openAt.minute}" : openAt.minute.toString();
+      final closeMinuteString = closeAt.minute < 10 ? "0${closeAt.minute}" : closeAt.minute.toString();
+      return "${openAt.hour}:$openMinuteString ~ ${closeAt.hour}:$closeMinuteString";
+    }
   }
 
   String getOpeningHourWithPeriod() {
-    final openHourString = openAt.hourOfPeriod < 10 ? "0${openAt.hourOfPeriod}" : openAt.hourOfPeriod.toString();
-    final openMinuteString = openAt.minute < 10 ? "0${openAt.minute}" : openAt.minute.toString();
-    return "${openAt.period == DayPeriod.am ? "오전" : "오후"}  $openHourString:$openMinuteString";
+    if (isClose) {
+      return "정기휴무";
+    } else {
+      final openHourString = openAt.hourOfPeriod < 10 ? "0${openAt.hourOfPeriod}" : openAt
+          .hourOfPeriod.toString();
+      final openMinuteString = openAt.minute < 10 ? "0${openAt.minute}" : openAt.minute.toString();
+      return "${openAt.period == DayPeriod.am ? "오전" : "오후"}  $openHourString:$openMinuteString";
+    }
   }
 
   String getClosingHourWithPeriod() {
-    final closeHourString = closeAt.hourOfPeriod < 10 ? "0${closeAt.hourOfPeriod}" : closeAt.hourOfPeriod.toString();
-    final closeMinuteString = closeAt.minute < 10 ? "0${closeAt.minute}" : closeAt.minute.toString();
-    return "${closeAt.period == DayPeriod.am ? "오전" : "오후"}  $closeHourString:$closeMinuteString";
+    if (isClose) {
+      return "정기휴무";
+    } else {
+      final closeHourString = closeAt.hourOfPeriod < 10 ? "0${closeAt.hourOfPeriod}" : closeAt
+          .hourOfPeriod.toString();
+      final closeMinuteString = closeAt.minute < 10 ? "0${closeAt.minute}" : closeAt.minute
+          .toString();
+      return "${closeAt.period == DayPeriod.am ? "오전" : "오후"}  $closeHourString:$closeMinuteString";
+    }
   }
 }

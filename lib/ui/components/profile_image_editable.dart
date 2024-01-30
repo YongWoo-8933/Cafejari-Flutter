@@ -1,6 +1,4 @@
-
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
-import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/components/buttons/profile_edit_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:flutter/material.dart';

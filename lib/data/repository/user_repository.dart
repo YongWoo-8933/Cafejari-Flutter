@@ -54,10 +54,11 @@ abstract class UserRepository {
 /// user repository의 구현부
 class UserRepositoryImpl implements UserRepository {
   APIService apiService;
-  final String boxLabel = "local";
-  final String isInstalledFirstTimeKey = "isInstalledFirstTime";
 
   UserRepositoryImpl(this.apiService);
+
+  final String boxLabel = "local";
+  final String isInstalledFirstTimeKey = "isInstalledFirstTime";
 
   // LOCAL
   @override

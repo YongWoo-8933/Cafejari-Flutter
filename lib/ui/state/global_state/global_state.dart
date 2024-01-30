@@ -31,6 +31,8 @@ class GlobalState with _$GlobalState {
     required final InAppWebViewController? webViewController,
     required final String webViewTitle,
     required final Uri webViewUri,
+    required final bool isChallengeBadgeVisible,
+    required final bool isFlagButtonBadgeVisible
   }) = _GlobalState;
 
   factory GlobalState.empty() => GlobalState(
@@ -50,6 +52,8 @@ class GlobalState with _$GlobalState {
     currentDeviceLocation: null,
     webViewController: null,
     webViewTitle: "",
-    webViewUri: Uri.parse("https://google.com")
+    webViewUri: Uri.parse("https://google.com"),
+    isChallengeBadgeVisible: false,
+    isFlagButtonBadgeVisible: false
   );
 }

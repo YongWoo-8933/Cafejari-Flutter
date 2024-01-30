@@ -83,7 +83,7 @@ class OnboardingDialog extends ConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 0) {
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                             if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(
@@ -105,7 +105,7 @@ class OnboardingDialog extends ConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (ref.watch(_currentPageIndex) == 3) {
-                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                             if(onComplete.isNotNull) onComplete!();
                           } else {
                             ref.watch(_pageController).animateToPage(
@@ -152,7 +152,7 @@ class _Page extends StatelessWidget {
         const VerticalSpacer(8),
         Text(introduction, style: const TextStyle(fontSize: 13), textAlign: TextAlign.center),
         const VerticalSpacer(12),
-        Image.asset(imagePath, height: 400),
+        Image.asset(imagePath, height: 390),
       ],
     );
   }

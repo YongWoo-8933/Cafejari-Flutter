@@ -25,8 +25,8 @@ class CafeSearchBar extends ConsumerWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(height / 2),
-              boxShadow: AppShadow.box
+            borderRadius: BorderRadius.circular(height / 2),
+            boxShadow: AppShadow.box
           ),
           child: TextFormField(
             enabled: mapState.isSearchPageVisible,

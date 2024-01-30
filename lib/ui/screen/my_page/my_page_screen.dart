@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/my_page_row.dart';
+import 'package:cafejari_flutter/ui/screen/my_page/component/nickname_editor_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/point_card.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/user_migration_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
@@ -119,7 +120,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                                             profileImageId: myPageState.defaultProfileImages[index].profileImageId,
                                             context: context
                                           );
-                                          Navigator.of(context).pop();
+                                          Navigator.pop(context);
                                         }
                                       ),
                                     ),
@@ -136,7 +137,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const VerticalSpacer(30),
+                                  const VerticalSpacer(24),
                                   const Text(
                                     "카페자리에 오신 것을 환영합니다",
                                     textAlign: TextAlign.center,
@@ -181,13 +182,41 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                             )
                           ),
                           const VerticalSpacer(20),
-                          Text(
-                            globalState.user.nickname,
-                            style: const TextStyle(
-                              color: AppColor.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600
-                            )
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const HorizontalSpacer(10),
+                                Text(
+                                  globalState.isLoggedIn ? globalState.user.nickname : "",
+                                  style: const TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600
+                                  )
+                                ),
+                                Visibility(
+                                  visible: globalState.isLoggedIn,
+                                  child: Row(
+                                    children: [
+                                      const HorizontalSpacer(8),
+                                      GestureDetector(
+                                        onTap: () => showDialog(
+                                          context: context,
+                                          builder: (context) => const NicknameEditorDialog()
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: AppColor.white,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                )
+                              ],
+                            ),
                           ),
                           const VerticalSpacer(25),
                           PointCard(width: deviceSize.width - sidePadding * 2)
@@ -223,7 +252,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                   ),
                   // 랭킹 부분
                   Container(
-                    padding: const EdgeInsets.all(sidePadding + 10),
+                    padding: const EdgeInsets.all(sidePadding + 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -268,24 +297,24 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                           text: "사용 가이드 북 보기",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.guide(),
-                              context: context
+                            route: WebViewRoute.guide(),
+                            context: context
                           )
                         ),
                         MyPageRow(
                           text: "공지사항",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.notification(),
-                              context: context
+                            route: WebViewRoute.notification(),
+                            context: context
                           )
                         ),
                         MyPageRow(
                           text: "업데이트 소식",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () => globalViewModel.navigateToWebView(
-                              route: WebViewRoute.update(),
-                              context: context
+                            route: WebViewRoute.update(),
+                            context: context
                           )
                         ),
                         const VerticalSpacer(40),

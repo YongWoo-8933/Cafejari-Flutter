@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cafejari_flutter/core/exception.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,7 +14,7 @@ abstract interface class CafeRepository {
       required double longitude,
       required int zoomLevel});
   Future<CafeResponse> retrieveCafe({required int cafeId});
-  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query});
+  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query, double? latitude, double? longitude});
   Future<List<CafeResponse>> fetchRecommendedCafe({
     required double latitude, required double longitude});
   Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken});
@@ -78,13 +79,17 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query}) async {
+  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query, double? latitude, double? longitude}) async {
     try {
+      var queryMap = {"query": query};
+      if(latitude.isNotNull && longitude.isNotNull) {
+        queryMap.addAll({"latitude": latitude!.toString(), "longitude": longitude!.toString()});
+      }
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "search/",
-        query: {"query": query},
+        query: queryMap
       );
       return response.map((dynamic e) => CafeSearchResponse.fromJson(e)).toList();
     } on ErrorWithMessage {

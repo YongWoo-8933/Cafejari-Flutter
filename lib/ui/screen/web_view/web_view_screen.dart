@@ -9,6 +9,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InAppWebViewScreen extends ConsumerStatefulWidget {
   const InAppWebViewScreen({Key? key}):super(key:key);
@@ -26,10 +27,8 @@ class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
   void initState() {
     super.initState();
 
-    pullToRefreshController = (kIsWeb
-        ? null
-        : PullToRefreshController(
-      options: PullToRefreshOptions(
+    pullToRefreshController = PullToRefreshController(
+      settings: PullToRefreshSettings(
         color: AppColor.white,
         backgroundColor: AppColor.primary,
         slingshotDistance: 40,
@@ -38,26 +37,26 @@ class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
       onRefresh: () async {
         final GlobalState globalState = ref.watch(globalViewModelProvider);
         if (defaultTargetPlatform == TargetPlatform.android) {
-          globalState.webViewController?.reload();
+          await globalState.webViewController?.reload();
         } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-          globalState.webViewController?.loadUrl(urlRequest: URLRequest(url: await globalState.webViewController?.getUrl()));
+          await globalState.webViewController?.loadUrl(urlRequest: URLRequest(url: await globalState.webViewController?.getUrl()));
         }
       },
-    ))!;
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (result) async {
         bool? canGoBack = await globalState.webViewController?.canGoBack();
         if(canGoBack.isNotNull && canGoBack!) {
           globalState.webViewController?.goBack();
-          return false;
         } else {
-          return true;
+          if(context.mounted) GoRouter.of(context).pop();
         }
       },
       child: Scaffold(
@@ -76,51 +75,56 @@ class InAppWebViewScreenState extends ConsumerState<InAppWebViewScreen> {
                 children: [
                   InAppWebView(
                     key: webViewKey,
-                    initialUrlRequest: URLRequest(url: globalState.webViewUri),
-                    initialOptions: InAppWebViewGroupOptions(
-                      crossPlatform: InAppWebViewOptions(
-                        javaScriptCanOpenWindowsAutomatically: true,
-                        javaScriptEnabled: true,
-                        useOnDownloadStart: true,
-                        useOnLoadResource: true,
-                        useShouldOverrideUrlLoading: true,
-                        mediaPlaybackRequiresUserGesture: true,
-                        allowFileAccessFromFileURLs: true,
-                        allowUniversalAccessFromFileURLs: true,
-                        verticalScrollBarEnabled: true
-                      ),
-                      android: AndroidInAppWebViewOptions(
-                        useHybridComposition: true,
-                        allowContentAccess: true,
-                        builtInZoomControls: true,
-                        thirdPartyCookiesEnabled: true,
-                        allowFileAccess: true,
-                        supportMultipleWindows: true
-                      ),
-                      ios: IOSInAppWebViewOptions(
-                        allowsInlineMediaPlayback: true,
-                        allowsBackForwardNavigationGestures: true,
-                      ),
+                    initialUrlRequest: URLRequest(url: WebUri.uri(globalState.webViewUri)),
+                    initialSettings: InAppWebViewSettings(
+                      javaScriptCanOpenWindowsAutomatically: true,
+                      javaScriptEnabled: true,
+                      useOnDownloadStart: true,
+                      useOnLoadResource: true,
+                      useShouldOverrideUrlLoading: true,
+                      mediaPlaybackRequiresUserGesture: true,
+                      allowFileAccessFromFileURLs: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      verticalScrollBarEnabled: true,
+                      useHybridComposition: true,
+                      allowContentAccess: true,
+                      builtInZoomControls: true,
+                      thirdPartyCookiesEnabled: true,
+                      allowFileAccess: true,
+                      supportMultipleWindows: true,
+                      allowsInlineMediaPlayback: true,
+                      allowsBackForwardNavigationGestures: true,
                     ),
                     pullToRefreshController: pullToRefreshController,
-                    onLoadStart: (InAppWebViewController controller, uri) {
-                      setState(() {  });
-                    },
-                    onLoadStop: (InAppWebViewController controller, uri) {
-                      setState(() {  });
-                    },
                     onProgressChanged: (controller, progress) {
                       if (progress == 100) {pullToRefreshController.endRefreshing();}
                       setState(() {this.progress = progress / 100;});
                     },
-                    androidOnPermissionRequest: (controller, origin, resources) async {
-                      return PermissionRequestResponse(
-                        resources: resources,
-                        action: PermissionRequestResponseAction.GRANT
-                      );
-                    },
                     onWebViewCreated: (InAppWebViewController controller) {
                       globalViewModel.initWebViewController(controller);
+                    },
+                    shouldOverrideUrlLoading:
+                        (controller, navigationAction) async {
+                      var uri = navigationAction.request.url!;
+                      if (![
+                        "http",
+                        "https",
+                        "file",
+                        "chrome",
+                        "data",
+                        "javascript",
+                        "about"
+                      ].contains(uri.scheme)) {
+                        if (await canLaunchUrl(uri)) {
+                          // Launch the App
+                          await launchUrl(
+                            uri,
+                          );
+                          // and cancel the request
+                          return NavigationActionPolicy.CANCEL;
+                        }
+                      }
+                      return NavigationActionPolicy.ALLOW;
                     }
                   )
                 ]

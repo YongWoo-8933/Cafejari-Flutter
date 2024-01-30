@@ -77,7 +77,7 @@ class WithdrawalDialog extends ConsumerWidget {
                   onDismiss: () => Navigator.of(context).pop(),
                   onNegativeButtonPress: () {
                     myPageViewModel.withdraw(reason: ref.watch(_selectedWithdrawalReason), context: context);
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                   onPositiveButtonPress: () => Navigator.of(context).pop()
                 )

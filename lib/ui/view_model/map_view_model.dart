@@ -52,8 +52,8 @@ class MapViewModel extends StateNotifier<MapState> {
       await state.mapController?.clearOverlays();
       await state.mapController?.addOverlayAll(resSet);
 
-      // 변경 사항 저장 + 로딩 종료
-      state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false);
+      // 변경 사항 저장 + 로딩 종료 + 업데이트 타임 기록
+      state = state.copyWith(cafes: newCafes, isCafeRefreshIndicatorVisible: false, lastUpdateTime: DateTime.now());
 
       // 카페 없으면 문구 띄우기
       if(showNoCafeSnackBar && newCafes.isEmpty) {
@@ -107,7 +107,12 @@ class MapViewModel extends StateNotifier<MapState> {
   searchCafe() async {
     try {
       state = state.copyWith(
-          searchPredictions: await _cafeUseCase.getSearchCafes(query: state.searchQueryController.text));
+        searchPredictions: await _cafeUseCase.getSearchCafes(
+          query: state.searchQueryController.text,
+          latitude: globalViewModel.state.currentDeviceLocation?.latitude,
+          longitude: globalViewModel.state.currentDeviceLocation?.longitude
+        )
+      );
     } on ErrorWithMessage catch (e) {
       globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
     }
@@ -124,9 +129,7 @@ class MapViewModel extends StateNotifier<MapState> {
     });
   }
 
-  openSearchPage() {
-    state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
-  }
+  openSearchPage() => state = state.copyWith(isSearchPageVisible: true, isSearchPageFadedIn: true);
 
   closeSearchPage() async {
     state = state.copyWith(isSearchPageFadedIn: false);
@@ -373,7 +376,7 @@ class MapViewModel extends StateNotifier<MapState> {
 
   _showPointAnimation({required BuildContext context, required int point}) {
     showDialog(context: context, builder: (context) {
-      Future.delayed(const Duration(seconds: 4), () {if(context.mounted) Navigator.of(context).pop();});
+      Future.delayed(const Duration(seconds: 4), () {if(context.mounted) Navigator.pop(context);});
       return Dialog(
         insetPadding: AppPadding.padding_0,
         backgroundColor: AppColor.transparent,

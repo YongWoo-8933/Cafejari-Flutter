@@ -166,7 +166,7 @@ class BottomSheetMainInfo extends ConsumerWidget {
                           const VerticalSpacer(30),
                           const Row(
                             children: [
-                              OccupancyUpdateButton(width: 208, height: 48),
+                              OccupancyUpdateButton(width: 200, height: 48),
                               HorizontalSpacer(10),
                               ShareButton(),
                               HorizontalSpacer(10),

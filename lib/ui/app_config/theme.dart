@@ -67,6 +67,7 @@ class Theming {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    useMaterial3: false,
     primaryColor: AppColor.crowdedBlue,
     appBarTheme: const AppBarTheme(
       toolbarTextStyle: lightText,
