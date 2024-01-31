@@ -4,7 +4,7 @@ import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
-import 'package:cafejari_flutter/ui/components/onboarding_dialog.dart';
+import 'package:cafejari_flutter/ui/screen/onboarding_screen/onboarding_screen.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';
@@ -129,18 +129,6 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
       // 로컬 init
       if (context.mounted) await globalViewModel.startAppFeedbackTimer(context: context);
       if (!await globalViewModel.getIsFlagButtonTapped()) globalViewModel.setFlagButtonBadgeVisible(true);
-      if (await globalViewModel.getIsInstalledFirst() && context.mounted) {
-        // 앱 첫 사용자
-        globalViewModel.setIsInstalledFirst(false);
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => const OnboardingDialog()
-        );
-      } else {
-        // 일반 사용자
-        await globalViewModel.init();
-      }
 
       // deep link 진입 유저 처리
       Future.delayed(const Duration(milliseconds: 500), () async {
@@ -167,10 +155,10 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
         final Uri deepLink = pendingDynamicLinkData.link;
         if (context.mounted) {
           _mapLinkFunction(
-            context: context,
-            mapViewModel: mapViewModel,
-            globalViewModel: globalViewModel,
-            link: deepLink
+              context: context,
+              mapViewModel: mapViewModel,
+              globalViewModel: globalViewModel,
+              link: deepLink
           );
         }
       });

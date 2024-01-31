@@ -1,4 +1,5 @@
 import 'package:cafejari_flutter/cafejari_app.dart';
+import 'package:cafejari_flutter/ui/screen/onboarding_screen/onboarding_screen.dart';
 import 'package:cafejari_flutter/ui/screen/app_permission_screen/app_permission_screen.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_info_modification/cafe_info_modification_screen.dart';
 import 'package:cafejari_flutter/ui/screen/cafe_registration/cafe_registration_screen.dart';
@@ -28,6 +29,11 @@ final GoRouter appRouter = GoRouter(
       path: "/app_permission",
       name: ScreenRoute.appPermission,
       builder: (_, __) => const AppPermissionScreen()
+    ),
+    GoRoute(
+      path: "/onboarding",
+      name: ScreenRoute.onboarding,
+      builder: (_, __) => const OnboardingScreen()
     ),
     GoRoute(
       path: "/",

@@ -3,6 +3,7 @@
 class ScreenRoute {
   static const String splash = "splash_screen";
   static const String appPermission = "app_permission_screen";
+  static const String onboarding = "onboarding_screen";
   static const String root = "root_screen";
   static const String login = "login_screen";
   static const String registration = "registration_screen";
