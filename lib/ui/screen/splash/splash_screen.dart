@@ -23,12 +23,13 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
       if (await globalViewModel.getIsInstalledFirst()) {
         Future.delayed(const Duration(seconds: 1), () {
-          if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.appPermission);
+          // if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.appPermission);
+          if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.onboarding);
         });
       } else {
         await globalViewModel.init();
         if (context.mounted) await globalViewModel.locationTrackingStart(context: context);
-        if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+        if (context.mounted) GoRouter.of(context).goNamed(ScreenRoute.onboarding);
       }
     });
   }
