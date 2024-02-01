@@ -30,11 +30,11 @@ class AppColor {
   static const Color white = Color(0xFFffffff);
   static const Color black = Color(0xFF000000);
   static const Color transparent = Colors.transparent;
-  static const Color transparentBlack_300 = Color(0x4D272914);
-  static const Color transparentBlack_400 = Color(0x66272914);
-  static const Color transparentBlack_500 = Color(0x80272914);
-  static const Color transparentBlack_600 = Color(0x99272914);
-  static const Color transparentBlack_700 = Color(0xB3272914);
+  static const Color transparentBlack_300 = Color(0x4D000000);
+  static const Color transparentBlack_400 = Color(0x66000000);
+  static const Color transparentBlack_500 = Color(0x80000000);
+  static const Color transparentBlack_600 = Color(0x99000000);
+  static const Color transparentBlack_700 = Color(0xB3000000);
 
   static const Color transparentGrey_300 = Color(0xCCF5F7FA);
 

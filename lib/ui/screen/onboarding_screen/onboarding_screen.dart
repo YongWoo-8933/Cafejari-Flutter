@@ -1,9 +1,12 @@
 import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
+import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final _currentPageIndex = StateProvider((ref) => 0);
 
@@ -14,193 +17,239 @@ class OnboardingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalViewModel globalViewModel = ref.watch(globalViewModelProvider.notifier);
+    final int currentIndex = ref.watch(_currentPageIndex);
+    const double lineSpacing = 8.0;
 
     return DefaultTextStyle(
       style: const TextStyle(
         letterSpacing: 0,
         color: AppColor.black,
         fontSize: 24,
-        fontWeight: FontWeight.w700,
-        height: 1.6
+        fontWeight: FontWeight.w700
       ),
-      child: Container(
-        color: AppColor.white,
-        child: IndexedStack(
-          index: ref.watch(_currentPageIndex),
-          children: [
-            _TopTextPage(
-              index: 0,
-              imageName: "asset/image/onboarding_0.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 1),
-              textPart: const Column(
-                children: [
-                  Text("카페자리를 더 유용하게"),
-                  VerticalSpacer(10),
-                  Text("활용해보세요!!"),
-                ]
-              ),
-            ),
-            _TopTextPage(
-              index: 1,
-              imageName: "asset/image/onboarding_1.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 2),
-              textPart: const Column(
-                children: [
-                  Text("카페자리에서는"),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (result) {
+          if(currentIndex != 0){
+            ref.watch(_currentPageIndex.notifier).update((state) => currentIndex - 1);
+          }
+        },
+        child: GestureDetector(
+          onTap: () {
+            ref.watch(_currentPageIndex.notifier).update((state) => currentIndex + 1);
+            if(currentIndex == 8) {
+              Future.delayed(const Duration(milliseconds: 500), () async {
+                await globalViewModel.setIsInstalledFirst(false);
+                if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
+              });
+            }
+          },
+          child: Container(
+            color: AppColor.white,
+            child: IndexedStack(
+              index: ref.watch(_currentPageIndex),
+              children: [
+                const _TopTextPage(
+                  imageName: "asset/image/onboarding_0.png",
+                  textPart: Column(
                     children: [
-                      Text("카페 혼잡도 확인", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("이 가능해요"),
-                    ],
+                      Text("카페자리에 오신 것을"),
+                      VerticalSpacer(lineSpacing),
+                      Text("환영합니다 🤗🤗"),
+                      VerticalSpacer(16),
+                      Text(
+                        "* 아무 곳이나 터치해주세요",
+                        style: TextStyle(
+                          color: AppColor.grey_500,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400
+                        )
+                      ),
+                    ]
                   ),
-                ]
-              ),
-            ),
-            _TopTextPage(
-              index: 2,
-              imageName: "asset/image/onboarding_2.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 3),
-              textPart: const Column(
-                children: [
-                  Text("우측 상단 깃발을 통해"),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                const _TopTextPage(
+                  imageName: "asset/image/onboarding_1.png",
+                  textPart: Column(
                     children: [
-                      Text("카페가 집중된 곳", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("으로"),
-                    ],
+                      Text("카페자리에서는"),
+                      VerticalSpacer(lineSpacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("카페 혼잡도", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text(" 확인이 가능해요"),
+                        ],
+                      ),
+                    ]
                   ),
-                  VerticalSpacer(10),
-                  Text("이동할 수 있어요"),
-                ]
-              ),
-            ),
-            _TopTextPage(
-              index: 3,
-              imageName: "asset/image/onboarding_3.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 4),
-              textPart: const Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                const _TopTextPage(
+                  imageName: "asset/image/onboarding_2.png",
+                  textPart: Column(
                     children: [
-                      Text("검색을 통해", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("원하는 카페가"),
-                    ],
+                      Text("우측 상단 깃발을 통해"),
+                      VerticalSpacer(lineSpacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("대학가, 핫 플레이스", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("로"),
+                        ],
+                      ),
+                      VerticalSpacer(lineSpacing),
+                      Text("이동할 수 있어요"),
+                    ]
                   ),
-                  VerticalSpacer(10),
-                  Text("등록되어 있는지 확인해보세요"),
-                ]
-              ),
-            ),
-            _BottomTextPage(
-              index: 4,
-              imageName: "asset/image/onboarding_4.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 5),
-              textPart: const Column(
-                children: [
-                  Text("카페가 등록되어 있지 않다면,"),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                const _TopTextPage(
+                  imageName: "asset/image/onboarding_3.png",
+                  textPart: Column(
                     children: [
-                      Text("카페추가", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("로 등록해보세요"),
-                    ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("검색을 통해", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text(" 원하는 카페가"),
+                        ],
+                      ),
+                      VerticalSpacer(lineSpacing),
+                      Text("등록되어 있는지 확인해보세요"),
+                    ]
                   ),
-                ]
-              ),
-            ),
-            _TopTextPage(
-              index: 5,
-              imageName: "asset/image/onboarding_5.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 6),
-              textPart: const Column(
-                  children: [
-                    Text("마커를 누르면"),
-                    VerticalSpacer(10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                const _BottomTextPage(
+                  imageName: "asset/image/onboarding_4.png",
+                  textPart: Column(
+                    children: [
+                      Text("원하는 카페가 없다면,"),
+                      VerticalSpacer(lineSpacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("카페추가", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("로 등록해보세요"),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+                const _TopTextPage(
+                  imageName: "asset/image/onboarding_5.png",
+                  textPart: Column(
                       children: [
-                        Text("간편 정보", style: TextStyle(color: AppColor.notificationOrange)),
-                        Text("를 확인할 수 있고"),
-                      ],
+                        Text("마커를 누르면 카페의"),
+                        VerticalSpacer(lineSpacing),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("간단한 정보", style: TextStyle(color: AppColor.notificationOrange)),
+                            Text("를 볼 수 있고"),
+                          ],
+                        ),
+                      ]
+                  ),
+                ),
+                const _BottomTextPage(
+                  imageName: "asset/image/onboarding_6.png",
+                  textPart: Column(
+                    children: [
+                      Text("위로 올려 카페의"),
+                      VerticalSpacer(lineSpacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("상세정보", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("를 알 수 있어요"),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+                const _BottomTextPage(
+                  imageName: "asset/image/onboarding_7.png",
+                  textPart: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("혼잡도 등록", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("을 통해"),
+                        ],
+                      ),
+                      VerticalSpacer(lineSpacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("포인트", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("를 얻을 수 있어요"),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+                const _BottomTextPage(
+                  imageName: "asset/image/onboarding_8.png",
+                  textPart: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("챌린지", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("를 통해 "),
+                          Text("추가 포인트", style: TextStyle(color: AppColor.notificationOrange)),
+                          Text("를"),
+                        ],
+                      ),
+                      VerticalSpacer(lineSpacing),
+                      Text("얻을 수 있어요"),
+                    ]
+                  ),
+                ),
+                Stack(
+                  children: [
+                    const _BottomTextPage(
+                      imageName: "asset/image/onboarding_8.png",
+                      textPart: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("챌린지", style: TextStyle(color: AppColor.notificationOrange)),
+                                Text("를 통해 "),
+                                Text("추가 포인트", style: TextStyle(color: AppColor.notificationOrange)),
+                                Text("를"),
+                              ],
+                            ),
+                            VerticalSpacer(lineSpacing),
+                            Text("얻을 수 있어요"),
+                          ]
+                      ),
                     ),
-                  ]
-              ),
+                    Container(
+                      color: AppColor.transparentBlack_700,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "카페자리를 시작합니다",
+                            style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                            ),
+                          ),
+                          const VerticalSpacer(20),
+                          LoadingAnimationWidget.hexagonDots(color: AppColor.white, size: 48),
+                          const VerticalSpacer(40)
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            _BottomTextPage(
-              index: 6,
-              imageName: "asset/image/onboarding_6.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 7),
-              textPart: const Column(
-                children: [
-                  Text("위로 올려"),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("카페 상세정보", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("를 알 수 있어요"),
-                    ],
-                  ),
-                ]
-              ),
-            ),
-            _BottomTextPage(
-              index: 7,
-              imageName: "asset/image/onboarding_7.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 8),
-              textPart: const Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("혼잡도 등록", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("을 통해"),
-                    ],
-                  ),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("포인트", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("를 얻을 수 있어요"),
-                    ],
-                  ),
-                ]
-              ),
-            ),
-            _BottomTextPage(
-              index: 7,
-              imageName: "asset/image/onboarding_8.png",
-              onTap: () => ref.watch(_currentPageIndex.notifier).update((state) => 8),
-              textPart: const Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("챌린지 참여", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("를 통해"),
-                    ],
-                  ),
-                  VerticalSpacer(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("더 많은 포인트", style: TextStyle(color: AppColor.notificationOrange)),
-                      Text("를"),
-                    ],
-                  ),
-                  VerticalSpacer(10),
-                  Text("얻을 수 있어요"),
-                ]
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -208,16 +257,12 @@ class OnboardingScreen extends ConsumerWidget {
 }
 
 class _TopTextPage extends StatelessWidget {
-  final int index;
   final String imageName;
-  final VoidCallback onTap;
   final Widget textPart;
 
   const _TopTextPage({
     super.key,
-    required this.index,
     required this.imageName,
-    required this.onTap,
     required this.textPart,
   });
 
@@ -225,38 +270,35 @@ class _TopTextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        color: AppColor.white,
-        width: deviceSize.width,
-        height: deviceSize.height,
-        child: Column(
-          children: [
-            const VerticalSpacer(100),
-            textPart,
-            Transform.translate(
-              offset: const Offset(0, 40),
-              child: Image.asset(imageName, width: deviceSize.width + 10 * 2)
-            )
-          ],
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        SizedBox(
+          height: 280,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [const VerticalSpacer(20), textPart],
+          ),
         ),
-      ),
+        Transform.translate(
+          offset: const Offset(0, 270),
+          child: Transform.scale(
+            scale: 1.1,
+            child: Image.asset(imageName, width: deviceSize.width)
+          ),
+        )
+      ],
     );
   }
 }
 
 class _BottomTextPage extends StatelessWidget {
-  final int index;
   final String imageName;
-  final VoidCallback onTap;
   final Widget textPart;
 
   const _BottomTextPage({
     super.key,
-    required this.index,
     required this.imageName,
-    required this.onTap,
     required this.textPart,
   });
 
@@ -264,25 +306,24 @@ class _BottomTextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        color: AppColor.white,
-        width: deviceSize.width,
-        height: deviceSize.height,
-        child: Column(
-          children: [
-            Transform.translate(
-              offset: const Offset(0, -180),
-              child: Image.asset(imageName, width: deviceSize.width + 10 * 2)
-            ),
-            Transform.translate(
-              offset: const Offset(0, -160),
-              child: textPart
-            )
-          ],
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        SizedBox(
+          height: 240,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [const VerticalSpacer(40), textPart],
+          ),
         ),
-      ),
+        Transform.translate(
+          offset: const Offset(0, -200),
+          child: Transform.scale(
+              scale: 1.1,
+              child: Image.asset(imageName, width: deviceSize.width)
+          ),
+        )
+      ],
     );
   }
 }

@@ -80,10 +80,6 @@ class AppPermissionScreen extends ConsumerWidget {
                     ].request();
                     if(context.mounted) await globalViewModel.locationTrackingStart(context: context);
                     if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.onboarding);
-                    // Future.delayed(const Duration(milliseconds: 50), () {
-                    //   GoRouter.of(context).goNamed(ScreenRoute.root);
-                    //   globalViewModel.showSnackBar(content: "권한 설정됨", type: SnackBarType.complete);
-                    // });
                   },
                 )
               ],
