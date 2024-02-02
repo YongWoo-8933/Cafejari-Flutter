@@ -54,6 +54,7 @@ android {
         multiDexEnabled true
         // manifest 환경변수 설정
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = localProperties.getProperty('kakao.native.app.key')
+        manifestPlaceholders["ADMOB_APP_ID"] = localProperties.getProperty('admob.app.id')
     }
 
     signingConfigs {

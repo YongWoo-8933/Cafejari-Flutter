@@ -6,6 +6,7 @@ import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dar
 import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/cati_blocks.dart';
 import 'package:cafejari_flutter/ui/components/cati_description_dialog.dart';
+import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/my_cati_editor.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/my_cafe/component/book_marked_card.dart';
@@ -13,6 +14,7 @@ import 'package:cafejari_flutter/ui/screen/my_cafe/component/cafe_recommendation
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/map_state/map_state.dart';
 import 'package:cafejari_flutter/ui/state/my_cafe_state/my_cafe_state.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/util/n_location.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/zoom.dart';
@@ -38,6 +40,7 @@ class MyCafeScreen extends ConsumerStatefulWidget {
 }
 
 class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -254,6 +257,9 @@ class MyCafeScreenState extends ConsumerState<MyCafeScreen> {
                 ),
               ),
             ),
+            const VerticalSpacer(20),
+            FullWidthBannerAd(bannerAd: AdManager.instance.myCafeScreenBannerAd),
+            const VerticalSpacer(20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

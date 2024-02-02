@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
+import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_editable.dart';
 import 'package:cafejari_flutter/ui/components/profile_image_select_grid.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
@@ -14,6 +15,7 @@ import 'package:cafejari_flutter/ui/screen/my_page/component/user_migration_dial
 import 'package:cafejari_flutter/ui/screen/my_page/component/withdrawal_dialog.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/state/my_page_state/my_page_state.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
@@ -276,6 +278,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                       ],
                     )
                   ),
+                  FullWidthBannerAd(bannerAd: AdManager.instance.myPageScreenBannerAd),
                   // 정보 파트
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: sidePadding, vertical: sidePadding + 10),

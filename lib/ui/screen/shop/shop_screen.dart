@@ -3,11 +3,13 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
+import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/item_grid.dart';
 import 'package:cafejari_flutter/ui/screen/shop/component/shop_my_gifticon.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,6 +123,9 @@ class ShopScreenState extends ConsumerState<ShopScreen> with SingleTickerProvide
                 ),
               ),
             ),
+            const VerticalSpacer(8),
+            FullWidthBannerAd(bannerAd: AdManager.instance.shopScreenBannerAd),
+            const VerticalSpacer(16),
             Visibility(
               visible: !shopState.isLoading,
               child: Expanded(

@@ -4,7 +4,6 @@ import 'package:cafejari_flutter/router.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/app_config/theme.dart';
-import 'package:cafejari_flutter/ui/screen/onboarding_screen/onboarding_screen.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/challenge_screen.dart';

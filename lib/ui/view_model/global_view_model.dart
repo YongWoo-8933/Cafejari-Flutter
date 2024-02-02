@@ -29,6 +29,7 @@ import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -172,6 +173,15 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     } finally {
       if(onFinish.isNotNull) onFinish!(state);
     }
+  }
+
+  AdManagerBannerAd loadBannerAd() {
+    return AdManagerBannerAd(
+      adUnitId: '/6499/example/banner',
+      request: const AdManagerAdRequest(),
+      sizes: [AdSize.banner],
+      listener: AdManagerBannerAdListener(),
+    )..load();
   }
 
   startAppFeedbackTimer({required BuildContext context}) async {

@@ -2,9 +2,11 @@ import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
+import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/challenge/component/challenge_block.dart';
 import 'package:cafejari_flutter/ui/state/challenge_state/challenge_state.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
 import 'package:flutter/material.dart';
@@ -60,14 +62,9 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                 child: ListView.builder(
                   padding: AppPadding.padding_25,
                   scrollDirection: Axis.horizontal,
-                  // itemCount: challengeState.availableChallenges.length + challengeState.unavailableChallenges.length,
                   itemCount: challengeState.availableChallenges.length,
                   itemBuilder: (context, index) {
-                    // final bool available = index + 1 <= challengeState.availableChallenges.length;
                     const bool available = true;
-                    // final Challenge challenge = available ?
-                    //   challengeState.availableChallenges[index] :
-                    //   challengeState.unavailableChallenges[index - challengeState.availableChallenges.length];
                     final Challenge challenge = challengeState.availableChallenges[index];
                     return Row(
                       children: [
@@ -89,7 +86,7 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
             ),
             Visibility(
               visible: challengeState.availableChallenges.isEmpty,
-              child: Container(
+              child: SizedBox(
                 height: 444,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -104,16 +101,8 @@ class ChallengeScreenState extends ConsumerState<ChallengeScreen> {
                 ),
               ),
             ),
-            // Container(
-            //   padding: AppPadding.padding_25,
-            //   child: const Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text("챌린지 우수 참가자", style: TextSize.textSize_bold_16),
-            //       ChallengeVIP()
-            //     ],
-            //   ),
-            // )
+            const VerticalSpacer(20),
+            FullWidthBannerAd(bannerAd: AdManager.instance.challengeScreenBannerAd),
           ],
         ),
       ),
