@@ -223,6 +223,11 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
             await showDialog(context: context, builder: (_) => const ReviewDialog());
           },
           onPositiveButtonPress: () async {
+            await _userUseCase.appFeedback(
+              accessToken: state.isLoggedIn ? state.accessToken : null,
+              feedback: "쓸만해요",
+              onAccessTokenRefresh: setAccessToken
+            );
             if (await inAppReview.isAvailable()) await inAppReview.requestReview();
             setIsReviewSubmitted(true);
             if (context.mounted) Navigator.pop(context);
@@ -382,21 +387,23 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
-  submitAppFeedback({required AppInconvenienceReason reason, required BuildContext context}) async {
+  submitAppFeedback({
+    required AppInconvenienceCategory category,
+    required String reason,
+    required BuildContext context,
+  }) async {
+    String type = "";
     try {
-      String feedback = "";
-      switch(reason) {
-        case AppInconvenienceReason.appUse: feedback = "앱 사용성";
-        case AppInconvenienceReason.etc: feedback = "기타";
-        case AppInconvenienceReason.noCafe: feedback = "카페 없음";
-        case AppInconvenienceReason.noNeed: feedback = "정보 필요 없음";
-        case AppInconvenienceReason.noUse: feedback = "카페 잘 안감";
-        case AppInconvenienceReason.occupancyRate: feedback = "혼잡도 문제";
-        default: feedback = "";
+      switch(category) {
+        case AppInconvenienceCategory.appUse: type = "앱 사용성";
+        case AppInconvenienceCategory.cafe: type = "카페";
+        case AppInconvenienceCategory.point: type = "포인트";
+        case AppInconvenienceCategory.occupancy: type = "혼잡도";
+        case AppInconvenienceCategory.none: type = "";
       }
       await _userUseCase.appFeedback(
         accessToken: state.isLoggedIn ? state.accessToken : null,
-        feedback: feedback,
+        feedback: "[$type] $reason",
         onAccessTokenRefresh: setAccessToken
       );
       showSnackBar(content: "제출됨", type: SnackBarType.complete);
