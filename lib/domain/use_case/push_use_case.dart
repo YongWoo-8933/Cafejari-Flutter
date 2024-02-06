@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/domain/use_case/util.dart';
 
 /// 알림 관련 data를 처리하는 use case
 abstract interface class PushUseCase {
+  Future<PopUps> getPopUps();
   Future<Pushes> getMyPushes({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
@@ -25,6 +26,17 @@ class PushUseCaseImpl extends BaseUseCase implements PushUseCase {
   final PushRepository pushRepository;
 
   PushUseCaseImpl({required this.tokenRepository, required this.pushRepository});
+
+  @override
+  Future<PopUps> getPopUps() async {
+    try {
+      List<PopUpResponse> popUpResponseList = await pushRepository.fetchPopUp();
+      PopUps resList = popUpResponseList.map((e) => parsePopUpFromPopUpResponse(popUpResponse: e)).toList();
+      return resList;
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
 
   @override
   Future<Pushes> getMyPushes({

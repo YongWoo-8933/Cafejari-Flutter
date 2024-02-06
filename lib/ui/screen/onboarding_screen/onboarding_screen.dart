@@ -1,14 +1,17 @@
 import 'package:cafejari_flutter/core/di.dart';
+import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final _currentPageIndex = StateProvider((ref) => 0);
+final _firstTabTime = StateProvider<DateTime?>((ref) => null);
 
 
 class OnboardingScreen extends ConsumerWidget {
@@ -36,10 +39,21 @@ class OnboardingScreen extends ConsumerWidget {
         },
         child: GestureDetector(
           onTap: () {
+            if(currentIndex == 0) {
+              ref.watch(_firstTabTime.notifier).update((state) => DateTime.now());
+            }
             ref.watch(_currentPageIndex.notifier).update((state) => currentIndex + 1);
             if(currentIndex == 8) {
               Future.delayed(const Duration(milliseconds: 500), () async {
                 await globalViewModel.setIsInstalledFirst(false);
+                if (ref.watch(_firstTabTime).isNotNull) {
+                  await FirebaseAnalytics.instance.logEvent(
+                    name: "onboarding_duration_time",
+                    parameters: {
+                      "seconds": DateTime.now().difference(ref.watch(_firstTabTime)!).inSeconds.abs()
+                    }
+                  );
+                }
                 if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
               });
             }
@@ -68,18 +82,27 @@ class OnboardingScreen extends ConsumerWidget {
                     ]
                   ),
                 ),
-                const _TopTextPage(
+                _TopTextPage(
                   imageName: "asset/image/onboarding_1.png",
                   textPart: Column(
                     children: [
-                      Text("카페자리에서는"),
-                      VerticalSpacer(lineSpacing),
-                      Row(
+                      const Text("카페자리에서는"),
+                      const VerticalSpacer(lineSpacing),
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("카페 혼잡도", style: TextStyle(color: AppColor.notificationOrange)),
                           Text(" 확인이 가능해요"),
                         ],
+                      ),
+                      const VerticalSpacer(16),
+                      Text(
+                        "* 일부 지역에서 예상 혼잡도 제공",
+                        style: TextStyle(
+                            color: AppColor.error.withOpacity(0.8),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500
+                        )
                       ),
                     ]
                   ),
@@ -319,8 +342,8 @@ class _BottomTextPage extends StatelessWidget {
         Transform.translate(
           offset: const Offset(0, -200),
           child: Transform.scale(
-              scale: 1.1,
-              child: Image.asset(imageName, width: deviceSize.width)
+            scale: 1.1,
+            child: Image.asset(imageName, width: deviceSize.width)
           ),
         )
       ],

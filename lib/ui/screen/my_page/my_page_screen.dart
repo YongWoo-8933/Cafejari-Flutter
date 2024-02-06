@@ -386,7 +386,7 @@ class MyPageScreenState extends ConsumerState<MyPageScreen> {
                           text: "1:1 문의",
                           width: deviceSize.width - sidePadding * 2,
                           onPress: () async {
-                            Uri url = await TalkApi.instance.channelChatUrl('_xbxnxaRG');
+                            Uri url = await TalkApi.instance.chatChannelUrl('_xbxnxaRG');
                             await launchBrowserTab(url);
                           }
                         ),

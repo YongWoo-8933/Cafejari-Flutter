@@ -422,3 +422,17 @@ Push parsePushFromPushResponse({required PushResponse pushResponse}) {
     type: pushResponse.type.toPushType()
   );
 }
+
+/// PopUpResponse로부터 PopUp 객체를 뽑아내는 함수
+PopUp parsePopUpFromPopUpResponse({required PopUpResponse popUpResponse}) {
+  return PopUp(
+    id: popUpResponse.id,
+    inAppRouteTargetIndex: popUpResponse.in_app_route_target,
+    cafeId: popUpResponse.cafe,
+    challengeId: popUpResponse.challenge,
+    title: popUpResponse.title,
+    imageUrl: popUpResponse.image,
+    webViewUrl: popUpResponse.web_view_url,
+    externalUrl: popUpResponse.external_url
+  );
+}

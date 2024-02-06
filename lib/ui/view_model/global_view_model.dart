@@ -15,6 +15,7 @@ import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/components/pop_up_dialog.dart';
 import 'package:cafejari_flutter/ui/components/review_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
@@ -109,6 +110,27 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
             ));
           }
         }
+      }
+    } on ErrorWithMessage {
+      null;
+    }
+  }
+
+  checkPopUp({required BuildContext context}) async {
+    try {
+      final PopUps popUps = await _pushUseCase.getPopUps();
+      // 띄울 팝업이 없으면 pass
+      if(popUps.isEmpty) return null;
+      state = state.copyWith(popUps: popUps);
+      final DateTime lastPopUpTime = await _appConfigUseCase.getLastPopUpTime();
+      final DateTime now = DateTime.now();
+      // '오늘 하루 보지 않기'를 오늘 누른 경우 pass
+      if(lastPopUpTime.month == now.month && lastPopUpTime.day == now.day) return null;
+
+      if(context.mounted) {
+        showDialog(context: context, builder: (_) {
+          return const PopUpDialog();
+        });
       }
     } on ErrorWithMessage {
       null;
@@ -244,6 +266,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   Future<bool> getIsReviewSubmitted() async => await _appConfigUseCase.getIsReviewSubmitted();
 
   setIsReviewSubmitted(bool value) async => await _appConfigUseCase.setIsReviewSubmitted(value);
+
+  setLastPopUpTime() async => await _appConfigUseCase.setLastPopUpTime(DateTime.now());
 
   setChallengeBadgeVisible(bool value) => state = state.copyWith(isChallengeBadgeVisible: value);
 

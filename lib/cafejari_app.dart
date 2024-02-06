@@ -161,6 +161,8 @@ class RootScreenState extends ConsumerState<RootScreen> with WidgetsBindingObser
           );
         }
       });
+
+      await globalViewModel.checkPopUp(context: context);
     });
   }
 

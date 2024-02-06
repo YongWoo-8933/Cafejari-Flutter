@@ -4,6 +4,7 @@ import 'package:cafejari_flutter/data/remote/api_service.dart';
 
 /// push 알림 저장소
 abstract interface class PushRepository {
+  Future<List<PopUpResponse>> fetchPopUp();
   Future<List<PushResponse>> fetchMyPush({required String accessToken});
   Future<PushResponse> readPush({required String accessToken, required int pushId});
 }
@@ -13,6 +14,19 @@ class PushRepositoryImpl implements PushRepository {
   final APIService service;
 
   PushRepositoryImpl(this.service);
+
+  @override
+  Future<List<PopUpResponse>> fetchPopUp() async {
+    try {
+      final List<dynamic> response = await service.request(
+          method: HttpMethod.get,
+          appLabel: "push",
+          endpoint: "pop_up/");
+      return response.map((dynamic e) => PopUpResponse.fromJson(e)).toList();
+    } on ErrorWithMessage {
+      rethrow;
+    }
+  }
 
   @override
   Future<List<PushResponse>> fetchMyPush({required String accessToken}) async {
