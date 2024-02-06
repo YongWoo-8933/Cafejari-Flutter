@@ -26,20 +26,20 @@ const List<String> _occupancyReasons = [
   "",
   "혼잡도 정보가 필요없어요",
   "가려는 카페의 혼잡도가 없어요",
-  "앱에 표시된 혼잡도 정보가 적어요",
+  "제공중인 혼잡도 정보가 적어요",
   "앱이 운영되고 있는지 모르겠어요",
 ];
 
 const List<String> _appUseReasons = [
   "",
   "앱을 어떻게 사용하는지 모르겠어요",
-  "앱이 사용하기 불편하게 되어있어요",
+  "앱이 사용하기 불편해요",
   "앱이 운영되고 있는지 모르겠어요",
 ];
 
 const List<String> _pointReasons = [
   "",
-  "혼잡도 등록으로 포인트를 벌기 힘들어요",
+  "혼잡도 등록으로 \n포인트를 벌기 힘들어요",
   "제공되는 포인트의 양이 적어요",
 ];
 
@@ -87,6 +87,10 @@ class ReviewDialog extends ConsumerWidget {
               elevation: 3,
               onChanged: (AppInconvenienceCategory? value) {
                 ref.watch(_selectedAppInconvenienceCategory.notifier).update((state) => value ?? state);
+                ref.watch(_selectedCafeReason.notifier).update((state) => "");
+                ref.watch(_selectedOccupancyReason.notifier).update((state) => "");
+                ref.watch(_selectedAppUseReason.notifier).update((state) => "");
+                ref.watch(_selectedPointReason.notifier).update((state) => "");
               },
               items: const [
                 DropdownMenuItem(value: AppInconvenienceCategory.none, child: Text("선택")),

@@ -197,15 +197,6 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
-  AdManagerBannerAd loadBannerAd() {
-    return AdManagerBannerAd(
-      adUnitId: '/6499/example/banner',
-      request: const AdManagerAdRequest(),
-      sizes: [AdSize.banner],
-      listener: AdManagerBannerAdListener(),
-    )..load();
-  }
-
   startAppFeedbackTimer({required BuildContext context}) async {
     if (await getIsReviewSubmitted()) {
       _appFeedbackTimer?.cancel();
