@@ -5,9 +5,11 @@ import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/padding.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
+import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,42 +59,51 @@ class PushScreenState extends ConsumerState<PushScreen> {
         onBack: () => GoRouter.of(context).pop(),
       ),
       backgroundColor: AppColor.white,
-      body: DefaultTabController(
-        length: 6,
-        child: Column(
-          children: [
-            TabBar(
-              indicator: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: AppColor.secondary,
-              ),
-              padding: AppPadding.padding_20,
-              indicatorSize: TabBarIndicatorSize.label,
-              labelColor: AppColor.white,
-              unselectedLabelColor: AppColor.secondary,
-              isScrollable: true,
-              labelPadding: const EdgeInsets.symmetric(horizontal: 4),
-              tabs: [
-                Tab(height: 40, iconMargin: AppPadding.padding_0, child: _tab(56, "전체")),
-                Tab(height: 40, child: _tab(56, PushType.notification().tag)),
-                Tab(height: 40, child: _tab(56, PushType.activity().tag)),
-                Tab(height: 40, child: _tab(68, PushType.event().tag)),
-                Tab(height: 40, child: _tab(68, PushType.marketing().tag)),
-                Tab(height: 40, child: _tab(56, PushType.etc().tag))
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: AdManager.instance.notificationScreenBannerAd?.sizes.first.height.toDouble() ?? 50),
+            child: DefaultTabController(
+              length: 6,
+              child: Column(
                 children: [
-                  _buildTabContent(globalState.myPushes),
-                  ...typePushes.map((e) => _buildTabContent(e)).toList()
+                  TabBar(
+                    indicator: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      color: AppColor.secondary,
+                    ),
+                    padding: AppPadding.padding_20,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    labelColor: AppColor.white,
+                    unselectedLabelColor: AppColor.secondary,
+                    isScrollable: true,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    tabs: [
+                      Tab(height: 40, iconMargin: AppPadding.padding_0, child: _tab(56, "전체")),
+                      Tab(height: 40, child: _tab(56, PushType.notification().tag)),
+                      Tab(height: 40, child: _tab(56, PushType.activity().tag)),
+                      Tab(height: 40, child: _tab(68, PushType.event().tag)),
+                      Tab(height: 40, child: _tab(68, PushType.marketing().tag)),
+                      Tab(height: 40, child: _tab(56, PushType.etc().tag))
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        _buildTabContent(globalState.myPushes),
+                        ...typePushes.map((e) => _buildTabContent(e)).toList()
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          FullWidthBannerAd(bannerAd: AdManager.instance.notificationScreenBannerAd)
+        ],
       ),
     );
   }

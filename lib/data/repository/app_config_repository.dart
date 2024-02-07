@@ -12,6 +12,8 @@ abstract interface class AppConfigRepository {
   putIsReviewSubmitted(bool isSubmitted);
   Future<bool> getIsFlagButtonTapped();
   putIsFlagButtonTapped(bool isTapped);
+  Future<DateTime> getLastPopUpTime();
+  putLastPopUpTime(DateTime datetime);
   // GET
   Future<List<VersionResponse>> fetchVersion();
 }
@@ -21,8 +23,8 @@ class AppConfigRepositoryImpl implements AppConfigRepository {
   final String boxLabel = "local";
   final String isInstalledFirstTimeKey = "isInstalledFirstTime";
   final String isReviewSubmittedKey = "IsReviewSubmitted";
-  final String isChallengeTappedKey = "isChallengeTapped";
-  final String isMyPageTappedKey = "isMyPageTapped";
+  final String isFlagButtonTappedKey = "isFlagButtonTapped";
+  final String lastPopUpTimeKey = "lastPopUpTime";
 
   APIService apiService;
 
@@ -56,13 +58,25 @@ class AppConfigRepositoryImpl implements AppConfigRepository {
   @override
   Future<bool> getIsFlagButtonTapped() async {
     final Box<dynamic> box = await Hive.openBox(boxLabel);
-    return await box.get(isMyPageTappedKey) ?? false;
+    return await box.get(isFlagButtonTappedKey) ?? false;
   }
 
   @override
   putIsFlagButtonTapped(bool isTapped) async {
     final Box<dynamic> box = await Hive.openBox(boxLabel);
-    await box.put(isMyPageTappedKey, isTapped);
+    await box.put(isFlagButtonTappedKey, isTapped);
+  }
+
+  @override
+  Future<DateTime> getLastPopUpTime() async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    return await box.get(lastPopUpTimeKey) ?? DateTime(2022);
+  }
+
+  @override
+  putLastPopUpTime(DateTime datetime) async {
+    final Box<dynamic> box = await Hive.openBox(boxLabel);
+    await box.put(lastPopUpTimeKey, datetime);
   }
 
   @override

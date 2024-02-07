@@ -12,7 +12,7 @@ part of 'push.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Push {
@@ -230,5 +230,269 @@ abstract class _Push implements Push {
   @override
   @JsonKey(ignore: true)
   _$$PushImplCopyWith<_$PushImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$PopUp {
+  int get id => throw _privateConstructorUsedError;
+  int? get inAppRouteTargetIndex => throw _privateConstructorUsedError;
+  int? get cafeId => throw _privateConstructorUsedError;
+  int? get challengeId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
+  String? get webViewUrl => throw _privateConstructorUsedError;
+  String? get externalUrl => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PopUpCopyWith<PopUp> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PopUpCopyWith<$Res> {
+  factory $PopUpCopyWith(PopUp value, $Res Function(PopUp) then) =
+      _$PopUpCopyWithImpl<$Res, PopUp>;
+  @useResult
+  $Res call(
+      {int id,
+      int? inAppRouteTargetIndex,
+      int? cafeId,
+      int? challengeId,
+      String title,
+      String imageUrl,
+      String? webViewUrl,
+      String? externalUrl});
+}
+
+/// @nodoc
+class _$PopUpCopyWithImpl<$Res, $Val extends PopUp>
+    implements $PopUpCopyWith<$Res> {
+  _$PopUpCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? inAppRouteTargetIndex = freezed,
+    Object? cafeId = freezed,
+    Object? challengeId = freezed,
+    Object? title = null,
+    Object? imageUrl = null,
+    Object? webViewUrl = freezed,
+    Object? externalUrl = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      inAppRouteTargetIndex: freezed == inAppRouteTargetIndex
+          ? _value.inAppRouteTargetIndex
+          : inAppRouteTargetIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cafeId: freezed == cafeId
+          ? _value.cafeId
+          : cafeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      challengeId: freezed == challengeId
+          ? _value.challengeId
+          : challengeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      webViewUrl: freezed == webViewUrl
+          ? _value.webViewUrl
+          : webViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalUrl: freezed == externalUrl
+          ? _value.externalUrl
+          : externalUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PopUpImplCopyWith<$Res> implements $PopUpCopyWith<$Res> {
+  factory _$$PopUpImplCopyWith(
+          _$PopUpImpl value, $Res Function(_$PopUpImpl) then) =
+      __$$PopUpImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      int? inAppRouteTargetIndex,
+      int? cafeId,
+      int? challengeId,
+      String title,
+      String imageUrl,
+      String? webViewUrl,
+      String? externalUrl});
+}
+
+/// @nodoc
+class __$$PopUpImplCopyWithImpl<$Res>
+    extends _$PopUpCopyWithImpl<$Res, _$PopUpImpl>
+    implements _$$PopUpImplCopyWith<$Res> {
+  __$$PopUpImplCopyWithImpl(
+      _$PopUpImpl _value, $Res Function(_$PopUpImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? inAppRouteTargetIndex = freezed,
+    Object? cafeId = freezed,
+    Object? challengeId = freezed,
+    Object? title = null,
+    Object? imageUrl = null,
+    Object? webViewUrl = freezed,
+    Object? externalUrl = freezed,
+  }) {
+    return _then(_$PopUpImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      inAppRouteTargetIndex: freezed == inAppRouteTargetIndex
+          ? _value.inAppRouteTargetIndex
+          : inAppRouteTargetIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cafeId: freezed == cafeId
+          ? _value.cafeId
+          : cafeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      challengeId: freezed == challengeId
+          ? _value.challengeId
+          : challengeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      webViewUrl: freezed == webViewUrl
+          ? _value.webViewUrl
+          : webViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalUrl: freezed == externalUrl
+          ? _value.externalUrl
+          : externalUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PopUpImpl implements _PopUp {
+  _$PopUpImpl(
+      {required this.id,
+      required this.inAppRouteTargetIndex,
+      required this.cafeId,
+      required this.challengeId,
+      required this.title,
+      required this.imageUrl,
+      required this.webViewUrl,
+      required this.externalUrl});
+
+  @override
+  final int id;
+  @override
+  final int? inAppRouteTargetIndex;
+  @override
+  final int? cafeId;
+  @override
+  final int? challengeId;
+  @override
+  final String title;
+  @override
+  final String imageUrl;
+  @override
+  final String? webViewUrl;
+  @override
+  final String? externalUrl;
+
+  @override
+  String toString() {
+    return 'PopUp(id: $id, inAppRouteTargetIndex: $inAppRouteTargetIndex, cafeId: $cafeId, challengeId: $challengeId, title: $title, imageUrl: $imageUrl, webViewUrl: $webViewUrl, externalUrl: $externalUrl)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PopUpImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.inAppRouteTargetIndex, inAppRouteTargetIndex) ||
+                other.inAppRouteTargetIndex == inAppRouteTargetIndex) &&
+            (identical(other.cafeId, cafeId) || other.cafeId == cafeId) &&
+            (identical(other.challengeId, challengeId) ||
+                other.challengeId == challengeId) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.webViewUrl, webViewUrl) ||
+                other.webViewUrl == webViewUrl) &&
+            (identical(other.externalUrl, externalUrl) ||
+                other.externalUrl == externalUrl));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, inAppRouteTargetIndex,
+      cafeId, challengeId, title, imageUrl, webViewUrl, externalUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PopUpImplCopyWith<_$PopUpImpl> get copyWith =>
+      __$$PopUpImplCopyWithImpl<_$PopUpImpl>(this, _$identity);
+}
+
+abstract class _PopUp implements PopUp {
+  factory _PopUp(
+      {required final int id,
+      required final int? inAppRouteTargetIndex,
+      required final int? cafeId,
+      required final int? challengeId,
+      required final String title,
+      required final String imageUrl,
+      required final String? webViewUrl,
+      required final String? externalUrl}) = _$PopUpImpl;
+
+  @override
+  int get id;
+  @override
+  int? get inAppRouteTargetIndex;
+  @override
+  int? get cafeId;
+  @override
+  int? get challengeId;
+  @override
+  String get title;
+  @override
+  String get imageUrl;
+  @override
+  String? get webViewUrl;
+  @override
+  String? get externalUrl;
+  @override
+  @JsonKey(ignore: true)
+  _$$PopUpImplCopyWith<_$PopUpImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

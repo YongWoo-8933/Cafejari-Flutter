@@ -48,12 +48,13 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 27
-        versionName "1.4.6"
+        versionCode 29
+        versionName "1.5.0"
         // local noti
         multiDexEnabled true
         // manifest 환경변수 설정
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = localProperties.getProperty('kakao.native.app.key')
+        manifestPlaceholders["ADMOB_APP_ID"] = localProperties.getProperty('admob.app.id')
     }
 
     signingConfigs {

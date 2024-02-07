@@ -11,6 +11,8 @@ abstract class AppConfigUseCase {
   setIsReviewSubmitted(bool isSubmitted);
   Future<bool> getIsFlagButtonTapped();
   setIsFlagButtonTapped(bool isTapped);
+  Future<DateTime> getLastPopUpTime();
+  setLastPopUpTime(DateTime datetime);
 
   Future<Versions> getAppVersions();
 }
@@ -37,6 +39,12 @@ class AppConfigUseCaseImpl extends BaseUseCase implements AppConfigUseCase {
 
   @override
   setIsFlagButtonTapped(bool isTapped) async => await appConfigRepository.putIsFlagButtonTapped(isTapped);
+
+  @override
+  Future<DateTime> getLastPopUpTime() async => await appConfigRepository.getLastPopUpTime();
+
+  @override
+  setLastPopUpTime(DateTime datetime) async => await appConfigRepository.putLastPopUpTime(datetime);
 
   @override
   Future<Versions> getAppVersions() async {

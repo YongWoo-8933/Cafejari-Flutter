@@ -1,13 +1,14 @@
 import 'package:cafejari_flutter/core/flutter_local_notification.dart';
 import 'package:cafejari_flutter/firebase_options.dart';
+import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:cafejari_flutter/cafejari_app.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -25,6 +26,9 @@ void main() async {
   // Firebase init
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // Admob init
+  await MobileAds.instance.initialize();
+
   // Firebase analytics 사용설정
   await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
   FirebaseAnalytics.instance.logAppOpen();
@@ -38,8 +42,9 @@ void main() async {
   // 알림 init
   FlutterLocalNotification.init();
 
+  // 광고 init
+  AdManager.init(targetPlatform: defaultTargetPlatform);
+
   // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
-
-  // 테스트
 }

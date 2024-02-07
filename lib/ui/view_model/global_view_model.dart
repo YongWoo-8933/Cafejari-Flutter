@@ -15,6 +15,7 @@ import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/user_use_case.dart';
 import 'package:cafejari_flutter/ui/app_config/duration.dart';
 import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
+import 'package:cafejari_flutter/ui/components/pop_up_dialog.dart';
 import 'package:cafejari_flutter/ui/components/review_dialog.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
@@ -29,6 +30,7 @@ import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -108,6 +110,27 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
             ));
           }
         }
+      }
+    } on ErrorWithMessage {
+      null;
+    }
+  }
+
+  checkPopUp({required BuildContext context}) async {
+    try {
+      final PopUps popUps = await _pushUseCase.getPopUps();
+      // 띄울 팝업이 없으면 pass
+      if(popUps.isEmpty) return null;
+      state = state.copyWith(popUps: popUps);
+      final DateTime lastPopUpTime = await _appConfigUseCase.getLastPopUpTime();
+      final DateTime now = DateTime.now();
+      // '오늘 하루 보지 않기'를 오늘 누른 경우 pass
+      if(lastPopUpTime.month == now.month && lastPopUpTime.day == now.day) return null;
+
+      if(context.mounted) {
+        showDialog(context: context, builder: (_) {
+          return const PopUpDialog();
+        });
       }
     } on ErrorWithMessage {
       null;
@@ -213,6 +236,11 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
             await showDialog(context: context, builder: (_) => const ReviewDialog());
           },
           onPositiveButtonPress: () async {
+            await _userUseCase.appFeedback(
+              accessToken: state.isLoggedIn ? state.accessToken : null,
+              feedback: "쓸만해요",
+              onAccessTokenRefresh: setAccessToken
+            );
             if (await inAppReview.isAvailable()) await inAppReview.requestReview();
             setIsReviewSubmitted(true);
             if (context.mounted) Navigator.pop(context);
@@ -229,6 +257,8 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
   Future<bool> getIsReviewSubmitted() async => await _appConfigUseCase.getIsReviewSubmitted();
 
   setIsReviewSubmitted(bool value) async => await _appConfigUseCase.setIsReviewSubmitted(value);
+
+  setLastPopUpTime() async => await _appConfigUseCase.setLastPopUpTime(DateTime.now());
 
   setChallengeBadgeVisible(bool value) => state = state.copyWith(isChallengeBadgeVisible: value);
 
@@ -372,21 +402,23 @@ class GlobalViewModel extends StateNotifier<GlobalState> {
     }
   }
 
-  submitAppFeedback({required AppInconvenienceReason reason, required BuildContext context}) async {
+  submitAppFeedback({
+    required AppInconvenienceCategory category,
+    required String reason,
+    required BuildContext context,
+  }) async {
+    String type = "";
     try {
-      String feedback = "";
-      switch(reason) {
-        case AppInconvenienceReason.appUse: feedback = "앱 사용성";
-        case AppInconvenienceReason.etc: feedback = "기타";
-        case AppInconvenienceReason.noCafe: feedback = "카페 없음";
-        case AppInconvenienceReason.noNeed: feedback = "정보 필요 없음";
-        case AppInconvenienceReason.noUse: feedback = "카페 잘 안감";
-        case AppInconvenienceReason.occupancyRate: feedback = "혼잡도 문제";
-        default: feedback = "";
+      switch(category) {
+        case AppInconvenienceCategory.appUse: type = "앱 사용성";
+        case AppInconvenienceCategory.cafe: type = "카페";
+        case AppInconvenienceCategory.point: type = "포인트";
+        case AppInconvenienceCategory.occupancy: type = "혼잡도";
+        case AppInconvenienceCategory.none: type = "";
       }
       await _userUseCase.appFeedback(
         accessToken: state.isLoggedIn ? state.accessToken : null,
-        feedback: feedback,
+        feedback: "[$type] $reason",
         onAccessTokenRefresh: setAccessToken
       );
       showSnackBar(content: "제출됨", type: SnackBarType.complete);

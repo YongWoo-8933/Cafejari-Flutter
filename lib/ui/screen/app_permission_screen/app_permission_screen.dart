@@ -2,7 +2,6 @@ import 'package:cafejari_flutter/core/di.dart';
 import 'package:cafejari_flutter/ui/app_config/app_color.dart';
 import 'package:cafejari_flutter/ui/app_config/size.dart';
 import 'package:cafejari_flutter/ui/components/buttons/action_button_primary.dart';
-import 'package:cafejari_flutter/ui/components/custom_snack_bar.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
@@ -59,10 +58,7 @@ class AppPermissionScreen extends ConsumerWidget {
                 iconRow(iconData: CupertinoIcons.bell, text: "알림 (마케팅 알림이 아니에요)"),
                 const Divider(height: 1, thickness: 1, color: AppColor.grey_200),
                 const VerticalSpacer(40),
-                const Text(
-                  "선택",
-                  style: TextSize.textSize_bold_16,
-                ),
+                const Text("선택", style: TextSize.textSize_bold_16,),
                 const VerticalSpacer(20),
                 const Divider(height: 1, thickness: 1, color: AppColor.grey_200),
                 iconRow(iconData: CupertinoIcons.camera, text: "저장소 접근 권한"),
@@ -79,10 +75,7 @@ class AppPermissionScreen extends ConsumerWidget {
                       Permission.storage
                     ].request();
                     if(context.mounted) await globalViewModel.locationTrackingStart(context: context);
-                    Future.delayed(const Duration(milliseconds: 50), () {
-                      GoRouter.of(context).goNamed(ScreenRoute.root);
-                      globalViewModel.showSnackBar(content: "권한 설정됨", type: SnackBarType.complete);
-                    });
+                    if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.onboarding);
                   },
                 )
               ],

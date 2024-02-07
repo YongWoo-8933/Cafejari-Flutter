@@ -12,11 +12,12 @@ part of 'global_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$GlobalState {
   List<Version> get versions => throw _privateConstructorUsedError;
+  List<PopUp> get popUps => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
   bool get isLoggedIn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
@@ -52,6 +53,7 @@ abstract class $GlobalStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<Version> versions,
+      List<PopUp> popUps,
       String accessToken,
       bool isLoggedIn,
       User user,
@@ -88,6 +90,7 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
   @override
   $Res call({
     Object? versions = null,
+    Object? popUps = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
@@ -112,6 +115,10 @@ class _$GlobalStateCopyWithImpl<$Res, $Val extends GlobalState>
           ? _value.versions
           : versions // ignore: cast_nullable_to_non_nullable
               as List<Version>,
+      popUps: null == popUps
+          ? _value.popUps
+          : popUps // ignore: cast_nullable_to_non_nullable
+              as List<PopUp>,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -206,6 +213,7 @@ abstract class _$$GlobalStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<Version> versions,
+      List<PopUp> popUps,
       String accessToken,
       bool isLoggedIn,
       User user,
@@ -241,6 +249,7 @@ class __$$GlobalStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? versions = null,
+    Object? popUps = null,
     Object? accessToken = null,
     Object? isLoggedIn = null,
     Object? user = null,
@@ -265,6 +274,10 @@ class __$$GlobalStateImplCopyWithImpl<$Res>
           ? _value._versions
           : versions // ignore: cast_nullable_to_non_nullable
               as List<Version>,
+      popUps: null == popUps
+          ? _value._popUps
+          : popUps // ignore: cast_nullable_to_non_nullable
+              as List<PopUp>,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -346,6 +359,7 @@ class __$$GlobalStateImplCopyWithImpl<$Res>
 class _$GlobalStateImpl implements _GlobalState {
   _$GlobalStateImpl(
       {required final List<Version> versions,
+      required final List<PopUp> popUps,
       required this.accessToken,
       required this.isLoggedIn,
       required this.user,
@@ -365,6 +379,7 @@ class _$GlobalStateImpl implements _GlobalState {
       required this.isChallengeBadgeVisible,
       required this.isFlagButtonBadgeVisible})
       : _versions = versions,
+        _popUps = popUps,
         _myTodayUpdates = myTodayUpdates,
         _myChallengers = myChallengers,
         _myPushes = myPushes;
@@ -375,6 +390,14 @@ class _$GlobalStateImpl implements _GlobalState {
     if (_versions is EqualUnmodifiableListView) return _versions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_versions);
+  }
+
+  final List<PopUp> _popUps;
+  @override
+  List<PopUp> get popUps {
+    if (_popUps is EqualUnmodifiableListView) return _popUps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_popUps);
   }
 
   @override
@@ -434,7 +457,7 @@ class _$GlobalStateImpl implements _GlobalState {
 
   @override
   String toString() {
-    return 'GlobalState(versions: $versions, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, myPushes: $myPushes, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri, isChallengeBadgeVisible: $isChallengeBadgeVisible, isFlagButtonBadgeVisible: $isFlagButtonBadgeVisible)';
+    return 'GlobalState(versions: $versions, popUps: $popUps, accessToken: $accessToken, isLoggedIn: $isLoggedIn, user: $user, myTodayUpdates: $myTodayUpdates, myRanking: $myRanking, myChallengers: $myChallengers, myPushes: $myPushes, currentPage: $currentPage, isSnackBarOpened: $isSnackBarOpened, isSnackBarExpanded: $isSnackBarExpanded, snackBarText: $snackBarText, snackBarType: $snackBarType, currentDeviceLocation: $currentDeviceLocation, webViewController: $webViewController, webViewTitle: $webViewTitle, webViewUri: $webViewUri, isChallengeBadgeVisible: $isChallengeBadgeVisible, isFlagButtonBadgeVisible: $isFlagButtonBadgeVisible)';
   }
 
   @override
@@ -443,6 +466,7 @@ class _$GlobalStateImpl implements _GlobalState {
         (other.runtimeType == runtimeType &&
             other is _$GlobalStateImpl &&
             const DeepCollectionEquality().equals(other._versions, _versions) &&
+            const DeepCollectionEquality().equals(other._popUps, _popUps) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.isLoggedIn, isLoggedIn) ||
@@ -485,6 +509,7 @@ class _$GlobalStateImpl implements _GlobalState {
   int get hashCode => Object.hashAll([
         runtimeType,
         const DeepCollectionEquality().hash(_versions),
+        const DeepCollectionEquality().hash(_popUps),
         accessToken,
         isLoggedIn,
         user,
@@ -515,6 +540,7 @@ class _$GlobalStateImpl implements _GlobalState {
 abstract class _GlobalState implements GlobalState {
   factory _GlobalState(
       {required final List<Version> versions,
+      required final List<PopUp> popUps,
       required final String accessToken,
       required final bool isLoggedIn,
       required final User user,
@@ -536,6 +562,8 @@ abstract class _GlobalState implements GlobalState {
 
   @override
   List<Version> get versions;
+  @override
+  List<PopUp> get popUps;
   @override
   String get accessToken;
   @override
