@@ -150,12 +150,9 @@
 </h2>
 
 -   ### <b> <a href="https://cafejari.co.kr"> 🏠 web page </a> </b>
--   ### <b> <a href="https://www.instagram.com/cafejari_official?igsh=cXh1YThpb3I1bjBn">
-      <img src="https://github.com/YongWoo-8933/Cafejari-Flutter/assets/77825655/ddc4b640-e638-40f4-b40b-432622434aa0" width="15"/> </a> </b>
--   ### <b> <a href="https://play.google.com/store/apps/details?id=kr.co.cafejari.cafejari_flutter">
-      <img src="https://cafejari.co.kr/static/main/image/Google-Play.svg" width="100"/> </a> </b>
--   ### <b> <a href="https://apps.apple.com/kr/app/%EC%B9%B4%ED%8E%98%EC%9E%90%EB%A6%AC-%ED%95%AB%ED%94%8C-%EB%8C%80%ED%95%99%EA%B0%80-%EC%B9%B4%ED%8E%98-%ED%98%BC%EC%9E%A1%EB%8F%84-%ED%99%95%EC%9D%B8-%EC%84%9C%EC%9A%B8/id6467621695">
-      <img src="https://cafejari.co.kr/static/main/image/App-Store.svg" width="100"/> </a> </b>
+-   ### <b> <a href="https://www.instagram.com/cafejari_official?igsh=cXh1YThpb3I1bjBn"> 🌠 instagram </a> </b>
+-   ### <b> <a href="https://play.google.com/store/apps/details?id=kr.co.cafejari.cafejari_flutter"> 🤖 android - play store </a> </b>
+-   ### <b> <a href="https://apps.apple.com/kr/app/%EC%B9%B4%ED%8E%98%EC%9E%90%EB%A6%AC-%ED%95%AB%ED%94%8C-%EB%8C%80%ED%95%99%EA%B0%80-%EC%B9%B4%ED%8E%98-%ED%98%BC%EC%9E%A1%EB%8F%84-%ED%99%95%EC%9D%B8-%EC%84%9C%EC%9A%B8/id6467621695"> 🍎 ios - app store </a> </b>
 
 <hr>
 
