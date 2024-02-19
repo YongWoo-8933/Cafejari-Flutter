@@ -12,7 +12,6 @@ import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/screen_route.dart';
 import 'package:cafejari_flutter/ui/util/web_view_route.dart';
 import 'package:cafejari_flutter/ui/view_model/challenge_view_model.dart';
-import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +33,7 @@ class PopUpDialog extends ConsumerWidget {
     final MapViewModel mapViewModel = ref.watch(mapViewModelProvider.notifier);
     final ChallengeState challengeState = ref.watch(challengeViewModelProvider);
     final ChallengeViewModel challengeViewModel = ref.watch(challengeViewModelProvider.notifier);
-    const double dialogSidePadding = 20;
+    const double dialogSidePadding = 30;
     const double closeButtonWidth = 96;
     const double buttonHeight = 48;
     const double buttonSidePadding = 8;
@@ -95,7 +94,7 @@ class PopUpDialog extends ConsumerWidget {
                             }
                           },
                           child: CustomCachedNetworkImage(
-                            imageUrl: globalState.popUps.isNotEmpty ? globalState.popUps[ref.watch(_currentPageIndex)].imageUrl : "",
+                            imageUrl: e.imageUrl,
                             width: deviceSize.width - dialogSidePadding * 2,
                           )
                         );

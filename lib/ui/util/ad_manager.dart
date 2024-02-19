@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -20,29 +21,29 @@ class AdManager {
     this.bottomFullSheetBannerAd
   });
 
-  factory AdManager.init({required TargetPlatform targetPlatform}) => instance = AdManager(
-    myCafeScreenBannerAd: _loadBannerAd(targetPlatform),
-    challengeScreenBannerAd: _loadBannerAd(targetPlatform),
-    myPageScreenBannerAd: _loadBannerAd(targetPlatform),
-    shopScreenBannerAd: _loadBannerAd(targetPlatform),
-    notificationScreenBannerAd: _loadBannerAd(targetPlatform),
-    bottomFullSheetBannerAd: _loadBannerAd(targetPlatform),
+  factory AdManager.init() => instance = AdManager(
+    myCafeScreenBannerAd: _loadBannerAd(),
+    challengeScreenBannerAd: _loadBannerAd(),
+    myPageScreenBannerAd: _loadBannerAd(),
+    shopScreenBannerAd: _loadBannerAd(),
+    notificationScreenBannerAd: _loadBannerAd(),
+    bottomFullSheetBannerAd: _loadBannerAd(),
   );
 
-  loadMyCafeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
-  loadChallengeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
-  loadMyPageScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
-  loadShopScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
-  loadNotificationScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
-  loadBottomFullSheetBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd(targetPlatform);
+  loadMyCafeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
+  loadChallengeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
+  loadMyPageScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
+  loadShopScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
+  loadNotificationScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
+  loadBottomFullSheetBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
 }
 
-AdManagerBannerAd _loadBannerAd(TargetPlatform targetPlatform) {
+AdManagerBannerAd _loadBannerAd() {
   const String androidBannerAdUnitId = 'ca-app-pub-4181634903165130/5331376786';
-  const String iosBannerAdUnitId = 'ca-app-pub-4181634903165130/6823571792';
+  const String iosBannerAdUnitId = 'ca-app-pub-4181634903165130/8135613456';
 
   String adUnitId = androidBannerAdUnitId;
-  if(targetPlatform == TargetPlatform.iOS) adUnitId = iosBannerAdUnitId;
+  if(Platform.isIOS) adUnitId = iosBannerAdUnitId;
 
   return AdManagerBannerAd(
     adUnitId: adUnitId,

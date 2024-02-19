@@ -3,7 +3,6 @@ import 'package:cafejari_flutter/firebase_options.dart';
 import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -43,7 +42,7 @@ void main() async {
   FlutterLocalNotification.init();
 
   // 광고 init
-  AdManager.init(targetPlatform: defaultTargetPlatform);
+  AdManager.init();
 
   // 앱 시작
   runApp(const ProviderScope(child: CafejariApp()));
