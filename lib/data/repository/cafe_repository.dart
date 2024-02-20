@@ -39,6 +39,9 @@ abstract interface class CafeRepository {
       required int acidity});
 }
 
+final String _naverSearchClientId = dotenv.env['NAVER_SEARCH_CLIENT_ID']!;
+final String _naverSearchSecret = dotenv.env['NAVER_SEARCH_SECRET']!;
+
 /// cafe repository의 구현부
 class CafeRepositoryImpl implements CafeRepository {
   APIService apiService;
@@ -150,8 +153,8 @@ class CafeRepositoryImpl implements CafeRepository {
     try {
       Map<String, String> headers = {
         "Content-Type": "plain/text",
-        "X-Naver-Client-Id": dotenv.env['NAVER_SEARCH_CLIENT_ID']!,
-        "X-Naver-Client-Secret": dotenv.env['NAVER_SEARCH_SECRET']!
+        "X-Naver-Client-Id": _naverSearchClientId,
+        "X-Naver-Client-Secret": _naverSearchSecret
       };
       final stringQuery = {"query": query, "sort": "sim", "display": "10"};
 

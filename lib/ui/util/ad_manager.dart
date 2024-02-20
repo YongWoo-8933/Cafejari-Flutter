@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdManager {
@@ -29,13 +28,6 @@ class AdManager {
     notificationScreenBannerAd: _loadBannerAd(),
     bottomFullSheetBannerAd: _loadBannerAd(),
   );
-
-  loadMyCafeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
-  loadChallengeScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
-  loadMyPageScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
-  loadShopScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
-  loadNotificationScreenBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
-  loadBottomFullSheetBannerAd({required TargetPlatform targetPlatform}) => _loadBannerAd();
 }
 
 AdManagerBannerAd _loadBannerAd() {

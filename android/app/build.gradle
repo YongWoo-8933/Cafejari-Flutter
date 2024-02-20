@@ -48,7 +48,7 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 30
+        versionCode 31
         versionName "1.5.1"
         // local noti
         multiDexEnabled true
