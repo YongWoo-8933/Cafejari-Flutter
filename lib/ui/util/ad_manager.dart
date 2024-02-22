@@ -32,7 +32,7 @@ class AdManager {
 
 AdManagerBannerAd _loadBannerAd() {
   const String androidBannerAdUnitId = 'ca-app-pub-4181634903165130/5331376786';
-  const String iosBannerAdUnitId = 'ca-app-pub-4181634903165130/8135613456';
+  const String iosBannerAdUnitId = 'ca-app-pub-4181634903165130/9461508692';
 
   String adUnitId = androidBannerAdUnitId;
   if(Platform.isIOS) adUnitId = iosBannerAdUnitId;
