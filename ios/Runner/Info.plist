@@ -76,8 +76,6 @@
 	<string>저장소 접근을 통해 파일을 업로드합니다.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>앱 사용에 필요한 알림을 전달합니다.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>사용자에게 최적화된 광고를 표시합니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

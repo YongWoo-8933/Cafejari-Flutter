@@ -41,9 +41,7 @@ class OnboardingScreen extends ConsumerWidget {
           onTap: () {
             if(currentIndex == 0) {
               ref.watch(_firstTabTime.notifier).update((state) => DateTime.now());
-            }
-            ref.watch(_currentPageIndex.notifier).update((state) => currentIndex + 1);
-            if(currentIndex == 8) {
+            } else if(currentIndex == 8) {
               Future.delayed(const Duration(milliseconds: 500), () async {
                 await globalViewModel.setIsInstalledFirst(false);
                 if (ref.watch(_firstTabTime).isNotNull) {
@@ -56,7 +54,10 @@ class OnboardingScreen extends ConsumerWidget {
                 }
                 if(context.mounted) GoRouter.of(context).goNamed(ScreenRoute.root);
               });
+            } else if (currentIndex == 9) {
+              return;
             }
+            ref.watch(_currentPageIndex.notifier).update((state) => currentIndex + 1);
           },
           child: Container(
             color: AppColor.white,
