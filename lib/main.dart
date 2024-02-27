@@ -3,6 +3,7 @@ import 'package:cafejari_flutter/firebase_options.dart';
 import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -29,7 +30,7 @@ void main() async {
   await MobileAds.instance.initialize();
 
   // Firebase analytics 사용설정
-  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
   FirebaseAnalytics.instance.logAppOpen();
 
   // Naver map init
