@@ -11,6 +11,7 @@ import 'package:cafejari_flutter/ui/components/buttons/question_button.dart';
 import 'package:cafejari_flutter/ui/components/occupancy_prediction_description_dialog.dart';
 import 'package:cafejari_flutter/ui/components/page_view_dot_indicator.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/search_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/cached_network_image.dart';
 import 'package:cafejari_flutter/ui/components/cafe_name_address_block.dart';
