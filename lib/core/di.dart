@@ -43,6 +43,7 @@ import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/map_view_model.dart';
 import 'package:cafejari_flutter/ui/view_model/shop_view_model.dart';
 
+
 final apiServiceProvider = Provider<APIService>((ref) {
   return APIService();
 });
