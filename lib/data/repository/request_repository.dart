@@ -2,43 +2,9 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/request/request_response.dart';
-
-/// 각종 request 저장소
-abstract interface class RequestRepository {
-  // GET
-  Future<List<CafeAdditionRequestResponse>> fetchMyCafeAdditionRequest({required String accessToken});
-
-  // POST
-  Future<CafeAdditionRequestResponse> postCafeAdditionRequest({
-    required String accessToken,
-    required String cafeName,
-    required String dongAddress,
-    required String roadAddress,
-    required double latitude,
-    required double longitude,
-    required int topFloor,
-    required int bottomFloor,
-    required List<double> wallSocketRateList,
-    required List<String> openingHourList,
-    required String etc
-  });
-  Future<CafeModificationRequestResponse> postCafeModificationRequest({
-    required String accessToken,
-    required bool isClosed,
-    required int cafeId,
-    required int topFloor,
-    required int bottomFloor,
-    List<double>? wallSocketRateList,
-    List<String>? openingHourList,
-    List<String>? restRoomList,
-    double? latitude,
-    double? longitude,
-    String? etc
-  });
-  Future<void> postUserWithdrawalRequest({required String accessToken, required String reason});
-  Future<UserMigrationRequestResponse> postUserMigrationRequest({required String accessToken, required String phoneNumber});
-  Future<void> postAppFeedback({String? accessToken, required String feedback});
-}
+import 'package:cafejari_flutter/data/repository/util.dart';
+import 'package:cafejari_flutter/domain/entity/request/request.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 
 /// request repository의 구현부
 class RequestRepositoryImpl implements RequestRepository {
@@ -47,23 +13,7 @@ class RequestRepositoryImpl implements RequestRepository {
   RequestRepositoryImpl(this.service);
 
   @override
-  Future<List<CafeAdditionRequestResponse>> fetchMyCafeAdditionRequest({required String accessToken}) async {
-    try {
-      final List<dynamic> response = await service.request(
-          method: HttpMethod.get,
-          appLabel: "request",
-          endpoint: "cafe_addition/",
-          accessToken: accessToken);
-      return response.map((dynamic e) => CafeAdditionRequestResponse.fromJson(e)).toList();
-    } on ErrorWithMessage {
-      rethrow;
-    } on TokenExpired {
-      throw AccessTokenExpired();
-    }
-  }
-
-  @override
-  Future<CafeAdditionRequestResponse> postCafeAdditionRequest({
+  Future<CafeAdditionRequest> postCafeAdditionRequest({
     required String accessToken,
     required String cafeName,
     required String dongAddress,
@@ -95,7 +45,8 @@ class RequestRepositoryImpl implements RequestRepository {
           "etc": etc
         }
       );
-      return CafeAdditionRequestResponse.fromJson(response);
+      final res = CafeAdditionRequestResponse.fromJson(response);
+      return parseCafeAdditionRequestFromCafeAdditionRequestResponse(requestResponse: res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -104,7 +55,7 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<CafeModificationRequestResponse> postCafeModificationRequest({
+  Future<CafeModificationRequest> postCafeModificationRequest({
     required String accessToken,
     required bool isClosed,
     required int cafeId,
@@ -137,7 +88,8 @@ class RequestRepositoryImpl implements RequestRepository {
         accessToken: accessToken,
         body: requestBody
       );
-      return CafeModificationRequestResponse.fromJson(response);
+      final res = CafeModificationRequestResponse.fromJson(response);
+      return parseCafeModificationRequestFromCafeModificationRequestResponse(requestResponse: res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -149,11 +101,11 @@ class RequestRepositoryImpl implements RequestRepository {
   Future<void> postUserWithdrawalRequest({required String accessToken, required String reason}) async {
     try {
       await service.request(
-          method: HttpMethod.post,
-          appLabel: "request",
-          endpoint: "withdrawal/",
-          accessToken: accessToken,
-          body: {"reason": reason}
+        method: HttpMethod.post,
+        appLabel: "request",
+        endpoint: "withdrawal/",
+        accessToken: accessToken,
+        body: {"reason": reason}
       );
     } on ErrorWithMessage {
       rethrow;
@@ -163,16 +115,15 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<UserMigrationRequestResponse> postUserMigrationRequest({required String accessToken, required String phoneNumber}) async {
+  Future<void> postUserMigrationRequest({required String accessToken, required String phoneNumber}) async {
     try {
-      final dynamic response = await service.request(
+      await service.request(
         method: HttpMethod.post,
         appLabel: "request",
         endpoint: "user_migration/",
         accessToken: accessToken,
         body: {"phone_number": phoneNumber}
       );
-      return UserMigrationRequestResponse.fromJson(response);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

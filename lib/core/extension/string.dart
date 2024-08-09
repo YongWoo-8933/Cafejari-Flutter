@@ -1,22 +1,5 @@
-import 'package:cafejari_flutter/domain/entity/cafe_log/util.dart';
 import 'package:cafejari_flutter/domain/entity/push/util.dart';
 import 'package:html/parser.dart';
-
-
-/// 해당 string으로부터 CafeLogTheme을 얻어냄
-extension GetCafeTheme on String {
-  CafeLogTheme toCafeLogTheme() {
-    if(this == CafeLogTheme.study().tag) {
-      return CafeLogTheme.study();
-    } else if(this == CafeLogTheme.meeting().tag) {
-      return CafeLogTheme.meeting();
-    } else if(this == CafeLogTheme.healing().tag) {
-      return CafeLogTheme.healing();
-    } else {
-      return CafeLogTheme.free();
-    }
-  }
-}
 
 /// 해당 string으로부터 PushType을 얻어냄
 extension GetPushType on String {

@@ -1,31 +1,10 @@
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
-
-/// shop 관련 저장소
-abstract interface class ShopRepository {
-  // GET
-  Future<List<BrandResponse>> fetchBrand();
-  Future<List<CouponResponse>> fetchCoupon();
-  Future<List<ItemResponse>> fetchItem();
-  Future<List<BrandconResponse>> fetchMyBrandcon({required String accessToken});
-  Future<List<UserCouponResponse>> fetchMyCoupon({required String accessToken});
-
-  // POST
-  Future<BrandconResponse> postBrandcon({required String accessToken, required int itemId});
-
-  // PUT
-  Future updateBrandcon({
-    required String accessToken,
-    required int brandconId,
-    bool? isUsed
-  });
-
-  // DELETE
-  Future<void> deleteBrandcon({required String accessToken, required int brandconId});
-}
+import 'package:cafejari_flutter/data/repository/util.dart';
+import 'package:cafejari_flutter/domain/entity/shop/shop.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 
 /// shop repository의 구현부
 class ShopRepositoryImpl implements ShopRepository {
@@ -34,53 +13,58 @@ class ShopRepositoryImpl implements ShopRepository {
   ShopRepositoryImpl(this.service);
 
   @override
-  Future<List<BrandResponse>> fetchBrand() async {
+  Future<Brands> fetchBrand() async {
     try {
       final List<dynamic> response = await service.request(
-          method: HttpMethod.get,
-          appLabel: "shop",
-          endpoint: "brand/");
-      return response.map((dynamic e) => BrandResponse.fromJson(e)).toList();
+        method: HttpMethod.get,
+        appLabel: "shop",
+        endpoint: "brand/");
+      final res = response.map((dynamic e) => BrandResponse.fromJson(e)).toList();
+      return res.map((e) {
+        return Brand(id: e.id, name: e.name, imageUrl: e.image ?? "");
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<CouponResponse>> fetchCoupon() async {
-    try {
-      final List<dynamic> response = await service.request(
-          method: HttpMethod.get,
-          appLabel: "shop",
-          endpoint: "coupon/");
-      return response.map((dynamic e) => CouponResponse.fromJson(e)).toList();
-    } on ErrorWithMessage {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<ItemResponse>> fetchItem() async {
+  Future<Items> fetchItem() async {
     try {
       final List<dynamic> response = await service.request(
           method: HttpMethod.get,
           appLabel: "shop",
           endpoint: "item/");
-      return response.map((dynamic e) => ItemResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => ItemResponse.fromJson(e)).toList();
+      return res.map((itemResponse) {
+        return Item(
+          itemId: itemResponse.id,
+          brandId: itemResponse.brand,
+          price: itemResponse.price,
+          limitDay: itemResponse.limit_day,
+          name: itemResponse.name,
+          description: itemResponse.description,
+          smallImageUrl: itemResponse.small_image_url,
+          largeImageUrl: itemResponse.large_image_url
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<BrandconResponse>> fetchMyBrandcon({required String accessToken}) async {
+  Future<Brandcons> fetchMyBrandcon({required String accessToken}) async {
     try {
       final List<dynamic> response = await service.request(
           method: HttpMethod.get,
           appLabel: "shop",
           endpoint: "gifticon/",
           accessToken: accessToken);
-      return response.map((dynamic e) => BrandconResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => BrandconResponse.fromJson(e)).toList();
+      return res.map((brandconResponse) {
+        return parseBrandconFromBrandconResponse(brandconResponse: brandconResponse);
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -89,23 +73,7 @@ class ShopRepositoryImpl implements ShopRepository {
   }
 
   @override
-  Future<List<UserCouponResponse>> fetchMyCoupon({required String accessToken}) async {
-    try {
-      final List<dynamic> response = await service.request(
-          method: HttpMethod.get,
-          appLabel: "shop",
-          endpoint: "user_coupon/",
-          accessToken: accessToken);
-      return response.map((dynamic e) => UserCouponResponse.fromJson(e)).toList();
-    } on ErrorWithMessage {
-      rethrow;
-    } on TokenExpired {
-      throw AccessTokenExpired();
-    }
-  }
-
-  @override
-  Future<BrandconResponse> postBrandcon({required String accessToken, required int itemId}) async {
+  Future<Brandcon> postBrandcon({required String accessToken, required int itemId}) async {
     try {
       final dynamic response = await service.request(
         method: HttpMethod.post,
@@ -114,7 +82,8 @@ class ShopRepositoryImpl implements ShopRepository {
         accessToken: accessToken,
         body: {"item_id": itemId}
       );
-      return BrandconResponse.fromJson(response);
+      final res = BrandconResponse.fromJson(response);
+      return parseBrandconFromBrandconResponse(brandconResponse: res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -123,7 +92,7 @@ class ShopRepositoryImpl implements ShopRepository {
   }
 
   @override
-  Future<BrandconResponse> updateBrandcon({
+  Future<Brandcon> updateBrandcon({
     required String accessToken,
     required int brandconId,
     bool? isUsed
@@ -138,7 +107,8 @@ class ShopRepositoryImpl implements ShopRepository {
         accessToken: accessToken,
         body: requestBody
       );
-      return BrandconResponse.fromJson(response);
+      final res = BrandconResponse.fromJson(response);
+      return parseBrandconFromBrandconResponse(brandconResponse: res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {

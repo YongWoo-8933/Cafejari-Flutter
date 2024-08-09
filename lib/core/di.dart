@@ -1,13 +1,12 @@
 import 'package:cafejari_flutter/data/repository/app_config_repository.dart';
-import 'package:cafejari_flutter/data/repository/cafe_log_repository.dart';
 import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
 import 'package:cafejari_flutter/data/repository/leaderboard_repository.dart';
 import 'package:cafejari_flutter/data/repository/request_repository.dart';
 import 'package:cafejari_flutter/data/repository/shop_repository.dart';
 import 'package:cafejari_flutter/data/repository/token_repository.dart';
 import 'package:cafejari_flutter/data/repository/user_repository.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 import 'package:cafejari_flutter/domain/use_case/app_config_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/cafe_log_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/challenge_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/leaderboard_use_case.dart';
 import 'package:cafejari_flutter/domain/use_case/push_use_case.dart';
@@ -65,11 +64,6 @@ final cafeRepositoryProvider = Provider<CafeRepository>((ref) {
   return CafeRepositoryImpl(apiService);
 });
 
-final cafeLogRepositoryProvider = Provider<CafeLogRepository>((ref) {
-  APIService apiService = ref.watch(apiServiceProvider);
-  return CafeLogRepositoryImpl(apiService);
-});
-
 final userRepositoryProvider = Provider<UserRepository>((ref) {
   APIService apiService = ref.watch(apiServiceProvider);
   return UserRepositoryImpl(apiService);
@@ -104,19 +98,19 @@ final challengeRepositoryProvider = Provider<ChallengeRepository>((ref) {
 // use_case ----------------------------------------------------------------------------------------
 final appConfigUseCaseProvider = Provider<AppConfigUseCase>((ref) {
   AppConfigRepository appConfigRepository = ref.watch(appConfigRepositoryProvider);
-  return AppConfigUseCaseImpl(appConfigRepository);
+  return AppConfigUseCase(appConfigRepository);
 });
 
 final tokenUseCaseProvider = Provider<TokenUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
-  return TokenUseCaseImpl(tokenRepository);
+  return TokenUseCase(tokenRepository);
 });
 
 final cafeUseCaseProvider = Provider<CafeUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   CafeRepository cafeRepository = ref.watch(cafeRepositoryProvider);
   RequestRepository requestRepository = ref.watch(requestRepositoryProvider);
-  return CafeUseCaseImpl(
+  return CafeUseCase(
       tokenRepository: tokenRepository,
       cafeRepository: cafeRepository,
       requestRepository: requestRepository);
@@ -126,39 +120,33 @@ final userUseCaseProvider = Provider<UserUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   UserRepository userRepository = ref.watch(userRepositoryProvider);
   RequestRepository requestRepository = ref.watch(requestRepositoryProvider);
-  return UserUseCaseImpl(tokenRepository: tokenRepository, userRepository: userRepository, requestRepository: requestRepository);
+  return UserUseCase(tokenRepository: tokenRepository, userRepository: userRepository, requestRepository: requestRepository);
 });
 
 final leaderboardUseCaseProvider = Provider<LeaderboardUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   LeaderboardRepository leaderboardRepository = ref.watch(leaderboardRepositoryProvider);
-  return LeaderboardUseCaseImpl(
+  return LeaderboardUseCase(
       tokenRepository: tokenRepository, leaderboardRepository: leaderboardRepository);
-});
-
-final cafeLogUseCaseProvider = Provider<CafeLogUseCase>((ref) {
-  TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
-  CafeLogRepository cafeLogRepository = ref.watch(cafeLogRepositoryProvider);
-  return CafeLogUseCaseImpl(tokenRepository: tokenRepository, cafeLogRepository: cafeLogRepository);
 });
 
 final pushUseCaseProvider = Provider<PushUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   PushRepository pushRepository = ref.watch(pushRepositoryProvider);
-  return PushUseCaseImpl(tokenRepository: tokenRepository, pushRepository: pushRepository);
+  return PushUseCase(tokenRepository: tokenRepository, pushRepository: pushRepository);
 });
 
 final shopUseCaseProvider = Provider<ShopUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   ShopRepository shopRepository = ref.watch(shopRepositoryProvider);
-  return ShopUseCaseImpl(tokenRepository: tokenRepository, shopRepository: shopRepository);
+  return ShopUseCase(tokenRepository: tokenRepository, shopRepository: shopRepository);
 });
 
 final challengeUseCaseProvider = Provider<ChallengeUseCase>((ref) {
   TokenRepository tokenRepository = ref.watch(tokenRepositoryProvider);
   ChallengeRepository challengeRepository = ref.watch(challengeRepositoryProvider);
   UserRepository userRepository = ref.watch(userRepositoryProvider);
-  return ChallengeUseCaseImpl(
+  return ChallengeUseCase(
     tokenRepository: tokenRepository,
     challengeRepository: challengeRepository,
     userRepository: userRepository

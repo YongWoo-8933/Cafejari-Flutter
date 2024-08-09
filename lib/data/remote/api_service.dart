@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart';
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
