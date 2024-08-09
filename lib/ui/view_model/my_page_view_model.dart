@@ -121,4 +121,20 @@ class MyPageViewModel extends StateNotifier<MyPageState> {
       if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
     }
   }
+
+  updateOccupancyPushEnabled({required BuildContext context, required bool enabled}) async {
+    try {
+      final User updatedUser = await _userUseCase.updateProfile(
+        accessToken: globalViewModel.state.accessToken,
+        profileId: globalViewModel.state.user.profileId,
+        occupancyPushEnabled: enabled,
+        onAccessTokenRefresh: globalViewModel.setAccessToken
+      );
+      await globalViewModel.init(accessToken: globalViewModel.state.accessToken, user: updatedUser);
+    } on ErrorWithMessage catch (e) {
+      globalViewModel.showSnackBar(content: e.message, type: SnackBarType.error);
+    } on RefreshTokenExpired {
+      if(context.mounted) await globalViewModel.expireRefreshToken(context: context);
+    }
+  }
 }

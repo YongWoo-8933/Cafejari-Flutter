@@ -8,9 +8,11 @@ import 'package:cafejari_flutter/ui/components/back_button_app_bar.dart';
 import 'package:cafejari_flutter/ui/components/full_width_banner_ad.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/push/component/push_block.dart';
+import 'package:cafejari_flutter/ui/screen/push/component/push_permission_dialog.dart';
 import 'package:cafejari_flutter/ui/state/global_state/global_state.dart';
 import 'package:cafejari_flutter/ui/util/ad_manager.dart';
 import 'package:cafejari_flutter/ui/view_model/global_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -53,11 +55,29 @@ class PushScreenState extends ConsumerState<PushScreen> {
     }
 
     return Scaffold(
-      appBar: BackButtonAppBar(
-        backButtonText: "알림함",
-        backGroundColor: AppColor.white,
-        onBack: () => GoRouter.of(context).pop(),
+      appBar: AppBar(
+        leadingWidth: 240,
+        elevation: 0,
+        scrolledUnderElevation: 1.0,
+        backgroundColor: AppColor.white,
+        leading: Row(
+          children: [
+            IconButton(
+              onPressed: () => GoRouter.of(context).pop(),
+              icon: const Icon(CupertinoIcons.left_chevron, color: AppColor.black)
+            ),
+            const Text("알림함", style: TextSize.textSize_16)
+          ]
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => showDialog(context: context, builder: (context) => const PushPermissionDialog()),
+            icon: const Icon(Icons.settings, color: AppColor.primary)
+          ),
+          const HorizontalSpacer(8)
+        ],
       ),
+
       backgroundColor: AppColor.white,
       body: Stack(
         alignment: Alignment.bottomCenter,

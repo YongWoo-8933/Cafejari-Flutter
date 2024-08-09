@@ -5,7 +5,7 @@ extension GetFloorFromInt on int {
     if(this > 0) {
       return "$this";
     } else if (this < 0) {
-      return "B${this.abs()}";
+      return "B${abs()}";
     } else {
       return "";
     }

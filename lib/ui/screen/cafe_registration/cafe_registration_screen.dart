@@ -88,6 +88,29 @@ class CafeRegistrationScreenState extends ConsumerState<CafeRegistrationScreen> 
                   address: state.selectedSearchCafe.roadAddress,
                   nameTextSize: 18,
                 ),
+                Visibility(
+                  visible: state.selectedSearchCafe.roadAddress.isNotEmpty && !state.selectedSearchCafe.roadAddress.contains("서울"),
+                  child: Column(
+                    children: [
+                      const VerticalSpacer(30),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: const BoxDecoration(
+                            color: AppColor.transparentBlack_500,
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                        ),
+                        child: const Text(
+                          "서울 외 지역의 카페는 요청이 거절될 수 있어요",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ),
                 const VerticalSpacer(30),
                 _divider(),
                 const VerticalSpacer(40),

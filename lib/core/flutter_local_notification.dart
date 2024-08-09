@@ -1,4 +1,3 @@
-import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// 알림을 보내 주는 class

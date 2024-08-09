@@ -8,6 +8,7 @@ import 'package:cafejari_flutter/ui/components/buttons/book_mark.dart';
 import 'package:cafejari_flutter/ui/components/square_alert_dialog.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_cati.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/occupancy_update_button.dart';
+import 'package:cafejari_flutter/ui/screen/map/component/search_button.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/share_button.dart';
 import 'package:cafejari_flutter/ui/components/spacer.dart';
 import 'package:cafejari_flutter/ui/screen/map/component/bottom_sheet_slider.dart';
@@ -150,7 +151,7 @@ class BottomSheetPreview extends ConsumerWidget {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       OccupancyUpdateButton(height: componentHeight, textSize: 12),
-                                      ShareButton(buttonSize: componentHeight),
+                                      SearchButton(buttonSize: componentHeight)
                                     ],
                                   ),
                                 )

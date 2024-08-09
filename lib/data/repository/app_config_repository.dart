@@ -1,22 +1,9 @@
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/app_config/app_config_response.dart';
+import 'package:cafejari_flutter/domain/entity/app_config/app_config.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-/// app_config application api와 통신하는 저장소
-abstract interface class AppConfigRepository {
-  // LOCAL
-  Future<bool> getIsInstalledFirstTime();
-  putIsInstalledFirstTime(bool isInstalled);
-  Future<bool> getIsReviewSubmitted();
-  putIsReviewSubmitted(bool isSubmitted);
-  Future<bool> getIsFlagButtonTapped();
-  putIsFlagButtonTapped(bool isTapped);
-  Future<DateTime> getLastPopUpTime();
-  putLastPopUpTime(DateTime datetime);
-  // GET
-  Future<List<VersionResponse>> fetchVersion();
-}
 
 /// app_config repository의 구현부
 class AppConfigRepositoryImpl implements AppConfigRepository {
@@ -79,15 +66,25 @@ class AppConfigRepositoryImpl implements AppConfigRepository {
     await box.put(lastPopUpTimeKey, datetime);
   }
 
+  // REMOTE
   @override
-  Future<List<VersionResponse>> fetchVersion() async {
+  Future<Versions> fetchVersion() async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "app_config",
         endpoint: "version/",
       );
-      return response.map((e) => VersionResponse.fromJson(e)).toList();
+      final List<VersionResponse> responses = response.map((e) => VersionResponse.fromJson(e)).toList();
+      return responses.map((e) {
+        return Version(
+            major: e.major,
+            minor: e.minor,
+            patch: e.patch,
+            updatedAt: DateTime.parse(e.updated_at),
+            description: e.description
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }

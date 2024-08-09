@@ -82,7 +82,7 @@ class ShareButton extends ConsumerWidget {
         ),
         child: AnimatedCrossFade(
           firstChild: const Icon(
-            CupertinoIcons.paperplane,
+            CupertinoIcons.share,
             color: AppColor.white,
             size: 16,
           ),

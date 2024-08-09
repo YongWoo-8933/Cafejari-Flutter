@@ -23,6 +23,10 @@ class OnMap extends ConsumerWidget {
     final MapState mapState = ref.watch(mapViewModelProvider);
     final GlobalState globalState = ref.watch(globalViewModelProvider);
     final double deviceWidth = MediaQuery.of(context).size.width;
+    final DateTime now = DateTime.now();
+    final DateTime evening9PM = DateTime(now.year, now.month, now.day, 21, 0);
+    final DateTime morning8AM = DateTime(now.year, now.month, now.day, 8, 0);
+    final bool isNight = now.isAfter(evening9PM) || now.isBefore(morning8AM);
 
     return Stack(
       alignment: Alignment.center,
@@ -123,7 +127,21 @@ class OnMap extends ConsumerWidget {
                   ],
                 ),
               ),
-              secondChild: const HorizontalSpacer(0.001),
+              secondChild: isNight ? Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: const BoxDecoration(
+                    color: AppColor.transparentBlack_500,
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                child: const Text(
+                  "오후 9:00 ~ 오전 8:00\n 표시되는 혼잡도 정보가 없을 수 있습니다",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColor.white,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ) : const HorizontalSpacer(0.001),
               duration: AppDuration.animationDefault,
               firstCurve: Curves.easeInOut,
               secondCurve: Curves.easeInOut,

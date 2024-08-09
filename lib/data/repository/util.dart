@@ -1,17 +1,13 @@
-
 import 'dart:math';
-
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/core/extension/string.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
-import 'package:cafejari_flutter/data/remote/dto/cafe_log/cafe_log_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/push/push_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/request/request_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/shop/shop_response.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
 import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
-import 'package:cafejari_flutter/domain/entity/cafe_log/cafe_log.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
 import 'package:cafejari_flutter/domain/entity/push/push.dart';
 import 'package:cafejari_flutter/domain/entity/request/request.dart';
@@ -300,36 +296,6 @@ Cafe parseCafeFromCafeRepResponse({required CafeRepResponse cafeRepResponse}) {
       openingHour: null,
       imageUrls: [],
       vips: []);
-}
-
-/// CafeLogResponse로부터 CafeLog 객체를 뽑아내는 함수
-CafeLog parseCafeLogFromCafeLogResponse({required CafeLogResponse cafeLogResponse}) {
-  List<int> likeUserIds = [];
-  List<int> reportUserIds = [];
-  List<String> imageUrls = [];
-  for(CafeLogLikeResponse logLikeResponse in cafeLogResponse.like) {
-    likeUserIds.add(logLikeResponse.user);
-  }
-  for(CafeLogReportResponse logReportResponse in cafeLogResponse.report) {
-    reportUserIds.add(logReportResponse.user);
-  }
-  for(SnapshotResponse snapshotResponse in cafeLogResponse.snapshot) {
-    imageUrls.add(snapshotResponse.image);
-  }
-  return CafeLog(
-      id: cafeLogResponse.id,
-      isVisible: cafeLogResponse.is_visible,
-      isPrivate: cafeLogResponse.is_private,
-      content: cafeLogResponse.content,
-      createdAt: DateTime.parse(cafeLogResponse.created_at),
-      updatedAt: DateTime.parse(cafeLogResponse.updated_at),
-      theme: cafeLogResponse.theme.toCafeLogTheme(),
-      user: parsePartialUserFromPartialUserResponse(
-          partialUserResponse: cafeLogResponse.user, updateCount: 0),
-      cafe: parseCafeFromCafeRepResponse(cafeRepResponse: cafeLogResponse.cafe),
-      likeUserIds: likeUserIds,
-      reportUserIds: reportUserIds,
-      imageUrls: imageUrls);
 }
 
 /// ChallengeResponse로부터 Challenge 객체를 뽑아내는 함수

@@ -1,82 +1,42 @@
 import 'package:cafejari_flutter/core/exception.dart';
-import 'package:cafejari_flutter/data/remote/dto/challenge/challenge_response.dart';
-import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
-import 'package:cafejari_flutter/data/repository/challenge_repository.dart';
-import 'package:cafejari_flutter/data/repository/token_repository.dart';
-import 'package:cafejari_flutter/data/repository/user_repository.dart';
 import 'package:cafejari_flutter/domain/entity/challenge/challenge.dart';
-import 'package:cafejari_flutter/domain/use_case/base_use_case.dart';
-import 'package:cafejari_flutter/domain/use_case/challenge_use_case/get_my_challengers.dart';
-import 'package:cafejari_flutter/domain/use_case/util.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 
-abstract class ChallengeUseCase {
-  Future<int> getLastViewedChallengeId();
-  setLastViewedChallengeId(int id);
 
-  Future<Challenges> getChallenges();
-  Future<Challengers> getMyChallengers({
-    required String accessToken,
-    required Function(String) onAccessTokenRefresh
-  });
-  Future<Challenge> participateChallenge({
-    required String accessToken,
-    required int challengeId,
-    required Function(String) onAccessTokenRefresh
-  });
-}
-
-class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
+class ChallengeUseCase {
   final TokenRepository tokenRepository;
   final ChallengeRepository challengeRepository;
   final UserRepository userRepository;
 
-  ChallengeUseCaseImpl({
+  ChallengeUseCase({
     required this.tokenRepository,
     required this.challengeRepository,
     required this.userRepository
   });
 
-  @override
   Future<int> getLastViewedChallengeId() async => await challengeRepository.getLastViewedChallengeId();
 
-  @override
   setLastViewedChallengeId(int id) async => await challengeRepository.putLastViewedChallengeId(id);
 
-  @override
   Future<Challenges> getChallenges() async {
     try {
-      List<ChallengeResponse> challengeResponseList = await challengeRepository.fetchChallenges();
-      List<ProfileImageResponse> profileImages = await userRepository.fetchProfileImage();
-      return challengeResponseList.map((e) => parseChallengeFromChallengeResponse(
-        challengeResponse: e,
-        challengerProfileImages: profileImages.map((e) => e.image).toList()
-      )).toList();
+      return challengeRepository.fetchChallenges();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
-  @override
   Future<Challengers> getMyChallengers({
     required String accessToken,
     required Function(String) onAccessTokenRefresh
   }) async {
-    final f = GetMyChallengers();
     try {
-      return await f(
-        challengeRepository: challengeRepository,
-        userRepository: userRepository,
-        accessToken: accessToken,
-      );
+      return await challengeRepository.fetchMyChallengers(accessToken: accessToken);
     } on AccessTokenExpired {
-      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      final String newToken = await tokenRepository.fetchAccessToken();
       onAccessTokenRefresh(newToken);
       try {
-        return await f(
-          challengeRepository: challengeRepository,
-          userRepository: userRepository,
-          accessToken: newToken,
-        );
+        return await challengeRepository.fetchMyChallengers(accessToken: newToken);
       } on AccessTokenExpired {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }
@@ -87,31 +47,18 @@ class ChallengeUseCaseImpl extends BaseUseCase implements ChallengeUseCase {
     }
   }
 
-  @override
   Future<Challenge> participateChallenge({
     required String accessToken,
     required int challengeId,
     required Function(String) onAccessTokenRefresh
   }) async {
     try {
-      ChallengeResponse challengeResponse = await challengeRepository.participate(
-          accessToken: accessToken, challengeId: challengeId);
-      List<ProfileImageResponse> profileImages = await userRepository.fetchProfileImage();
-      return parseChallengeFromChallengeResponse(
-        challengeResponse: challengeResponse,
-        challengerProfileImages: profileImages.map((e) => e.image).toList()
-      );
+      return await challengeRepository.participate(accessToken: accessToken, challengeId: challengeId);
     } on AccessTokenExpired {
-      final String newToken = await getNewAccessToken(tokenRepository: tokenRepository);
+      final String newToken = await tokenRepository.fetchAccessToken();
       onAccessTokenRefresh(newToken);
       try {
-        ChallengeResponse challengeResponse = await challengeRepository.participate(
-            accessToken: newToken, challengeId: challengeId);
-        List<ProfileImageResponse> profileImages = await userRepository.fetchProfileImage();
-        return parseChallengeFromChallengeResponse(
-            challengeResponse: challengeResponse,
-            challengerProfileImages: profileImages.map((e) => e.image).toList()
-        );
+        return await challengeRepository.participate(accessToken: newToken, challengeId: challengeId);
       } on AccessTokenExpired{
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생, 앱을 재시작 해보세요");
       }

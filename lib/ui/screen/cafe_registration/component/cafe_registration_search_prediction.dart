@@ -63,7 +63,7 @@ class CafeRegistrationSearchPrediction extends ConsumerWidget {
                   marker.setSize(OccupancyLevel.minus().markerSize * 1.2);
                   state.mapController?.addOverlay(marker);
                   state.mapController?.updateCamera(NCameraUpdate.fromCameraPosition(
-                      NCameraPosition(target: NLatLng(searchCafe.latitude, searchCafe.longitude), zoom: Zoom.large)
+                    NCameraPosition(target: NLatLng(searchCafe.latitude, searchCafe.longitude), zoom: Zoom.large)
                   ));
                 },
                 child: Container(

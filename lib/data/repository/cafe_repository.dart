@@ -1,43 +1,14 @@
 import 'dart:convert';
-
 import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/cafe/cafe_response.dart';
+import 'package:cafejari_flutter/data/repository/util.dart';
+import 'package:cafejari_flutter/domain/entity/cafe/cafe.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:http/http.dart';
-
-/// cafe application api와 통신하는 저장소
-abstract interface class CafeRepository {
-  Future<List<CafeResponse>> fetchMapCafe(
-      {required double latitude,
-      required double longitude,
-      required int zoomLevel});
-  Future<CafeResponse> retrieveCafe({required int cafeId});
-  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query, double? latitude, double? longitude});
-  Future<List<CafeResponse>> fetchRecommendedCafe({
-    required double latitude, required double longitude});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken});
-  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate({required String accessToken});
-  Future<NaverSearchCafeResponse> fetchNaverSearchResult({required String query});
-  Future<List<LocationResponse>> fetchLocation();
-  Future<List<CATIResponse>> fetchCATI({required int cafeId});
-
-  Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser(
-      {required String accessToken,
-      required double occupancyRate,
-      required int cafeFloorId});
-  Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest(
-      {required double occupancyRate,
-      required int cafeFloorId});
-  Future<CATIResponse> postCATI(
-      {required String accessToken,
-      required int cafeId,
-      required int openness,
-      required int coffee,
-      required int workspace,
-      required int acidity});
-}
 
 final String _naverSearchClientId = dotenv.env['NAVER_SEARCH_CLIENT_ID']!;
 final String _naverSearchSecret = dotenv.env['NAVER_SEARCH_SECRET']!;
@@ -50,7 +21,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   // get ///////////////////////////////////////////////////////////////////////////////////////////
   @override
-  Future<List<CafeResponse>> fetchMapCafe(
+  Future<Cafes> fetchMapCafe(
       {required double latitude,
       required double longitude,
       required int zoomLevel}) async {
@@ -61,28 +32,30 @@ class CafeRepositoryImpl implements CafeRepository {
         endpoint: "",
         query: {"latitude": latitude, "longitude": longitude, "zoom_level": zoomLevel},
       );
-      return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+      return res.map((e) => parseCafeFromCafeResponse(e)).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<CafeResponse> retrieveCafe({required int cafeId}) async {
+  Future<Cafe> retrieveCafe({required int cafeId}) async {
     try {
       final dynamic response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "$cafeId/",
       );
-      return CafeResponse.fromJson(response);
+      final res = CafeResponse.fromJson(response);
+      return parseCafeFromCafeResponse(res);
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<CafeSearchResponse>> fetchSearchCafe({required String query, double? latitude, double? longitude}) async {
+  Future<Cafes> fetchSearchCafe({required String query, double? latitude, double? longitude}) async {
     try {
       var queryMap = {"query": query};
       if(latitude.isNotNull && longitude.isNotNull) {
@@ -94,15 +67,22 @@ class CafeRepositoryImpl implements CafeRepository {
         endpoint: "search/",
         query: queryMap
       );
-      return response.map((dynamic e) => CafeSearchResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => CafeSearchResponse.fromJson(e)).toList();
+      return res.map((cafeSearchResponse) {
+        return Cafe.empty().copyWith(
+          id: cafeSearchResponse.id,
+          name: cafeSearchResponse.name,
+          address: cafeSearchResponse.address,
+          latLng: NLatLng(cafeSearchResponse.latitude, cafeSearchResponse.longitude)
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<CafeResponse>> fetchRecommendedCafe({
-    required double latitude, required double longitude}) async {
+  Future<Cafes> fetchRecommendedCafe({required double latitude, required double longitude}) async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
@@ -110,21 +90,27 @@ class CafeRepositoryImpl implements CafeRepository {
         endpoint: "recommendation/",
         query: {"latitude": latitude, "longitude": longitude},
       );
-      return response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => CafeResponse.fromJson(e)).toList();
+      return res.map((cafeResponse) {
+        return parseCafeFromCafeResponse(cafeResponse);
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<OccupancyRateUpdateResponse>> fetchMyOccupancyUpdate({required String accessToken}) async {
+  Future<OccupancyRateUpdates> fetchMyOccupancyUpdate({required String accessToken}) async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "occupancy_update_log/",
         accessToken: accessToken);
-      return response.map((dynamic e) => OccupancyRateUpdateResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => OccupancyRateUpdateResponse.fromJson(e)).toList();
+      return res.map((e) {
+        return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: e);
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -133,14 +119,25 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<List<OccupancyRateUpdateResponse>> fetchMyTodayOccupancyUpdate({required String accessToken}) async {
+  Future<Map<int, OccupancyRateUpdates>> fetchMyTodayOccupancyUpdate({required String accessToken}) async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "occupancy_update_log/today_updated_log/",
         accessToken: accessToken);
-      return response.map((dynamic e) => OccupancyRateUpdateResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => OccupancyRateUpdateResponse.fromJson(e)).toList();
+      Map<int, OccupancyRateUpdates> categorizedOccupancies = {};
+      for (OccupancyRateUpdateResponse response in res) {
+        final int cafeFloorId = response.cafe_floor.id;
+        if (!categorizedOccupancies.containsKey(cafeFloorId)) {
+          categorizedOccupancies[cafeFloorId] = [];
+        }
+        categorizedOccupancies[cafeFloorId]?.add(
+          parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: response)
+        );
+      }
+      return categorizedOccupancies;
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -149,7 +146,7 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<NaverSearchCafeResponse> fetchNaverSearchResult({required String query}) async {
+  Future<NaverSearchCafes> fetchNaverSearchResult({required String query}) async {
     try {
       Map<String, String> headers = {
         "Content-Type": "plain/text",
@@ -162,10 +159,17 @@ class CafeRepositoryImpl implements CafeRepository {
         Uri.https("openapi.naver.com", "/v1/search/local", stringQuery),
         headers: headers,
       );
-
       if (response.statusCode == 200) {
-        dynamic res = jsonDecode(utf8.decode(response.bodyBytes));
-        return NaverSearchCafeResponse.fromJson(res);
+        NaverSearchCafeResponse res = NaverSearchCafeResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+        return res.items.map((e) {
+          return NaverSearchCafe(
+            name: e.title,
+            roadAddress: e.roadAddress,
+            dongAddress: e.address,
+            latitude: double.parse(e.mapy.substring(0, 2)) + double.parse("0.${e.mapy.substring(2)}"),
+            longitude: double.parse(e.mapx.substring(0, 3)) + double.parse("0.${e.mapx.substring(3)}")
+          );
+        }).toList();
       } else {
         throw ErrorWithMessage(code: 0, message: "원인 모를 에러 발생");
       }
@@ -175,29 +179,24 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<List<LocationResponse>> fetchLocation() async {
+  Future<Locations> fetchLocation() async {
     try {
       final List<dynamic> response = await apiService.request(
         method: HttpMethod.get,
         appLabel: "cafe",
         endpoint: "location/"
       );
-      return response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
-    } on ErrorWithMessage {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<CATIResponse>> fetchCATI({required int cafeId}) async {
-    try {
-      final List<dynamic> response = await apiService.request(
-        method: HttpMethod.get,
-        appLabel: "cafe",
-        endpoint: "cati/",
-        query: {"cafe_id": cafeId}
-      );
-      return response.map((dynamic e) => CATIResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => LocationResponse.fromJson(e)).toList();
+      final Locations locations = res.map((e) {
+        return Location(
+          name: e.name,
+          imageUrl: e.image,
+          latitude: e.latitude,
+          longitude: e.longitude
+        );
+      }).toList();
+      locations.sort((a, b) => a.name.compareTo(b.name));
+      return locations;
     } on ErrorWithMessage {
       rethrow;
     }
@@ -205,7 +204,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   // post //////////////////////////////////////////////////////////////////////////////////////////
   @override
-  Future<OccupancyRateUpdateResponse> postOccupancyRateAsUser({
+  Future<OccupancyRateUpdate> postOccupancyRateAsUser({
     required String accessToken, required double occupancyRate, required int cafeFloorId
   }) async {
     try {
@@ -216,7 +215,8 @@ class CafeRepositoryImpl implements CafeRepository {
         accessToken: accessToken,
         body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
       );
-      return OccupancyRateUpdateResponse.fromJson(response);
+      final res = OccupancyRateUpdateResponse.fromJson(response);
+      return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -225,7 +225,7 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<OccupancyRateUpdateResponse> postOccupancyRateAsGuest({
+  Future<OccupancyRateUpdate> postOccupancyRateAsGuest({
     required double occupancyRate, required int cafeFloorId
   }) async {
     try {
@@ -235,14 +235,15 @@ class CafeRepositoryImpl implements CafeRepository {
           endpoint: "occupancy_update_log/guest_registration/",
           body: {"occupancy_rate": occupancyRate, "cafe_floor_id": cafeFloorId}
       );
-      return OccupancyRateUpdateResponse.fromJson(response);
+      final res = OccupancyRateUpdateResponse.fromJson(response);
+      return parseOccupancyRateUpdateFromOccupancyRateUpdateResponse(updateResponse: res);
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<CATIResponse> postCATI({
+  Future<void> postCATI({
     required String accessToken,
     required int cafeId,
     required int openness,
@@ -251,7 +252,7 @@ class CafeRepositoryImpl implements CafeRepository {
     required int acidity
   }) async {
     try {
-      final dynamic response = await apiService.request(
+      await apiService.request(
         method: HttpMethod.post,
         appLabel: "cafe",
         endpoint: "cati/",
@@ -264,7 +265,6 @@ class CafeRepositoryImpl implements CafeRepository {
           "acidity": acidity,
         }
       );
-      return CATIResponse.fromJson(response);
     } on TokenExpired {
       throw AccessTokenExpired();
     } on ErrorWithMessage {

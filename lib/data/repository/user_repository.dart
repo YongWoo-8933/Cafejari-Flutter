@@ -2,54 +2,10 @@ import 'package:cafejari_flutter/core/exception.dart';
 import 'package:cafejari_flutter/core/extension/null.dart';
 import 'package:cafejari_flutter/data/remote/api_service.dart';
 import 'package:cafejari_flutter/data/remote/dto/user/user_response.dart';
+import 'package:cafejari_flutter/data/repository/util.dart';
+import 'package:cafejari_flutter/domain/entity/user/user.dart';
+import 'package:cafejari_flutter/domain/repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-/// user application api와 통신하는 저장소
-abstract class UserRepository {
-  // LOCAL
-  Future<bool> getIsInstalledFirstTime();
-  putIsInstalledFirstTime(bool isInstalled);
-  // GET
-  Future<List<GradeResponse>> fetchGrade();
-  Future<NicknameResponse> validateNickname({required String nickname});
-  Future<NicknameResponse> autoGenerateNickname();
-  Future<UserResponse> fetchUser({required String accessToken});
-  Future<List<ProfileImageResponse>> fetchProfileImage();
-  // POST
-  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken});
-  Future<LoginResponse> kakaoLoginFinish({required String accessToken});
-  Future<AppleLoginCallbackResponse> appleLogin({required String idToken, required String code});
-  Future<LoginResponse> appleLoginFinish({required String idToken, required String code});
-  Future<UserResponse> makeNewProfile({
-    required String accessToken,
-    required String fcmToken,
-    required String nickname,
-    required int userId,
-    required int profileImageId,
-    required bool marketingPushEnabled
-  });
-  // PUT
-  Future<UserResponse> updateProfile({
-    required String accessToken,
-    required int profileId,
-    String? nickname,
-    String? ageRange,
-    String? dateOfBirth,
-    String? phoneNumber,
-    String? fcmToken,
-    int? gender,
-    int? profileImageId,
-    bool? marketingPushEnabled,
-    bool? occupancyPushEnabled,
-    bool? logPushEnabled,
-    List<int>? favoriteCafeIdList,
-    int? openness,
-    int? coffee,
-    int? workspace,
-    int? acidity,
-  });
-  Future<void> logout({required String accessToken, required String refreshToken});
-}
 
 /// user repository의 구현부
 class UserRepositoryImpl implements UserRepository {
@@ -73,31 +29,44 @@ class UserRepositoryImpl implements UserRepository {
     await box.put(isInstalledFirstTimeKey, isInstalled);
   }
 
-  // GET
+  // REMOTE
   @override
-  Future<List<GradeResponse>> fetchGrade() async {
+  Future<Grades> fetchGrade() async {
     try {
       List<dynamic> response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "user",
-          endpoint: "grade/"
+        method: HttpMethod.get,
+        appLabel: "user",
+        endpoint: "grade/"
       );
-      return response.map((dynamic e) => GradeResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => GradeResponse.fromJson(e)).toList();
+      return res.map((gradeResponse) {
+        return Grade(
+          id: gradeResponse.id,
+          step: gradeResponse.step,
+          updateCountRequirement: gradeResponse.sharing_count_requirement,
+          updateRestrictionPerCafe: gradeResponse.sharing_restriction_per_cafe,
+          stackRestrictionPerDay: gradeResponse.activity_stack_restriction_per_day,
+          name: gradeResponse.name,
+          imageUrl: gradeResponse.image ?? Grade.empty().imageUrl,
+          description: gradeResponse.description ?? Grade.empty().description
+        );
+      }).toList();
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<UserResponse> fetchUser({required String accessToken}) async {
+  Future<User> fetchUser({required String accessToken}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "user",
-          endpoint: "user/",
-          accessToken: accessToken
+        method: HttpMethod.get,
+        appLabel: "user",
+        endpoint: "user/",
+        accessToken: accessToken
       );
-      return UserResponse.fromJson(response);
+      final res = UserResponse.fromJson(response);
+      return parseUserFromUserResponse(res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -106,43 +75,44 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<NicknameResponse> validateNickname({required String nickname}) async {
+  Future<String> validateNickname({required String nickname}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "user",
-          endpoint: "profile/validate_nickname/",
-          query: {"nickname": nickname}
+        method: HttpMethod.get,
+        appLabel: "user",
+        endpoint: "profile/validate_nickname/",
+        query: {"nickname": nickname}
       );
-      return NicknameResponse.fromJson(response);
+      return NicknameResponse.fromJson(response).nickname;
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<NicknameResponse> autoGenerateNickname() async {
+  Future<String> autoGenerateNickname() async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "user",
-          endpoint: "profile/auto_generate_nickname/"
+        method: HttpMethod.get,
+        appLabel: "user",
+        endpoint: "profile/auto_generate_nickname/"
       );
-      return NicknameResponse.fromJson(response);
+      return NicknameResponse.fromJson(response).nickname;
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<List<ProfileImageResponse>> fetchProfileImage() async {
+  Future<List<ProfileImage>> fetchProfileImage() async {
     try {
       List<dynamic> response = await apiService.request(
-          method: HttpMethod.get,
-          appLabel: "user",
-          endpoint: "profile_image/"
+        method: HttpMethod.get,
+        appLabel: "user",
+        endpoint: "profile_image/"
       );
-      return response.map((dynamic e) => ProfileImageResponse.fromJson(e)).toList();
+      final res = response.map((dynamic e) => ProfileImageResponse.fromJson(e)).toList();
+      return res.map((e) => (profileImageId: e.id, imageUrl: e.image)).toList();
     } on ErrorWithMessage {
       rethrow;
     }
@@ -150,37 +120,40 @@ class UserRepositoryImpl implements UserRepository {
 
   // POST
   @override
-  Future<KakaoLoginCallbackResponse> kakaoLogin({required String accessToken}) async {
+  Future<KakaoLogin> kakaoLogin({required String accessToken}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "kakao/login/callback/",
-          body: {"access_token": accessToken}
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "kakao/login/callback/",
+        body: {"access_token": accessToken}
       );
-      return KakaoLoginCallbackResponse.fromJson(response);
+      final res = KakaoLoginCallbackResponse.fromJson(response);
+      if(res.is_inactive) throw ErrorWithMessage(code: 0, message: '탈퇴 처리중인 계정입니다. 취소하려면 1:1문의를 통해 문의해주세요');
+      return (accessToken: res.access_token, isUserExist: res.user_exists);
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<LoginResponse> kakaoLoginFinish({required String accessToken}) async {
+  Future<KakaoLoginFinish> kakaoLoginFinish({required String accessToken}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "kakao/login/finish/",
-          body: {"access_token": accessToken}
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "kakao/login/finish/",
+        body: {"access_token": accessToken}
       );
-      return LoginResponse.fromJson(response);
+      final res = LoginResponse.fromJson(response);
+      return (accessToken: res.access, refreshToken: res.refresh, user: parseUserFromUserResponse(res.user));
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<AppleLoginCallbackResponse> appleLogin({required String idToken, required String code}) async {
+  Future<AppleLogin> appleLogin({required String idToken, required String code}) async {
     try {
       dynamic response = await apiService.request(
         method: HttpMethod.post,
@@ -188,29 +161,32 @@ class UserRepositoryImpl implements UserRepository {
         endpoint: "apple/login/callback/",
         body: {"id_token": idToken, "code": code}
       );
-      return AppleLoginCallbackResponse.fromJson(response);
+      final res = AppleLoginCallbackResponse.fromJson(response);
+      if(res.is_inactive) throw ErrorWithMessage(code: 0, message: '탈퇴 처리중인 계정입니다. 취소하려면 1:1문의를 통해 문의해주세요');
+      return (idToken: res.id_token, code: res.code, isUserExist: res.user_exists);
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<LoginResponse> appleLoginFinish({required String idToken, required String code}) async {
+  Future<AppleLoginFinish> appleLoginFinish({required String idToken, required String code}) async {
     try {
       dynamic response = await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "apple/login/finish/",
-          body: {"id_token": idToken, "code": code}
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "apple/login/finish/",
+        body: {"id_token": idToken, "code": code}
       );
-      return LoginResponse.fromJson(response);
+      final res = LoginResponse.fromJson(response);
+      return (accessToken: res.access, refreshToken: res.refresh, user: parseUserFromUserResponse(res.user));
     } on ErrorWithMessage {
       rethrow;
     }
   }
 
   @override
-  Future<UserResponse> makeNewProfile({
+  Future<User> makeNewProfile({
     required String accessToken,
     required String fcmToken,
     required String nickname,
@@ -231,7 +207,8 @@ class UserRepositoryImpl implements UserRepository {
           "marketing_push_enabled": marketingPushEnabled
         }
       );
-      return UserResponse.fromJson(response);
+      final res = UserResponse.fromJson(response);
+      return parseUserFromUserResponse(res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -240,7 +217,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<UserResponse> updateProfile({
+  Future<User> updateProfile({
     required String accessToken,
     required int profileId,
     String? nickname,
@@ -283,7 +260,8 @@ class UserRepositoryImpl implements UserRepository {
         accessToken: accessToken,
         body: requestBody
       );
-      return UserResponse.fromJson(response);
+      final res = UserResponse.fromJson(response);
+      return parseUserFromUserResponse(res);
     } on ErrorWithMessage {
       rethrow;
     } on TokenExpired {
@@ -295,11 +273,11 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> logout({required String accessToken, required String refreshToken}) async {
     try {
       await apiService.request(
-          method: HttpMethod.post,
-          appLabel: "user",
-          endpoint: "logout/",
-          accessToken: accessToken,
-          body: {"refresh": refreshToken}
+        method: HttpMethod.post,
+        appLabel: "user",
+        endpoint: "logout/",
+        accessToken: accessToken,
+        body: {"refresh": refreshToken}
       );
     } on ErrorWithMessage {
       rethrow;
